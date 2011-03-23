@@ -12,7 +12,7 @@
 #include <stdlib.h>
 
 double calc(position a, position b) {
-	double angle = atan((b.lon - a.lon)/(b.lat - a.lat)) * (180/ M_PI) + 180;
+	double angle = atan2((b.lon - a.lon),(b.lat - a.lat)) * (180/ M_PI) + 180;
 	printf("%f\n", angle);
 	return angle;
 }
