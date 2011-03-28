@@ -19,7 +19,7 @@ void loop(fun_t *funArr);
 
 int main(void){
     /*  declare array of funtion pointers to loop around 
-        the functions are declared */
+        the functions are declared in sched_stubs */
     fun_t funArr[FUNS] = {  &caRun,
                             &stabRun,
                             &moveRun,
