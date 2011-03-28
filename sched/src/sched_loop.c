@@ -18,7 +18,8 @@ typedef int (*fun_t)(void);
 void loop(fun_t *funArr);
 
 int main(void){
-    /* declare array of funtion pointers to loop around */
+    /*  declare array of funtion pointers to loop around 
+        the functions are declared */
     fun_t funArr[FUNS] = {  &caRun,
                             &stabRun,
                             &moveRun,
