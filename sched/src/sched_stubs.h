@@ -17,4 +17,4 @@ int motoRun(void);
 /* dummy interface for protocol code */
 int protoRun(void);
 
-#endif STUBS_H
+#endif

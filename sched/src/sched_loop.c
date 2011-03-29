@@ -1,6 +1,6 @@
 
 #include <stdio.h>
-#include "stubs.h"
+#include "sched_stubs.h"
 
 /* number of function pointers to use in array */
 #define FUNS 5
