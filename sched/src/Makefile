@@ -13,9 +13,7 @@ AVRDUDE=$(AVRDUDE_UNO)
 
 include /opt/libarduino/build/arduino.mk
 
-#clean:
-#	-rm -f *.o *.elf *.map
-
+# "normal" make will compile with gcc and set the DEBUG flag
 normal:
-	gcc $(SRC) -o $(PROG)
+	gcc $(SRC) -o $(PROG) -DDEBUG
     
