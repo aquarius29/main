@@ -21,7 +21,7 @@ void loop(void)
 	for(i = 0; i < 1; i++)
 	{
 		Process *process = g_processArr[i];
-		process->idleTask->functionPointer();
+		runIdleTask(process);
 	}
 }
 
