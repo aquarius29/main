@@ -1,5 +1,7 @@
 #include <stdio.h>
 
+#include "stubs.h"
+
 int caRun(void)
 {
 	printf("inside caRun\n");

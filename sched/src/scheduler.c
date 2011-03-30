@@ -4,6 +4,7 @@
 
 #include "scheduler.h"
 
+/* TODO: Fix const construction of processes */
 Process* createProcess(char *name)
 {
 	int strLen = strlen(name) + 1;
@@ -15,6 +16,15 @@ Process* createProcess(char *name)
 	return process;
 }
 
+/* Terminates a process completely */
+void endProcess(Process *process)
+{
+	removeProcessTasks(process->firstTask);
+	free(process->name);
+	free(process);
+}
+
+/* TODO: Fix const construction of tasks */
 Task* createTask(char *name, Fun_t functionPointer)
 {
 	int strLen = strlen(name) + 1;
@@ -27,6 +37,23 @@ Task* createTask(char *name, Fun_t functionPointer)
 	return task;
 }
 
+/* Removes all enqueued tasks for a process */
+void removeProcessTasks(Task *task)
+{
+	if(task->nextTask != NULL)
+	{
+		removeProcessTasks(task->nextTask);
+		free(task->name);
+		free(task);
+	}
+	else
+	{
+		free(task->name);
+		free(task);
+	}
+}
+
+/* Enqueues a task to a structer at the last position of queue */
 void enqueueTask(Process *process, Task *task)
 {
 	Task *tmpTask = process->lastTask;
@@ -52,6 +79,7 @@ void enqueueTask(Process *process, Task *task)
 void dequeueTask(Process *process, Task *task)
 { }
 
+/* Runs the idle task for the process */
 void runIdleTask(Process *process)
 {
 	if(process->firstTask != NULL)

@@ -1,6 +1,5 @@
-#define NO_PROCESSES 5
-
 /* type Fun_t is type "function that returns int and takes no arguments */
+// TODO: make it possible to generalize a functionpointer
 typedef int(*Fun_t)(void);
 
 /* struct Task points to function which perfoms given task */
@@ -24,7 +23,9 @@ typedef struct tagProcess
 }Process;
 
 Process* createProcess(char *name);
-Task* createTask(char *name, Fun_t functionPointer); // TODO: make possible to generalize functionpointer
+void endProcess(Process *process);
+Task* createTask(char *name, Fun_t functionPointer); 
+void removeProcessTasks(Task *task);
 void enqueueTask(Process *process, Task *task);
 void dequeueTask(Process *process, Task *task);
 
