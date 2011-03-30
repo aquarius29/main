@@ -15,7 +15,7 @@ AVRDUDE=$(AVRDUDE_UNO)
 
 # "normal" make will compile with gcc and set the DEBUG flag
 normal:
-	gcc-3 $(SRC) -o $(PROG) -DDEBUG
+	gcc $(SRC) -o $(PROG) -DDEBUG
     
 clean:
 	rm -f $(PROG) $(PROG).exe $(PROG).o
