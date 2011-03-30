@@ -11,7 +11,7 @@ LIBARDUINO_PATH=/opt/libarduino
 # change to $(AVRDUDE_DUE) if necessary.
 AVRDUDE=$(AVRDUDE_UNO) 
 
-#include /opt/libarduino/build/arduino.mk
+include /opt/libarduino/build/arduino.mk
 
 # "normal" make will compile with gcc and set the DEBUG flag
 normal:
