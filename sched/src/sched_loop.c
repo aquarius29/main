@@ -1,9 +1,8 @@
 #include <stdio.h>
 
-#include "scheduler.h"
-
+#include "sched_scheduler.h"
 /* stubs represent other modules */
-#include "stubs.h"
+#include "sched_stubs.h"
 
 // Hardcoded
 #define NO_PROCESSES 5

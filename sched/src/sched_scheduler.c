@@ -2,7 +2,7 @@
 #include <malloc.h>
 #include <string.h>
 
-#include "scheduler.h"
+#include "sched_scheduler.h"
 
 /* TODO: Fix const construction of processes */
 Process* createProcess(char *name)

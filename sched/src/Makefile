@@ -1,5 +1,5 @@
-PROG=scheduler
-SRC=$(PROG).c scheduler.c scheduler.h stubs.c stubs.h
+PROG=scheduler_prototype
+SRC=sched_loop.c sched_scheduler.c sched_scheduler.h sched_stubs.c sched_stubs.h
 
 # modify according to the device file under /dev, /dev/tty.usbmodemNNN under mac for example.                                                                                   
 DUE_USB_DEV=/dev/ttyUSB0
