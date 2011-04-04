@@ -1,0 +1,30 @@
+INCL = include/libarduino.h include/irkeys.h include/timercountercalcs.h
+SRC  = src/libarduino.c 
+LIB  = src/libarduino.a
+INSTALL_PATH = /opt/libarduino_crap
+LIBARDUINO_MAKEFILE = build/arduino.mk
+EXAMPLES_DIR = examples
+EXAMPLE_MAKEFILE = $(EXAMPLES_DIR)/Makefile
+
+all: clean $(LIB)
+
+$(LIB): $(SRC)
+	cd src && make lib
+
+clean:
+	cd src      && rm -f *.a *.o *.rom *.elf *.lst *.map
+	-rm -f  build/*~
+	-rm -f src/*.o src/*.a
+	-rm -f examples/*.a examples/*.o examples/*.map examples/*.elf  examples/*.rom examples/*.lst
+
+dist: 
+	make clean
+	#make -f $(LIBARDUINO_MAKEFILE) $(EXAMPLE_MAKEFILE)
+	#make -f $(LIBARDUINO_MAKEFILE)
+	cd $(EXAMPLES_DIR) && make 
+	-rm -f libarduino-svn.tar
+	tar cvf  libarduino-svn.tar src $(INCL) Makefile $(LIBARDUINO_MAKEFILE) $(EXAMPLE_MAKEFILE)  examples/*.c  bin/checksize
+	gzip libarduino-svn.tar
+
+
+
