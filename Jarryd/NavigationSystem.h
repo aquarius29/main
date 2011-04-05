@@ -19,11 +19,33 @@ typedef struct
 }
 movementPerformed;
 
+typedef struct
+{
+	double latitude;
+	double longitude;
+}
+GPSLocation;
+
+typedef struct
+{
+	ThreeDWorld *world;
+	int startTile;
+	int destinationTile;
+}
+indoorRouteRequest;
+
+typedef struct 
+{
+	GPSLocation *startPoint;
+	GPSLocation *destinationPoint;
+}
+outdoorRouteRequest;
+
+// define 3Dworld pointer
 ThreeDWorld *world;
 
-void setNavigationSystem(char *navigationSystem);
-void setupGPSSystem();
-void setupIndoorNavigationSystem();
+void setupGPSSystem(GPSLocation *start, GPSLocation *destination);
+void setupIndoorNavigationSystem(int startTile, int destinationTile);
 void manualMovementCommand(moveCommand *_command);
 void receiveOrder(movementPerformed *movement);
 

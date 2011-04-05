@@ -15,7 +15,6 @@ CGPoint* tileForCoordinates (CGPoint position, short width, short height)
 }
 
 
-
 // TODO: Create this function to be reusable for adding items to an array
 /*
 int AddItemToArray ()
@@ -28,6 +27,7 @@ int AddItemToArray ()
 // TODO: Create this dynamically from the parsed xml file
 
 /*
+// check diagram on git: filename = tileImage2.png
 int representation[12][10] = 
 {
 	{1, 1, 1, 1, 1, 1, 1, 1, 0, 0},

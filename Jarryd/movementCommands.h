@@ -11,6 +11,8 @@
 typedef struct
 {
 	// command e.g. Take Off/ Land/ Hover/ Move
+	// note: Take Off/ Land/ Hover will have 
+	// null values for direction and height
 	char* command;
 	int direction;
 	int height;
