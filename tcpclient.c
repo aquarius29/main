@@ -1,3 +1,5 @@
+/* Author Yuhan Qiu and Shuang Wu */
+
 #include<stdlib.h>
 #include<stdio.h>
 #include<errno.h>
