@@ -2,6 +2,11 @@
 * Author: Jarryd Hall
 */
 
+#include "Tilemap.h"
+
+#ifndef NAVIGATIONSYSTEM_H
+#define NAVIGATIONSYSTEM_H
+
 typedef struct
 {
 	// the angle/direction the drone moved
@@ -16,7 +21,10 @@ movementPerformed;
 
 ThreeDWorld *world;
 
-void setNavigationSystem(char* navigationSystem);
+void setNavigationSystem(char *navigationSystem);
 void setupGPSSystem();
 void setupIndoorNavigationSystem();
-void manualMovementCommand(char *_command);
+void manualMovementCommand(moveCommand *_command);
+void receiveOrder(movementPerformed *movement);
+
+#endif /* NAVIGATIONSYSTEM_H */

@@ -3,6 +3,8 @@
 * Purpose: Tilemap representation header file
 */
 
+#ifndef TILEMAP_H
+#define TILEMAP_H
 
 typedef struct
 {
@@ -29,3 +31,5 @@ typedef struct
 CGPoint;
 
 CGPoint* tileForCoordinates (CGPoint position, short width, short height);
+
+#endif /* TILEMAP_H */

@@ -8,14 +8,11 @@
 *           Auto-Pilot GPS: Create connection to gps/ start gps parser
 *           Auto-Pilot ad-hoc: Parse TMX File
 *
-* User controls: see movementCommands.h file
-*
 */
 
 #include <stdio.h>
 #include "NavigationSystem.h"
 #include "TMXParser.c"
-#include "Tilemap.c"
 #include "movementCommands.h"
 
 // Determine if the gps system is used together with the indoor system
@@ -44,25 +41,37 @@ void setupGPSSystem()
 
 void setupIndoorNavigationSystem()
 {
-	world = NULL;
-
-	char *doc = "secondYearSquare.xml";
-	// send the world pointer to the parser for on-the-fly ThreeDWorld setup
-	parseDoc(doc, world);
+	world = malloc(sizeof(ThreeDWorld));
+	if (world == NULL)
+	{
+		printf("Youre world is fucked! couldnt create existance");
+	}
+	else
+	{
+		char *doc = "secondYearSquare.xml";
+		// send the world pointer to the parser for on-the-fly ThreeDWorld setup
+		parseDoc(doc, world);
 	
-	// TODO: call path calculation functions and send in the world pointer
+		// TODO: call path calculation functions and send in the world pointer
+	}
 }
 
 // TODO: Ask UI group how they handle input, a basic command e.g. right or an angle moved
 // functions for handling the manual user input
-void manualMovementCommand(char *_command)
-{
-	// TODO: notify the path calculation to stop creating movement orders.
-	sendMovementCommand();
-}
+// void manualMovementCommand(moveCommand *_command)
+// {
+// 	// TODO: notify the path calculation to stop creating movement orders.
+// 	sendMovementCommand(_command);
+// }
 
 // receive data about the movement from movement group
 void receiveOrder(movementPerformed *movement)
 {
 	// send the movement data to the positioning system
+}
+
+// Dealloc shouldnt be needed during a flight, unless flight switches to GPS/outdoor system
+void dealloc()
+{
+	free(world);
 }

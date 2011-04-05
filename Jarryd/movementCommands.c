@@ -6,7 +6,7 @@
 
 #include "movementCommands.h"
 
-// Create a movement command
+// Create a movement command 
 void sendMovementCommand(char* _command, int _direction, int _height)
 {
 	moveCommand *move = malloc(sizeof(movementCommand));

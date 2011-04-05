@@ -4,10 +4,13 @@
 *
 */
 
+#ifndef MOVEMENTCOMMANDS_H
+#define MOVEMENTCOMMANDS_H
+
 // MovementCommand struct 
 typedef struct
 {
-	// command e.g. stop/move
+	// command e.g. Take Off/ Land/ Hover/ Move
 	char* command;
 	int direction;
 	int height;
@@ -15,3 +18,5 @@ typedef struct
 moveCommand;
 
 void sendMovementCommand(char* _command, int _direction, int _height);
+
+#endif /* MOVEMENTCOMMANDS_H */
