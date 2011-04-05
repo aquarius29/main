@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "stubs.h"
+#include "sched_stubs.h"
 
 int caRun(void)
 {
