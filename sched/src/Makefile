@@ -18,7 +18,7 @@ normal:
 	gcc $(SRC) -o $(PROG) -DDEBUG
     
 clean:
-	rm -f $(PROG) $(PROG).exe $(PROG).o
+	rm -f $(PROG) $(PROG).exe $(PROG).o *.lst
 
 windows-normal:
 	cl /Fe$(PROG) *.c
