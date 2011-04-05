@@ -1,17 +1,17 @@
 /*
 * Author: Jarryd Hall
-* Purpose: Drone Controls
+* Purpose: Drone Movement Commands
 *
 */
 
-// Control order struct 
+// MovementCommand struct 
 typedef struct
 {
-	// order e.g. stop/move
-	char* order;
+	// command e.g. stop/move
+	char* command;
 	int direction;
 	int height;
 }
-controlOrder;
+moveCommand;
 
-void createMovementOrder(char* _order, int _direction, int _height);
+void sendMovementCommand(char* _command, int _direction, int _height);

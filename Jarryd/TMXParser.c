@@ -10,6 +10,7 @@
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
 #include <libxml/xpath.h>
+#include "Tilemap.h"
 
 xmlXPathObjectPtr retrieveXmlnodeset (xmlDocPtr doc, xmlChar *xpath)
 {
@@ -39,9 +40,8 @@ xmlXPathObjectPtr retrieveXmlnodeset (xmlDocPtr doc, xmlChar *xpath)
 	return object;
 }
 
-void getMapDetails (xmlDocPtr doc, xmlNodePtr cur)
+void getMapDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 {
-	char *array[4];
 	xmlChar *mapWidth;
 	xmlChar *mapHeight;
 	xmlChar *tileWidth;
@@ -50,13 +50,16 @@ void getMapDetails (xmlDocPtr doc, xmlNodePtr cur)
 	if((!xmlStrcmp(cur->name, (const xmlChar *)"map")))
 	{
 		mapWidth = xmlGetProp(cur, "width");
-		array[0] = (char *)mapWidth;
+		world->mapWidth = mapWidth;
+		
 		mapHeight = xmlGetProp(cur, "height");
-		array[1] = (char *)mapHeight;
+		world->mapHeight = mapHeight;
+		
 		tileWidth = xmlGetProp(cur, "tilewidth");
-		array[2] = (char *)tileWidth;
+		world->tileWidth = tileWidth;
+		
 		tileHeight = xmlGetProp(cur, "tileheight");
-		array[3] = (char *)tileHeight;
+		world->tileHeight = tileHeight;
 	}
 }
 
@@ -66,7 +69,7 @@ void getMapDetails (xmlDocPtr doc, xmlNodePtr cur)
 // to create a 2dimensional array representation
 // TODO: add code to create the 2d array representation on the fly
 
-void getTileDetails (xmlDocPtr doc, xmlNodePtr cur)
+void getTileDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 {
 	xmlChar *xpath = (xmlChar*) "//layer[@name=\"collision\"]/data/tile/@gid";
 	xmlNodeSetPtr nodeset;
@@ -110,6 +113,8 @@ void getTileDetails (xmlDocPtr doc, xmlNodePtr cur)
 	printf("number of collision tiles : %d\n", numCollisionTiles);
 	printf("number of movable tiles : %d\n", numMovableTiles);
 	printf("Total tiles : %d\n", totalTiles);
+	world->numberOfTilesInMap = totalTiles;
+	//world->height = 
 }
 
 // Helper function to retrieve a the value for the specfied attribute at a specified node
@@ -133,7 +138,7 @@ char* getAttributeValueForNode (xmlDocPtr doc, xmlNodePtr cur, char *node, char 
 }
 
 // TODO: Add functions to return all the data in a struct.
-void parseDoc(char *docname) 
+void parseDoc(char *docname, ThreeDWorld *world) 
 {
 	xmlDocPtr doc;
 	xmlNodePtr cur;
@@ -160,8 +165,8 @@ void parseDoc(char *docname)
 		return;
 	}
 	
-	getMapDetails(doc, cur);
-	getTileDetails(doc, cur);
+	getMapDetails(doc, cur, world);
+	getTileDetails(doc, cur, world);
 
 	xmlFreeDoc(doc);
 	return;

@@ -3,30 +3,7 @@
 * Purpose: Tilemap representation
 */
 
-typedef struct
-{
-    // Height for the room is 3m 
-    
-	short mapWidth; // number of tiles | note: not number of pixels
-	short mapHeight; // number of tiles | note: not number of pixels
-	short tileWidth; // size in pixels
-	short tileHeight; // size in pixels
-	short numberOfTilesInMap; // number of tiles in tile-map
-	short numberOfColumns; // number of columns in map width
-	short numberOfRows; // number of rows in map height
-	short margin; // pixels to skip for current tile before looking for pixels
-	short spacing; // pixels to advance to the next tile data
-	short worldHeight; // height for the room
-} 
-ThreeDWorld;
-
-typedef struct
-{
-	int xPosition;
-	int yPosition;
-	
-} 
-CGPoint;
+#include "Tilemap.h"
 
 CGPoint* tileForCoordinates (CGPoint position, short width, short height)
 {	
@@ -36,6 +13,8 @@ CGPoint* tileForCoordinates (CGPoint position, short width, short height)
 	
 	return tileCoordinate;
 }
+
+
 
 // TODO: Create this function to be reusable for adding items to an array
 /*

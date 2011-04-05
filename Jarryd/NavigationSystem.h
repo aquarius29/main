@@ -14,6 +14,9 @@ typedef struct
 }
 movementPerformed;
 
+ThreeDWorld *world;
+
 void setNavigationSystem(char* navigationSystem);
 void setupGPSSystem();
 void setupIndoorNavigationSystem();
+void manualMovementCommand(char *_command);
