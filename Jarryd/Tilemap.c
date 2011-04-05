@@ -5,6 +5,8 @@
 
 typedef struct
 {
+    // Height for the room is 3m 
+    
 	short mapWidth; // number of tiles | note: not number of pixels
 	short mapHeight; // number of tiles | note: not number of pixels
 	short tileWidth; // size in pixels
@@ -16,7 +18,7 @@ typedef struct
 	short spacing; // pixels to advance to the next tile data
 	short worldHeight; // height for the room
 } 
-3dWorld;
+ThreeDWorld;
 
 typedef struct
 {
@@ -29,8 +31,8 @@ CGPoint;
 CGPoint* tileForCoordinates (CGPoint position, short width, short height)
 {	
 	CGPoint *tileCoordinate = (CGPoint*)malloc(sizeof(CGPoint));
-	tileCoordinate->xTile = (position.xPosition / width);
-	tileCoordinate->yTile = (position.yPosition / height);
+	tileCoordinate->xPosition = (position.xPosition / width);
+	tileCoordinate->yPosition = (position.yPosition / height);
 	
 	return tileCoordinate;
 }

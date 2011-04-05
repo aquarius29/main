@@ -16,6 +16,7 @@
 #include "NavigationSystem.h"
 #include "TMXParser.c"
 #include "Tilemap.c"
+#include "Controls.h"
 
 // Determine if the gps system is used together with the indoor system
 void setNavigationSystem(char* navigationSystem)
@@ -53,17 +54,6 @@ void setupIndoorNavigationSystem()
 	//       of the returned parsed struct.
 	
 	
-}
-
-// Create a movement order
-void createMovementOrder(char* _order, int _direction, int _height)
-{
-	controlOrder *order = malloc(sizeof(controlOrder));
-	order->order = _order;
-	order->direction = _direction;
-	order->height = _height;
-	// Function from interface to send order goes here e.g. InterfaceSendOrder(order);
-	free(order);
 }
 
 void receiveOrder(movementPerformed *movement)

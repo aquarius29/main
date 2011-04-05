@@ -2,16 +2,6 @@
 * Author: Jarryd Hall
 */
 
-// Control order struct 
-typedef struct
-{
-	// order e.g. stop/move
-	char* order;
-	int direction;
-	int height;
-}
-controlOrder;
-
 typedef struct
 {
 	// the angle/direction the drone moved
@@ -27,4 +17,3 @@ movementPerformed;
 void setNavigationSystem(char* navigationSystem);
 void setupGPSSystem();
 void setupIndoorNavigationSystem();
-void createMovementOrder(char* _order, int _direction, int _height);

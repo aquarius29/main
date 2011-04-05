@@ -51,16 +51,12 @@ void getMapDetails (xmlDocPtr doc, xmlNodePtr cur)
 	{
 		mapWidth = xmlGetProp(cur, "width");
 		array[0] = (char *)mapWidth;
-		printf("map width is %s\n", array[0]);
 		mapHeight = xmlGetProp(cur, "height");
 		array[1] = (char *)mapHeight;
-		printf("map height is %s\n", array[1]);
 		tileWidth = xmlGetProp(cur, "tilewidth");
 		array[2] = (char *)tileWidth;
-		printf("tile width is %s\n", array[2]);
 		tileHeight = xmlGetProp(cur, "tileheight");
 		array[3] = (char *)tileHeight;
-		printf("tile height is %s\n", array[3]);
 	}
 }
 
@@ -97,9 +93,8 @@ void getTileDetails (xmlDocPtr doc, xmlNodePtr cur)
 			if (id == 0)
 			{
 				numMovableTiles += 1;
-				printf("Movable tile id: %d for index: %d\n", id, index);
 			}
-			if (id == 121)
+			if (id != 0)
 			{
 				numCollisionTiles += 1;			
 				printf("Collision tile id : %d for index: %d\n", id, index);
@@ -137,6 +132,7 @@ char* getAttributeValueForNode (xmlDocPtr doc, xmlNodePtr cur, char *node, char 
 	return (char *)attributeValue;
 }
 
+// TODO: Add functions to return all the data in a struct.
 void parseDoc(char *docname) 
 {
 	xmlDocPtr doc;
@@ -171,18 +167,18 @@ void parseDoc(char *docname)
 	return;
 }
 
-int main(int argc, char **argv) 
-{
-	char *docname;
-
-	if (argc <= 1) 
-	{
-		printf("Usage: %s docname\n", argv[0]);
-		return(0);
-	}
-
-	docname = argv[1];
-	parseDoc (docname);
-	
-	return (1);
-}
+//int main(int argc, char **argv) 
+//{
+//	char *docname;
+//
+//	if (argc <= 1) 
+//	{
+//		printf("Usage: %s docname\n", argv[0]);
+//		return(0);
+//	}
+//
+//	docname = argv[1];
+//	parseDoc (docname);
+//	
+//	return (1);
+//}
