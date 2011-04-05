@@ -45,17 +45,15 @@ void setupGPSSystem()
 void setupIndoorNavigationSystem()
 {
 	world = NULL;
-	// TODO: Set the return of the parsed doc to the new representation
 
 	char *doc = "secondYearSquare.xml";
+	// send the world pointer to the parser for on-the-fly ThreeDWorld setup
 	parseDoc(doc, world);
 	
-	// TODO: Open the return struct and set the representation fields to the fields\
-	//       of the returned parsed struct. Init the 3DWorld
-	// TODO: Add functions in TMXParser to return the needed struct
-	
+	// TODO: call path calculation functions and send in the world pointer
 }
 
+// TODO: Ask UI group how they handle input, a basic command e.g. right or an angle moved
 // functions for handling the manual user input
 void manualMovementCommand(char *_command)
 {
