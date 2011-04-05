@@ -18,7 +18,11 @@ normal:
 	gcc $(SRC) -o $(PROG) -DDEBUG
     
 clean:
+<<<<<<< HEAD
 	rm -f $(PROG) $(PROG).exe $(PROG).o *.lst
+=======
+	rm -f $(PROG) $(PROG).exe $(PROG).lst *.o *.map
+>>>>>>> de08e10486a944a31b00ab4ea5b544baaa04ce76
 
 windows-normal:
 	cl /Fe$(PROG) *.c

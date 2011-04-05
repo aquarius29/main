@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <malloc.h>
+>>>>>>> 378aad5783d29e511aedf7b12215b3ec43c97bed
 #include <string.h>
 
 #include "sched_scheduler.h"
