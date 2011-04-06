@@ -1,9 +1,13 @@
 
-#include <stdio.h>
 #include <stdint.h>
 
 #ifdef PC
+/* non-arduino includes */
+#include <stdio.h>
+#include <stdlib.h>
+
 /* header file for group code stubs here */
+#include "sched_stubs.h"
 #endif /* PC */
 
 #ifdef ARDUINO
@@ -12,8 +16,11 @@
 
 #include "sched_naive_sched.h"
 
-static int system_init(void);
-static void naive_loop(Fun_t funArr[]);
+#define NUMBER_OF_RUN_FUNS 10
+#define NUMBER_OF_INIT_FUNS 6
+
+static int system_init(Fun_t funArrInit[]);
+static void naive_loop(Fun_t funArrRun[]);
 
 void sched_naive_init(void){
     /* function pointers to modules init functions */
@@ -37,11 +44,12 @@ void sched_naive_init(void){
                             &motoRun };
     
     /* call all other groups inits */
-    if (system_init(funArrInit) != 1) {
+    if (system_init(funArrInit) != 1) {
+        /* something went wrong during system initialization */
         #ifdef PC
             printf("Error in system initialization sequence!\n");
             exit(EXIT_FAILURE);
-        #endif
+        #endif /* PC */
         #ifdef ARDUINO
             /*  
              *  Do we have a way to give fatal error message on arduino,
@@ -49,25 +57,48 @@ void sched_naive_init(void){
              */
             exit(EXIT_FAILURE);
             
-        #endif
+        #endif /* ARDUINO */
     }
     else {
+        /* system initialization OK */
         /* call loop, pass array as argument */
         naive_loop(funArrRun);
     }
 }
 
-int system_init(Fun_t funArrInit[]){
+int system_init(Fun_t *funArrInit){
     int i;
     int res;
     
-    for (i = 0; i < length(funArrInit); i++){
-        res = *(funArrInit[i]);
+    for (i = 0; i < NUMBER_OF_INIT_FUNS; i++){
+        res = (*funArrInit[i])();
+
+        #ifdef PC
+        #ifdef DEBUG
+            printf("function call result: %d\n", res);
+        #endif /* DEBUG */
+        #endif /* PC */
     }
     
     return 1;
 }
 
-void naive_loop(Fun_t funArr[]){
+void naive_loop(Fun_t *funArrRun){
+    int i;
+    int res;
     
+    #ifdef DEBUG
+        /* DEBUG flag is set, only do one loop iteration */
+        for (i = 0; i < NUMBER_OF_RUN_FUNS; i++) {
+            res = (*funArrRun[i])();
+        }
+        
+    #else
+        /*  DEBUG flag is not set, do the normal scheduler loop */
+        while (1) {
+            for (i = 0; i < NUMBER_OF_RUN_FUNS; i++) {
+                res = (*funArrRun[i])();
+            }
+        }
+    #endif /* DEBUG */
 }
