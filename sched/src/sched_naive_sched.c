@@ -19,7 +19,7 @@
 #define NUMBER_OF_RUN_FUNS 10
 #define NUMBER_OF_INIT_FUNS 6
 
-static int system_init(Fun_t funArrInit[]);
+static int16_t system_init(Fun_t funArrInit[]);
 static void naive_loop(Fun_t funArrRun[]);
 
 void sched_naive_init(void){
@@ -66,9 +66,9 @@ void sched_naive_init(void){
     }
 }
 
-int system_init(Fun_t *funArrInit){
-    int i;
-    int res;
+int16_t system_init(Fun_t *funArrInit){
+    int16_t i;
+    int16_t res;
     
     for (i = 0; i < NUMBER_OF_INIT_FUNS; i++){
         res = (*funArrInit[i])();
@@ -84,8 +84,8 @@ int system_init(Fun_t *funArrInit){
 }
 
 void naive_loop(Fun_t *funArrRun){
-    int i;
-    int res;
+    int16_t i;
+    int16_t res;
     
     #ifdef DEBUG
         /* DEBUG flag is set, only do one loop iteration */
