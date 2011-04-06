@@ -16,6 +16,7 @@ typedef struct
 	short tileHeight; // size in pixels
 	short numberOfTilesInMap; // number of tiles in tile-map
 	short worldHeight; // height for the room
+	// 2d array of the representation
 	
 	// short margin; // pixels to skip for current tile before looking for pixels
 	// short spacing; // pixels to advance to the next tile data

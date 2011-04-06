@@ -4,8 +4,9 @@
 
 #include "Tilemap.h"
 
-#ifndef NAVIGATIONSYSTEM_H
-#define NAVIGATIONSYSTEM_H
+#ifndef CORELOGIC_H
+#define CORELOGIC_H
+
 
 typedef struct
 {
@@ -45,8 +46,15 @@ outdoorRouteRequest;
 ThreeDWorld *world;
 
 void setupGPSSystem(GPSLocation *start, GPSLocation *destination);
+void killGPSSystem();
 void setupIndoorNavigationSystem(int startTile, int destinationTile);
-void manualMovementCommand(moveCommand *_command);
-void receiveOrder(movementPerformed *movement);
+void killIndoorNavigationSystem();
+void relayManualMovementCommand(moveCommand *_command);
+void sendMovementCommand(moveCommand *move);
+void updateIndoorDestination(int destinationTile);
+void updateGPSDestination(GPSLocation *destination);
+void receiveMovementData(movementPerformed *movement);
+void createIndoorCollisionObject(int tileNumber);
+void dealloc();
 
-#endif /* NAVIGATIONSYSTEM_H */
+#endif /* CORELOGIC_H */

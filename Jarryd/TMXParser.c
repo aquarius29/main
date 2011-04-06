@@ -2,6 +2,7 @@
 * Author: Jarryd Hall
 * Purpose: An XML Parser to parse a tilemap
 * Note: The TMX file has been converted to an xml file before hand
+* CommandLine usage: gcc source.c -I/usr/include/libxml2 -lxml2 -o output
 */
 
 #include <stdio.h>
