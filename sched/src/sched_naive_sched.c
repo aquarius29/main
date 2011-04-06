@@ -94,11 +94,25 @@ void naive_loop(Fun_t *funArrRun){
         }
         
     #else
-        /*  DEBUG flag is not set, do the normal scheduler loop */
+        /* DEBUG flag is not set, do the normal scheduler loop */
         while (1) {
             for (i = 0; i < NUMBER_OF_RUN_FUNS; i++) {
                 res = (*funArrRun[i])();
             }
         }
     #endif /* DEBUG */
+}
+
+int16_t time(void){
+    int16_t currentTime;
+    
+    #ifdef PC
+        /* call non-arduino timing functions to retrieve current time */
+    #endif /* PC */
+    
+    #ifdef ARDUINO 
+        /* call arduino specific timing functions to retrieve current time */    
+    #endif /* ARDUINO */
+    
+    return currentTime;
 }
