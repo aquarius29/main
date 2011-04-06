@@ -1,5 +1,6 @@
 
 #include <stdio.h>
+#include <stdint.h>
 
 #ifdef PC
 /* header file for group code stubs here */
@@ -36,7 +37,7 @@ void sched_naive_init(void){
                             &motoRun };
     
     /* call all other groups inits */
-    if (system_init() != 1) {
+    if (system_init(funArrInit) != 1) {
         #ifdef PC
             printf("Error in system initialization sequence!\n");
             exit(EXIT_FAILURE);
@@ -56,8 +57,15 @@ void sched_naive_init(void){
     }
 }
 
-int system_init(void){
+int system_init(Fun_t funArrInit[]){
+    int i;
+    int res;
     
+    for (i = 0; i < length(funArrInit); i++){
+        res = *(funArrInit[i]);
+    }
+    
+    return 1;
 }
 
 void naive_loop(Fun_t funArr[]){
