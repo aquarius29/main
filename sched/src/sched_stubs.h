@@ -1,37 +1,37 @@
-#include <stdio.h>
+#include <stdint.h>
 
-/* dummy interface for collision avoidance code */
-int caRun(void);
+/* dummy int16_terface for collision avoidance code */
+int16_t caRun(void);
 
-/* dummy interface for stabilization code */
-int stabRun(void);
+/* dummy int16_terface for stabilization code */
+int16_t stabRun(void);
 
-/* dummy interface for movement code */
-int moveRun(void);
+/* dummy int16_terface for movement code */
+int16_t moveRun(void);
 
-/* dummy interface for motor code */
-int motoRun(void);
+/* dummy int16_terface for motor code */
+int16_t motoRun(void);
 
-/* dummy interface for protocol code */
-int protoRun(void);
+/* dummy int16_terface for protocol code */
+int16_t protoRun(void);
 
-/* dummy interface for filter code */
-int filterRun(void);
+/* dummy int16_terface for filter code */
+int16_t filterRun(void);
 
-/* dummy interface for collision avoidance code */
-int caInit(void);
+/* dummy int16_terface for collision avoidance code */
+int16_t caInit(void);
 
-/* dummy interface for stabilization code */
-int stabInit(void);
+/* dummy int16_terface for stabilization code */
+int16_t stabInit(void);
 
-/* dummy interface for movement code */
-int moveInit(void);
+/* dummy int16_terface for movement code */
+int16_t moveInit(void);
 
-/* dummy interface for motor code */
-int motoInit(void);
+/* dummy int16_terface for motor code */
+int16_t motoInit(void);
 
-/* dummy interface for protocol code */
-int protoInit(void);
+/* dummy int16_terface for protocol code */
+int16_t protoInit(void);
 
-/* dummy interface for filter code */
-int filterInit(void);
+/* dummy int16_terface for filter code */
+int16_t filterInit(void);

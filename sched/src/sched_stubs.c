@@ -1,8 +1,9 @@
 #include <stdio.h>
+#include <stdint.h>
 
 #include "sched_stubs.h"
 
-int caRun(void) {
+int16_t caRun(void) {
 	#ifdef DEBUG
 	    printf("inside caRun\n");
 	#endif /* DEBUG */
@@ -10,7 +11,7 @@ int caRun(void) {
 	return 0;
 }
 
-int stabRun(void) {
+int16_t stabRun(void) {
 	#ifdef DEBUG
 	    printf("inside stabRun\n");
 	#endif /* DEBUG */
@@ -18,7 +19,7 @@ int stabRun(void) {
 	return 0;
 }
 
-int moveRun(void) {
+int16_t moveRun(void) {
 	#ifdef DEBUG
 	    printf("inside moveRun\n");
 	#endif /* DEBUG */
@@ -26,7 +27,7 @@ int moveRun(void) {
 	return 0;
 }
 
-int motoRun(void) {
+int16_t motoRun(void) {
 	#ifdef DEBUG
 	    printf("inside motoRun\n");
 	#endif /* DEBUG */
@@ -34,7 +35,7 @@ int motoRun(void) {
 	return 0;
 }
 
-int protoRun(void) {
+int16_t protoRun(void) {
 	#ifdef DEBUG
 	    printf("inside protoRun\n");
 	#endif /* DEBUG */
@@ -42,7 +43,7 @@ int protoRun(void) {
 	return 0;
 }
 
-int filterRun(void) {
+int16_t filterRun(void) {
 	#ifdef DEBUG
 	    printf("inside filterRun\n");
 	#endif /* DEBUG */
@@ -50,7 +51,7 @@ int filterRun(void) {
 	return 0;
 }
 
-int caInit(void) {
+int16_t caInit(void) {
 	#ifdef DEBUG
 	    printf("inside caInit\n");
 	#endif /* DEBUG */
@@ -58,7 +59,7 @@ int caInit(void) {
 	return 0;
 }
 
-int stabInit(void) {
+int16_t stabInit(void) {
 	#ifdef DEBUG
 	    printf("inside stabInit\n");
 	#endif /* DEBUG */
@@ -66,7 +67,7 @@ int stabInit(void) {
 	return 0;
 }
 
-int moveInit(void) {
+int16_t moveInit(void) {
 	#ifdef DEBUG
 	    printf("inside moveInit\n");
 	#endif /* DEBUG */
@@ -74,7 +75,7 @@ int moveInit(void) {
 	return 0;
 }
 
-int motoInit(void) {
+int16_t motoInit(void) {
 	#ifdef DEBUG
 	    printf("inside motoInit\n");
 	#endif /* DEBUG */
@@ -82,7 +83,7 @@ int motoInit(void) {
 	return 0;
 }
 
-int protoInit(void) {
+int16_t protoInit(void) {
 	#ifdef DEBUG
 	    printf("inside protoInit\n");
 	#endif /* DEBUG */
@@ -90,7 +91,7 @@ int protoInit(void) {
 	return 0;
 }
 
-int filterInit(void) {
+int16_t filterInit(void) {
 	#ifdef DEBUG
 	    printf("inside filterInit\n");
 	#endif /* DEBUG */
