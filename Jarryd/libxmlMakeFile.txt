@@ -1,13 +1,13 @@
 # make file template
 
-SOURCES:=source.c
+SOURCES:=TMXParser.c
 OBJECTS:=$(SOURCES:%.c=%.o)
 CC=gcc
 CFLAGS=-g -Wall -I/usr/include/libxml2
 LD=gcc
 LDFLAGS=
 LIBS=-lxml2
-TARGET:=output
+TARGET:=TMXParser
 
 all: $(TARGET)
 
