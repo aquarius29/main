@@ -29,12 +29,16 @@ int conn_socket_host(char *argv[]){
   /*Checking Master sockets IP */
   if((Host = gethostbyname(argv[1]))==NULL)
     {
+#ifdef DEBUG
       perror("gethostbyname()");
+#endif
       exit(EXIT_FAILURE); 
     }
   
   else{
+#ifdef DEBUG
     printf("Remote host is %s\n",argv[1]);
+#endif 
   }
   
   return 0; 
@@ -45,12 +49,15 @@ int conn_socket_host(char *argv[]){
 int conn_socket_create(void){
 
  if((socket_tcp = socket(AF_INET, SOCK_STREAM,0))==-1){
+#ifdef DEBUG
      printf("socket()");
+#endif
      exit(EXIT_FAILURE);
    }
  else{
+#ifdef DEBUG
      printf("Socket is succesfully created\n");
-   
+#endif   
    }
  return 0;
 }
@@ -69,14 +76,17 @@ int conn_socket_binding(void){
 /*Connection to a host*/
 int conn_socket_connection(char *argv[]){
 
-
  if(connect(socket_tcp,(struct sockaddr *)&connecting,sizeof(struct sockaddr))==-1)
   {
+#ifdef DEBUG
     perror("connect()");
+#endif
     exit(1);
   }
  else{
+#ifdef DEBUG
    printf("Client is connected to%s\n",argv[1]);
+#endif
  }
 
  return 0;
@@ -97,7 +107,9 @@ int conn_socket_connection(char *argv[]){
    else{
    /*Quiting both client and server with quit*/
      send(socket_tcp,send_data,strlen(send_data),0);
-     printf("Closing client \n");
+#ifdef DEBUG  
+   printf("Closing client \n");
+#endif
      close(socket_tcp);    
      break;
    }
