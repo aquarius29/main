@@ -1,6 +1,6 @@
+/* Author Abdirashid Jama */
 #include <stdio.h>      /* for printf() and fprintf() */
 #include <sys/socket.h> /* for socket(), bind(), and connect() */
-/* Author Abdirashid Jama */
 #include <arpa/inet.h>  /* for sockaddr_in and inet_ntoa() */
 #include <stdlib.h>     /* for atoi() and exit() */
 #include <string.h>     /* for memset() */
@@ -28,8 +28,6 @@ void Exit_Error_func(char *errorMessage)
     perror(errorMessage);
     exit(1);
 }
-
-
 
 
     if (argc != 2)     /* Test for correct number of arguments */
@@ -76,22 +74,29 @@ printf("listening \n");
 		printf("waiting for msg to handle \n");
 
                 n = recv(clntSock, msg_buf, sizeof(msg_buf), 0);
-                while (n>1){
-		
+                
+		 printf("responding to client");
 
-                if(strcmp (msg_buf, "set_camera_available")==0){
+		while(n>0){
+                if(strcmp (msg_buf,"set_camera_available")==0){
+                printf("if.................................");
 		status=1;
-                    send(clntSock, status,strlen(msg_buf), 0);
-                    n = recv(clntSock, msg_buf, sizeof(msg_buf), 0);
-		   printf("responding to client");
+                send(clntSock, status,strlen(status, 0);
+                n = recv(clntSock, msg_buf, sizeof(msg_buf), 0);
+		  
 		}
 		else{
+		status=0;
+                send(clntSock, status,strlen(status), 0);
                 printf("wrong message \n");
+		close(clntSock); 
+
+		exit(0);
 		}
-                }
+                
                 close(clntSock);    /* Close client socket */
         	}
-
+	}	
         
     }
     /* NOT REACHED */

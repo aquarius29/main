@@ -72,12 +72,12 @@ void Exit_Error_func(char *errorMessage)
         /* Repeatedly read data from user and send it to server. */
 
         msg_string = fgets(msg_buf, sizeof(msg_buf), stdin);
-        while (msg_string != NULL) {
+        
                 send(sock, msg_buf, strlen(msg_buf), 0);
                 n = recv(sock, msg_buf, sizeof(msg_buf), 0);
-                write(1, msg_buf, n);
+                write(1, msg_buf, 0);
                 msg_string = fgets(msg_buf, sizeof(msg_buf), stdin);
-        }
+        
 
         /* Close the socket. */
 
