@@ -18,7 +18,7 @@
 // function to setup the initial gps system
 void setupGPSSystem(GPSLocation *start, GPSLocation *destination)
 {
-		printf("Starting GPS System");
+		printf("Starting GPS System\n");
 		// TODO: start connection to gps
 		// TODO: start parser
 		// TODO: fetch data from gps data structure
@@ -39,7 +39,7 @@ void setupIndoorNavigationSystem(int startTile, int destinationTile)
 		world = malloc(sizeof(ThreeDWorld));
 		if (world == NULL)
 		{
-			printf("Youre world is fucked! couldnt create existance");
+			printf("Youre world is fucked! couldnt create existance\n");
 		}
 		else
 		{
@@ -65,7 +65,7 @@ void relayManualMovementCommand(moveCommand *_command)
 {
 	if (_command->command == NULL)
 	{
-		printf("Invalid Manual Command, cannot relay to movement");
+		printf("Invalid Manual Command, cannot relay to movement\n");
 	}
 	else
 	{
@@ -82,7 +82,7 @@ void sendMovementCommand(moveCommand *move)
 {
 	if (move->command == NULL)
 	{
-		printf("Movement from path calculation invalid");
+		printf("Movement from path calculation invalid\n");
 	}
 	else
 	{
@@ -146,7 +146,7 @@ void receiveMovementData(movementPerformed *movement)
 {
 	if (movement == NULL)
 	{
-		printf("movement data from movement system invalid");
+		printf("movement data from movement system invalid\n");
 	}
 	else
 	{
@@ -159,7 +159,7 @@ void createIndoorCollisionObject(int tileNumber, ThreeDWorld *world)
 {
 	if (world == NULL)
 	{
-		printf("Trying to modify an invalid world");
+		printf("Trying to modify an invalid world\n");
 	}
 	else
 	{
@@ -175,6 +175,7 @@ void createIndoorCollisionObject(int tileNumber, ThreeDWorld *world)
 		world->representation[firstDimension][secondDimension] = 1;
 
 		// notify the path calculation to recheck the worldMap and recalculate.
+		printf("Collision object created\n");
 	}
 
 }

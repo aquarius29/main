@@ -161,7 +161,7 @@ void parseDoc(char *docname, ThreeDWorld *world)
 	}
 	if (xmlStrcmp(cur->name, (const xmlChar *) "map"))
 	{
-		fprintf(stderr,"Root node != map, not a tmx file");
+		fprintf(stderr,"Root node != map, not a tmx file\n");
 		xmlFreeDoc(doc);
 		return;
 	}

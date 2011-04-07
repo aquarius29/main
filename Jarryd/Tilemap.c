@@ -15,6 +15,25 @@ CGPoint* tileForCoordinates (CGPoint position, short width, short height)
 	return tileCoordinate;
 }
 
+// modify world represnetation set the index to value e.g. 1 or 0
+void setIndexValue(ThreeDWorld *world, int index, int value)
+{
+	int first = index / world->mapWidth;
+	int second =  index % world->mapWidth;
+	world->representation[first][second] = value; 
+}
+
+// check a tile for its contents
+int checkTileValue(ThreeDWorld *world, int index)
+{
+	int value = NULL; // value for tile e.g. 0 = free, 1 = collision 2 = destination
+	int first = index / world->mapWidth;
+	int second =  index % world->mapWidth;
+	
+	value = world->representation[first][second];
+	
+	return value;
+}
 // TODO: Create this function to be reusable for adding items to an array
 /*
 int AddItemToArray ()

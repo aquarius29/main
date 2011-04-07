@@ -31,7 +31,9 @@ typedef struct
 } 
 CGPoint;
 
-// function to take coordinates and determine the tile index
-CGPoint* tileForCoordinates (CGPoint position, short width, short height);
+CGPoint* tileForCoordinates (CGPoint position, short width, short height); // determine the tile index
+
+void setIndexValue(ThreeDWorld *world, int index, int value); // modify world represnetation set the index to value e.g. 1 or 0
+int checkTileValue(ThreeDWorld *world, int index); // check a tile for its contents e.g. 0 = free, 1 = collision, 2 = destination
 
 #endif /* TILEMAP_H */
