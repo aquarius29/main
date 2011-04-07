@@ -7,7 +7,7 @@
 
 
 
-void stab_init(void);
+int stab_init(void);
 
 
-void stab_start(void);
+int stab_run(void);
