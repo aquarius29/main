@@ -19,6 +19,7 @@ typedef struct
 }
 moveCommand;
 
+// Create a movement command 
 void sendMovementCommand(char* _command, int _direction, int _height);
 
 #endif /* MOVEMENTCOMMANDS_H */

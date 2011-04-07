@@ -31,6 +31,7 @@ typedef struct
 } 
 CGPoint;
 
+// function to take coordinates and determine the tile index
 CGPoint* tileForCoordinates (CGPoint position, short width, short height);
 
 #endif /* TILEMAP_H */

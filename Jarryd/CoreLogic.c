@@ -63,7 +63,7 @@ void killIndoorNavigationSystem()
 // NOTE: Wait for correct protocol implementation/
 void relayManualMovementCommand(moveCommand *_command)
 {
-	
+	// use protocol here to send the data to the movement for handling
 }
 
 // function for the path calculation/navigation to use to 
@@ -82,9 +82,15 @@ void updateGPSDestination(GPSLocation *destination)
 }
 
 // function to update an indoor destination
-void updateIndoorDestination(int destinationTile)
+void updateIndoorDestination(int tileNumber, ThreeDWorld *world)
 {
 	// send the new data to the path calculation system
+	int firstDimension = tileNumber / world->mapwidth;
+	int secondDimension = tileNumber % world->mapWidth;
+	
+	// 2 marks the tile as the destination.
+	world->representation[firstDimension][secondDimension] = 2;
+	// notify the path calculation to recheck the worldMap and recalculate.
 }
 
 sendNavigationDataToPathCalculation()
@@ -122,7 +128,7 @@ void createIndoorCollisionObject(int tileNumber, ThreeDWorld *world)
 	// representation graph/ If these objects arent permananet then it makes more sense.
 	
 	// calculate the tile to add the collision object.
-	int firstDimension = tileNumber/ world->mapwidth;
+	int firstDimension = tileNumber / world->mapwidth;
 	int secondDimension = tileNumber % world->mapWidth;
 	
 	// 1 marks the tile as having an object.

@@ -5,6 +5,7 @@
 
 #include "Tilemap.h"
 
+// function to take coordinates and determine the tile index
 CGPoint* tileForCoordinates (CGPoint position, short width, short height)
 {	
 	CGPoint *tileCoordinate = (CGPoint*)malloc(sizeof(CGPoint));
@@ -13,7 +14,6 @@ CGPoint* tileForCoordinates (CGPoint position, short width, short height)
 	
 	return tileCoordinate;
 }
-
 
 // TODO: Create this function to be reusable for adding items to an array
 /*
