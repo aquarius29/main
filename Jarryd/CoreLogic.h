@@ -55,6 +55,7 @@ void updateGPSDestination(GPSLocation *destination); // update the destination a
 void updateIndoorDestination(int tileNumber, ThreeDWorld *world); // update an indoor destination
 void receiveMovementData(movementPerformed *movement); // receive data about the movement from movement group
 void createIndoorCollisionObject(int tileNumber); // create a collision object for the indoor system.
+void sendMovementCommandsListToMovement(); // send a list of movement commands to movement group.
 void dealloc();
 
 #endif /* CORELOGIC_H */

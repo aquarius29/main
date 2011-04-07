@@ -63,7 +63,15 @@ void killIndoorNavigationSystem()
 // NOTE: Wait for correct protocol implementation/
 void relayManualMovementCommand(moveCommand *_command)
 {
-	// use protocol here to send the data to the movement for handling
+	if (_command->command == NULL)
+	{
+		printf("Invalid Manual Command, cannot relay to movement");
+	}
+	else
+	{
+		// use protocol here to send the data to the movement for handling
+	}
+	
 }
 
 // function for the path calculation/navigation to use to 
@@ -72,7 +80,14 @@ void relayManualMovementCommand(moveCommand *_command)
 // NOTE: Wait for correct protocol implementation/
 void sendMovementCommand(moveCommand *move)
 {
-	// use protocol to send the movement command to the movement group
+	if (move->command == NULL)
+	{
+		printf("Movement from path calculation invalid");
+	}
+	else
+	{
+		// use protocol to send the movement command to the movement group
+	}
 }
 
 // function to update the destination at any given time: GPS
@@ -98,11 +113,23 @@ sendNavigationDataToPathCalculation()
 	
 }
 
+// notify the path calculation a collision was found/ stop calculation
+void collisionFound()
+{
+	// notify the path calculation group
+}
+
+// notify the path calculation to recalculate
+void collisionAvoided()
+{
+	// notify the path calculation to recalculate
+}
+
 // The function to send movement commands to movement system
 // This depends totally on the implementation by the movement group.
 // NOTE: use this when sending an entire list of commands. 
 // e.g. when no collision objects are expected to arise.
-sendMovementCommandsToMovement()
+void sendMovementCommandsListToMovement()
 {
 	
 }
@@ -117,24 +144,39 @@ sendMovementCommandsToMovement()
 // receive data about the movement from movement group
 void receiveMovementData(movementPerformed *movement)
 {
-	// send the movement data to the positioning system
+	if (movement == NULL)
+	{
+		printf("movement data from movement system invalid");
+	}
+	else
+	{
+		// send the movement data to the positioning system
+	}
 }
 
 // function to create a collision object for the indoor system.
 void createIndoorCollisionObject(int tileNumber, ThreeDWorld *world)
 {
-	// update the tilemap represenation and then send the new one to the 
-	// path calculation module or just send the tile and the path calculation updates their 
-	// representation graph/ If these objects arent permananet then it makes more sense.
-	
-	// calculate the tile to add the collision object.
-	int firstDimension = tileNumber / world->mapwidth;
-	int secondDimension = tileNumber % world->mapWidth;
-	
-	// 1 marks the tile as having an object.
-	world->representation[firstDimension][secondDimension] = 1;
-	
-	// notify the path calculation to recheck the worldMap and recalculate.
+	if (world == NULL)
+	{
+		printf("Trying to modify an invalid world");
+	}
+	else
+	{
+		// update the tilemap represenation and then send the new one to the 
+		// path calculation module or just send the tile and the path calculation updates their 
+		// representation graph/ If these objects arent permananet then it makes more sense.
+
+		// calculate the tile to add the collision object.
+		int firstDimension = tileNumber / world->mapwidth;
+		int secondDimension = tileNumber % world->mapWidth;
+
+		// 1 marks the tile as having an object.
+		world->representation[firstDimension][secondDimension] = 1;
+
+		// notify the path calculation to recheck the worldMap and recalculate.
+	}
+
 }
 
 // Dealloc shouldnt be needed during a flight, unless flight switches between GPS/outdoor system
