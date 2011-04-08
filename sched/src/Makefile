@@ -1,5 +1,5 @@
 PROG=prog
-SRC=sched_naive_main.c sched_naive_sched.c sched_naive_sched.h sched_stubs.c sched_stubs.h
+SRC=sched_naive_main.c sched_naive_sched.c sched_naive_sched.h sched_stubs.c sched_stubs.h stab.h stab_filter.c stab_gyro_sim.c stab_main.c stab_ra.c stab_rg.c
 
 
 pc:
@@ -10,4 +10,4 @@ pc-debug:
 	gcc $(SRC) -o $(PROG) -DDEBUG -DPC -DSTAB -pedantic
     
 clean:
-	rm -f $(PROG) $(PROG).exe $(PROG).o *.lst
+	rm -f $(PROG) $(PROG).exe *.o *.lst
