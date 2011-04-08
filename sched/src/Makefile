@@ -1,5 +1,5 @@
 PROG=prog
-SRC=sched_naive_main.c sched_naive_sched.c sched_naive_sched.h sched_stubs.c sched_stubs.h stab.h stab_filter.c stab_gyro_sim.c stab_main.c stab_ra.c stab_rg.c
+SRC=sched_naive_main.c sched_naive_sched.c sched_stubs.c
 
 
 pc:
