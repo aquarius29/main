@@ -27,7 +27,7 @@ void sched_naive_init(void){
     Fun_t funArrInit[] = {  &protoInit,
                             &moveInit,
                             &caInit,
-                            &stabInit,
+                            &stab_init,
                             &filterInit,
                             &motoInit };
     
@@ -37,7 +37,7 @@ void sched_naive_init(void){
                             &protoRun,
                             &caRun,
                             &protoRun,
-                            &stabRun,
+                            &stab_run,
                             &protoRun,
                             &filterRun,
                             &protoRun,

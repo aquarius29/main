@@ -7,7 +7,7 @@ pc:
 
 # "pc-debug" make will compile with gcc and set the DEBUG and PC flag
 pc-debug:
-	gcc $(SRC) -o $(PROG) -DDEBUG -DPC -pedantic
+	gcc $(SRC) -o $(PROG) -DDEBUG -DPC -DSTAB -pedantic
     
 clean:
 	rm -f $(PROG) $(PROG).exe $(PROG).o *.lst
