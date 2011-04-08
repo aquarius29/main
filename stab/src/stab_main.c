@@ -2,6 +2,7 @@
 #include "stab.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 /************************************************************
   Global variables used to save input/output of the algorithm:
@@ -23,56 +24,7 @@ struct vector accel_vect;
 struct vector filter_vect;
 
 
-
-/* int main(void) */
-/* { */
- 
-/*   init_filter();  */
- 
-/*   while(1) */
-/*     {   */
-      
-/*       gyro_vect = init_sim(); */
-/*       accel_vect = init_sim(); */
-      
-/*       /\* scanf("%f", &gyro_vect.x); *\/ */
-/*       /\* scanf("%f", &gyro_vect.y); *\/ */
-/*       /\* scanf("%f", &gyro_vect.z); *\/ */
-      
-/*       /\* scanf("%f", &accel_vect.x); *\/ */
-/*       /\* scanf("%f", &accel_vect.y); *\/ */
-/*       /\* scanf("%f", &accel_vect.z); *\/ */
-      
-/*       printf("Sim. Gyro x: %f\n", gyro_vect.x); */
-/*       printf("Sim. Gyro y: %f\n", gyro_vect.y); */
-/*       printf("Sim. Gyro z: %f\n", gyro_vect.z); */
-      
-/*       printf("Sim. Acce x: %f\n", accel_vect.x); */
-/*       printf("Sim. Acce y:  %f\n", accel_vect.y); */
-/*       printf("Sim. Acce z: %f\n", accel_vect.z); */
-      
-/*       //convert_acce_raw_to_deg(acc_x, acc_y, acc_z); */
-/*       filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x); */
-/*       filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y); */
-/*       //filter_est[2] = comp_filter(acc_vector[2], gyro_vect[2], filter_est[2]); */
-/*       filter_vect.z = gyro_vect.z; */
-      
-/*       printf("ESTIMATED X %f\n", filter_vect.x); */
-/*       printf("ESTMIATED Y %f\n", filter_vect.y); */
-/*       printf("ESTMIATED Z %f\n", filter_vect.z); */
-      
-/*       sleep(1); */
-/*     } */
-  
-  
-/*   return 0; */
-  
- 
-/* } */
-
-
-
-int stab_init(void)
+int16_t stab_init(void)
 {
   // code to init the hardware goes in here as well
   init_filter();
@@ -81,29 +33,21 @@ int stab_init(void)
 }
 
 
-int stab_run(void)
+int16_t stab_run(void)
 {
+  gyro_vect = init_sim();
+  accel_vect = init_sim();
   
-      /* #ifdef DEBUG */
-      /* printf("Sim. Gyro x: %f\n", gyro_vect.x); */
-      /* printf("Sim. Gyro y: %f\n", gyro_vect.y); */
-      /* printf("Sim. Gyro z: %f\n", gyro_vect.z); */
-      
-      /* printf("Sim. Acce x: %f\n", accel_vect.x); */
-      /* printf("Sim. Acce y:  %f\n", accel_vect.y); */
-      /* printf("Sim. Acce z: %f\n", accel_vect.z); */
-      /* #endif /\*DEBUG*\/ */
-      
-      //convert_acce_raw_to_deg(acc_x, acc_y, acc_z);
-      filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x);
-      filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y);
-      //filter_est[2] = comp_filter(acc_vector[2], gyro_vect[2], filter_est[2]);
-      filter_vect.z = gyro_vect.z;
-      
-      //printf("ESTIMATED X %f\n", filter_vect.x);
-      //printf("ESTMIATED Y %f\n", filter_vect.y);
-      //printf("ESTMIATED Z %f\n", filter_vect.z);
-      
-      return 0;
-
+  filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x);
+  filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y);
+  //filter_est[2] = comp_filter(acc_vector[2], gyro_vect[2], filter_est[2]);
+  filter_vect.z = gyro_vect.z;
+  
+#ifdef DEBUG 
+  printf("ESTIMATED X %f\n", filter_vect.x);
+  printf("ESTMIATED Y %f\n", filter_vect.y);
+  printf("ESTMIATED Z %f\n", filter_vect.z);
+#endif /*DEBUG*/  
+  
+  return 0;
 }

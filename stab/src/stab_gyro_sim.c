@@ -1,3 +1,15 @@
+/******************************************************************************
+  File: filter.c
+  Description: This is a small simulator that creates random value as output
+               the gyroscope and acceleometer 
+  Authors: Adam Debbiche 	       
+  Created: 05/04/2011
+  Log: 
+     04/04/2011: Initia
+     8/04/2011: Added description and comments
+*******************************************************************************/
+
+
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
@@ -12,40 +24,8 @@ struct vector
 };
 
 
-/* int main(void) */
-/* { */
-
-/*   while(1) */
-/*     { */
-/*       float gyro_x = gen_val(-180.0, 360.0); */
-/*       float gyro_y = gen_val(-180.0, 360.0); */
-/*       float gyro_z = gen_val(-180.0, 360.0); */
-      
-      
-/*       float acce_x = gen_val(-180.0, 360.0); */
-/*       float acce_y = gen_val(-180.0, 360.0); */
-/*       float acce_z = gen_val(-180.0, 360.0); */
-      
-/*       printf("%f\n", gyro_x); */
-/*       printf("%f\n", gyro_y); */
-/*       printf("%f\n", gyro_z); */
-
-/*       printf("%f\n", acce_x); */
-/*       printf("%f\n", acce_y); */
-/*       printf("%f\n", acce_z); */
-      
-/*       fflush(stdout); */
-/*       sleep(1); */
-/*     } */
-
-/*   return 0; */
-
-/* } */
-
 struct vector init_sim(void)
 {
-  //while(1)
-  // {
   struct vector rand;
       rand.x = gen_val(-180.0, 360.0);
       rand.y = gen_val(-180.0, 360.0);
@@ -58,7 +38,7 @@ struct vector init_sim(void)
       return rand;
       // fflush(stdout);
       //sleep(1);
-      // }
+  
 }
 
 

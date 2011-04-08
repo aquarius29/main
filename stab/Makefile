@@ -1,5 +1,5 @@
 PROG=stab
-SRC=stab_main.c stab_rg.c stab_ra.c stab_gyro_sim.c stab_filter.c stab.h stab_sched.h 
+SRC=stab_main.c stab_rg.c stab_ra.c stab_gyro_sim.c stab_filter.c stab.h stab_sched.h main.c
 
 
 pc:
