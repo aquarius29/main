@@ -45,7 +45,8 @@ outdoorRouteRequest;
 // define 3Dworld pointer
 ThreeDWorld *world;
 
-void setupGPSSystem(GPSLocation *start, GPSLocation *destination); // setup the initial gps system
+void setupGPSSystem(); // setup the initial gps system
+void setGPSDestination(GPSLocation *destination); // set the destination
 void killGPSSystem(); // kill GPS system - e.g only manual input wanted.
 void setupIndoorNavigationSystem(int startTile, int destinationTile); // setup the indoor navigation system
 void killIndoorNavigationSystem(); // kill the navigation system e.g. user wants only manual input.

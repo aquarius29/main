@@ -16,7 +16,7 @@
 #include "movementCommands.h"
 
 // function to setup the initial gps system
-void setupGPSSystem(GPSLocation *start, GPSLocation *destination)
+void setupGPSSystem()
 {
 		printf("Starting GPS System\n");
 		// TODO: start connection to gps
@@ -25,6 +25,9 @@ void setupGPSSystem(GPSLocation *start, GPSLocation *destination)
 		// TODO: Notify path calculation that gps is started/ is being used send in start and desintation
 		printf("gps system started\n");
 }
+
+// set the gps destination
+void setGPSDestination(GPSLocation *destination);
 
 // function to kill GPS system - e.g only manual input wanted.
 void killGPSSystem()
