@@ -1,3 +1,7 @@
+
+#ifndef SCHED_STUBS_H
+#define SCHED_STUBS_H
+
 #include <stdint.h>
 
 
@@ -8,9 +12,9 @@
 #else
 
 /* dummy interface for stabilization code */
-int16_t ca_init(void);
+int16_t caInit(void);
 /* dummy interface for stabilization code */
-int16_t ca_run(void);
+int16_t caRun(void);
 
 #endif /* CA */
 
@@ -36,9 +40,9 @@ int16_t stab_run(void);
 #else
 
 /* dummy interface for stabilization code */
-int16_t move_init(void);
+int16_t moveInit(void);
 /* dummy interface for stabilization code */
-int16_t move_run(void);
+int16_t moveRun(void);
 
 #endif /* MOVE */
 
@@ -50,9 +54,9 @@ int16_t move_run(void);
 #else
 
 /* dummy interface for stabilization code */
-int16_t moto_init(void);
+int16_t motoInit(void);
 /* dummy interface for stabilization code */
-int16_t moto_run(void);
+int16_t motoRun(void);
 
 #endif /* MOTO */
 
@@ -64,9 +68,9 @@ int16_t moto_run(void);
 #else
 
 /* dummy interface for stabilization code */
-int16_t proto_init(void);
+int16_t protoInit(void);
 /* dummy interface for stabilization code */
-int16_t proto_run(void);
+int16_t protoRun(void);
 
 #endif /* PROTO */
 
@@ -78,10 +82,10 @@ int16_t proto_run(void);
 #else
 
 /* dummy interface for stabilization code */
-int16_t filter_init(void);
+int16_t filterInit(void);
 /* dummy interface for stabilization code */
-int16_t filter_run(void);
+int16_t filterRun(void);
 
 #endif /* FILTER */
 
-
+#endif /* SCHED_STUBS_H */

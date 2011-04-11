@@ -1,15 +1,35 @@
-default:
-	@echo "--- Normal compilation ----------------------------------"
-	@echo "make normal     produces binary in src/"
-	@echo " "
-	@echo "--- Cleaning up -----------------------------------------"
-	@echo "make clean    recursively clean up subdirs"
-	@echo " "
-	@echo "--- Normal compilation : windows style ------------------"
-	@echo "make windows-normal    procudes binary in src/"
-	@echo " "
-	@echo "--- Cleaning up : windows style -------------------------"
-	@echo "make windows-clean    recursively clean up subdirs"
+
+DEBUG_FLAGS=-g -DDEBUG
+PC_FLAGS=-DPC
+ARDUINO_FLAGS=-DARDUINO
+
+# EXTRA_FLAGS defines what groups code to use instead of stubs
+EXTRA_FLAGS=-DSTAB
+
+export CFLAGS
+export CC
+
+OBJS=sched.o
+
+BIN:$(OBJS)
+
+
+pc: CC=gcc
+pc: CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS)
+pc:
+	cd src && $(MAKE) pc
+	
+
+pc-debug: CC=gcc
+pc-debug: CFLAGS+=$(PC_FLAGS) $(DEBUG_FLAGS) $(EXTRA_FLAGS)
+pc-debug:
+	cd src && $(MAKE) pc-debug
+
+
+ardu: CC=avr-gcc
+ardu: CFLAGS+=$(ARDUINO_FLAGS)
+ardu:
+	cd src && $(MAKE) ardu
 
 normal:
 	cd src && $(MAKE) normal
