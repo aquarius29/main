@@ -20,11 +20,10 @@ compile: clean
 	cd $(CODE_PATH) && \
 	$(C) -c *.c $(CFLAG) && \
 	$(AR) rcs ../libproto.a *.o  && \
-	rm *.o
 	@ echo "Library created"
 	
 clean:
-	@ rm -f *.a
+	@ rm -f *.a $(CODE_PATH)*.o
 
 .PHONY: compile clean pc arduino
 .SILENT: compile
