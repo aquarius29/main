@@ -16,12 +16,15 @@ arduino: AR=avr-ar
 arduino: CFLAG=-DARDUINO
 arduino: compile
 
-compile:
+compile: clean
 	cd $(CODE_PATH) && \
 	$(C) -c *.c $(CFLAG) && \
-	$(AR) rcs ../libproto.a *.o && \
+	$(AR) rcs ../libproto.a *.o  && \
 	rm *.o
 	@ echo "Library created"
+	
+clean:
+	@ rm -f *.a
 
 .PHONY: compile clean pc arduino
 .SILENT: compile
