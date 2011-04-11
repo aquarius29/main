@@ -14,22 +14,21 @@
  *
  */
 #include "path_structure.h"
-#include <math.h>
+#include <stdlib.h>
 
-#define CENTIMETRES_PER_SECOND 10
-#define CENTIMETRES_PER_DEGREE 2
+#define CENTIMETRES_PER_SECOND 20
 
 void set_direction(progressive_route *path) {
 	path->current_destination.angle =
 	atan2((path->current_destination.lat - path->path[path->num-1].lat),
-	(path->current_destination.lon - path->path[path->num-1].lon)) * (180/ M_PI) + 180;
+	(path->current_destination.lon - path->path[path->num-1].lon));
 }
 void set_distance(progressive_route *path) {
 	path->current_destination.distance = (sqrt((path->current_destination.lon -
 	path->path[path->num-1].lon) * (path->current_destination.lon -
 	path->path[path->num-1].lon) + (path->current_destination.lat -
 	path->path[path->num-1].lat) * (path->current_destination.lat -
-	path->path[path->num-1].lat))) * CENTIMETRES_PER_DEGREE;
+	path->path[path->num-1].lat)));
 }
 void update_position(progressive_route *path) {
 	struct timeval current_time;
@@ -42,7 +41,8 @@ void update_position(progressive_route *path) {
 	time = (current_time.tv_sec - path->timer.tv_sec) + microseconds;
 	change_y = (time * CENTIMETRES_PER_SECOND) *
 	sin(path->current_destination.angle);
-	change_x = change_y / tan(path->current_destination.angle);
+	change_x = (time * CENTIMETRES_PER_SECOND) *
+	cos(path->current_destination.angle);
 	path->current_point.lon = path->path[path->num-1].lon + change_x;
 	path->current_point.lat = path->path[path->num-1].lat + change_y;
 }
