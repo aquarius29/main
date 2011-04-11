@@ -1,27 +1,19 @@
 
 /*Author Abdirashid Jama and Henry
 i integrated my camserver codes and the codes for capturing videos writen by Henry and its working now but not final*/
-#include <stdio.h>      /* for printf() and fprintf() */
-#include <sys/socket.h> /* for socket(), bind(), and connect() */
-#include <arpa/inet.h>  /* for sockaddr_in and inet_ntoa() */
-#include <stdlib.h>     /* for atoi() and exit() */
-#include <string.h>     /* for memset() */
-#include <unistd.h>     /* for close() */
-
-#define MAXPENDING 5    /* Maximum outstanding connection requests */
-#define RCVBUFSIZE 1000
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdio.h>     
 #include <sys/socket.h>
-#include <arpa/inet.h>
+#include <arpa/inet.h>  
+#include <stdlib.h>     
+#include <string.h>     
+#include <unistd.h>     
 #include <netinet/in.h>
 #include <pthread.h>
-#include <unistd.h>
 #include "cv.h"
 #include "highgui.h"
-
+#define MAXPENDING 5    /* Maximum outstanding connection requests */
+#define RCVBUFSIZE 1000
 // Define a port number for the server machine
-
 #define PORT_NUM 3434
 
 CvCapture*    capture;
@@ -39,10 +31,10 @@ pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 void* videoServer(void* arg);
 void  exit_now(char* msg, int retval);
 //void Exit_error_func(char *errorMessage);  /* Error handling function */
-//void client_handler(int clntSock);   /* TCP client handling function */
+
 struct sockaddr_in Server_Address; /* Local address */
 struct sockaddr_in Client_adress; /* Client address */
-unsigned short server_port;     /* Server port */
+
     
 
 int main(int argc, char **argv)

@@ -1,3 +1,5 @@
+/* The client codes for testing purpose */
+
 /* Author Abdirashid Jama */
 #include <stdio.h>      
 #include <sys/socket.h>
