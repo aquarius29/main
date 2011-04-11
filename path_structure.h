@@ -8,6 +8,7 @@
 
 #define COORDINATE_LIMIT 4
 #include <sys/time.h>
+#include <math.h>
 
 typedef struct{
     double lat;
@@ -36,6 +37,7 @@ void DynAddCoordinates(float lat, float lon);
 void StaAddCoordinates(float lat, float lon);
 void FreePointer(dijkstra_route * route);
 void Test();
+dijkstra_route Dijkstra(const position * start, const position * end);
 void set_direction(progressive_route *path);
 void set_distance(progressive_route *path);
 void update_position(progressive_route *path);
