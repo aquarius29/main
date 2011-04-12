@@ -20,7 +20,7 @@ compile: clean
 	cd $(CODE_PATH) && \
 	$(C) -c *.c $(CFLAG) && \
 	$(AR) rcs ../libproto.a *.o  && \
-	@ echo "Library created"
+	echo "Library created"
 	
 clean:
 	@ rm -f *.a $(CODE_PATH)*.o
