@@ -7,7 +7,8 @@
 #include "movementCommands.h"
 
 // Create a movement command 
-void sendMovementCommand(char* _command, int _direction, int _height)
+void sendMovementCommand
+(char type, char order , int height, int distance, int yaw, int pitch , int roll, int speed);
 {
 	moveCommand *move = malloc(sizeof(movementCommand));
 	if (move == NULL)
@@ -16,9 +17,15 @@ void sendMovementCommand(char* _command, int _direction, int _height)
 	}
 	else 
 	{
-		move->command = _command;
-		move->direction = _direction;
-		move->height = _height;
+		move->type = type;
+		move->order = order;
+		move->height = height;
+		move->distance = distance;
+		move->yaw = yaw;
+		move->pitch = pitch;
+		move->roll = roll;
+		move->speed = speed;
+		
 		// Function from interface to send order goes here 
 		// e.g. InterfaceSendOrder(order);
 		free(move);

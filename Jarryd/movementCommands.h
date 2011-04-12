@@ -8,18 +8,21 @@
 #define MOVEMENTCOMMANDS_H
 
 // MovementCommand struct 
-typedef struct
-{
-	// command e.g. Take Off/ Land/ Hover/ Move
-	// note: Take Off/ Land/ Hover will have 
-	// null values for direction and height
-	char* command;
-	int direction;
+struct typedef
+ {
+	char type;  // (manual/auto)
+	char order; //(lift off/ hovering/ moving/ land)
 	int height;
+	int distance;
+	int yaw; // vertical
+	int pitch; // lateral
+	int roll; // longitudinal 
+	int speed; 
 }
-moveCommand;
+movementCommand;
 
 // Create a movement command 
-void sendMovementCommand(char* _command, int _direction, int _height);
+void sendMovementCommand
+(char type, char order , int height, int distance, int yaw, int pitch , int roll, int speed);
 
 #endif /* MOVEMENTCOMMANDS_H */
