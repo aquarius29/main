@@ -21,7 +21,9 @@ int16_t caRun(void);
 
 #ifdef STAB
 /* stabilization groups header here */
-#include "../../stab/src/stab_sched.h"
+//#include "../../stab/src/stab_sched.h"
+#include "stab_sched.h"
+
 
 #else
 

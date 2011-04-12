@@ -1,17 +1,56 @@
-BIN=prog
-#OBJS=stab/src/stab.h stab/src/stab_filter.o stab/src/stab_gyro_sim.o stab/src/stab_main.o stab/src/stab_ra.o stab/src/stab_rg.o sched/src/sched_naive_main.o sched/src/sched_naive_sched.o sched/src/sched_naive_sched.h sched/src/sched_stubs.o sched/src/sched_stubs.h
-OBJS=stab/src/stab_filter.o stab/src/stab_gyro_sim.o stab/src/stab_main.o stab/src/stab_ra.o stab/src/stab_rg.o sched/src/sched_naive_main.o sched/src/sched_naive_sched.o sched/src/sched_stubs.o
+
+DEBUG_FLAGS=-g -DDEBUG
+PC_FLAGS=-DPC
+ARDUINO_FLAGS=-DARDUINO
+
+# INCLUDES holds paths to other groups headers
+INCLUDES=../../stab/src
+
+# EXTRA_FLAGS defines what groups code to use instead of stubs
+EXTRA_FLAGS=-DSTAB
+
+export CFLAGS
+export CC
+
+BIN:$(OBJS)
 
 
+# just calling this target "lib" does not work!
+# do i have some other makefile with a "lib" target on a path or something???
+mylib: CC=gcc
+mylib: CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(DEBUG_FLAGS) -I$(INCLUDES)
+mylib:
+	cd sched/src && $(MAKE) lib
+	cd stab/src && $(MAKE) lib
+	$(CC) main.c -Lstab/lib -Lsched/lib -lsched -lstab
 
-CC=gcc
-CFLAGS= -DPC -DSTAB -DDEBUG
 
-$(BIN): $(OBJS)
+pc: CC=gcc
+pc: CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) -I$(INCLUDES)
+pc:
+	cd sched/src && $(MAKE) pc
+	
 
-    
+pc-debug: CC=gcc
+pc-debug: CFLAGS+=$(PC_FLAGS) $(DEBUG_FLAGS) $(EXTRA_FLAGS)
+pc-debug:
+	cd sched/src && $(MAKE) pc-debug
+
+
+ardu: CC=avr-gcc
+ardu: CFLAGS+=$(ARDUINO_FLAGS)
+ardu:
+	cd sched/src && $(MAKE) ardu
+
+normal:
+	cd sched/src && $(MAKE) normal
+
 clean:
-	rm -f $(BIN) $(BIN).exe $(BIN).o *.lst
+	cd sched/src && $(MAKE) clean
+	cd stab/src && $(MAKE) clean
 
-$(BIN): $(OBJS)
-	gcc $(OBJS) -o $(BIN)
+windows-normal:
+	cd src && $(MAKE) windows-normal
+
+windows-clean:
+	cd src && $(MAKE) windows-clean

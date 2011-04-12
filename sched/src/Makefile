@@ -3,15 +3,25 @@
 PROG=sched
 SRC=sched_naive_main.c sched_naive_sched.c sched_stubs.c
 
-
-$(PROG): $(SRC)
-
 sched_naive_sched.c: sched_naive_sched.h
 sched_stubs.c: sched_stubs.h
 
 
-pc:
-	$(CC) $(SRC) -o $(PROG) $(CFLAGS)
+$(PROG): $(SRC)
+
+OBJ = $(SRC:.c=.o)
+
+%.o: %.c
+	$(CC) -c -I. $*.c $(CFLAGS)
+
+
+lib: $(OBJ)
+	ar rvs ../lib/libsched.a $(OBJ)
+
+
+pc: $(OBJ)
+	@echo OBJ: $(OBJ)
+	#$(CC) $(SRC) -o $(PROG) $(CFLAGS)
 
 pc-debug:
 	$(CC) $(SRC) -o $(PROG) $(CFLAGS)
