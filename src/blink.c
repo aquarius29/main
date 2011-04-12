@@ -24,7 +24,7 @@ void setup() {
    // initialize the digital pin as an output.
    // Pin 13 has an LED connected on most Arduino boards:
    pinMode(13, OUTPUT);
-  
+   Serial.begin(9600);
 #elif defined PC // PC code
    printf("%s\n", "Pin 13 mode = output");
    	
@@ -36,10 +36,10 @@ void loop() {
 
 #ifdef ARDUINO // Arduino code
   digitalWrite(13, HIGH);   // set the LED on
-  delay(100);               // wait for a second
+  delay(500);               // wait for a second
   digitalWrite(13, LOW);    // set the LED off
   delay(500);               // wait for a second
-
+  Serial.println("hello ");
 #elif defined PC // PC code
    printf("%s\n", "Set pin 13\t ON\t for 500 ms");
    printf("%s\n", "Set pin 13\t OFF\t for 500 ms"); 
@@ -54,8 +54,8 @@ int main(void)
 #endif
 
   setup();
-
-  for (;;)
+  int i;
+  for (i = 0; i < 10; i++)
     loop();
 
   return 0;
