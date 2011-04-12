@@ -54,14 +54,14 @@ unsigned int read_distance(void);// proto API
 void write_height(int value){ 
     height = value;
 #ifdef PC
-	printf("value set to: %c\n", height);
+	printf("collision avodance value set to: %c\n", height);
 #endif
 } 
  
  
 unsigned int read_height(void){ 
 #ifdef PC
-	printf("value is: %c\n", height);
+	printf("collision avodance value is: %c\n", height);
 #endif
 
     return height; 
@@ -71,7 +71,7 @@ unsigned int read_height(void){
 void write_direction(int value){ 
     direction = value;
 #ifdef PC
-	printf("value set to: %c\n", direction);
+	printf("collision avodance value set to: %c\n", direction);
 #endif
  
 } 
@@ -79,7 +79,7 @@ void write_direction(int value){
  
 unsigned int read_direction(void){ 
 #ifdef PC
-	printf("value is: %c\n", direction);
+	printf("collision avodance value is: %c\n", direction);
 #endif
     return direction; 
 }
@@ -87,7 +87,7 @@ unsigned int read_direction(void){
 void write_distance(int value){ 
     distance = value;
 #ifdef PC
-	printf("value set to: %c\n", distance);
+	printf("collision avodance value set to: %c\n", distance);
 #endif
  
 } 
@@ -95,7 +95,7 @@ void write_distance(int value){
  
 unsigned int read_distance(void){ 
 #ifdef PC
-	printf("value is: %c\n", distance);
+	printf("collision avodance value is: %c\n", distance);
 #endif
     return distance; 
 }
