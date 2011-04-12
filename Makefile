@@ -1,5 +1,5 @@
 
-DEBUG_FLAGS=-g -DDEBUG
+DEBUG_FLAGS=-g -DDEBUG -Wall
 PC_FLAGS=-DPC
 ARDUINO_FLAGS=-DARDUINO
 
@@ -7,7 +7,7 @@ ARDUINO_FLAGS=-DARDUINO
 INCLUDES=../../stab/src
 
 # EXTRA_FLAGS defines what groups code to use instead of stubs
-EXTRA_FLAGS=-DSTAB
+EXTRA_FLAGS=
 
 # PROG is the name of the executable
 PROG=prog
@@ -25,7 +25,7 @@ lib: CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(DEBUG_FLAGS) -I$(INCLUDES)
 lib:
 	cd sched/src && $(MAKE) lib
 	cd stab/src && $(MAKE) lib
-	gcc -c main.c -Isched/src
+	gcc -c main.c -Isched/src $(CFLAGS)
 	gcc -o $(PROG) main.o -Lstab/lib -Lsched/lib -lsched -lstab
 
 
