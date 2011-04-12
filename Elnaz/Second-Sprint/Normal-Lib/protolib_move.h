@@ -18,7 +18,7 @@ void write_speed(int value);// proto API
 unsigned int read_speed(void);// proto API 
  
 
-//get direction from movement to collision avodance  
+//write direction from movement to collision avodance  
 void write_direction(int value);// proto API 
  
  
