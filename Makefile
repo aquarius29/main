@@ -9,6 +9,9 @@ INCLUDES=../../stab/src
 # EXTRA_FLAGS defines what groups code to use instead of stubs
 EXTRA_FLAGS=-DSTAB
 
+# PROG is the name of the executable
+PROG=prog
+
 export CFLAGS
 export CC
 
@@ -17,12 +20,13 @@ BIN:$(OBJS)
 
 # just calling this target "lib" does not work!
 # do i have some other makefile with a "lib" target on a path or something???
-mylib: CC=gcc
-mylib: CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(DEBUG_FLAGS) -I$(INCLUDES)
-mylib:
+lib: CC=gcc
+lib: CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(DEBUG_FLAGS) -I$(INCLUDES)
+lib:
 	cd sched/src && $(MAKE) lib
 	cd stab/src && $(MAKE) lib
-	$(CC) main.c -Lstab/lib -Lsched/lib -lsched -lstab
+	gcc -c main.c -Isched/src
+	gcc -o $(PROG) main.o -Lstab/lib -Lsched/lib -lsched -lstab
 
 
 pc: CC=gcc
@@ -46,6 +50,7 @@ normal:
 	cd sched/src && $(MAKE) normal
 
 clean:
+	rm $(PROG) *.o
 	cd sched/src && $(MAKE) clean
 	cd stab/src && $(MAKE) clean
 
@@ -54,3 +59,5 @@ windows-normal:
 
 windows-clean:
 	cd src && $(MAKE) windows-clean
+	
+.PHONY: lib
