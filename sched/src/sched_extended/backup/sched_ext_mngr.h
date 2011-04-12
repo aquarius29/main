@@ -11,7 +11,6 @@
  *******************************************************************************/
 
 #include <unistd.h> 
-#include <time.h>
 
 //
 // 
@@ -22,9 +21,9 @@
 
 struct proc{
   pid_t pid;
-  //pid_t parent_id;
+  pid_t parent_id;
   char running;
-  time_t running_time;
+  int running_time;
   int (*init_fun)(); // init function pointer
   int (*run_fun)(); // run function pointer
 };

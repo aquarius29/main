@@ -11,16 +11,13 @@
  *******************************************************************************/
 
 #include <stdlib.h>
-#include <unistd.h>
-#include <sys/types.h>
 #include "sched_ext_mngr.h"
 #include "sched_types.h"
 
-//#include "sched_proc_test.c"
-//#include "sched_proc_test2.c"
-#include "ex_pthread.c"
+#include "sched_proc_test.c"
+#include "sched_proc_test2.c"
 
-#define NUM_PROC 2 // number of processes
+#define NUM_PROC 5 // number of processes
 
 int main(void){
   struct proc p, p2;
@@ -33,10 +30,7 @@ int main(void){
   
   init_proc(&p, poll);
   init_proc(&p2, poll);
-  /*init_proc(&p2, poll);
-  init_proc(&p, poll);
-  init_proc(&p2, poll);*/
-
+  
   printf("Poll holds %d processes\n", poll->num_procs);
 
   run_poll(poll);
@@ -56,7 +50,7 @@ struct proc create_proc(int (*init_fun)(), int (*run_fun)()){
 // calls the process function's init. and adds the proc to the poll.
 void init_proc(struct proc *p, struct proc_poll *poll){
   if (poll->num_procs >= NUM_PROC) {
-    // todo: error handling 
+    /* error handling */
   }
   int ret= (*p->init_fun)();
   if ( ret == SUCCESS ){
@@ -85,21 +79,13 @@ void free_poll(struct proc_poll *poll){
 
 void run_poll(struct proc_poll *poll){
   struct proc *p;
-  pid_t pid;
-  time_t t;
   do {
-    pid= fork();
-    p = poll->p;
-    if (pid == 0){
-      p->running_time = 0;
-      p->pid= getpid();
-      p->running = 1;
+    fork();
+    if (getppid() == 0){
+      p = poll->p;
       int ret= (*p->run_fun)();
-      _exit(0);
-    } else {
-      poll = poll->next_proc; /* iterate */
-    } 
+    }
+    poll = poll->next_proc; /* iterate */
+    
   } while (poll != NULL);
-  
 }
-
