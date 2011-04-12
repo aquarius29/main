@@ -31,11 +31,11 @@ struct move {
 } move_ca;
 
  
-//write speed from movement to collision avodance  
+//write from movement to collision avodance  
 void write(struct move mv);// proto API 
  
  
-//read speed from movement to collision avodance 
+//read from movement to collision avodance 
 struct move read();// proto API 
  
 

@@ -50,14 +50,14 @@ struct collision_avoid read();// proto API
 void write(struct collision_avoid ca){ 
     collision_avoid = ca;
 #ifdef PC
-	printf("Movement value set to: %d , %d , %d\n", ca.height , ca.direction, ca.distance);
+	printf("Collision Avoidance value set to: %d , %d , %d\n", ca.height , ca.direction, ca.distance);
 #endif
 } 
  
  
 struct collision_avoid read(){ 
 #ifdef PC
-	printf("Movement value set to: %d , %d ,%d\n", ca.height , ca.direction ,ca.distance);
+	printf("Collision Avoidance  set to: %d , %d ,%d\n", ca.height , ca.direction ,ca.distance);
 #endif
 
     return collision_avoid; 
