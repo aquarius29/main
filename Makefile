@@ -5,7 +5,7 @@ ARDUINO_FLAGS=
 GROUP_LIBS=-Lstab/lib -Lsched/lib -Lmoto/lib -lsched -lstab -lmoto
 
 # INCLUDES holds paths to other groups headers
-INCLUDES=-I../../stab/src -I../../moto/src
+INCLUDES=-I../../stab/src -I../../moto/src -I../../include
 
 # EXTRA_FLAGS defines what groups code to use instead of stubs
 EXTRA_FLAGS=
