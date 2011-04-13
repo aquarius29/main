@@ -33,14 +33,20 @@ void movementlistener()
 }
 
 // commands via the UI, user/manual commands
-void commandslistener()
+void commandfetcher()
 {
-	data = protocol_read_command;
+	// while (alive == 1)
+	// {
+		data = protocol_read_command;
 	
-	if (data == null)
-	{
-		printf("No command input data\n");
-	}
-	else
-		// send the command to the movement group using protocol_write
+		if (data == null)
+		{
+			printf("No command input data\n");
+		}
+		else
+			// send the command to the movement group using protocol_write
+			// e.g. write_movement_command
+			// use core logic funtion to pause path calculation
+//	}
+	commandfetcher();
 }
