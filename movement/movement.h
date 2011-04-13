@@ -20,5 +20,10 @@ double angle(double x,double y);
 double third_side(int a, int b);
 
 //movementInterface.c
-void init();
-void run();
+#ifdef ARDUINO
+int movement_init();
+int movement_run();
+#elif defined PC
+int movement_init();
+int movement_run();
+#endif
