@@ -14,6 +14,9 @@
 #ifdef ARDUINO
 #include <stdlib.h> /* this is included because of exit(), remove later */
 /* header files for other groups interfaces here */
+#include "moto_interface.h"
+#include "stab_sched.h" /* tell these guys to rename their interface! */
+
 #endif /* ARDUINO */
 
 #include "sched_naive_sched.h"
