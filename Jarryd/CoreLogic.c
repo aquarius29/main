@@ -11,48 +11,104 @@
 */
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
 #include "CoreLogic.h"
 #include "TMXParser.c"
 #include "movementCommands.h"
 
-// function to setup the initial gps system
-void setupGPSSystem()
+// start the gps navigation system
+void nav_run_gps_system(GPSLocation *destination)
 {
-		printf("Starting GPS System\n");
-		// TODO: start connection to gps
-		// TODO: start parser
-		// TODO: fetch data from gps data structure
-		// TODO: Notify path calculation that gps is started/ is being used send in start and desintation
-		printf("gps system started\n");
+	printf("Creating manual command handler thread\n");
+	
+	int threadResult; // pthread functions return 0 when successful
+	char *message = "manual movement thread command started";
+	pthread_t manualCommandThread;
+    
+    threadResult = 
+    pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
+
+    // check if thread was created
+    if (threadResult == 0)
+		printf("Thread created\n");
+    else
+    {
+		printf("Couldnt create thread\nRetrying.....\n");
+        threadResult = 
+	    pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
+       
+ 		if (threadResult == 0)
+			printf("Thread created\n");
+    }
+
+    printf("Starting GPS System\n");
+
+    // TODO: start connection to gps
+    // TODO: start parser
+    // TODO: start gps navigation system. Use the destination GPSLocation
+
+    printf("gps system started\n");
+
+    pthread_join(manualCommandThread, NULL); // wait for the thread to finish
+
+	printf("Switching off gps system");
+}
+
+// start the indoor navigation system
+void nav_run_indoor_system(int startTile, int destinationTile)
+{
+	printf("Creating manual command handler thread\n");
+	
+	int threadResult; // pthread functions return 0 when successful
+	char *message = "manual movement command thread started";
+	pthread_t manualCommandThread;
+    
+    threadResult = 
+    pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
+
+    // check if thread was created
+    if (threadResult == 0)
+		printf("Thread created\n");
+    else
+    {
+		printf("Couldnt create thread\nRetrying.....\n");
+		
+        threadResult = 
+	    pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
+       
+ 		if (threadResult == 0)
+			printf("Thread created\n");
+    }
+
+	printf("indoor navigation system started\n");
+	
+	world = malloc(sizeof(ThreeDWorld));
+	
+	if (world == NULL)
+	{
+		printf("Youre world is fuckd! couldnt create existance\n");
+	}
+	else
+	{
+		char *doc = "secondYearSquare.xml";
+		// send the world pointer to the parser for on-the-fly ThreeDWorld setup
+		parseDoc(doc, world);
+		// TODO: call path calculation functions and send in the world pointer
+		// send the startTile and DestinationTile with the world data
+	}
 }
 
 // set the gps destination
-void setGPSDestination(GPSLocation *destination);
+void setGPSDestination(GPSLocation *destination)
+{
+	
+}
 
 // function to kill GPS system - e.g only manual input wanted.
 void killGPSSystem()
 {
 	
-}
-
-// setup the indoor navigation system
-void setupIndoorNavigationSystem(int startTile, int destinationTile)
-{
-		printf("indoor navigation system started\n");
-		world = malloc(sizeof(ThreeDWorld));
-		if (world == NULL)
-		{
-			printf("Youre world is fucked! couldnt create existance\n");
-		}
-		else
-		{
-			char *doc = "secondYearSquare.xml";
-			// send the world pointer to the parser for on-the-fly ThreeDWorld setup
-			parseDoc(doc, world);
-	
-			// TODO: call path calculation functions and send in the world pointer
-			// send the startTile and DestinationTile with the world data
-		}
 }
 
 // function to kill the navigation system e.g. the user wants only manual input.
@@ -183,7 +239,49 @@ void createIndoorCollisionObject(int tileNumber, ThreeDWorld *world)
 
 }
 
-// Dealloc shouldnt be needed during a flight, unless flight switches between GPS/outdoor system
+// handles manual drone commands
+void commandfetcher(void *ptr)
+{
+    char *message;
+    message = (char *) ptr;
+    printf("%s\n", message);
+	
+	// check if it is neccesary to malloc command if it is simply being relayed
+	// movementCommand *data = malloc(sizeof movementCommand);
+	// 	if (data == NULL)
+	// 	{
+	// 		printf("Couldnt malloc movement command\n");
+	// 	}
+	
+	movementCommand data;
+    data = protocol_read_command;
+    if (data == null)
+        {
+            printf("No command input data\n");
+        }
+    else
+		{
+        // send the command to the movement group using protocol_write
+        // e.g. write_movement_command
+        // use core logic funtion to pause path calculation? 
+		// maybe no need for pausing if we want to retake control when 
+		// manual commands are done.
+//		}
+
+//	free(data);
+	
+	commandfetcher();
+}
+
+void killThread()
+{
+	printf("KILL ME\n");
+	
+	pthread_exit(NULL);
+}
+
+// Dealloc shouldnt be needed during a flight, 
+// unless flight switches between GPS/outdoor system
 void dealloc()
 {
 	free(world);

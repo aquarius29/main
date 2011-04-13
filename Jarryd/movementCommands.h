@@ -22,7 +22,7 @@ struct typedef
 movementCommand;
 
 // Create a movement command 
-void sendMovementCommand
+void sendmovementcommand
 (char type, char order , int height, int distance, int yaw, int pitch , int roll, int speed);
 
 #endif /* MOVEMENTCOMMANDS_H */
