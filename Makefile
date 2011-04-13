@@ -2,6 +2,7 @@
 DEBUG_FLAGS=-g -DDEBUG -Wall
 PC_FLAGS=-DPC
 ARDUINO_FLAGS=-DARDUINO
+GROUP_LIBS=-Lstab/lib -Lsched/lib -lsched -lstab
 
 # INCLUDES holds paths to other groups headers
 INCLUDES=../../stab/src
@@ -18,46 +19,44 @@ export CC
 BIN:$(OBJS)
 
 
-# just calling this target "lib" does not work!
-# do i have some other makefile with a "lib" target on a path or something???
-lib: CC=gcc
-lib: CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(DEBUG_FLAGS) -I$(INCLUDES)
-lib:
-	cd sched/src && $(MAKE) lib
-	cd stab/src && $(MAKE) lib
-	gcc -c main.c -Isched/src $(CFLAGS)
-	gcc -o $(PROG) main.o -Lstab/lib -Lsched/lib -lsched -lstab
-
-
 pc: CC=gcc
 pc: CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) -I$(INCLUDES)
 pc:
-	cd sched/src && $(MAKE) pc
+	cd sched/src && $(MAKE) lib
+	cd stab/src && $(MAKE) lib
+	$(CC) -c main.c -Isched/src
+	$(CC) -o $(PROG) main.o $(GROUP_LIBS)
 	
 
-pc-debug: CC=gcc
-pc-debug: CFLAGS+=$(PC_FLAGS) $(DEBUG_FLAGS) $(EXTRA_FLAGS)
-pc-debug:
-	cd sched/src && $(MAKE) pc-debug
+pc-dbg: CC=gcc
+pc-dbg: CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(DEBUG_FLAGS) -I$(INCLUDES)
+pc-dbg:
+	cd sched/src && $(MAKE) lib
+	cd stab/src && $(MAKE) lib
+	$(CC) -c main.c -Isched/src
+	$(CC) -o $(PROG) main.o $(GROUP_LIBS)
 
 
 ardu: CC=avr-gcc
 ardu: CFLAGS+=$(ARDUINO_FLAGS)
 ardu:
 	cd sched/src && $(MAKE) ardu
+	cd stab/src && $(MAKE) ardu
 
-normal:
-	cd sched/src && $(MAKE) normal
+
+ardu: CC=avr-gcc
+ardu: CFLAGS+=$(ARDUINO_FLAGS) $(DEBUG_FLAGS)
+ardu:
+	cd sched/src && $(MAKE) ardu
+	cd stab/src && $(MAKE) ardu
+
+
 
 clean:
 	rm $(PROG) *.o
 	cd sched/src && $(MAKE) clean
 	cd stab/src && $(MAKE) clean
 
-windows-normal:
-	cd src && $(MAKE) windows-normal
-
-windows-clean:
-	cd src && $(MAKE) windows-clean
 	
+
 .PHONY: lib
