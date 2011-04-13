@@ -11,7 +11,6 @@
 
 msg binary;
 msg_pointer mp;
-int x = 5;
 
 #ifdef ARDUINO
 //Pins for testing
@@ -34,7 +33,6 @@ int moto_init(void){
   pinMode(ledPin, OUTPUT);
   Serial.begin(9600); 
 #elif defined PC
-  x = 5;
 #endif
 
   return 0;
@@ -56,12 +54,10 @@ int moto_run(void){
   printMotorStatus();
   //  delay(5000);
 #elif defined PC
-  while(x != 0){
     binary = scanHexMsgSTDIN();
     examineID(mp);
     printMsg(mp);
     printMotorStatus();
-    x--;
   }
 
 #endif
