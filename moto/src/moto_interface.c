@@ -58,7 +58,6 @@ int moto_run(void){
     examineID(mp);
     printMsg(mp);
     printMotorStatus();
-  }
 
 #endif
   return 0;
