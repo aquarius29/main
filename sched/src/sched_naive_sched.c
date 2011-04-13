@@ -8,6 +8,7 @@
 
 /* header file for group code stubs here */
 #include "sched_stubs.h"
+#include "moto_interface.h"
 #endif /* PC */
 
 #ifdef ARDUINO
@@ -29,7 +30,7 @@ void sched_naive_init(void){
                             &caInit,
                             &stab_init,
                             &filterInit,
-                            &motoInit };
+                            &moto_init };
     
     /* function pointers to modules run functions */
     Fun_t funArrRun[] = {   &protoRun,
@@ -41,7 +42,7 @@ void sched_naive_init(void){
                             &protoRun,
                             &filterRun,
                             &protoRun,
-                            &motoRun };
+                            &moto_run };
     
     /* call all other groups inits */
     if (system_init(funArrInit) != 1) {
