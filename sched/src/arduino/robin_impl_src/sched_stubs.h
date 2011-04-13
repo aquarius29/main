@@ -1,16 +1,17 @@
 #include <stdio.h>
+#include <stdint.h>
 
 /* dummy interface for collision avoidance code */
-int caRun(void);
+int16_t caRun(void);
 
 /* dummy interface for stabilization code */
-int stabRun(void);
+int16_t stabRun(void);
 
 /* dummy interface for movement code */
-int moveRun(void);
+int16_t moveRun(void);
 
 /* dummy interface for motor code */
-int motoRun(void);
+int16_t motoRun(void);
 
 /* dummy interface for protocol code */
-int protoRun(void);
+int16_t protoRun(void);

@@ -1,24 +1,25 @@
 default:
-	@echo "--- Normal compilation ----------------------------------"
-	@echo "make normal     produces binary in src/"
+	@echo "--- Normal Robin compilation ----------------------------"
+	@echo "make normal_robin produces binary in src/arduino/robin_impl_src"
 	@echo " "
 	@echo "--- Cleaning up -----------------------------------------"
 	@echo "make clean    recursively clean up subdirs"
 	@echo " "
 	@echo "--- Normal compilation : windows style ------------------"
-	@echo "make windows-normal    procudes binary in src/"
+	@echo "make windows_normal_robin    procudes binary in sched/"
 	@echo " "
 	@echo "--- Cleaning up : windows style -------------------------"
-	@echo "make windows-clean    recursively clean up subdirs"
+	@echo "make windows_clean    recursively clean up subdirs"
 
-normal:
-	cd src && $(MAKE) normal
+normal_robin:
+	cd src/arduino/robin_impl_src && $(MAKE) normal
 
 clean:
-	cd src && $(MAKE) clean
+	cd src/arduino/robin_impl_src && $(MAKE) clean
 
-windows-normal:
-	cd src && $(MAKE) windows-normal
+windows_normal_robin:
+	cd src\arduino\Robin_impl_src && $(MAKE) windows_normal
 
-windows-clean:
-	cd src && $(MAKE) windows-clean
+windows_clean:
+	del *.exe
+	cd src\arduino\Robin_impl_src && $(MAKE) windows_clean
