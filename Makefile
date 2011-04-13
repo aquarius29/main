@@ -1,7 +1,7 @@
 
 DEBUG_FLAGS=-g -DDEBUG -Wall
 PC_FLAGS=-DPC
-ARDUINO_FLAGS=-DARDUINO
+ARDUINO_FLAGS=
 GROUP_LIBS=-Lstab/lib -Lsched/lib -Lmoto/lib -lsched -lstab -lmoto
 
 # INCLUDES holds paths to other groups headers
@@ -39,18 +39,20 @@ pc-dbg:
 	$(CC) -o $(PROG) main.o $(GROUP_LIBS)
 
 
-ardu: CC=avr-gcc
-ardu: CFLAGS+=$(ARDUINO_FLAGS)
-ardu:
-	cd sched/src && $(MAKE) ardu
-	cd stab/src && $(MAKE) ardu
+mega: CC=avr-gcc
+mega: CFLAGS+=$(ARDUINO_FLAGS) $(EXTRA_FLAGS) $(INCLUDES)
+mega:
+	cd sched/src && $(MAKE) lib-mega
+	#cd stab/src && $(MAKE) mega
+	#cd moto/src && $(MAKE) mega
 
 
-ardu: CC=avr-gcc
-ardu: CFLAGS+=$(ARDUINO_FLAGS) $(DEBUG_FLAGS)
-ardu:
-	cd sched/src && $(MAKE) ardu
-	cd stab/src && $(MAKE) ardu
+mega-dbg: CC=avr-gcc
+mega-dbg: CFLAGS+=$(ARDUINO_FLAGS) $(DEBUG_FLAGS)
+mega-dbg:
+	cd sched/src && $(MAKE) mega
+	cd stab/src && $(MAKE) mega
+	cd moto/src && $(MAKE) mega
 
 
 
@@ -58,6 +60,7 @@ clean:
 	rm $(PROG) *.o
 	cd sched/src && $(MAKE) clean
 	cd stab/src && $(MAKE) clean
+	cd moto/src && $(MAKSE) clean
 
 	
 

@@ -12,6 +12,7 @@
 #endif /* PC */
 
 #ifdef ARDUINO
+#include <stdio.h> /* this is included because of exit(), remove later */
 /* header files for other groups interfaces here */
 #endif /* ARDUINO */
 
