@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*****************************************************************************
 * Product: 
 * Version:  
@@ -19,3 +20,26 @@ struct proto read();//API
 
 
 void write(struct proto msg);//API
+=======
+/*****************************************************************************
+* Product: 
+* Version:  
+* Released: April 5 2011
+* Updated: April 5 2011
+* 
+* Copyright (C) 2011 Navid amiriarshad,Pooyan Mobtahej
+*
+* Providing message handling Between Navigation and Connectivity
+*
+* <IT University of Goteborg>
+*****************************************************************************/
+
+
+
+
+       
+struct proto read();//API
+
+
+void write(struct proto msg);//API
+>>>>>>> f5d43bd61898c209a7a62c53b539d80b30ba1520
