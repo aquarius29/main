@@ -1,3 +1,4 @@
+#ifdef PC
 #include "stab_sched.h"
 #include "stab.h"
 #include <stdio.h>
@@ -51,3 +52,4 @@ int16_t stab_run(void)
   
   return 0;
 }
+#endif
