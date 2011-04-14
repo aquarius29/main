@@ -90,8 +90,7 @@ lib: $(OBJ)
 	
 lib-mega: $(OBJ)
 	@echo Objects: $(OBJ)
-	avr-ar rvs ../lib/libsched.a $(OBJ)
-	ranlib ../lib/libsched.a
+	avr-ar rcs ../lib/libsched.a $(OBJ)
 #	$(CC) $(OBJ) -L../../lib -lcoremega -Wl,-Map=$(PROG).map,--cref -mmcu=$(MMCU) -Iinclude -lm -Llib \
 #		-fno-exceptions  -ffunction-sections -fdata-sections -l$(LIB) -o bin/$(PROG).elf
 	

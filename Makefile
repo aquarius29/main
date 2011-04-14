@@ -48,10 +48,16 @@ mega: CC=avr-gcc
 mega: CFLAGS+=$(ARDUINO_FLAGS) $(EXTRA_FLAGS) $(INCLUDES)
 mega:
 	cd sched/src && $(MAKE) lib-mega
+	avr-ranlib sched/lib/libsched.a
+	
 	#cd stab/src && $(MAKE) mega
+	avr-ranlib stab/lib/libstab.a
+	
 	#cd moto/src && $(MAKE) mega
+	avr-ranlib moto/lib/libmoto.a	
+	
 	$(CC) -c main.c -Isched/src
-	$(CC) main.o $(GROUP_LIBS) -Wl,-Map=$(PROG).map,--cref -mmcu=$(MMCU) -Iinclude -lm -fno-exceptions  -ffunction-sections -fdata-sections -l$(LIB) -o $(PROG).elf
+	$(CC) main.o $(GROUP_LIBS) -Wl,-Map=$(PROG).map,--cref -mmcu=$(MMCU) -Iinclude -lm -fno-exceptions  -ffunction-sections -fdata-sections -o $(PROG).elf
 
 
 mega-dbg: CC=avr-gcc
