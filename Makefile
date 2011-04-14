@@ -57,10 +57,10 @@ mega-dbg:
 
 
 clean:
-	rm $(PROG) *.o
 	cd sched/src && $(MAKE) clean
 	cd stab/src && $(MAKE) clean
 	cd moto/src && $(MAKSE) clean
+	rm $(PROG) *.o
 
 	
 

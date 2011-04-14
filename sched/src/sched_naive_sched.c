@@ -1,5 +1,6 @@
 
 #include <stdint.h>
+#include <stdlib.h> /* this is included because of exit(), remove later */
 
 #ifdef PC
 /* non-arduino includes */
@@ -12,10 +13,10 @@
 #endif /* PC */
 
 #ifdef ARDUINO
-#include <stdlib.h> /* this is included because of exit(), remove later */
 /* header files for other groups interfaces here */
 #include "moto_interface.h"
 #include "stab_sched.h" /* tell these guys to rename their interface! */
+#include "sched_stubs.h"
 
 #endif /* ARDUINO */
 
@@ -53,14 +54,14 @@ void sched_naive_init(void){
         /* something went wrong during system initialization */
         #ifdef PC
             printf("Error in system initialization sequence!\n");
-            exit(EXIT_FAILURE);
+            exit(1);
         #endif /* PC */
         #ifdef ARDUINO
             /*  
              *  Do we have a way to give fatal error message on arduino,
              *  and exit? 
              */
-            exit(EXIT_FAILURE);
+            exit(1);
             
         #endif /* ARDUINO */
     }
