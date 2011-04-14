@@ -44,16 +44,16 @@ STK=stk500v2
 BAUD=115200
 LIB=coremega
 
-mega: CC=avr-gcc
+mega: CC=avr-g++
 mega: CFLAGS+=$(ARDUINO_FLAGS) $(EXTRA_FLAGS) $(INCLUDES)
 mega:
 	cd sched/src && $(MAKE) lib-mega
 	avr-ranlib sched/lib/libsched.a
 	
-	#cd stab/src && $(MAKE) mega
+	cd stab/src && $(MAKE) lib-mega
 	avr-ranlib stab/lib/libstab.a
 	
-	#cd moto/src && $(MAKE) mega
+	cd moto/src && $(MAKE) lib-mega
 	avr-ranlib moto/lib/libmoto.a	
 	
 	$(CC) -c main.c -Isched/src
@@ -73,7 +73,9 @@ clean:
 	cd sched/src && $(MAKE) clean
 	cd sched/lib && rm *.a
 	cd stab/src && $(MAKE) clean
+	cd stab/lib && rm *.a
 	cd moto/src && $(MAKE) clean
+	cd moto/lib && rm *.a
 	rm $(PROG) *.o
 
 	

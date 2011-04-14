@@ -34,8 +34,9 @@ USB_PORT=/dev/tty.usbmodem411
 F_CPU=16000000
 #F_CPU=8000000
 
-PROG=sched
-SRC=sched_naive_main.c sched_naive_sched.c sched_stubs.c
+PROG=moto
+SRC=moto_driver_functions.c moto_interface.c moto_msg_handler.c moto_msg_manipulation.c
+
 #OBJ=bin/*.o
 
 #mega: MMCU=atmega2560
@@ -86,11 +87,11 @@ BAUD=115200
 LIB=coremega
 
 lib: $(OBJ)
-	ar rvs ../lib/libsched.a $(OBJ)
+	ar rvs ../lib/libmoto.a $(OBJ)
 	
 lib-mega: $(OBJ)
 	@echo Objects: $(OBJ)
-	avr-ar rcs ../lib/libsched.a $(OBJ)
+	avr-ar rcs ../lib/libmoto.a $(OBJ)
 #	$(CC) $(OBJ) -L../../lib -lcoremega -Wl,-Map=$(PROG).map,--cref -mmcu=$(MMCU) -Iinclude -lm -Llib \
 #		-fno-exceptions  -ffunction-sections -fdata-sections -l$(LIB) -o bin/$(PROG).elf
 	

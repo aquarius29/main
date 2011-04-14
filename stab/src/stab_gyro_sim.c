@@ -11,6 +11,7 @@
                  invoked. Added comments to each function.
                  Added time as seed so values are always random.
 *******************************************************************************/
+#ifdef PC
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
@@ -53,3 +54,4 @@ float gen_val(float start, float end)
   srand(time(NULL));
   return start + (int)( end * rand() / ( RAND_MAX + 1.0 ) );
 }
+#endif /* PC */
