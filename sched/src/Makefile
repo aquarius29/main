@@ -34,7 +34,7 @@ USB_PORT=/dev/tty.usbmodem411
 F_CPU=16000000
 #F_CPU=8000000
 
-PROG=prog
+PROG=sched
 SRC=sched_naive_main.c sched_naive_sched.c sched_stubs.c
 #OBJ=bin/*.o
 
@@ -90,7 +90,10 @@ lib: $(OBJ)
 	
 lib-mega: $(OBJ)
 	@echo Objects: $(OBJ)
-	#$(CC) -c  $(SRC)
+	avr-ar rvs ../lib/libsched.a $(OBJ)
+	ranlib ../lib/libsched.a
+#	$(CC) $(OBJ) -L../../lib -lcoremega -Wl,-Map=$(PROG).map,--cref -mmcu=$(MMCU) -Iinclude -lm -Llib \
+#		-fno-exceptions  -ffunction-sections -fdata-sections -l$(LIB) -o bin/$(PROG).elf
 	
 clean:
 	rm *.o *.lst

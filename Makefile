@@ -2,7 +2,7 @@
 DEBUG_FLAGS=-g -DDEBUG -Wall
 PC_FLAGS=-DPC
 ARDUINO_FLAGS=
-GROUP_LIBS=-Lstab/lib -Lsched/lib -Lmoto/lib -lsched -lstab -lmoto
+GROUP_LIBS=-Lstab/lib -Lsched/lib -Lmoto/lib -Llib -lsched -lstab -lmoto -lcoremega
 
 # INCLUDES holds paths to other groups headers
 INCLUDES=-I../../stab/src -I../../moto/src -I../../include
@@ -39,12 +39,19 @@ pc-dbg:
 	$(CC) -o $(PROG) main.o $(GROUP_LIBS)
 
 
+MMCU=atmega2560
+STK=stk500v2
+BAUD=115200
+LIB=coremega
+
 mega: CC=avr-gcc
 mega: CFLAGS+=$(ARDUINO_FLAGS) $(EXTRA_FLAGS) $(INCLUDES)
 mega:
 	cd sched/src && $(MAKE) lib-mega
 	#cd stab/src && $(MAKE) mega
 	#cd moto/src && $(MAKE) mega
+	$(CC) -c main.c -Isched/src
+	$(CC) main.o $(GROUP_LIBS) -Wl,-Map=$(PROG).map,--cref -mmcu=$(MMCU) -Iinclude -lm -fno-exceptions  -ffunction-sections -fdata-sections -l$(LIB) -o $(PROG).elf
 
 
 mega-dbg: CC=avr-gcc
@@ -58,8 +65,9 @@ mega-dbg:
 
 clean:
 	cd sched/src && $(MAKE) clean
+	cd sched/lib && rm *.a
 	cd stab/src && $(MAKE) clean
-	cd moto/src && $(MAKSE) clean
+	cd moto/src && $(MAKE) clean
 	rm $(PROG) *.o
 
 	
