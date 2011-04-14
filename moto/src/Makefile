@@ -1,12 +1,12 @@
 # CC and CFLAGS are defined in higher level Makefile
 
-PROG=sched
-SRC=sched_naive_main.c sched_naive_sched.c sched_stubs.c
+PROG=moto
+SRC=moto_driver_functions.c moto_interface.c moto_msg_handler.c moto_msg_manipulation.c
 
-sched_naive_main.c: sched_naive_sched.h sched_interface.h
-sched_naive_sched.c: sched_naive_sched.h
-sched_stubs.c: sched_stubs.h
-
+moto_driver_functions.c: moto_driver_functions.h
+moto_interface.c: moto_interface.h moto_state_definitions.h
+moto_msg_handler.c: moto_msg_handler.c
+moto_msg_manipulation.c: moto_msg_manipulation.c
 
 $(PROG): $(SRC)
 
@@ -17,7 +17,7 @@ OBJ = $(SRC:.c=.o)
 
 
 lib: $(OBJ)
-	ar rvs ../lib/libsched.a $(OBJ)
+	ar rvs ../lib/libmoto.a $(OBJ)
 
 
 pc: $(OBJ)

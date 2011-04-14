@@ -1,11 +1,13 @@
 # CC and CFLAGS are defined in higher level Makefile
 
-PROG=sched
-SRC=sched_naive_main.c sched_naive_sched.c sched_stubs.c
+PROG=stab
+SRC=stab_main.c stab_filter.c stab_gyro_sim.c stab_ra.c stab_rg.c
 
-sched_naive_main.c: sched_naive_sched.h sched_interface.h
-sched_naive_sched.c: sched_naive_sched.h
-sched_stubs.c: sched_stubs.h
+stab_main.c: stab.h stab_sched.h
+stab_filter.c: stab.h
+stab_gyro_sim.c: stab.h
+stab_ra.c: stab.h
+stab_rg.c: stab.h
 
 
 $(PROG): $(SRC)
@@ -17,7 +19,7 @@ OBJ = $(SRC:.c=.o)
 
 
 lib: $(OBJ)
-	ar rvs ../lib/libsched.a $(OBJ)
+	ar rvs ../lib/libstab.a $(OBJ)
 
 
 pc: $(OBJ)

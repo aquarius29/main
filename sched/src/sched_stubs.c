@@ -1,33 +1,100 @@
 #include <stdio.h>
+#include <stdint.h>
 
 #include "sched_stubs.h"
 
-int caRun(void)
-{
-	printf("inside caRun\n");
+int16_t caRun(void) {
+	#ifdef DEBUG
+	    printf("inside caRun\n");
+	#endif /* DEBUG */
+	
 	return 0;
 }
 
-int stabRun(void)
-{
-	printf("inside stabRun\n");
+int16_t stabRun(void) {
+	#ifdef DEBUG
+	    printf("inside stabRun\n");
+	#endif /* DEBUG */
+	
 	return 0;
 }
 
-int moveRun(void)
-{
-	printf("inside moveRun\n");
+int16_t moveRun(void) {
+	#ifdef DEBUG
+	    printf("inside moveRun\n");
+	#endif /* DEBUG */
+	
 	return 0;
 }
 
-int motoRun(void)
-{
-	printf("inside motoRun\n");
+int16_t motoRun(void) {
+	#ifdef DEBUG
+	    printf("inside motoRun\n");
+	#endif /* DEBUG */
+	
 	return 0;
 }
 
-int protoRun(void)
-{
-	printf("inside protoRun\n");
+int16_t protoRun(void) {
+	#ifdef DEBUG
+	    printf("inside protoRun\n");
+	#endif /* DEBUG */
+	
+	return 0;
+}
+
+int16_t filterRun(void) {
+	#ifdef DEBUG
+	    printf("inside filterRun\n");
+	#endif /* DEBUG */
+	
+	return 0;
+}
+
+int16_t caInit(void) {
+	#ifdef DEBUG
+	    printf("inside caInit\n");
+	#endif /* DEBUG */
+	
+	return 0;
+}
+
+int16_t stabInit(void) {
+	#ifdef DEBUG
+	    printf("inside stabInit\n");
+	#endif /* DEBUG */
+	
+	return 0;
+}
+
+int16_t moveInit(void) {
+	#ifdef DEBUG
+	    printf("inside moveInit\n");
+	#endif /* DEBUG */
+	
+	return 0;
+}
+
+int16_t motoInit(void) {
+	#ifdef DEBUG
+	    printf("inside motoInit\n");
+	#endif /* DEBUG */
+	
+	return 0;
+}
+
+int16_t protoInit(void) {
+	#ifdef DEBUG
+	    printf("inside protoInit\n");
+	#endif /* DEBUG */
+	
+	return 0;
+}
+
+int16_t filterInit(void) {
+	#ifdef DEBUG
+	    printf("inside filterInit\n");
+	#endif /* DEBUG */
+	
 	return 0;
 }
