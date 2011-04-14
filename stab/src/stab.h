@@ -4,30 +4,10 @@
   THIS IS NOT TO BE USED BY OTHER GROUPS 
 */
 
-/*
-  Reads data from accelerometer in the form of a vector (x, y, z)
-*/
-//float read_accel();
 
 /*
-  Reads the data from the gyroscope in the form of a vector (x, y, z)
-*/
-//float read_gyro();
-
-
-/*
-  Invokes the main function of the filter		
-*/
-//float comp_filter(float acc_scal, float gyro_scal, float old_est);
-
-/*
- Initializes the vector of the filter
- */
-//void init_filter();
-
-
-/*
- Initializes the simulator 
+ Different functions are included depending on the mode 
+ (pc or arduino)
 */
 #ifdef ARDUINO
 void init_gyro_hardware();
@@ -38,5 +18,5 @@ float read_gyro();
 float read_accel();
 struct vector init_sim(void);
 #endif	
-//void init();
+
 

@@ -1,3 +1,18 @@
+/******************************************************************************
+  File: main.c
+  Description: Main file for all the code, used to select if arduino or pc mode 
+  is selected
+  Authors: Adam Debbiche 	       
+  Created: 08/04/2011
+  Log: 
+     08/04/2011: Initial version // Adam
+     13/04/2011: Added ifdefs for arduino and pc modes //Adam
+     14/04/2011: Added comments to functions //Adam
+*******************************************************************************/
+/*
+  Different header files are included depending on the mode 
+  (arduino or pc)
+*/
 #ifdef PC
   #include "stab.h"
   #include <stdio.h>
@@ -7,6 +22,11 @@
   #include <WProgram.h>
 #endif 
 
+
+/*
+  If the code for the pc is being compiled then 
+  the simulator is run. Otherwise, the arduino code is run 
+*/
 int main(void)
 {  
 #ifdef PC
@@ -25,6 +45,4 @@ int main(void)
 #endif 
   
   return 0;
-  
- 
 }
