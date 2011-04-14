@@ -45,10 +45,9 @@ outdoorRouteRequest;
 // define 3Dworld pointer
 ThreeDWorld *world;
 
-void setupGPSSystem(); // setup the initial gps system
-void setGPSDestination(GPSLocation *destination); // set the destination
+void nav_run_gps_system(GPSLocation *destination); // setup gps system
 void killGPSSystem(); // kill GPS system - e.g only manual input wanted.
-void setupIndoorNavigationSystem(int startTile, int destinationTile); // setup the indoor navigation system
+void nav_run_indoor_system(int startTile, int destinationTile); // setup the indoor navigation system
 void killIndoorNavigationSystem(); // kill the navigation system e.g. user wants only manual input.
 void relayManualMovementCommand(moveCommand *_command); // relay movementCommand /Connectivity > core > movement
 void sendMovementCommand(moveCommand *move); // send the movement to the movement for handling.
@@ -57,6 +56,8 @@ void updateIndoorDestination(int tileNumber, ThreeDWorld *world); // update an i
 void receiveMovementData(movementPerformed *movement); // receive data about the movement from movement group
 void createIndoorCollisionObject(int tileNumber); // create a collision object for the indoor system.
 void sendMovementCommandsListToMovement(); // send a list of movement commands to movement group.
+void commandfetcher(void *ptr);
+void killThread();
 void dealloc();
 
 #endif /* CORELOGIC_H */
