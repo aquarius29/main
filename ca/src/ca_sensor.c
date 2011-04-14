@@ -13,7 +13,7 @@
 #include <WProgram.h>
 #include <stdio.h>
 #include <math.h>
-#include "ca.h"
+#include "ca_header.h"
 
 
 int ir_distance(int irpin)

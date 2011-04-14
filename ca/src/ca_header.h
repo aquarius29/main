@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Product: ca.h
+ * Product: ca_header.h
  * Version: 0.1
  * Created: March 30 2011
  *
@@ -8,7 +8,7 @@
 
 
 /*******************
- * collision_logic.c
+ * ca_logic.c
  *******************/
 // Filter the dangerous zone for the quadrocopter to react according to the speed
 // Return the dangerous zone in "cm"
@@ -47,7 +47,7 @@ void outputdirection(int direction);
 void print_result(unsigned char *result);
 
 /*******************
- * collision_main.c
+ * ca_main.c
  *******************/
 #ifdef ARDUINO
 int direction_filter(void);
@@ -63,7 +63,7 @@ int get_dir(void);
 
 
 /*******************
- * collision_sensor.c
+ * ca_sensor.c
  *******************/
 #ifdef ARDUINO
 int ir_distance(int irpin);
@@ -72,24 +72,24 @@ int ir_distance(int irpin);
 
 
 /*******************
- *object_calculations.c
+ *ca_object_calculations.c
  *******************/
 unsigned char* moving_closer (int * irDistances);
 
 
 /*******************
- *collisionInterface.c
+ *ca_interface.c
  *******************/
 #ifdef ARDUINO
-void collision_init(void);
-void collision_run(void);
+int collision_init(void);
+int collision_run(void);
 #elif defined PC
-void collision_init(void);
-void collision_run(int ir1,int ir2, int ir3, int ir4);
+int collision_init(void);
+int collision_run(void);
 #endif 
 
 /*******************
- *height_calculation.c
+ *ca_height_calculation.c
  *******************/
 int duration_to_cm(long duration);
 int height_filter(int distance);

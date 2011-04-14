@@ -8,7 +8,7 @@
  * Movement/CA Group
  *****************************************************************************/
 
-#include "ca.h"
+#include "ca_header.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -17,9 +17,9 @@
 // ARDUINO
 // All collision preperation goes here.
 //************************************************************
-void collision_init()
+int collision_init(void)
 {
-
+  return 1;
 }
 
 
@@ -27,7 +27,7 @@ void collision_init()
 // ARDUINO
 // Collision is started here
 //************************************************************
-void collision_run()
+int collision_run(void)
 {
   init();
 
@@ -52,10 +52,11 @@ void collision_run()
 // PC
 //  All movement preperation goes here.
 //************************************************************
-void collision_init()
+int collision_init(void)
 {
   
 
+  return 1;
 
 
 }
@@ -64,16 +65,29 @@ void collision_init()
 // PC
 // Movement is started here
 //************************************************************
-void collision_run(int ir1, int ir2, int ir3, int ir4)
+int collision_run(void)
 {
 
+  int ir1=100;
+  int ir2=100;
+  int ir3=100;
+  int ir4=100;
   int i=0;
   while (i<5){
     direction_filter(get_speed(),get_dir(),ir1, ir2, ir3, ir4);
     i++;
   }
 
+  return 1;
 }
 
 
 #endif
+
+
+int main(void){
+
+  collision_run();
+  return 1;
+
+}
