@@ -21,7 +21,13 @@ compile: clean
 	$(C) -c *.c $(CFLAG) && \
 	$(AR) rcs ../libproto.a *.o  && \
 	echo "Library created"
-	
+
+test:
+	cd /proto/test/test_ca && \
+	make unit
+	cd /proto/test/test_move && \
+	make unit
+
 clean:
 	@ rm -f *.a $(CODE_PATH)*.o
 
