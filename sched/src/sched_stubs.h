@@ -1,4 +1,15 @@
 
+/*!
+ *  @file sched_stubs.h
+ *
+ *  @brief Temporary solution to represent missing modules
+ *
+ *  @author Joakim
+ *  @date 2011-04-16
+ *  @history    2011-04-10 - wrote original code
+ *              2011-04-14 - added Doxygen comments
+ */
+
 #ifndef SCHED_STUBS_H
 #define SCHED_STUBS_H
 

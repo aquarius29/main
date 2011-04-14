@@ -1,4 +1,17 @@
 
+/*!
+ *  @file sched_naive_sched.c
+ *
+ *  @brief The naive schedulers main code
+ *
+ *  @author Joakim
+ *  @date 2011-04-16
+ *  @history    2011-04-10 - wrote original code
+ *              2011-04-14 - added Doxygen comments
+ *
+ *  @details This code was written together with Justin and Sabah \n
+ */
+
 #include <stdint.h>
 
 #ifdef PC

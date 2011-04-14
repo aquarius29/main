@@ -1,4 +1,15 @@
 
+/*!
+ *  @file sched_naive_sched.h
+ *
+ *  @brief Header file for the naive scheduers main module
+ *
+ *  @author Joakim
+ *  @date 2011-04-16
+ *  @history    2011-04-10 - wrote original code
+ *              2011-04-14 - added Doxygen comments
+ */
+
 #include <stdint.h>
 
 #ifndef SCHED_NAIVE_SCHED_H
