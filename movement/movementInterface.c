@@ -1,4 +1,4 @@
-/*****************************************************************************
+l/*****************************************************************************
  * Product: movementInterface.c
  * Version: 0.1
  * Created: April 7, 2011
@@ -18,11 +18,11 @@
 // ARDUINO
 // All movement preperation goes here.
 //************************************************************
-void init()
+int movement_init()
 {
   //start magnetometer
 
-
+  return 1;
 }
 
 
@@ -30,11 +30,11 @@ void init()
 // ARDUINO
 // Movement is started here
 //************************************************************
-void run()
+int movement_run()
 {
   
 
-
+  return 1;
 
 }
 #endif
@@ -46,11 +46,11 @@ void run()
 // PC
 //  All movement preperation goes here.
 //************************************************************
-void init()
+int movement_init()
 {
   
 
-
+  return 1;
 
 }
 
@@ -58,11 +58,11 @@ void init()
 // PC
 // Movement is started here
 //************************************************************
-void run()
+int movement_run()
 {
 
 
-
+  return 1;
 }
 #endif
 
