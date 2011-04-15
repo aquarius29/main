@@ -58,16 +58,16 @@ pc-dbg:
 	$(CC) -o $(PROG) main.o $(GROUP_LIBS)
 
 
-ardu: GLOBAL_CC=avr-gcc
-ardu: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS)
-ardu:
+mega: GLOBAL_CC=avr-gcc
+mega: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS)
+mega:
 	cd sched/src && $(MAKE) ardu
 	cd stab/src && $(MAKE) ardu
 
 
-ardu: GLOBAL_CC=avr-gcc
-ardu: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS) $(DEBUG_FLAGS)
-ardu:
+mega-dbg: GLOBAL_CC=avr-gcc
+mega-dbg: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS) $(DEBUG_FLAGS)
+mega-dbg:
 	cd sched/src && $(MAKE) ardu
 	cd stab/src && $(MAKE) ardu
 
@@ -80,4 +80,4 @@ clean:
 
 	
 
-.PHONY: lib
+.PHONY: pc pc-dbg mega mega-dbg
