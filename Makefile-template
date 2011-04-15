@@ -3,29 +3,29 @@
 #   heavily copied from original libarduino sources
 #   (c) 2009, for all changes belong to Henrik Sandklef
 #	which lead to the current version
-#	(c) 2011, for all changes belong to Petre Mihail Anton
+#   (c) 2011, for all changes belong to Petre Mihail Anton
 #######################################################################
 
-#     Change device names to corespond to your system
-#  Description
-#  =============
-#    DUE_USB_DEV - used for Arduino DueMillaNove
-#    UNO_USB_DEV - used for Arduino Uno
-#
-# here are various USB device names for various operating system and Arduinos:
+
+# *** Change device port to corespond to your system ***
+# 
+# Example port names: 
 # if you're using GNU/Linux (Ubuntu/Debian/Fedora.....):
-#	DUE_USB_DEV=/dev/ttyUSB0
-#	UNO_USB_DEV=/dev/ttyACM0
+#    USB_PORT=/dev/ttyACM0
+#
 # if you're using Mac:
-#	DUE_USB_DEV=
-#	UNO_USB_DEV=/dev/tty.usbmodemfa141 (check name!)
+#    USB_PORT=/dev/tty.usbmodemfa141
+#
 # Hint:
-#    Launch the Arduino program to see what your USB device 
+#    Launch Arduino IDE  to see what your USB device 
 #    is called (look under the port settings)
-                                                                                  
-#USB_PORT=/dev/ttyACM0
+#    Alternatively, type in your terminal:
+#        ls /dev/tty*                                                                                  
+# USB_PORT=/dev/ttyACM0
 USB_PORT=/dev/tty.usbmodem411
 
+# *** DO NOT EDIT TEXT BELOW! ***
+# *** IF YOU NEED TO ADD YOUR OWN RULES, GO TO THE END OF THE FILE! ***
 #########################################################################
 #########################################################################
 #########################################################################
