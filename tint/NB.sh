@@ -1,7 +1,10 @@
 #!/bin/bash
 
+# Change history:
+#    2011-04-15 - added hours:minutes:seconds to date format
+
 BUILD_DIR=${HOME}/emb-2011/test-cvs
-DATE=$(date '+%Y%m%d')
+DATE=$(date '+%Y%m%d-%H:%M:%S')
 
 #LOG_FILE=${HOME}/emb-2011/log/mybuild-${DATE}.lo#g
 #rm -f ${LOG_FILE}
@@ -61,4 +64,6 @@ get_src
 #test_src   >> $LOG_FILE   2>&1
 
 
-
+# git tag & git describe - tagging a release
+# git archive - making a tar
+# upload tar to web directory
