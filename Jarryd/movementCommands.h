@@ -8,7 +8,7 @@
 #define MOVEMENTCOMMANDS_H
 
 // MovementCommand struct 
-struct typedef
+typedef struct 
  {
 	char type;  // (manual/auto)
 	char order; //(lift off/ hovering/ moving/ land)
@@ -22,7 +22,6 @@ struct typedef
 movementCommand;
 
 // Create a movement command 
-void sendmovementcommand
-(char type, char order , int height, int distance, int yaw, int pitch , int roll, int speed);
+void sendmovementcommand(char type, char order , int height, int distance, int yaw, int pitch , int roll, int speed);
 
 #endif /* MOVEMENTCOMMANDS_H */

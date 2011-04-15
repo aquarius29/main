@@ -15,7 +15,7 @@
 #include <pthread.h>
 #include "CoreLogic.h"
 #include "TMXParser.c"
-#include "movementCommands.h"
+//#include "movementCommands.h"
 
 // start the gps navigation system
 void nav_run_gps_system(GPSLocation *destination)
@@ -26,8 +26,7 @@ void nav_run_gps_system(GPSLocation *destination)
 	char *message = "manual movement thread command started";
 	pthread_t manualCommandThread;
     
-    threadResult = 
-    pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
+    threadResult = pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
 
     // check if thread was created
     if (threadResult == 0)
@@ -35,8 +34,7 @@ void nav_run_gps_system(GPSLocation *destination)
     else
     {
 		printf("Couldnt create thread\nRetrying.....\n");
-        threadResult = 
-	    pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
+        threadResult = pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
        
  		if (threadResult == 0)
 			printf("Thread created\n");
@@ -52,7 +50,7 @@ void nav_run_gps_system(GPSLocation *destination)
 
     pthread_join(manualCommandThread, NULL); // wait for the thread to finish
 
-	printf("Switching off gps system");
+	printf("Switching off gps system\n");
 }
 
 // start the indoor navigation system
@@ -120,16 +118,16 @@ void killIndoorNavigationSystem()
 // function by which external system e.g Connectivity sends a request to move
 // and the request is passes on to the movement for processing.
 // NOTE: Wait for correct protocol implementation/
-void relayManualMovementCommand(moveCommand *_command)
+void relayManualMovementCommand(movementCommand *_command)
 {
-	if (_command->command == NULL)
-	{
-		printf("Invalid Manual Command, cannot relay to movement\n");
-	}
-	else
-	{
-		// use protocol here to send the data to the movement for handling
-	}
+	// if (_command->command == NULL)
+	// 	{
+	// 		printf("Invalid Manual Command, cannot relay to movement\n");
+	// 	}
+	// 	else
+	// 	{
+	// 		// use protocol here to send the data to the movement for handling
+	// 	}
 	
 }
 
@@ -137,16 +135,18 @@ void relayManualMovementCommand(moveCommand *_command)
 // send the movement to the movement for handling. 
 // Movement commands will be processed one at a time
 // NOTE: Wait for correct protocol implementation/
-void sendMovementCommand(moveCommand *move)
+// Does the path calculation want manual commands sent to them as well so they can update the navigation
+// or do they want to update it when they receive movementsMande data from movement group?
+void sendMovementCommand(movementCommand *move)
 {
-	if (move->command == NULL)
-	{
-		printf("Movement from path calculation invalid\n");
-	}
-	else
-	{
-		// use protocol to send the movement command to the movement group
-	}
+	// if (move->command == NULL)
+	// {
+	// 	printf("Movement from path calculation invalid\n");
+	// }
+	// else
+	// {
+	// 	// use protocol to send the movement command to the movement group
+	// }
 }
 
 // function to update the destination at any given time: GPS
@@ -159,7 +159,7 @@ void updateGPSDestination(GPSLocation *destination)
 void updateIndoorDestination(int tileNumber, ThreeDWorld *world)
 {
 	// send the new data to the path calculation system
-	int firstDimension = tileNumber / world->mapwidth;
+	int firstDimension = tileNumber / world->mapWidth;
 	int secondDimension = tileNumber % world->mapWidth;
 	
 	// 2 marks the tile as the destination.
@@ -227,7 +227,7 @@ void createIndoorCollisionObject(int tileNumber, ThreeDWorld *world)
 		// representation graph/ If these objects arent permananet then it makes more sense.
 
 		// calculate the tile to add the collision object.
-		int firstDimension = tileNumber / world->mapwidth;
+		int firstDimension = tileNumber / world->mapWidth;
 		int secondDimension = tileNumber % world->mapWidth;
 
 		// 1 marks the tile as having an object.
@@ -240,7 +240,7 @@ void createIndoorCollisionObject(int tileNumber, ThreeDWorld *world)
 }
 
 // handles manual drone commands
-void commandfetcher(void *ptr)
+void commandFetcher(void *ptr)
 {
     char *message;
     message = (char *) ptr;
@@ -253,14 +253,14 @@ void commandfetcher(void *ptr)
 	// 		printf("Couldnt malloc movement command\n");
 	// 	}
 	
-	movementCommand data;
-    data = protocol_read_command;
-    if (data == null)
+	movementCommand *data;
+   // data = protocol_read_command;
+    if (data == NULL)
         {
             printf("No command input data\n");
         }
     else
-		{
+	//	{
         // send the command to the movement group using protocol_write
         // e.g. write_movement_command
         // use core logic funtion to pause path calculation? 
