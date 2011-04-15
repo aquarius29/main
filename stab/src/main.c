@@ -8,6 +8,8 @@
      08/04/2011: Initial version // Adam
      13/04/2011: Added ifdefs for arduino and pc modes //Adam
      14/04/2011: Added comments to functions //Adam
+     15/04/2011: Merged gyro and accel code so both can be read 
+                 simultaneously //Adam
 *******************************************************************************/
 /*
   Different header files are included depending on the mode 
@@ -40,9 +42,11 @@ int main(void)
   while (1)
     {
       read_gyro_data();
+      readAccel();
       delay(50); 
     }
 #endif 
   
   return 0;
 }
+

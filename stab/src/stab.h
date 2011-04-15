@@ -12,6 +12,7 @@
 #ifdef ARDUINO
 void init_gyro_hardware();
 void read_gyro_data();
+void readAccel();
 #elif PC 
 float comp_filter(float acc_scal, float gyro_scal, float old_est);
 float read_gyro();
