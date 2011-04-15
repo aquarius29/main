@@ -1,4 +1,4 @@
-# CC and CFLAGS are defined in higher level Makefile
+# GLOBAL_CC and GLOBAL_CFLAGS are defined in higher level Makefile
 
 PROG=stab
 SRC=stab_main.c stab_filter.c stab_gyro_sim.c stab_ra.c stab_rg.c
@@ -15,7 +15,7 @@ $(PROG): $(SRC)
 OBJ = $(SRC:.c=.o)
 
 %.o: %.c
-	$(CC) -c -I. $*.c $(CFLAGS)
+	$(GLOBAL_CC) -c -I. $*.c $(GLOBAL_CFLAGS)
 
 
 lib: $(OBJ)
@@ -24,15 +24,15 @@ lib: $(OBJ)
 
 pc: $(OBJ)
 	@echo OBJ: $(OBJ)
-	#$(CC) $(SRC) -o $(PROG) $(CFLAGS)
+	#$(GLOBAL_CC) $(SRC) -o $(PROG) $(GLOBAL_CFLAGS)
 
 pc-debug:
-	$(CC) $(SRC) -o $(PROG) $(CFLAGS)
+	$(GLOBAL_CC) $(SRC) -o $(PROG) $(GLOBAL_CFLAGS)
 
 
 # "ardu" will compile for the Arduino boards
 ardu:
-	$(CC) $(SRC) -o $(PROG) $(CFLAGS)
+	$(GLOBAL_CC) $(SRC) -o $(PROG) $(GLOBAL_CFLAGS)
 
     
 clean:

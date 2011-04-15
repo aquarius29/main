@@ -1,4 +1,26 @@
 
+#############################################################################
+#  Makefile for use in the project root directory.
+#  The purpose is to have one makefile to build the whole system
+#  using flags that gets exported and invoke lower level makefiles
+#  on a group level. This will need to be changed to work with the 
+#  Arduino makefile created by Mihail and Eugene.
+#
+#  Author: Joakim
+#  Date: 2011-04-15
+#
+#  History:
+#  2011-04-13 - Created this file
+#
+#  Notes:
+#  This only works for building and compiling for PC at the moment.
+#############################################################################
+
+# these two are exported to be used in lower level makefiles
+export GLOBAL_CFLAGS
+export GLOBAL_CC
+
+
 DEBUG_FLAGS=-g -DDEBUG -Wall
 PC_FLAGS=-DPC
 ARDUINO_FLAGS=-DARDUINO
@@ -13,14 +35,11 @@ EXTRA_FLAGS=
 # PROG is the name of the executable
 PROG=prog
 
-export CFLAGS
-export CC
-
 BIN:$(OBJS)
 
 
-pc: CC=gcc
-pc: CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) -I$(INCLUDES)
+pc: GLOBAL_CC=gcc
+pc: GLOBAL_CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) -I$(INCLUDES)
 pc:
 	cd sched/src && $(MAKE) lib
 	cd stab/src && $(MAKE) lib
@@ -29,8 +48,8 @@ pc:
 	$(CC) -o $(PROG) main.o $(GROUP_LIBS)
 	
 
-pc-dbg: CC=gcc
-pc-dbg: CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(DEBUG_FLAGS) $(INCLUDES)
+pc-dbg: GLOBAL_CC=gcc
+pc-dbg: GLOBAL_CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(DEBUG_FLAGS) $(INCLUDES)
 pc-dbg:
 	cd sched/src && $(MAKE) lib
 	cd stab/src && $(MAKE) lib
@@ -39,15 +58,15 @@ pc-dbg:
 	$(CC) -o $(PROG) main.o $(GROUP_LIBS)
 
 
-ardu: CC=avr-gcc
-ardu: CFLAGS+=$(ARDUINO_FLAGS)
+ardu: GLOBAL_CC=avr-gcc
+ardu: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS)
 ardu:
 	cd sched/src && $(MAKE) ardu
 	cd stab/src && $(MAKE) ardu
 
 
-ardu: CC=avr-gcc
-ardu: CFLAGS+=$(ARDUINO_FLAGS) $(DEBUG_FLAGS)
+ardu: GLOBAL_CC=avr-gcc
+ardu: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS) $(DEBUG_FLAGS)
 ardu:
 	cd sched/src && $(MAKE) ardu
 	cd stab/src && $(MAKE) ardu
