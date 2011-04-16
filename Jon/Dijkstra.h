@@ -36,7 +36,6 @@ typedef struct {
 
 void AddNodeToOpen(node * current, nodeList * open);
 void RemoveNodeFromOpen(node * current, nodeList * open);
-void Init(position dronePosition, position goalPosition);
 void AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed, int map[][MAP_X]);
 void FreeAllocatedList(nodeList * list);
 positionList * Dijkstra(const position * start, const position * end, int map[][MAP_X]);
