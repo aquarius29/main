@@ -1,25 +1,26 @@
 #include "CUnit/Basic.h"
+#include "../src/arduino/robin_impl_src/sched_scheduler.h"
 
-#include "../src/scheduler.h"
-
+ProcessData *l_processData;
 
 /* Set up and clean up test suite */
-
-int init_suite(void) {
-  pp = createProcess(name); 
-  return calc == NULL;
+int init_suite(void)
+{
+    initProcessData();
+    processData = sched_processData;
+    return 0;
 }
 
-int clean_suite(void) {
-  freeCalcState(calc);
-  calc=NULL;
-  return 0;
+int clean_suite(void) 
+{
+    endProcesses();
+    return 0;
 }
 
-void testSched1(void) {
-
-  char name = "Justin";
-
-  
-  CU_ASSERT(pp->name, name);
+/* Assert that processData struct is nulled and ready after init */
+void testSched1(void) 
+{
+    CU_ASSERT(l_processData->ProcessQueue == 0);
+    CU_ASSERT(l_processData->CurrentQueueSize == 0);
+    CU_ASSERT(l_processData->IdleProcess == 1); //Idle process should be 1 at init
 }

@@ -27,8 +27,8 @@ int16_t motoRun(void)
 	return 0;
 }
 
-int16_t protoRun(void)
+int16_t connRun(void)
 {
-	printf("running protoRun\n");
+	printf("running connRun\n");
 	return 0;
 }

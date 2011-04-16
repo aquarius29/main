@@ -1,3 +1,6 @@
+#ifndef __sched_stubs_h
+#define __sched_stubs_h
+
 #include <stdio.h>
 #include <stdint.h>
 
@@ -14,4 +17,5 @@ int16_t moveRun(void);
 int16_t motoRun(void);
 
 /* dummy interface for protocol code */
-int16_t protoRun(void);
+int16_t connRun(void);
+#endif

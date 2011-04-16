@@ -18,8 +18,8 @@ const char MOVE_TASK_1[]  = "runMove";
 const char STAB_PROCESS[] = "Stabilization Process";
 const char STAB_TASK_1[] = "runStab";
 
-const char PROTO_PROCESS[] = "Protocol Process";
-const char PROTO_TASK_1[] = "runProto";
+const char PROTO_PROCESS[] = "Connectivity Process";
+const char PROTO_TASK_1[] = "runConn";
 
 /* TODO: Fix const construction of processes */
 Process* createProcess(const char *name, int8_t pid)
@@ -39,7 +39,9 @@ void endProcess(Process *process)
 }
 
 /* TODO: Fix const construction of tasks */
-Task* createTask(const char *name, Fun_t functionPointer, int16_t executionTime)
+Task* createTask(const char *name, 
+                    Fun_t functionPointer, 
+                            int16_t executionTime)
 {
     int16_t strLen = strlen(name) + 1;
 	Task *task = (Task*)malloc(sizeof(Task));
@@ -131,47 +133,26 @@ void initProcessData(void)
     sched_processData.ProcessList[3] = process;
 
     process = createProcess(PROTO_PROCESS, PROTO_PID);
-    task = createTask(PROTO_TASK_1, &protoRun, 10);
+    task = createTask(PROTO_TASK_1, &connRun, 10);
     enqueueTask(process, task);
     sched_processData.ProcessList[4] = process;
 
-    sched_processData.IdleProcess = 1;
+    sched_processData.IdleProcessToSchedule = 1;
+    sched_processData.TotalExecutionTime = 0;
 }
 
-Process** getProcessListPtr(void)
+void cleanProcessData(void)
 {
-    return sched_processData.ProcessList;
+    int i;
+    for(i = 0; i < TOTAL_NO_PROCESSES; i++)
+    {
+        endProcess(sched_processData.ProcessList[i]);
+    }
 }
 
-Process** getQueuePtr(void)
+ProcessData* getProcessData(void)
 {
-    if(sched_processData.ProcessQueue != NULL)
-        return sched_processData.ProcessQueue;
-    else
-        return NULL;
-}
-
-int8_t* getIdleProcess(void)
-{
-    return &sched_processData.IdleProcess;
-}
-
-int8_t* getLastProcess(void)
-{
-    return &sched_processData.LastProcess;
-}
-
-Process* getProcessAtIndex(int8_t index)
-{
-    if(index > TOTAL_NO_PROCESSES)
-        return NULL;
-    else
-        return sched_processData.ProcessList[index];
-}
-
-int8_t* getCurrentQueueSize(void)
-{
-    return &sched_processData.CurrentQueueSize;
+    return &sched_processData;
 }
 
 /* Nulls out the processQueue */
@@ -186,25 +167,80 @@ void nullQueue(void)
             break;
     }
     sched_processData.CurrentQueueSize = 0;
+    sched_processData.TotalExecutionTime = 0;
 }
 
 void enqueueProcess(Process *process)
 {
-    int8_t *queueSize = getCurrentQueueSize();
-    getQueuePtr()[*queueSize] = process;
-    *queueSize += 1;
+    ProcessData *processData = getProcessData();
+    processData->ProcessQueue[processData->CurrentQueueSize] = process;
+    processData->CurrentQueueSize += 1;
 }
 
+void createProcessQueue(void)
+{
+    int8_t i;
+    int16_t timeLeft = TIMEFRAME_MS;
+    int8_t peekLayer = 0;
+    int16_t taskTime = 0;
+    ProcessData *pProcessData = getProcessData();
+    Process **pProcessList = pProcessData->ProcessList;
+    Process **pQueue = pProcessData->ProcessQueue;
+    int8_t *pIdleToSchedule = &pProcessData->IdleProcessToSchedule;
+
+    nullQueue();
+    enqueueProcess(pProcessList[0]);
+    timeLeft -= peekProcess(pProcessList[0], peekLayer)->executionTime;
+
+    for(i = 1; i < MAX_PROC_ITER; i++)
+    {
+        taskTime = peekProcess(pProcessList[*pIdleToSchedule], 
+                                peekLayer)->executionTime;
+        if(timeLeft - taskTime > 0)
+        {
+            enqueueProcess(pProcessList[*pIdleToSchedule]);
+            pProcessData->TotalExecutionTime += taskTime;
+            timeLeft -= taskTime;
+        }
+        else
+        {
+            break;
+        }
+
+        if(*pIdleToSchedule + 1 < TOTAL_NO_PROCESSES)
+        {
+            *pIdleToSchedule += 1;
+        }
+        else
+        {
+            *pIdleToSchedule = 1;
+        }
+        peekLayer++;
+    }
+
+    #ifdef DEBUG
+    printf("Current Process Queue: \n");
+    for(i = 0; i < pProcessData->CurrentQueueSize; i++)
+    {
+        printf("%s\n", pQueue[i]->name);        
+    }
+    printf("\n");
+    #endif
+}
+
+/*
 // Algorithm for setting up a queue of processes
 void createProcessQueue(void)
 {
     int8_t i;
-    int8_t *queueSize = getCurrentQueueSize();
     int currentTimeLeft = 50; //TODO Fix TIME
-    Process** processQueue = getQueuePtr();
-    Process** processList = getProcessListPtr();
-    int8_t* idleProcess = getIdleProcess();
-    int8_t* lastProcess = getLastProcess();
+    ProcessData *processData = getProcessData();
+    int8_t idleScheduledProcess = processData->IdleProcess;
+    int8_t lastScheduledProcess = processData->LastProcess;
+    int8_t* queueSize = &processData->CurrentQueueSize;
+    Process** processQueue = processData->ProcessQueue;
+    Process** processList = processData->ProcessList;
+
     nullQueue();
     
     //MotorProcess starts first
@@ -215,24 +251,25 @@ void createProcessQueue(void)
     {
         //Every other process call is protocol
         if(currentTimeLeft - processList[4]->idleTask->executionTime > 0
-                && *getLastProcess() != 4)
+                && lastScheduledProcess != 4)
         {
             currentTimeLeft -= processList[4]->idleTask->executionTime;
             enqueueProcess(processList[4]);
-            *getLastProcess() = 4;
+            lastScheduledProcess = 4;
         }
-        else if(currentTimeLeft - peekIdleProcess() > 0)
+        else if(
+            currentTimeLeft - processList[idleScheduledProcess]->idleTask->executionTime > 0)
         {
-            currentTimeLeft -= peekIdleProcess();
-            enqueueProcess(processList[*idleProcess]);
-            *lastProcess = *idleProcess;
-            if(*getIdleProcess() + 1 <= 3)
+            currentTimeLeft -= processList[idleScheduledProcess]->idleTask->executionTime;
+            enqueueProcess(processList[idleScheduledProcess]);
+            lastScheduledProcess = idleScheduledProcess;
+            if(idleScheduledProcess + 1 <= 3)
             {
-                *idleProcess += 1;
+                idleScheduledProcess += 1;
             }
             else
             {
-                *idleProcess = 1; //Restart process order in list
+                idleScheduledProcess = 1; //Restart process order in list
             }
         }
         else
@@ -240,19 +277,59 @@ void createProcessQueue(void)
             break;
         }
     }
+    for(i = 0; i < *queueSize; i++)
+    {
+        processData->TotalExecutionTime += 
+            processData->ProcessQueue[i]->idleTask->executionTime;
+    }
 
+    #ifdef DEBUG
     printf("Current Process Queue: \n");
-    for(i = 0; i < *getCurrentQueueSize(); i++)
+    for(i = 0; i < *queueSize; i++)
     {
         printf("%s\n", processQueue[i]->name);        
     }
     printf("\n");
+    #endif
+}
+*/
+
+void runProcess(int8_t processIndex)
+{
+    ProcessData *pProcessData = getProcessData();
+    runIdleTask(pProcessData->ProcessQueue[processIndex]);
+
+    /*
+    ProcessData *processData = getProcessData();
+    runIdleTask(processData->ProcessQueue[processData->IdleProcess]);
+    if(processData->IdleProcess + 1 < processData->CurrentQueueSize)
+    {
+        processData->LastProcess = processData->IdleProcess;
+        processData->IdleProcess += 1;
+    }
+    else
+    {
+        processData->LastProcess = processData->IdleProcess;
+        processData->IdleProcess = 0;
+    }
+    */
 }
 
-/* Returns the index of the process which is idle */
-int16_t peekIdleProcess(void)
+/* Returns the task which is idle for the process for scheduling */
+Task* peekProcess(Process *process, int16_t layer)
 {
-    Process **processList = getProcessListPtr();
-    int16_t taskTime = processList[*getIdleProcess()]->idleTask->executionTime;
-    return taskTime;
+    int8_t i;
+    Task *task = process->firstTask;
+    for(i = 0; i < layer; i++)
+    {
+        if(task->nextTask != NULL)
+        {
+            task = task->nextTask;
+        }
+        else
+        {
+            task = process->firstTask;
+        }
+    }
+    return task;
 }

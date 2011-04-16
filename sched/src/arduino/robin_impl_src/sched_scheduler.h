@@ -4,6 +4,7 @@
 #include <stdint.h>
 #define TOTAL_NO_PROCESSES 5
 #define MAX_PROC_ITER 30
+#define TIMEFRAME_MS 50
 
 /* Defines all Process ID's */
 #define MOTOR_PID 1
@@ -32,13 +33,13 @@ extern const char STAB_TASK_1[];
 extern const char PROTO_PROCESS[];
 extern const char PROTO_TASK_1[];
 
-/* type Fun_t is type "function that returns int16_t and takes no arguments */
+/* type Fun_t is type "function that 
+* returns int16_t and takes no arguments */
 typedef int16_t(*Fun_t)(void);
 
 /* struct Task points to function which perfoms given task 
 * Is tasks are linked in a linked list structure */
-typedef struct tagTask
-{
+typedef struct tagTask {
     /* Readable name of the task */
 	const char *name;
     /* The time it takes to execute the function pointed to */
@@ -50,8 +51,7 @@ typedef struct tagTask
 }Task;
 
 /* struct Process consists of 1...n number of Tasks put into an array */
-typedef struct tagProcess
-{
+typedef struct tagProcess {
     /* Process ID */
     int8_t Pid;
     /* Readable name of process */
@@ -60,6 +60,8 @@ typedef struct tagProcess
 	int8_t priority;
     /* Numbers of tasks which the process contains */
 	int8_t no_tasks;
+    /* At what layer of tasks the last peeking was at */
+    int8_t peekLayer;
     /* Pointer to first task in linked list */
 	Task *firstTask;
     /* Pointer to last task in linked list */
@@ -69,18 +71,17 @@ typedef struct tagProcess
 }Process;
 
 /*Struct which contains all data that handles processes for the system */
-typedef struct tagProcessData
-{
+typedef struct tagProcessData {
     /* ProcessList contains all processes of the system */
     Process *ProcessList[TOTAL_NO_PROCESSES];
     /* ProcessQueue is the actual queue of processes to be ran */
     Process *ProcessQueue[MAX_PROC_ITER];
-    /* IdleProcess is the process which is next in queue to run */
-    int8_t IdleProcess; //TODO: init to 1
     /* LastProcess is an offset to the last process ran in the ProcessList */
-    int8_t LastProcess;
+    int8_t IdleProcessToSchedule;
     /* The size of the current processQueue */
     int8_t CurrentQueueSize;
+    /* The total execution time for the processQueue */
+    int16_t TotalExecutionTime;
 }ProcessData;
 
 /* Functions that handle a process */
@@ -91,24 +92,23 @@ void dequeueTask(Process *process, Task *task);
 void runIdleTask(Process *process);
 
 /* Functions that handle a task */
-Task* createTask(const char *name, Fun_t functionPointer, int16_t executionTime); 
+Task* createTask(const char *name, 
+                    Fun_t functionPointer, 
+                        int16_t executionTime);
 void removeProcessTasks(Task *task);
 
 /* Functions that handle the ProcessData struct */
 void initProcessData(void);
-Process** getProcessListPtr(void);
-Process** getQueuePtr(void);
-int8_t* getIdleProcess(void);
-int8_t* getLastProcess(void);
+void cleanProcessData(void);
+ProcessData* getProcessData(void);
+Process* getProcessAtIndexPtr(int8_t index);
 void nullQueue(void);
-Process* getProcessAtIndex(int8_t index);
-int8_t* getCurrentQueueSize(void);
 void enqueueProcess(Process *process);
-void runIdleProcess(void);
+void runProcess(int8_t processIndex);
 
 /* RunTime functions for ProcessData struct */
 void createProcessQueue(void);
-int16_t peekIdleProcess();
+Task* peekProcess(Process *process, int16_t layer);
 
 /* Main Process Data for the system */
 static ProcessData sched_processData;
