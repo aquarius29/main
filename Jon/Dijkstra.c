@@ -133,8 +133,8 @@ void AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed,
 	enum diagonal {
 		north_west = 0,
 		north_east = 2,
-		south_east = 6,
-		south_west = 8
+		south_west = 6,
+		south_east = 8,
 	};
 
 	// Loop through the neighbor nodes
@@ -167,12 +167,12 @@ void AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed,
 			else if(counter % 2 == 0) {
 				if(counter == north_west) {
 					if(map[neighborY + 1][neighborX] == 5 	// west
-					|| map[neighborY][neighborX - 1] == 5)	// north
+					|| map[neighborY][neighborX + 1] == 5)	// north
 						continue;
 				}
 				else if(counter == north_east) {
 					if(map[neighborY][neighborX - 1] == 5 	// North
-					|| map[neighborY - 1][neighborX] == 5)	// East
+					|| map[neighborY + 1][neighborX] == 5)	// East
 						continue;
 				}
 				else if(counter == south_east) {
