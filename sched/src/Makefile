@@ -77,24 +77,17 @@ SRC=sched_naive_main.c sched_naive_sched.c sched_stubs.c
 OBJ = $(SRC:.c=.o)
 
 %.o: %.c
-	$(GLOBAL_CC) -c -I. $*.c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -mmcu=$(MMCU) -DARDUINO=22 -DF_CPU=$(F_CPU) $(GLOBAL_CFLAGS)
+	$(GLOBAL_CC) -c -I. $*.c $(GLOBAL_CFLAGS)
 
-MMCU=atmega2560
-STK=stk500v2
-BAUD=115200
-LIB=coremega
-
-lib: $(OBJ)
+lib-pc: $(OBJ)
 	ar rvs ../lib/libsched.a $(OBJ)
 	
 lib-mega: $(OBJ)
 	@echo Objects: $(OBJ)
 	avr-ar rvs ../lib/libsched.a $(OBJ)
-#	$(CC) $(OBJ) -L../../lib -lcoremega -Wl,-Map=$(PROG).map,--cref -mmcu=$(MMCU) -Iinclude -lm -Llib \
-#		-fno-exceptions  -ffunction-sections -fdata-sections -l$(LIB) -o bin/$(PROG).elf
 	
 clean:
-	rm *.o
+	rm -f *.o
 	
 ##########################################################################
 
@@ -118,3 +111,4 @@ clean:
 ##	avrdude -p atmega168 -c stk200 -U lfuse:w:0x62:m
 	
 .PHONY : clean uno due mega install help lib
+

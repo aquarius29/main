@@ -85,7 +85,7 @@ STK=stk500v2
 BAUD=115200
 LIB=coremega
 
-lib: $(OBJ)
+lib-pc: $(OBJ)
 	ar rvs ../lib/libmoto.a $(OBJ)
 	
 lib-mega: $(OBJ)
@@ -95,7 +95,7 @@ lib-mega: $(OBJ)
 #		-fno-exceptions  -ffunction-sections -fdata-sections -l$(LIB) -o bin/$(PROG).elf
 	
 clean:
-	rm *.o
+	rm -f *.o
 	
 ##########################################################################
 
