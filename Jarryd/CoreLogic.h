@@ -8,6 +8,7 @@
 #ifndef CORELOGIC_H
 #define CORELOGIC_H
 
+extern struct point curr;
 
 typedef struct
 {
@@ -60,5 +61,7 @@ void sendMovementCommandsListToMovement(); // send a list of movement commands t
 void *commandFetcher(void *ptr);
 void killThread();
 void dealloc();
+double getLat(); // called by UI via connectivity
+double getLong(); // called by UI via connectivity
 
 #endif /* CORELOGIC_H */

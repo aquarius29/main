@@ -15,6 +15,9 @@
 #include <pthread.h>
 #include "CoreLogic.h"
 #include "TMXParser.c"
+#include "gps_nav.h"
+
+
 //#include "movementCommands.h"
 
 // start the gps navigation system
@@ -42,7 +45,7 @@ void nav_run_gps_system(GPSLocation *destination)
 
     printf("Starting GPS System\n");
 
-    // TODO: start connection to gps
+	setup_gps();
     // TODO: start parser
     // TODO: start gps navigation system. Use the destination GPSLocation
 
@@ -277,6 +280,16 @@ void killThread()
 	printf("KILL ME\n");
 	pthread_exit(NULL);
 	printf("KILLED\n");
+}
+
+double getLat()
+{
+	return curr->lat;
+}
+
+double getLon()
+{
+	return curr->lon;
 }
 
 // Dealloc shouldnt be needed during a flight, 
