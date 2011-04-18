@@ -76,7 +76,7 @@ mega:
 	avr-ranlib moto/lib/libmoto.a	
 	
 	$(GLOBAL_CC) -c main.c -Isched/src
-	$(GLOBAL_CC) main.o $(GROUP_LIBS) -Wl,-Map=$(PROG).map,--cref -mmcu=$(MMCU) -Iinclude -lm -fno-exceptions  -ffunction-sections -fdata-sections -o $(PROG).elf
+	$(GLOBAL_CC) main.o $(GROUP_LIBS) -Os -Wl,--gc-sections -mmcu=$(MMCU) -lm -o $(PROG).elf
 
 
 mega-dbg: GLOBAL_CC=avr-gcc
@@ -95,7 +95,7 @@ clean:
 	cd stab/lib && rm *.a
 	cd moto/src && $(MAKE) clean
 	cd moto/lib && rm *.a
-	rm $(PROG) *.o
+	rm $(PROG) *.o *.map
 
 	
 

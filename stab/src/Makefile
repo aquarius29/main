@@ -78,8 +78,7 @@ SRC=stab_main.c stab_filter.c stab_gyro_sim.c stab_ra.c stab_rg.c
 OBJ = $(SRC:.c=.o)
 
 %.o: %.c
-	$(GLOBAL_CC) -c -I. $*.c -g -Os -ffunction-sections -fdata-sections -mmcu=$(MMCU) -DARDUINO=22 -Wall -Wstrict-prototypes -DF_CPU=$(F_CPU) \
-		-Wa,-ahlms=$(PROG).lst -fno-exceptions $(GLOBAL_CFLAGS)
+	$(GLOBAL_CC) -c -I. $*.c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -mmcu=$(MMCU) -DARDUINO=22 -DF_CPU=$(F_CPU) $(GLOBAL_CFLAGS)
 
 MMCU=atmega2560
 STK=stk500v2
@@ -96,7 +95,7 @@ lib-mega: $(OBJ)
 #		-fno-exceptions  -ffunction-sections -fdata-sections -l$(LIB) -o bin/$(PROG).elf
 	
 clean:
-	rm *.o *.lst
+	rm *.o
 	
 ##########################################################################
 
