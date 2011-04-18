@@ -1,14 +1,15 @@
 /*
-  Interface for the stabilization code. It allows the different files
-  to communicate with each other.
-  THIS IS NOT TO BE USED BY OTHER GROUPS 
-*/
+ * Interface for the stabilization code. It allows the different files
+ * to communicate with each other.
+ * THIS IS NOT TO BE USED BY OTHER GROUPS 
+ * Author: Adam Debbiche
+ */
 
 
 /*
- Different functions are included depending on the mode 
- (pc or arduino)
-*/
+ * Different functions are included depending on the mode 
+ * (pc or arduino)
+ */
 #ifdef ARDUINO
 void init_gyro_hardware();
 void read_gyro_data();

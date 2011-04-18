@@ -1,32 +1,37 @@
 /*************************************************************************
-  File: stab_sim.c
-  Description: This is a small simulator that creates random value as output
-               the gyroscope and acceleometer. The simulator returns a vector
-               with x, y and z values randomly generated.
-  Authors: Adam Debbiche 	       
-  Created: 05/04/2011
-  Log: 
-     04/04/2011: Initial version // Adam
-     08/04/2011: Removed the pipe version, the sim now works when it is
-                 invoked. Added comments to each function.
-                 Added time as seed so values are always random.This was 
-                 a bug before. //Adam
-     11/04/2011: Renamed file to stab_sim (was stab_gyro_sim) // Adam
-*************************************************************************/
+ * File: stab_sim.c
+ * Description: This is a small simulator that creates random value as 
+ *               output the gyroscope and acceleometer. The simulator 
+ *               returns a vector with x, y and z values randomly 
+ *               generated.
+ * Authors: Adam Debbiche 	       
+ * Created: 05/04/2011
+ * Log: 
+ *    04/04/2011: Initial version // Adam
+ *    08/04/2011: Removed the pipe version, the sim now works when it is
+ *                invoked. Added comments to each function.
+ *                Added time as seed so values are always random.This was 
+ *                a bug before. //Adam
+ *    11/04/2011: Renamed file to stab_sim (was stab_gyro_sim) // Adam
+ *    18/04/2011: Updated code to reflect coding standards
+ *************************************************************************/
 #ifdef PC
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
 #include "stab.h"
-//#include <ltstdlib.h>
 
-/* Function prototype*/
+/* 
+ * Function prototype
+ */
 float gen_val(float a, float b);
 struct vector init_sim(void);
 
 
-/* A vector struct that is returned by the simulator when invoked*/
+/*
+ * A vector struct that is returned by the simulator when invoked
+ */
 struct vector
 {
   float x;
@@ -36,8 +41,9 @@ struct vector
 
 
 /*
-  Function to be called by other c files when a vector needs to be generated
-*/
+ * Function to be called by other c files when a vector needs 
+ * to be generated
+ */
 struct vector init_sim(void)
 {
   struct vector vect;
@@ -52,12 +58,11 @@ struct vector init_sim(void)
 
 
 /*
-  Function that generates the actual random float
-*/
+ * Function that generates the actual random float
+ */
 float gen_val(float start, float end)
 { 
   srand(time(NULL));
   return start + (int)( end * rand() / ( RAND_MAX + 1.0 ) );
 }
-
 #endif
