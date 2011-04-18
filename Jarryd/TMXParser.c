@@ -51,23 +51,29 @@ void getMapDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 	if((!xmlStrcmp(cur->name, (const xmlChar *)"map")))
 	{
 		mapWidth = xmlGetProp(cur, "width");
-		world->mapWidth = (int)mapWidth;
+		int mw = atoi(mapWidth);
+		world->mapWidth = mw;
 		
 		mapHeight = xmlGetProp(cur, "height");
-		world->mapHeight = (int)mapHeight;
+		int mh = atoi(mapHeight);
+		world->mapHeight = mh;
 		
 		tileWidth = xmlGetProp(cur, "tilewidth");
-		world->tileWidth = (int)tileWidth;
+		int tw = atoi(tileWidth);
+		world->tileWidth = tw;
 		
 		tileHeight = xmlGetProp(cur, "tileheight");
-		world->tileHeight = (int)tileHeight;
+		int th = atoi(tileHeight);
+		world->tileHeight = th;
 	}
 	
-	world->representation = malloc(sizeof(int *) * mapHeight);
+	int mapH = atoi(mapHeight);
+	int mapW = atoi(mapWidth);
+	world->representation = malloc(sizeof(int *) * mapH);
 	int i;
-	for (i = 0; i < mapHeight; i++ )
+	for (i = 0; i < mapH; i++ )
 	{
-		world->representation[i] = malloc(sizeof(int) * mapWidth);
+		world->representation[i] = malloc(sizeof(int) * mapW);
 	}
 }
 

@@ -57,7 +57,7 @@ void updateIndoorDestination(int tileNumber, ThreeDWorld *world); // update an i
 void receiveMovementData(movementPerformed *movement); // receive data about the movement from movement group
 void createIndoorCollisionObject(int tileNumber, ThreeDWorld *world); // create a collision object for the indoor system.
 void sendMovementCommandsListToMovement(); // send a list of movement commands to movement group.
-void commandFetcher(void *ptr);
+void *commandFetcher(void *ptr);
 void killThread();
 void dealloc();
 

@@ -24,6 +24,7 @@ void setIndexValue(ThreeDWorld *world, int index, int value)
 }
 
 // check a tile for its contents
+
 int checkTileValue(ThreeDWorld *world, int index)
 {
 	int value = NULL; // value for tile e.g. 0 = free, 1 = collision 2 = destination

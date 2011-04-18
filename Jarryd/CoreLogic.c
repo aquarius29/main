@@ -236,11 +236,10 @@ void createIndoorCollisionObject(int tileNumber, ThreeDWorld *world)
 		// notify the path calculation to recheck the worldMap and recalculate.
 		printf("Collision object created\n");
 	}
-
 }
 
 // handles manual drone commands
-void commandFetcher(void *ptr)
+void *commandFetcher(void *ptr)
 {
     char *message;
     message = (char *) ptr;
@@ -259,7 +258,7 @@ void commandFetcher(void *ptr)
         {
             printf("No command input data\n");
         }
-    else
+   // else
 	//	{
         // send the command to the movement group using protocol_write
         // e.g. write_movement_command
@@ -270,14 +269,14 @@ void commandFetcher(void *ptr)
 
 //	free(data);
 	
-	commandfetcher();
+	//commandfetcher();
 }
 
 void killThread()
 {
 	printf("KILL ME\n");
-	
 	pthread_exit(NULL);
+	printf("KILLED\n");
 }
 
 // Dealloc shouldnt be needed during a flight, 
@@ -285,4 +284,10 @@ void killThread()
 void dealloc()
 {
 	free(world);
+}
+
+int main(int argc, char **argv) 
+{
+	
+	return 1;
 }
