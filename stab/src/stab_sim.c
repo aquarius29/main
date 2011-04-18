@@ -1,4 +1,4 @@
-/******************************************************************************
+/*************************************************************************
   File: stab_sim.c
   Description: This is a small simulator that creates random value as output
                the gyroscope and acceleometer. The simulator returns a vector
@@ -12,13 +12,14 @@
                  Added time as seed so values are always random.This was 
                  a bug before. //Adam
      11/04/2011: Renamed file to stab_sim (was stab_gyro_sim) // Adam
-*******************************************************************************/
+*************************************************************************/
 #ifdef PC
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
 #include <time.h>
 #include "stab.h"
+//#include <ltstdlib.h>
 
 /* Function prototype*/
 float gen_val(float a, float b);
@@ -39,13 +40,14 @@ struct vector
 */
 struct vector init_sim(void)
 {
-  struct vector rand;
-    
-  rand.x = gen_val(-180.0, 360.0);
-  rand.y = gen_val(-180.0, 360.0);
-  rand.z = gen_val(-180.0, 360.0);
+  struct vector vect;
+
+  vect.x = gen_val(-180.0, 360.0);
+  vect.y = gen_val(-180.0, 360.0);
+  vect.z = gen_val(-180.0, 360.0);
+
   
-  return rand;
+  return vect;
 }
 
 

@@ -1,4 +1,4 @@
-/******************************************************************************
+/**************************************************************************
   File: main.c
   Description: Main file for all the code, used to select if arduino or pc mode 
   is selected
@@ -10,7 +10,7 @@
      14/04/2011: Added comments to functions //Adam
      15/04/2011: Merged gyro and accel code so both can be read 
                  simultaneously //Adam
-*******************************************************************************/
+**************************************************************************/
 /*
   Different header files are included depending on the mode 
   (arduino or pc)

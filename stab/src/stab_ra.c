@@ -1,3 +1,4 @@
+#ifdef ARDUINO
 #include "stab.h"
 #include <Wire.h>
 #include "WProgram.h"
@@ -6,26 +7,9 @@
 int x,y,z;
 int temp;
 
-
-//void initBMA180();
 void readAccel();
 void checkResult(int result);
 
-//int main()
-//void setup()
-//{
-  //init();
-  // Wire.begin();
-  //Serial.begin(9600);
-// initBMA180() should be done once, it will write appropriate adjustments for range and mode. 
-//  initBMA180();
-//  delay(2000);
-  //for(int j= 0;j<10;j++){
-  // readAccel();
-  //delay(300);
-  //}
-  //return 0;
-  //}
 
 void readAccel()
 {
@@ -87,7 +71,7 @@ void initBMA180()
   delay(10);
   if(temp == 3)
   {
-    // Connect to the ctrl_reg1 register and set the ee_w bit to enable writing.
+   
     Wire.beginTransmission(address);
     Wire.send(0x0D);
     Wire.send(B0001);
@@ -132,24 +116,24 @@ void checkResult(int result)
 {
   if(result >= 1)
   {
-	//probably device is not connected or not all bits are ready to be read.
+    //probably device is not connected or not all bits are ready to be read.
     Serial.print("PROBLEM. Result code is ");  
     Serial.print(result);
-	 Serial.print(". Device is probably not connected properly");  
-   /* result code explanation
-	1 = data too long to fit in transmit buffer
-	2 = received NACK on transmit of address
-	3 = received NACK on transmit of data
-	4 = other error
-	*/
+    Serial.print(". Device is probably not connected properly");  
+    /* result code explanation
+       1 = data too long to fit in transmit buffer
+       2 = received NACK on transmit of address
+       3 = received NACK on transmit of data
+       4 = other error
+    */
   }
   else
-  {
-// device is connected properly and there are bytes ready to be read.
-//    Serial.println("Read/Write success");
-  }
+    {
+      // device is connected properly and there are bytes ready to be read.
+      //    Serial.println("Read/Write success");
+    }
 }
 
-
+#endif
 
 

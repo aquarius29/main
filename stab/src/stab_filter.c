@@ -1,4 +1,4 @@
-/******************************************************************************
+/*************************************************************************
   File: filter.c
   Description: combines the data from the sensors (gyroscope/accelerometer)
                in order to eliminate the noise/drift
@@ -7,7 +7,7 @@
   Log: 
      05/04/2011: Initial version
      06/04/2011: Added description and comments
-*******************************************************************************/
+**************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -46,62 +46,6 @@ float convert_gyro_raw_to_deg_s(float a);
 float acc_vector[2];
 float gyro_vector[2];
 float filter_est[2];
-
-
-/************************************************************
-  Main method where the main loop of the algortihm is run
-************************************************************/
-/* int main(void) */
-/* { */
-
-/*   init_filter();   */
-/*   float acc_x; */
-/*   float acc_y; */
-/*   float acc_z; */
-  
-/*   float gyro_x_raw; */
-/*   float gyro_y_raw; */
-/*   float gyro_z_raw; */
-
-/*   float gyro_x = convert_gyro_raw_to_deg_s(gyro_x_raw); */
-/*   float gyro_y = convert_gyro_raw_to_deg_s(gyro_y_raw); */
-/*   float gyro_z = convert_gyro_raw_to_deg_s(gyro_z_raw); */
-
-/*   while(1) */
-/*     {   */
-/*       scanf("%f", &gyro_x); */
-/*       scanf("%f", &gyro_y); */
-/*       scanf("%f", &gyro_z); */
-      
-/*       scanf("%f", &acc_x); */
-/*       scanf("%f", &acc_y); */
-/*       scanf("%f", &acc_z); */
-      
-/*       printf("Sim. Gyro x: %f\n", gyro_x); */
-/*       printf("Sim. Gyro y: %f\n", gyro_y); */
-/*       printf("Sim. Gyro z: %f\n", gyro_z); */
-      
-/*       printf("Sim. Acce x: %f\n", acc_x); */
-/*       printf("Sim. Acce y:  %f\n", acc_y); */
-/*       printf("Sim. Acce z: %f\n", acc_z); */
-      
-/*       convert_acce_raw_to_deg(acc_x, acc_y, acc_z); */
-/*       filter_est[0] = comp_filter(acc_vector[0], gyro_vector[1], filter_est[0]); */
-/*       filter_est[1] = comp_filter(acc_vector[1], gyro_vector[0], filter_est[1]); */
-/*       //filter_est[2] = comp_filter(acc_vector[2], gyro_vect[2], filter_est[2]); */
-/*       filter_est[2] = gyro_vector[2]; */
-      
-/*       printf("ESTIMATED X %f\n", filter_est[0]); */
-/*       printf("ESTMIATED Y %f\n", filter_est[1]); */
-/*       printf("ESTMIATED Z %f\n", filter_est[2]); */
-      
-/*       sleep(1); */
-/*     } */
-  
-  
-/*   return 0; */
-  
-/* } */
 
 
 /************************************************************

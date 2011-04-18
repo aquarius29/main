@@ -1,4 +1,4 @@
-/******************************************************************************
+/***************************************************************************
   File: read_rg.c
   Description: Takes care of the communication with the gyroscope
   Authors: Adam Debbiche & Yuwen He  	       
@@ -6,7 +6,7 @@
   Log: 
      11/04/2011: Initial version // Adam
      14/04/2011: Added comments //Adam
-********************************************************************************/
+****************************************************************************/
 #ifdef ARDUINO
 #include <Wire.h>
 #include "WProgram.h"
