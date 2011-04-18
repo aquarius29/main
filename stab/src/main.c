@@ -15,10 +15,10 @@
   Different header files are included depending on the mode 
   (arduino or pc)
 */
-#ifdef PC
+#ifdef STAB
   #include <stdio.h>
   #include "stab.h"
-#elif defined ARDUINO
+#elif defined ARDUINO_STAB
   #include "stab.h"
   #include <Wire.h>
   #include <WProgram.h>
@@ -31,10 +31,10 @@
 */
 int main(void)
 {  
-#ifdef PC
+#ifdef STAB
   stab_init();
   stab_run();
-#elif defined ARDUINO
+#elif defined ARDUINO_STAB
   init();
   Serial.begin(9600);
   Wire.begin();
