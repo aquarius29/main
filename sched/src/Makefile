@@ -77,8 +77,8 @@ SRC=sched_naive_main.c sched_naive_sched.c sched_stubs.c
 OBJ = $(SRC:.c=.o)
 
 %.o: %.c
-	$(CC) -c -I. $*.c -g -Os -ffunction-sections -fdata-sections -mmcu=$(MMCU) -DARDUINO=22 -Wall -Wstrict-prototypes -DF_CPU=$(F_CPU) \
-		-Wa,-ahlms=$(PROG).lst -fno-exceptions $(CFLAGS)
+	$(GLOBAL_CC) -c -I. $*.c -g -Os -ffunction-sections -fdata-sections -mmcu=$(MMCU) -DARDUINO=22 -Wall -Wstrict-prototypes -DF_CPU=$(F_CPU) \
+		-Wa,-ahlms=$(PROG).lst -fno-exceptions $(GLOBAL_CFLAGS)
 
 MMCU=atmega2560
 STK=stk500v2
@@ -90,7 +90,7 @@ lib: $(OBJ)
 	
 lib-mega: $(OBJ)
 	@echo Objects: $(OBJ)
-	avr-ar rcs ../lib/libsched.a $(OBJ)
+	avr-ar rvs ../lib/libsched.a $(OBJ)
 #	$(CC) $(OBJ) -L../../lib -lcoremega -Wl,-Map=$(PROG).map,--cref -mmcu=$(MMCU) -Iinclude -lm -Llib \
 #		-fno-exceptions  -ffunction-sections -fdata-sections -l$(LIB) -o bin/$(PROG).elf
 	

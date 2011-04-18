@@ -78,8 +78,8 @@ SRC=moto_driver_functions.c moto_interface.c moto_msg_handler.c moto_msg_manipul
 OBJ = $(SRC:.c=.o)
 
 %.o: %.c
-	$(CC) -c -I. $*.c -g -Os -ffunction-sections -fdata-sections -mmcu=$(MMCU) -DARDUINO=22 -Wall -Wstrict-prototypes -DF_CPU=$(F_CPU) \
-		-Wa,-ahlms=$(PROG).lst -fno-exceptions $(CFLAGS)
+	$(GLOBAL_CC) -c -I. $*.c -g -Os -ffunction-sections -fdata-sections -mmcu=$(MMCU) -DARDUINO=22 -Wall -Wstrict-prototypes -DF_CPU=$(F_CPU) \
+		-Wa,-ahlms=$(PROG).lst -fno-exceptions $(GLOBAL_CFLAGS)
 
 MMCU=atmega2560
 STK=stk500v2
@@ -91,7 +91,7 @@ lib: $(OBJ)
 	
 lib-mega: $(OBJ)
 	@echo Objects: $(OBJ)
-	avr-ar rcs ../lib/libmoto.a $(OBJ)
+	avr-ar rvs ../lib/libmoto.a $(OBJ)
 #	$(CC) $(OBJ) -L../../lib -lcoremega -Wl,-Map=$(PROG).map,--cref -mmcu=$(MMCU) -Iinclude -lm -Llib \
 #		-fno-exceptions  -ffunction-sections -fdata-sections -l$(LIB) -o bin/$(PROG).elf
 	
