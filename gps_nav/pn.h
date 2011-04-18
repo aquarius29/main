@@ -17,8 +17,7 @@ double calc_c(struct point start,struct point dest);
 
 int check_position(double k, double c, struct point node);
 
-struct dist* prioritize_node(struct point start, struct point dest, struct point* node, char request);
+struct dist* pnode(struct point start, struct point dest, struct point* node, char request);
 
 double in_degree(double input);
-
 

@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include "pn.h"
 
 struct link* add_link(char from, char to, int distance,struct link* last);

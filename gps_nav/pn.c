@@ -9,14 +9,14 @@
 
 double calc_dist(struct point start, struct point node){
 	double dist;
-	
+
 	double dRadLatitude1 = in_degree(start.lat)*3.1415926/180.0;
 	double dRadLatitude2 = in_degree(node.lat)*3.1415926/180.0;
 	double dDisLatitude = dRadLatitude1 - dRadLatitude2;
 	double dDisLongitude = in_degree(start.lon)*3.1415926/180.0 - in_degree(node.lon)*3.1415926/180.0;
 
 	dist= 2 * asin(sqrt(pow(sin(dDisLatitude/2),2) + cos(dRadLatitude1)*cos(dRadLatitude2)*pow(sin(dDisLongitude/2),2)));
-	
+
 	dist *= 6378.137*1000;
 
 	//dist = pow((start.lat-node.lat),2)+ pow((start.lon - node.lon),2);
@@ -30,7 +30,7 @@ double calc_dist(struct point start, struct point node){
 double calc_k(struct point start, struct point dest){
 	double k,c;	
 //	k= (start.lon - dest.lon)/ (start.lat-dest.lat);
-	
+
 	k= (in_degree(start.lon) - in_degree(dest.lon))/ (in_degree(start.lat)-in_degree(dest.lat));
 
 	return k;	
@@ -66,12 +66,12 @@ int check_position(double k, double c, struct point node){
 
 
 
-struct dist* prioritize_node(struct point start, struct point dest, struct point* node, char request){
+struct dist* pnode(struct point start, struct point dest, struct point* node, char request){
 	struct dist* p = malloc(sizeof(struct dist));
 	int i=0;
 	double dist,k,c;
 	p->distance = 1000000;
-	
+
 	switch (request) 
 	{
 	case 0 : while(node[i].name != -1){	//down of the line
@@ -98,7 +98,7 @@ struct dist* prioritize_node(struct point start, struct point dest, struct point
 			}
 		}		
 	break;	
-	
+
 	case 1 : while(node[i].name != -1){	//up of the line
 			k=calc_k(start,dest);
 			c=calc_c(start,dest);	
@@ -125,9 +125,9 @@ struct dist* prioritize_node(struct point start, struct point dest, struct point
 		}		
 	break;	
 	}	
-	if(p->name == 0)	
-	free(p);	
-	
+//	if(p->name == 0)	
+//	free(p);	
+
 	return p;	
 	}
 
@@ -199,3 +199,4 @@ int main(){
 	return 0;
 }
 */
+

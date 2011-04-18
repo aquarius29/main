@@ -9,194 +9,88 @@
 */
 #include "dijk.h"
 
-/*
-int main(void)
-{
-	struct point *p = init_map();		
-	struct link *lk = NULL;
-
-	struct point start;
-	struct point dest;
-	
-	start.lat= 5742.447;
-	start.lon= 1156.219;
-	dest.lat= 5742.2950;
-	dest.lon= 1156.1050;
-
-	double m = calc_dist(start,dest);
-
-	printf("%f\n",m);
-
-
-	lk = init_link(lk,p);		
-
-	struct trac *path = NULL,*head = NULL;
-
-	path = calculate(1,12,lk);
-
-	head = path;	
-	while(head != NULL){
-		
-		printf("%d + ",head->p);
-
-		int element = head->p;
-
-		struct point m = p [element-1];
-
-		printf("latitude: %f, longitude: %f",m.lat,m.lon);
-
-		printf("\n");	
-		head = head->last;
-	}
-
-	deallocate_trac(path);
-	
-	deallocate_link(lk);	
-
-	free(p);
-
-	return 0;
-}
-
-*/
-
+/* define the nodes */
 struct point* init_map()
 {
-	struct point *p1 = malloc(sizeof(struct point));
-	p1 [0].name = 1;	
-	p1 [0].lat = 5742.4090;
-	p1 [0].lon = 1156.2460;
 
-	p1 = realloc(p1,2*sizeof(struct point));
-	p1 [1].name = 2;	
-	p1 [1].lat = 5742.3850;
-	p1 [1].lon = 1156.2290;
+struct point *p1 = malloc(sizeof(struct point));
+p1 [0].name = 1;	
+p1 [0].lat = 5742.4090;
+p1 [0].lon = 1156.2460;
 
-	p1 = realloc(p1,3*sizeof(struct point));
-	p1 [2].name = 3;	
-	p1 [2].lat = 5742.3730;
-	p1 [2].lon = 1156.2690;
+p1 = realloc(p1,2*sizeof(struct point));
+p1 [1].name = 2;	
+p1 [1].lat = 5742.3850;
+p1 [1].lon = 1156.2290;
 
-	p1 = realloc(p1,4*sizeof(struct point));
-	p1 [3].name = 4;	
-	p1 [3].lat = 5742.3480;
-	p1 [3].lon = 1156.2480;
+p1 = realloc(p1,3*sizeof(struct point));
+p1 [2].name = 3;	
+p1 [2].lat = 5742.3730;
+p1 [2].lon = 1156.2690;
 
-	p1 = realloc(p1,5*sizeof(struct point));
-	p1 [4].name = 5;	
-	p1 [4].lat = 5742.3600;
-	p1 [4].lon = 1156.2020;
+p1 = realloc(p1,4*sizeof(struct point));
+p1 [3].name = 4;	
+p1 [3].lat = 5742.3480;
+p1 [3].lon = 1156.2480;
 
-	p1 = realloc(p1,6*sizeof(struct point));
-	p1 [5].name = 6;	
-	p1 [5].lat = 5742.3710;
-	p1 [5].lon = 1156.1540;
+p1 = realloc(p1,5*sizeof(struct point));
+p1 [4].name = 5;	
+p1 [4].lat = 5742.3600;
+p1 [4].lon = 1156.2020;
 
-	p1 = realloc(p1,7*sizeof(struct point));
-	p1 [6].name = 7;	
-	p1 [6].lat = 5742.3810;
-	p1 [6].lon = 1156.1190;
+p1 = realloc(p1,6*sizeof(struct point));
+p1 [5].name = 6;	
+p1 [5].lat = 5742.3710;
+p1 [5].lon = 1156.1540;
 
-	p1 = realloc(p1,8*sizeof(struct point));
-	p1 [7].name = 8;	
-	p1 [7].lat = 5742.3970;
-	p1 [7].lon = 1156.1770;
+p1 = realloc(p1,7*sizeof(struct point));
+p1 [6].name = 7;	
+p1 [6].lat = 5742.3810;
+p1 [6].lon = 1156.1190;
 
-	p1 = realloc(p1,9*sizeof(struct point));
-	p1 [8].name = 9;	
-	p1 [8].lat = 5742.4060;
-	p1 [8].lon = 1156.1410;
+p1 = realloc(p1,8*sizeof(struct point));
+p1 [7].name = 8;	
+p1 [7].lat = 5742.3970;
+p1 [7].lon = 1156.1770;
 
-	p1 = realloc(p1,10*sizeof(struct point));
-	p1 [9].name = 10;	
-	p1 [9].lat = 5742.4250;
-	p1 [9].lon = 1156.2010;
+p1 = realloc(p1,9*sizeof(struct point));
+p1 [8].name = 9;	
+p1 [8].lat = 5742.4060;
+p1 [8].lon = 1156.1410;
 
-	p1 = realloc(p1,11*sizeof(struct point));
-	p1 [10].name = 11;	
-	p1 [10].lat = 5742.4340;
-	p1 [10].lon = 1156.1670;
+p1 = realloc(p1,10*sizeof(struct point));
+p1 [9].name = 10;	
+p1 [9].lat = 5742.4250;
+p1 [9].lon = 1156.2010;
 
-	p1 = realloc(p1,12*sizeof(struct point));
-	p1 [11].name = 12;	
-	p1 [11].lat = 5742.3270;
-	p1 [11].lon = 1156.0560;
+p1 = realloc(p1,11*sizeof(struct point));
+p1 [10].name = 11;	
+p1 [10].lat = 5742.4340;
+p1 [10].lon = 1156.1670;
 
-	p1 = realloc(p1,13*sizeof(struct point));
-	p1 [12].name = 13;	
-	p1 [12].lat = 5742.3010;
-	p1 [12].lon = 1156.1490;
+p1 = realloc(p1,12*sizeof(struct point));
+p1 [11].name = 12;	
+p1 [11].lat = 5742.3270;
+p1 [11].lon = 1156.0560;
+
+p1 = realloc(p1,13*sizeof(struct point));
+p1 [12].name = 13;	
+p1 [12].lat = 5742.3010;
+p1 [12].lon = 1156.1490;
 	
-	p1 = realloc(p1,14*sizeof(struct point));
-	p1 [13].name = -1;	
-	p1 [13].lat = 0;
-	p1 [13].lon = 0;
+p1 = realloc(p1,14*sizeof(struct point));
+p1 [13].name = -1;	
+p1 [13].lat = 0;
+p1 [13].lon = 0;
 
-	return p1;
+return p1;
 }
 
 
 
-
+/* make node related to others*/
 struct link* init_link(struct link* link, struct point* p)
 {
-//	struct link *link = NULL;	
-
-/*	link = add_link(1,2,50,link);
-	link = add_link(1,10,50,link);
-
-	link = add_link(2,1,50,link);
-	link = add_link(2,3,60,link);
-	link = add_link(2,8,50,link);
-	link = add_link(2,5,50,link);
-
-	link = add_link(3,2,60,link);
-	link = add_link(3,4,50,link);
-
-	link = add_link(4,3,50,link);
-	link = add_link(4,'5',60,link);
-
-	link = add_link(5,2,50,link);
-	link = add_link(5,4,60,link);
-	link = add_link(5,6,50,link);
-	link = add_link(5,13,115,link);
-
-	link = add_link(6,5,50,link);
-	link = add_link(6,7,35,link);
-	link = add_link(6,8,50,link);
-
-	link = add_link(7,6,35,link);
-	link = add_link(7,9,50,link);
-	link = add_link(7,12,112,link);
-
-
-	link = add_link(8,2,50,link);
-	link = add_link(8,6,50,link);
-	link = add_link(8,10,50,link);
-	link = add_link(8,9,38,link);
-
-	link = add_link(9,8,38,link);
-	link = add_link(9,7,50,link);
-	link = add_link(9,11,55,link);
-
-	link = add_link(10,11,35,link);
-	link = add_link(10,8,50,link);
-	link = add_link(10,1,50,link);
-
-
-	link = add_link(11,10,35,link);
-	link = add_link(11,9,55,link);
-
-	link = add_link(12,7,112,link);
-	link = add_link(12,13,85,link);
-
-	link = add_link(13,5,112,link);
-	link = add_link(13,12,85,link);
-
-	link = add_link(0,0,0,link);
-*/
-
-
 	link = add_link(1,2,calc_dist(p [0],p [1]),link);
 	link = add_link(1,10,calc_dist(p [0],p [9]),link);
 
@@ -249,7 +143,6 @@ struct link* init_link(struct link* link, struct point* p)
 	link = add_link(13,12,calc_dist(p [12],p [11]),link);
 
 	link = add_link(0,0,0,link);
-
 
 	return link; 
 }
@@ -315,7 +208,7 @@ struct link* move_to_wl(struct link* curr,struct link* lk,struct link* wl)
 
 			wl = add_link(_lk->from,_lk->to,_lk->distance + curr->distance,wl);
 
-			printf("new one added: %d->%d :%f\n",_lk->from,_lk->to,_lk->distance + curr->distance);
+//			printf("new one added: %d->%d :%f\n",_lk->from,_lk->to,_lk->distance + curr->distance);
 
 			if(next!=NULL)
 			{
@@ -486,16 +379,16 @@ struct trac* calculate(char startp,char endp,struct link* lk)
 	return NULL;
 	}
 
-	struct link *wl,*next,*curr,*collection;					/*waiting list, next point, current*/
+	struct link *wl,*next,*curr,*collection;					
 
 	struct trac* sb = NULL;
-						/* store ..... selected points*/
+						
 	wl = next = curr = collection = NULL;
 	
-	struct link* start = malloc(sizeof(struct link));						/*set start point*/
+	struct link* start = malloc(sizeof(struct link));						
 	start->from = startp;start->to = startp;start->distance = 0;start->last = NULL;
 
-	struct link* end = malloc(sizeof(struct link));						/*set end point*/
+	struct link* end = malloc(sizeof(struct link));						
 	end->from = endp;end->to = endp;end->distance = 0;end->last = NULL;
 
 	curr = next = start;
