@@ -3,9 +3,9 @@
 #include <math.h>
 #include "movement.h"
 
-#define OBJECT_MASS 1000
-#define STANDARD_ACCELERATION 20
-#define OBJECT_LENGTH 50
+#define OBJECT_MASS 1000  //1000 gram
+#define STANDARD_ACCELERATION 200  //200 cm/s
+#define OBJECT_LENGTH 50// 50 cm
 
 //force components
 struct motor{
