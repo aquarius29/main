@@ -1,3 +1,4 @@
+#ifdef PC
 #include "stab_sched.h"
 #include "stab.h"
 #include <stdio.h>
@@ -10,8 +11,6 @@
      gyro_vector: Holds the values of the gyroscope output (x, y, z)
      filter_est: Output of the algorithm with (estimated vector) 
 ************************************************************/
-
-
 struct vector
 {
   float x;
@@ -24,6 +23,10 @@ struct vector accel_vect;
 struct vector filter_vect;
 
 
+/*
+  Inits the main hardware components of the shield
+  A LOT OF CHANGES EXPECTED 
+*/
 int16_t stab_init(void)
 {
   // code to init the hardware goes in here as well
@@ -32,7 +35,9 @@ int16_t stab_init(void)
 
 }
 
-
+/*
+  Runs the code when the scheduler calls it
+*/
 int16_t stab_run(void)
 {
   gyro_vect = init_sim();
@@ -43,12 +48,15 @@ int16_t stab_run(void)
   //filter_est[2] = comp_filter(acc_vector[2], gyro_vect[2], filter_est[2]);
   filter_vect.z = gyro_vect.z;
   
+<<<<<<< HEAD
   //#ifdef DEBUG 
   printf("*** Inside the actual stab_run in stan_main.c\n");
+=======
+>>>>>>> 173ae0acd6a4672dc41823b48c27dd9c8f3fa8d4
   printf("ESTIMATED X %f\n", filter_vect.x);
   printf("ESTMIATED Y %f\n", filter_vect.y);
   printf("ESTMIATED Z %f\n", filter_vect.z);
-  //#endif /*DEBUG*/  
-  
+
   return 0;
 }
+#endif
