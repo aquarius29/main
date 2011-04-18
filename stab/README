@@ -1,1 +1,12 @@
-Stabilization group folder
+Stab group README:
+
+The code is structered so that it can be compiled for both the 
+pc and the arduino. 
+
+The code can be compiled with the following taregets:
+
+*) make pc: compiles the code for the pc. The simulator is used to simulate output from the gyro and accelerometer.
+
+*) make mega/ make uno: compiles the code for arduino and flashes it to the board. Real data is read from the sensors.
+
+
