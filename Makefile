@@ -58,6 +58,7 @@ pc-dbg:
 	$(GLOBAL_CC) -o $(PROG) main.o $(GROUP_LIBS)
 
 
+USB_PORT=/dev/tty.usbmodemfa141
 MMCU=atmega2560
 STK=stk500v2
 BAUD=115200
@@ -77,6 +78,8 @@ mega:
 	
 	$(GLOBAL_CC) -c main.c -Isched/src
 	$(GLOBAL_CC) main.o $(GROUP_LIBS) -Os -Wl,--gc-sections -mmcu=$(MMCU) -lm -o $(PROG).elf
+	avr-objcopy -O srec $(PROG).elf $(PROG).rom
+	avrdude -p $(MMCU) -P $(USB_PORT) -c $(STK) -b $(BAUD) -F -u -U flash:w:$(PROG).rom
 
 
 mega-dbg: GLOBAL_CC=avr-gcc
@@ -95,7 +98,7 @@ clean:
 	cd stab/lib && rm *.a
 	cd moto/src && $(MAKE) clean
 	cd moto/lib && rm *.a
-	rm $(PROG) *.o *.map
+	rm -f $(PROG) $(PROG).elf $(PROG).rom *.o *.map
 
 	
 
