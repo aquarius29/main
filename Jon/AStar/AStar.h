@@ -8,7 +8,7 @@
 
 #define MAP_Y 14
 #define MAP_X 12
-#define NUM_ADJACENT 8 // Number of neighbors
+#define NUM_ADJACENT 8 /* Number of neighbors */
 
 typedef struct {
     uint16_t y;
@@ -42,10 +42,12 @@ positionList * AStar(const position * start, const position * end,
 int8_t ListMemoryAllocation(nodeList ** open, nodeList ** closed);
 positionList * CreateFinalList(nodeList * closed, const position * goal,
                                const position * drone);
-int8_t NodeInClosed(const uint16_t * nodeY, const uint16_t * nodeX, nodeList * closed);
-int8_t NodeInOpen(const uint16_t * nodeY, const uint16_t * nodeX, nodeList * open);
+int8_t NodeInClosed(const uint16_t * nodeY, const uint16_t * nodeX,
+                    nodeList * closed);
+int8_t NodeInOpen(const uint16_t * nodeY, const uint16_t * nodeX,
+                  nodeList * open);
 node * AddNodeToClosed(node * current, nodeList * closed);
 int32_t GetHeuristicCost(const position * currentNode,
                          const position * goalNode);
 
-#endif	// DIJKSTRA_H
+#endif	/* DIJKSTRA_H */
