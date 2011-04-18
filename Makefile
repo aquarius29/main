@@ -4,6 +4,32 @@
 ##  using flags that gets exported and invoke lower level makefiles
 ##  on a group level.
 ##
+##  Usage:
+##  All platforms have a target and a debug-target. For example the
+##  mega-board has a "mega" and a "mega-dbg" target.
+##
+##  The "mega-targets" creates a file that can be flashed to the board
+##  by invoking the "flash" target.
+##
+##  Some flags gets exported and are used in lower level makefiles.
+##  These are prefixed with "GLOBAL_". The various targets constructs the 
+##  content of these variables to create a certain configuration that is 
+##  used in the lower level makefiles.
+##
+##  The BASIC_LIBS variable specifies what libraries to include and the path
+##  to those. This variable should only specify libraries that are needed
+##  and work with all targets that has to do with the basic functionality
+##  sub-system. This is a good place to choose to use code stubs representing
+##  other groups code, or to use those groups real code.
+##
+##  The BASIC_INCLUDES variable specifies paths to headers in the code
+##  that is used in the basic functionality sub-system. This makes it
+##  possible for source files to include project headers by name only.
+##  Any potential structural changes only needs to be taken care of here.
+##
+##  Any temporary or extra flags should be added to EXTRA_FLAGS when for
+##  example testing ideas.
+##
 ##  Author:	Joakim
 ##  Date: 	2011-04-15
 ##
@@ -14,82 +40,93 @@
 ##
 ##  2011-04-18 - Merged with the makefile written by Eugene and Mihail,
 ##				 creating libs and linking with libcoremega and then 
-##				 uploading to the mega-board now works.
+##				 uploading to the mega-board now works. Also merged the
+##				 makefile that worked with PC targets. Added "Usage" part
+##				 in comments.
 ##
 ##  Notes:
-##  This needs to be merged with the makefile on the branch that
-##  works for PC. All flags, targets and variables that are supposed to
-##  make up the template part decided by TINT needs to be fixed in a 
-##  nice way.
+##  Missing instructions in targets not related to basic system. 
+##  By no means done and decided with regards to what flags are set and
+##  stuff like that.
+##
 #############################################################################
 
-##  Set name of usb-port
+##  Name of usb-port
 USB_PORT=/dev/tty.usbmodemfa141
 
-##  Set name of micro controller
+##  Name of executable or image
+PROG=prog
+
+##  Libraries to include when building the basic system, 
+##  only include libs that work for all targets for that system here!
+BASIC_LIBS=-Lstab/lib -Lsched/lib -Lmoto/lib -Llib -lsched -lstab -lmoto -lm
+
+##  Set paths to headers
+BASIC_INCLUDES=-I../../stab/src -I../../moto/src -I../../include
+
+##  Free of charge
+EXTRA_FLAGS=
+
+##  Name of micro controller
 MMCU=atmega2560
 
+##  Specify "corelib" to be linked, "coremega" or "coreuno" depending on board
+CORE_LIB=coremega
+
+##  cpu speed
 F_CPU=16000000
 
+##  Name of programmer
 STK=stk500v2
+
+##  Baud rate
 BAUD=115200
-CORE_LIB=coremega
 
 ##  These flags are exported to be used in lower level makefiles
 export GLOBAL_CFLAGS
 export GLOBAL_CC
 
-##  Linker flags for Arduino:
+##  Linker flags for Arduino
 LDFLAGS_ARDUINO=-Os -Wl,--gc-sections -mmcu=$(MMCU)
 
-##  Debug flags for PC:
-DEBUG_FLAGS_PC=-g -DDEBUG -Wall
-
-##  Debug flags for Arduino:
-DEBUG_FLAGS_ARDUINO=-g -DDEBUG
-
-##  PC specific flags:
+##  PC specific flags
 PC_FLAGS=-DPC
 
-##  Arduino specific flags:
+##  Debug flags for PC
+DEBUG_FLAGS_PC=-g -DDEBUG -Wall
+
+##  Arduino specific flags
 ARDUINO_FLAGS=-Os -w -fno-exceptions -ffunction-sections -fdata-sections -mmcu=$(MMCU) -DARDUINO=22 -DF_CPU=$(F_CPU)
 
-##  Libraries to include, only include libs that work for all targets here!
-LIBS=-Lstab/lib -Lsched/lib -Lmoto/lib -Llib -lsched -lstab -lmoto -lm
-
-# Set paths to headers
-INCLUDES=-I../../stab/src -I../../moto/src -I../../include
-
-# EXTRA_FLAGS defines what groups code to use instead of stubs
-EXTRA_FLAGS=
-
-# PROG is the name of the executable
-PROG=prog
+##  Debug flags for Arduino
+DEBUG_FLAGS_ARDUINO=-g -DDEBUG
 
 
+## pc-targets ###############################################################
 pc: GLOBAL_CC=gcc
-pc: GLOBAL_CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(INCLUDES)
+pc: GLOBAL_CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(BASIC_INCLUDES)
 pc:
 	cd sched/src && $(MAKE) lib-pc
 	cd stab/src && $(MAKE) lib-pc
 	cd moto/src && $(MAKE) lib-pc
 	$(GLOBAL_CC) -c main.c -Isched/src
-	$(GLOBAL_CC) -o $(PROG) main.o $(LIBS)
+	$(GLOBAL_CC) -o $(PROG) main.o $(BASIC_LIBS)
 	
 
 pc-dbg: GLOBAL_CC=gcc
-pc-dbg: GLOBAL_CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(DEBUG_FLAGS_PC) $(INCLUDES)
+pc-dbg: GLOBAL_CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(DEBUG_FLAGS_PC) $(BASIC_INCLUDES)
 pc-dbg:
 	cd sched/src && $(MAKE) lib-pc
 	cd stab/src && $(MAKE) lib-pc
 	cd moto/src && $(MAKE) lib-pc
 	$(GLOBAL_CC) -c main.c -Isched/src
-	$(GLOBAL_CC) -o $(PROG) main.o $(LIBS)
+	$(GLOBAL_CC) -o $(PROG) main.o $(BASIC_LIBS)
 
 
-mega: LIBS+=-l$(CORE_LIB)
+## mega-targets #############################################################
+mega: BASIC_LIBS+=-l$(CORE_LIB)  ## add the arduino-specific lib to LIBS
 mega: GLOBAL_CC=avr-g++
-mega: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS) $(EXTRA_FLAGS) $(INCLUDES)
+mega: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS) $(EXTRA_FLAGS) $(BASIC_INCLUDES)
 mega:
 	cd sched/src && $(MAKE) lib-mega
 	avr-ranlib sched/lib/libsched.a
@@ -101,13 +138,13 @@ mega:
 	avr-ranlib moto/lib/libmoto.a	
 	
 	$(GLOBAL_CC) -c main.c -Isched/src
-	$(GLOBAL_CC) main.o $(LIBS) $(LDFLAGS_ARDUINO) -o $(PROG).elf
+	$(GLOBAL_CC) main.o $(BASIC_LIBS) $(LDFLAGS_ARDUINO) -o $(PROG).elf
 	avr-objcopy -O srec $(PROG).elf $(PROG).rom
 
 
-mega.dbg: LIBS+=-l$(CORE_LIB)
+mega-dbg: BASIC_LIBS+=-l$(CORE_LIB)  ## add the arduino-specific lib to LIBS
 mega-dbg: GLOBAL_CC=avr-g++
-mega-dbg: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS) $(EXTRA_FLAGS) $(INCLUDES) $(DEBUG_FLAGS_ARDUINO)
+mega-dbg: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS) $(EXTRA_FLAGS) $(BASIC_INCLUDES) $(DEBUG_FLAGS_ARDUINO)
 mega-dbg:
 	cd sched/src && $(MAKE) lib-mega
 	avr-ranlib sched/lib/libsched.a
@@ -119,25 +156,34 @@ mega-dbg:
 	avr-ranlib moto/lib/libmoto.a	
 	
 	$(GLOBAL_CC) -c main.c -Isched/src
-	$(GLOBAL_CC) main.o $(LIBS) $(LDFLAGS_ARDUINO) -o $(PROG).elf
+	$(GLOBAL_CC) main.o $(BASIC_LIBS) $(LDFLAGS_ARDUINO) -o $(PROG).elf
 	avr-objcopy -O srec $(PROG).elf $(PROG).rom
 	
-
+	
+## panda-targets ############################################################
 panda:
 
 panda-dbg:
 
+
+## n900-targets #############################################################
 n900:
 
 n900-dbg:
 
+
+## ui-targets ###############################################################
 ui:
 
 ui-dbg:
 
+
+## flash-target #############################################################
 flash:
 	avrdude -p $(MMCU) -P $(USB_PORT) -c $(STK) -b $(BAUD) -F -u -U flash:w:$(PROG).rom
 
+
+## clean-target #############################################################
 clean:
 	cd sched/src && $(MAKE) clean
 	cd sched/lib && rm *.a
@@ -149,4 +195,4 @@ clean:
 
 	
 
-.PHONY: lib
+.PHONY: pc pc-dbg mega mega-dbg panda panda-dbg n900 n900-dbg ui ui-dbg flash clean

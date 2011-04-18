@@ -35,7 +35,7 @@ F_CPU=16000000
 #F_CPU=8000000
 
 PROG=stab
-SRC=stab_main.c stab_filter.c stab_filter.c stab_ra.c stab_rg.c
+SRC=stab_main.c stab_filter.c stab_ra.c stab_rg.c stab_sim.c
 
 #OBJ=bin/*.o
 
