@@ -7,6 +7,8 @@
 /* dummy interface for collision avoidance code */
 int16_t caRun(void);
 
+int16_t caRun2(void);
+
 /* dummy interface for stabilization code */
 int16_t stabRun(void);
 

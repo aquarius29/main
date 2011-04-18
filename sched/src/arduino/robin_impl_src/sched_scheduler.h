@@ -13,25 +13,23 @@
 #define STAB_PID 4
 #define PROTO_PID 5
 
-//Defintion of motor process
-extern const char MOTOR_PROCESS[];
-extern const char MOTOR_TASK_1[];
+#ifdef PC
+static const char MOTOR_PROCESS[] = "Motor Process";
+static const char MOTOR_TASK_1[] = "runMotor";
 
-//Defintion of Collision Avoidance process
-extern const char COLLISION_PROCESS[];
-extern const char COLLISION_TASK_1[];
+static const char COLLISION_PROCESS[] = "CA Process";
+static const char COLLISION_TASK_1[] = "runCA";
+static const char COLLISION_TASK_2[] = "runCA2";
 
-//Defintion of Move process
-extern const char MOVE_PROCESS[];
-extern const char MOVE_TASK_1[];
+static const char MOVE_PROCESS[] = "Move Process";
+static const char MOVE_TASK_1[]  = "runMove";
 
-//Defintion of Stabilization process
-extern const char STAB_PROCESS[];
-extern const char STAB_TASK_1[];
+static const char STAB_PROCESS[] = "Stabilization Process";
+static const char STAB_TASK_1[] = "runStab";
 
-//Defintion of Protocol process (non-existant)
-extern const char PROTO_PROCESS[];
-extern const char PROTO_TASK_1[];
+static const char PROTO_PROCESS[] = "Connectivity Process";
+static const char PROTO_TASK_1[] = "runConn";
+#endif
 
 /* type Fun_t is type "function that 
 * returns int16_t and takes no arguments */
@@ -90,6 +88,7 @@ void endProcess(Process *process);
 void enqueueTask(Process *process, Task *task);
 void dequeueTask(Process *process, Task *task);
 void runIdleTask(Process *process);
+Task* peekProcess(Process *process, int16_t layer);
 
 /* Functions that handle a task */
 Task* createTask(const char *name, 
@@ -101,14 +100,12 @@ void removeProcessTasks(Task *task);
 void initProcessData(void);
 void cleanProcessData(void);
 ProcessData* getProcessData(void);
-Process* getProcessAtIndexPtr(int8_t index);
 void nullQueue(void);
 void enqueueProcess(Process *process);
 void runProcess(int8_t processIndex);
 
 /* RunTime functions for ProcessData struct */
 void createProcessQueue(void);
-Task* peekProcess(Process *process, int16_t layer);
 
 /* Main Process Data for the system */
 static ProcessData sched_processData;

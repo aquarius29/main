@@ -1,5 +1,14 @@
 #include <stdio.h>
+
+#ifdef PC
+#include <time.h>
+#endif
+
 #include "sched_scheduler.h"
+
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
 
 void init(void){
     initProcessData();
@@ -10,7 +19,7 @@ void run(void){
     ProcessData *processData = getProcessData();
     Process** processQueue = processData->ProcessQueue;
 
-    for(k = 0; k < 5; k++) //TODO: 2?
+    for(k = 0; k < 15; k++) //TODO: 15?
     {
         int i;
         createProcessQueue();
@@ -26,6 +35,8 @@ void run(void){
 int main(void){
     init();
     run();
+    cleanProcessData();
+    _CrtDumpMemoryLeaks();
     getch();
     return 0;
 }
