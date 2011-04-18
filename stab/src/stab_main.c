@@ -1,3 +1,16 @@
+/*************************************************************************
+ * File: stab_main.c 
+ * Description: This is the main file that contains the init and run 
+ *              functiion for the other groups to call (scheduler)
+ *              
+ * Authors: Adam Debbiche 	       
+ * Created: 05/04/2011
+ * Log: 
+ *    05/04/2011: Initial version //Adam
+ *    06/04/2011: Added description and comments //Adam
+ *    18/04/2011: Updated the ifdef to reflect new scheduler code //Adam
+ *                Updated code to reflect coding standards
+ **************************************************************************/
 #ifdef PC
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,11 +27,11 @@
 #include <WProgram.h>
 #endif 
 /************************************************************
-  Global variables used to save input/output of the algorithm:
-     acc_vector: Holds the values of the accelerometer output (x, y, z)
-     gyro_vector: Holds the values of the gyroscope output (x, y, z)
-     filter_est: Output of the algorithm with (estimated vector) 
-************************************************************/
+ * Global variables used to save input/output of the algorithm:
+ *    acc_vector: Holds the values of the accelerometer output (x, y, z)
+ *    gyro_vector: Holds the values of the gyroscope output (x, y, z)
+ *    filter_est: Output of the algorithm with (estimated vector) 
+ ************************************************************/
 struct vector
 {
   float x;
@@ -32,9 +45,9 @@ struct vector filter_vect;
 
 
 /*
-  Inits the main hardware components of the shield
-  A LOT OF CHANGES EXPECTED 
-*/
+ * Inits the main hardware components of the shield
+ * A LOT OF CHANGES EXPECTED 
+ */
 int16_t stab_init(void)
 {
   // code to init the hardware goes in here as well
@@ -51,8 +64,8 @@ int16_t stab_init(void)
 }
 
 /*
-  Runs the code when the scheduler calls it
-*/
+ *  Runs the code when the scheduler calls it
+ */
 int16_t stab_run(void)
 {
 #ifdef PC 
