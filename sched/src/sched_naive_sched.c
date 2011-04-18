@@ -15,7 +15,7 @@
 #ifdef ARDUINO
 /* header files for other groups interfaces here */
 #include "moto_interface.h"
-#include "stab_sched.h" /* tell these guys to rename their interface! */
+#include "stab_interface.h" /* tell these guys to rename their interface! */
 #include "sched_stubs.h"
 
 #endif /* ARDUINO */
