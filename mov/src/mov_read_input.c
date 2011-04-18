@@ -1,7 +1,18 @@
+/*****************************************************************************
+  * Product: mov_read_input.c
+  * Version: 0.1
+  * Created: April 18, 2011
+  * History:
+  * Author: Sepideh Fazlmashhadi,Alina Butko, Dong Yu         
+  *
+  *
+  * Movement/CA Group
+  *****************************************************************************/
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
+//data stucture 
 struct data {
 	char *type;
 	char *order;
@@ -11,12 +22,12 @@ struct data {
 	int pitch;
 	int roll;
 	int speed;
-//	int gyro[3];
 	int gyrox;
 	int gyroy;
 	int gyroz;
 };
 
+//main method
 int main (int argc, char **argv) {
 	FILE *output;
 	char line[50];
@@ -76,18 +87,6 @@ int main (int argc, char **argv) {
 			d->gyroz = atoi(name);
 			printf("%s: %d\n", label, d->gyroz);
 	}
-/*
-	else if((strcmp(label, "GYRO")) == 0){
-		d->gyro = (char *)malloc(20);
-		strcpy(d->gyro, name);
-		x = atoi(strtok(d->gyro, ","));
-		z = strtok(NULL, "\n");
-		printf("\n%s: %s\n our crap: %d %d %s\n", label, d->gyro, x[0], x[1], z);
-//			d->gyro[0] = atoi(name);
-//			xyz = strtok(line, ",");
-//			d->gyro[1] = atoi(xyz);
-//			printf("%s: %d %d %d\n", label, d->gyro[0], d->gyro[1], d->gyro[2]);
-	}*/
 }
 	free((void *)d);
 	return 0;
