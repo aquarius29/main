@@ -64,11 +64,6 @@ int16_t stab_run(void)
   //filter_est[2] = comp_filter(acc_vector[2], gyro_vect[2], filter_est[2]);
   filter_vect.z = gyro_vect.z;
   
-<<<<<<< HEAD
-  //#ifdef DEBUG 
-  printf("*** Inside the actual stab_run in stan_main.c\n");
-=======
->>>>>>> 173ae0acd6a4672dc41823b48c27dd9c8f3fa8d4
   printf("ESTIMATED X %f\n", filter_vect.x);
   printf("ESTMIATED Y %f\n", filter_vect.y);
   printf("ESTMIATED Z %f\n", filter_vect.z);

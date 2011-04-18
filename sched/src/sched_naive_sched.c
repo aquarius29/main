@@ -1,22 +1,18 @@
 
+#include <stdlib.h>
 #include <stdint.h>
-#include <stdlib.h> /* this is included because of exit(), remove later */
+
+#include "moto_interface.h"
+#include "stab_interface.h" /* tell these guys to rename their interface! */
+#include "sched_stubs.h"
 
 #ifdef PC
 /* non-arduino includes */
 #include <stdio.h>
-#include <stdlib.h>
 
-/* header file for group code stubs here */
-#include "sched_stubs.h"
-#include "moto_interface.h"
 #endif /* PC */
 
 #ifdef ARDUINO
-/* header files for other groups interfaces here */
-#include "moto_interface.h"
-#include "stab_interface.h" /* tell these guys to rename their interface! */
-#include "sched_stubs.h"
 
 #endif /* ARDUINO */
 

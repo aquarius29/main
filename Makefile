@@ -54,8 +54,8 @@ PC_FLAGS=-DPC
 ##  Arduino specific flags:
 ARDUINO_FLAGS=-Os -w -fno-exceptions -ffunction-sections -fdata-sections -mmcu=$(MMCU) -DARDUINO=22 -DF_CPU=$(F_CPU)
 
-##  Libraries to include, group and the "core" lib, as well as others
-LIBS=-Lstab/lib -Lsched/lib -Lmoto/lib -Llib -lsched -lstab -lmoto -l$(CORE_LIB) -lm
+##  Libraries to include, only include libs that work for all targets here!
+LIBS=-Lstab/lib -Lsched/lib -Lmoto/lib -Llib -lsched -lstab -lmoto -lm
 
 # Set paths to headers
 INCLUDES=-I../../stab/src -I../../moto/src -I../../include
@@ -68,7 +68,7 @@ PROG=prog
 
 
 pc: GLOBAL_CC=gcc
-pc: GLOBAL_CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) -I$(INCLUDES)
+pc: GLOBAL_CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(INCLUDES)
 pc:
 	cd sched/src && $(MAKE) lib-pc
 	cd stab/src && $(MAKE) lib-pc
@@ -87,6 +87,7 @@ pc-dbg:
 	$(GLOBAL_CC) -o $(PROG) main.o $(LIBS)
 
 
+mega: LIBS+=-l$(CORE_LIB)
 mega: GLOBAL_CC=avr-g++
 mega: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS) $(EXTRA_FLAGS) $(INCLUDES)
 mega:
@@ -104,6 +105,7 @@ mega:
 	avr-objcopy -O srec $(PROG).elf $(PROG).rom
 
 
+mega.dbg: LIBS+=-l$(CORE_LIB)
 mega-dbg: GLOBAL_CC=avr-g++
 mega-dbg: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS) $(EXTRA_FLAGS) $(INCLUDES) $(DEBUG_FLAGS_ARDUINO)
 mega-dbg:

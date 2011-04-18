@@ -78,12 +78,7 @@ SRC=stab_main.c stab_filter.c stab_filter.c stab_ra.c stab_rg.c
 OBJ = $(SRC:.c=.o)
 
 %.o: %.c
-	$(GLOBAL_CC) -c -I. $*.c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -mmcu=$(MMCU) -DARDUINO=22 -DF_CPU=$(F_CPU) $(GLOBAL_CFLAGS)
-
-MMCU=atmega2560
-STK=stk500v2
-BAUD=115200
-LIB=coremega
+	$(GLOBAL_CC) -c -I. $*.c $(GLOBAL_CFLAGS)
 
 lib-pc: $(OBJ)
 	ar rvs ../lib/libstab.a $(OBJ)
@@ -91,8 +86,6 @@ lib-pc: $(OBJ)
 lib-mega: $(OBJ)
 	@echo Objects: $(OBJ)
 	avr-ar rvs ../lib/libstab.a $(OBJ)
-#	$(CC) $(OBJ) -L../../lib -lcoremega -Wl,-Map=$(PROG).map,--cref -mmcu=$(MMCU) -Iinclude -lm -Llib \
-#		-fno-exceptions  -ffunction-sections -fdata-sections -l$(LIB) -o bin/$(PROG).elf
 	
 clean:
 	rm -f *.o
