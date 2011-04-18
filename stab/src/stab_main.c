@@ -1,9 +1,9 @@
 #ifdef PC
-#include "stab_sched.h"
-#include "stab.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include "stab_interface.h"
+#include "stab.h"
 
 /************************************************************
   Global variables used to save input/output of the algorithm:
