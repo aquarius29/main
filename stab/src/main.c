@@ -16,8 +16,8 @@
   (arduino or pc)
 */
 #ifdef PC
-  #include "stab.h"
   #include <stdio.h>
+  #include "stab.h"
 #elif defined ARDUINO
   #include "stab.h"
   #include <Wire.h>
