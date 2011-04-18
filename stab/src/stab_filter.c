@@ -1,10 +1,10 @@
 /*************************************************************************
- *  File: filter.c
- * Description: combines the data from the sensors (gyroscope/accelerometer)
- *              in order to eliminate the noise/drift
- * Authors: Adam Debbiche & Yuwen He	       
- * Created: 05/04/2011
- * Log: 
+ * @file filter.c
+ * @brief combines the data from the sensors (gyroscope/accelerometer)
+ *        in order to eliminate the noise/drift
+ * @author Adam Debbiche & Yuwen He	       
+ * @date 05/04/2011
+ * @history 
  *    05/04/2011: Initial version
  *    06/04/2011: Added description and comments
  *    18/04/2011: Updated code to reflect coding standards

@@ -1,9 +1,9 @@
 /***************************************************************************
- * File: read_rg.c
- * Description: Takes care of the communication with the gyroscope
- * Authors: Adam Debbiche & Yuwen He  	       
- * Created: 05/04/2011
- * Log: 
+ * @file read_rg.c
+ * @brief Takes care of the communication with the gyroscope
+ * @author Adam Debbiche & Yuwen He  	       
+ * @date 05/04/2011
+ * @history
  *    11/04/2011: Initial version // Adam
  *    14/04/2011: Added comments //Adam
  *    18/04/2011: Code now reflects coding standards

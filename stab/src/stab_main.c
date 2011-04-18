@@ -1,17 +1,17 @@
 /*************************************************************************
- * File: stab_main.c 
- * Description: This is the main file that contains the init and run 
+ * @file stab_main.c 
+ * @brief This is the main file that contains the init and run 
  *              functiion for the other groups to call (scheduler)
  *              
- * Authors: Adam Debbiche 	       
- * Created: 05/04/2011
- * Log: 
+ * @author Adam Debbiche 	       
+ * @date 05/04/2011
+ * @history 
  *    05/04/2011: Initial version //Adam
  *    06/04/2011: Added description and comments //Adam
  *    18/04/2011: Updated the ifdef to reflect new scheduler code //Adam
  *                Updated code to reflect coding standards
  **************************************************************************/
-#ifdef PC
+#if defined(PC) || defined(STAB)
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -43,7 +43,6 @@ struct vector gyro_vect;
 struct vector accel_vect;
 struct vector filter_vect;
 
-
 /*
  * Inits the main hardware components of the shield
  * A LOT OF CHANGES EXPECTED 
@@ -51,7 +50,7 @@ struct vector filter_vect;
 int16_t stab_init(void)
 {
   // code to init the hardware goes in here as well
-#ifdef PC
+#if defined (PC) || defined (STAB)
   init_filter();
 #elif defined ARDUINO
   init();
@@ -68,7 +67,7 @@ int16_t stab_init(void)
  */
 int16_t stab_run(void)
 {
-#ifdef PC 
+#if defined(PC) || defined(STAB)
   gyro_vect = init_sim();
   accel_vect = init_sim();
   
