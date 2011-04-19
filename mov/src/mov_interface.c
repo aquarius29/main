@@ -9,10 +9,8 @@
   * Movement/CA Group
   *****************************************************************************/
 
-<<<<<<< HEAD
-=======
+
 #include "mov_header.h"
->>>>>>> abefb17ea747a8952ae3a12efcd0fac8cd3e55fa
 #include <stdlib.h>
 #include <stdio.h>
 
