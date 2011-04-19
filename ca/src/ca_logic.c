@@ -138,7 +138,7 @@ unsigned char* ir_filter(unsigned char *irBooleans)
   if(*(irBooleans+3)==1)
     right =0;
 
-  unsigned char *directions= calloc(5, sizeof(unsigned char)) ;
+  unsigned char *directions=(unsigned char *) calloc(5, sizeof(unsigned char)) ;
   *directions=front;
   *(directions+1)=back;
   *(directions+2)=left;
