@@ -6,3 +6,5 @@
  * Movement/CA Group
  *****************************************************************************/
 
+#include <stdio.h>
+int read_input(FILE *stdin);
