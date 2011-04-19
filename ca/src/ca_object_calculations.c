@@ -12,7 +12,7 @@
  *****************************************************************************/
 #include <stdlib.h>
 #include <stdio.h>
-#include "ca_header.h"
+#include "ca_interface.h"
 
 #define IGNORINGLITTLECHANGE 10
 
