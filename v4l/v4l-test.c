@@ -1,11 +1,23 @@
 /* This file is written by Jon Kristensen and Mahdi Abdinejadi. */
 
+#include <asm/types.h> /* needed for videodev2.h */
+#include <fcntl.h>
+#include <linux/videodev2.h>
+#include <malloc.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/ioctl.h>
+#include <sys/mman.h>
+#include <errno.h>
+
+#include "v4l-test.h"
+#include "encode.h"
+#include "network.h"
+
 #define DEVICE_PATH "/dev/v4l/by-id/usb-046d_0809_F15A496F-video-index0"
 
 #define CAMERA_WIDTH 800
 #define CAMERA_HEIGHT 600
-
-#include "v4l-test.h"
 
 struct buffer *bs = NULL;
 
@@ -36,7 +48,8 @@ int read_frame()
     }
   }
 
-  printf("%s", bs[0].start); /* data is in bs[0].start */
+  encode(bs);
+  send(bs);
 
   if(ioctl(fd, VIDIOC_QBUF, &b) == -1)
   {
