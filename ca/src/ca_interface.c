@@ -11,6 +11,7 @@
 #include "ca_header.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <WProgram.h>
 
 #ifdef ARDUINO
 //************************************************************
@@ -85,9 +86,9 @@ int collision_run(void)
 #endif
 
 
-int main(void){
+/* int main(int argc, char *argv[]) */
+/* { */
+/*   collision_run(); */
+/*   return 0; */
+/* } */
 
-  collision_run();
-  return 1;
-
-}

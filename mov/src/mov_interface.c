@@ -9,7 +9,9 @@
   * Movement/CA Group
   *****************************************************************************/
 
+
 #include "mov_header.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -65,18 +67,3 @@ int movement_run()
   return 1;
 }
 #endif
-
-
-
-
-int main(int argc, char* argv[])
-{
-
-  read_input(stdin);
-//  stab();
-//  mov();
-//  filter();
-//  send_to_motors();
-
-  return 1;
-}

@@ -98,7 +98,7 @@ unsigned char* distance_filter(int dangerzone,int ir1, int ir2, int ir3,int ir4)
     irBoolean4 = 0;
 
   //Allocates an array of 4 unsigned characters
-  unsigned char *irBooleans= calloc(4, sizeof(unsigned char)) ;
+  unsigned char *irBooleans= (unsigned char *)calloc(4, sizeof(unsigned char)) ;
   *irBooleans=irBoolean1;
   *(irBooleans+1)=irBoolean2;
   *(irBooleans+2)=irBoolean3;
@@ -138,7 +138,7 @@ unsigned char* ir_filter(unsigned char *irBooleans)
   if(*(irBooleans+3)==1)
     right =0;
 
-  unsigned char *directions= calloc(5, sizeof(unsigned char)) ;
+  unsigned char *directions=(unsigned char *) calloc(5, sizeof(unsigned char)) ;
   *directions=front;
   *(directions+1)=back;
   *(directions+2)=left;
