@@ -26,7 +26,8 @@ int ir_distance(int irpin)
   // if running 3.3.volts then change 5 to 3.3
 
   //convert to the distance according to the formula from luckylarry.co.uk
-  int distance = 65*pow(value*0.0048828125, -1.10);
+//  int distance = 65*pow(value*0.0048828125, -1.10);
+  int distance = 65*pow(1*0.0048828125, -1.10);
   return distance; 
 }
 
