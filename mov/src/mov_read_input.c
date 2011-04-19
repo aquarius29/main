@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "mov_header.h"
 
 //data stucture 
 struct data {
@@ -28,7 +29,7 @@ struct data {
 };
 
 //main method
-int main (int argc, char **argv) {
+int read_input (FILE *in) {
 	FILE *output;
 	char line[50];
 	char *label;
@@ -37,7 +38,9 @@ int main (int argc, char **argv) {
 	int x[3];
 	struct data *d = (struct data*) malloc(sizeof(struct data));
 
-  while(fgets(line, sizeof(line), stdin) != NULL ) {
+printf ("ready and willing\n"); 
+
+ while(fgets(line, sizeof(line), in) != NULL ) {
 	label = strtok(line, ": ");
 	name = strtok(NULL, "\n");
 	
