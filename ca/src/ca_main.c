@@ -86,7 +86,7 @@ int ir4=ir_distance(IRPIN4);
   /* print_result(result); */
 
 
-  int *distance_diff= calloc(4, sizeof(int) );
+  int *distance_diff=(int *) calloc(4, sizeof(int) );
   *distance_diff=ir_distance(IRPIN1)-ir1;
   *(distance_diff+1)=ir_distance(IRPIN2)-ir2;
   *(distance_diff+2)=ir_distance(IRPIN3)-ir3;
