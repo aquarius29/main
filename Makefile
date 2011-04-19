@@ -59,10 +59,10 @@ PROG=prog
 
 ##  Libraries to include when building the basic system, 
 ##  only include libs that work for all targets for that system here!
-BASIC_LIBS=-Lstab/lib -Lsched/lib -Lmoto/lib -Llib -lsched -lstab -lmoto -lm
+BASIC_LIBS=-Lstab/lib -Lsched/lib -Lmoto/lib -Lmov/lib -Llib -lsched -lstab -lmoto -lmov -lm
 
 ##  Set paths to headers used by code on the basic system
-BASIC_INCLUDES=-I../../stab/src -I../../moto/src -I../../include
+BASIC_INCLUDES=-I../../stab/src -I../../moto/src -I../../mov/src -I../../include
 
 ##  Free of charge
 EXTRA_FLAGS=
@@ -109,6 +109,7 @@ pc:
 	cd sched/src && $(MAKE) lib-pc
 	cd stab/src && $(MAKE) lib-pc
 	cd moto/src && $(MAKE) lib-pc
+	cd mov/src && $(MAKE) lib-pc
 	$(GLOBAL_CC) -c main.c -Isched/src
 	$(GLOBAL_CC) -o $(PROG) main.o $(BASIC_LIBS)
 	
@@ -119,6 +120,7 @@ pc-dbg:
 	cd sched/src && $(MAKE) lib-pc
 	cd stab/src && $(MAKE) lib-pc
 	cd moto/src && $(MAKE) lib-pc
+	cd mov/src && $(MAKE) lib-pc
 	$(GLOBAL_CC) -c main.c -Isched/src
 	$(GLOBAL_CC) -o $(PROG) main.o $(BASIC_LIBS)
 
@@ -137,6 +139,9 @@ mega:
 	cd moto/src && $(MAKE) lib-mega
 	avr-ranlib moto/lib/libmoto.a	
 	
+	cd mov/src && $(MAKE) lib-mega
+	avr-ranlib mov/lib/libmov.a	
+
 	$(GLOBAL_CC) -c main.c -Isched/src
 	$(GLOBAL_CC) main.o $(BASIC_LIBS) $(LDFLAGS_ARDUINO) -o $(PROG).elf
 	avr-objcopy -O srec $(PROG).elf $(PROG).rom
@@ -155,6 +160,9 @@ mega-dbg:
 	cd moto/src && $(MAKE) lib-mega
 	avr-ranlib moto/lib/libmoto.a	
 	
+	cd mov/src && $(MAKE) lib-mega
+	avr-ranlib mov/lib/libmov.a	
+
 	$(GLOBAL_CC) -c main.c -Isched/src
 	$(GLOBAL_CC) main.o $(BASIC_LIBS) $(LDFLAGS_ARDUINO) -o $(PROG).elf
 	avr-objcopy -O srec $(PROG).elf $(PROG).rom
@@ -187,10 +195,16 @@ flash:
 clean:
 	cd sched/src && $(MAKE) clean
 	cd sched/lib && rm *.a
+
 	cd stab/src && $(MAKE) clean
 	cd stab/lib && rm *.a
+
 	cd moto/src && $(MAKE) clean
 	cd moto/lib && rm *.a
+
+	cd mov/src && $(MAKE) clean
+	cd mov/lib && rm *.a
+
 	rm -f $(PROG) $(PROG).elf $(PROG).rom *.o *.map
 
 	
