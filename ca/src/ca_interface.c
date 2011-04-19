@@ -86,9 +86,9 @@ int collision_run(void)
 #endif
 
 
-int main(int argc, char *argv[])
-{
-  collision_run();
-  return 0;
-}
+/* int main(int argc, char *argv[]) */
+/* { */
+/*   collision_run(); */
+/*   return 0; */
+/* } */
 
