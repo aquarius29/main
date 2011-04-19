@@ -1,4 +1,4 @@
-l/*****************************************************************************
+/*****************************************************************************
   * Product: movementInterface.c
   * Version: 0.1
   * Created: April 7, 2011
@@ -9,6 +9,10 @@ l/*****************************************************************************
   * Movement/CA Group
   *****************************************************************************/
 
+<<<<<<< HEAD
+=======
+#include "mov_header.h"
+>>>>>>> abefb17ea747a8952ae3a12efcd0fac8cd3e55fa
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -71,11 +75,11 @@ int movement_run()
 int main(int argc, char* argv[])
 {
 
-  read_input();
-  stab();
-  mov();
-  filter();
-  send_to_motors();
+  read_input(stdin);
+//  stab();
+//  mov();
+//  filter();
+//  send_to_motors();
 
   return 1;
 }
