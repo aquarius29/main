@@ -1,3 +1,30 @@
+########################### Added by jogr 110413 #########################
+
+LIB_SRC=stab_main.c stab_filter.c stab_ra.c stab_rg.c stab_sim.c
+
+LIB_OBJ = $(LIB_SRC:.c=.o)
+
+%.o: %.c
+	$(GLOBAL_CC) -c -I. $*.c $(GLOBAL_CFLAGS)
+
+lib-pc: $(LIB_OBJ)
+	ar rvs ../lib/libstab.a $(LIB_OBJ)
+	
+lib-mega: $(LIB_OBJ)
+	@echo Objects: $(LIB_OBJ)
+	avr-ar rvs ../lib/libstab.a $(LIB_OBJ)
+	
+clean:
+	rm -f *.o
+	
+##########################################################################
+
+
+
+
+
+
+
 # #######################################################################
 # Makefile for inclusion by other projects
 #   heavily copied from original libarduino sources
@@ -31,12 +58,10 @@ USB_PORT=/dev/tty.usbmodem411
 #########################################################################
 
 # the speed that corresponds to your arduino (normally 16MHz)
-F_CPU=16000000
+#F_CPU=16000000
 #F_CPU=8000000
 
-PROG=stab
-SRC=stab_main.c stab_filter.c stab_ra.c stab_rg.c stab_sim.c
-
+#PROG=prog
 #OBJ=bin/*.o
 
 #mega: MMCU=atmega2560
@@ -72,25 +97,6 @@ SRC=stab_main.c stab_filter.c stab_ra.c stab_rg.c stab_sim.c
 #	cd bin && avr-objcopy -O srec $(PROG).elf $(PROG).rom
 ##	checksize $(PROG).elf
 #	avrdude -p $(MMCU) -P $(USB_PORT) -c $(STK) -b $(BAUD) -F -u -U flash:w:bin/$(PROG).rom
-
-
-########################### Added by jogr 110413 #########################
-OBJ = $(SRC:.c=.o)
-
-%.o: %.c
-	$(GLOBAL_CC) -c -I. $*.c $(GLOBAL_CFLAGS)
-
-lib-pc: $(OBJ)
-	ar rvs ../lib/libstab.a $(OBJ)
-	
-lib-mega: $(OBJ)
-	@echo Objects: $(OBJ)
-	avr-ar rvs ../lib/libstab.a $(OBJ)
-	
-clean:
-	rm -f *.o
-	
-##########################################################################
 
 
 #mega: clean install

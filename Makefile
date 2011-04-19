@@ -61,7 +61,7 @@ PROG=prog
 ##  only include libs that work for all targets for that system here!
 BASIC_LIBS=-Lstab/lib -Lsched/lib -Lmoto/lib -Llib -lsched -lstab -lmoto -lm
 
-##  Set paths to headers
+##  Set paths to headers used by code on the basic system
 BASIC_INCLUDES=-I../../stab/src -I../../moto/src -I../../include
 
 ##  Free of charge
@@ -70,7 +70,7 @@ EXTRA_FLAGS=
 ##  Name of micro controller
 MMCU=atmega2560
 
-##  Specify "corelib" to be linked, "coremega" or "coreuno" depending on board
+##  Specify what "corelib" to be linked, "coremega" or "coreuno" depending on board
 CORE_LIB=coremega
 
 ##  cpu speed
@@ -86,9 +86,6 @@ BAUD=115200
 export GLOBAL_CFLAGS
 export GLOBAL_CC
 
-##  Linker flags for Arduino
-LDFLAGS_ARDUINO=-Os -Wl,--gc-sections -mmcu=$(MMCU)
-
 ##  PC specific flags
 PC_FLAGS=-DPC
 
@@ -100,6 +97,9 @@ ARDUINO_FLAGS=-Os -w -fno-exceptions -ffunction-sections -fdata-sections -mmcu=$
 
 ##  Debug flags for Arduino
 DEBUG_FLAGS_ARDUINO=-g -DDEBUG
+
+##  Linker flags for Arduino
+LDFLAGS_ARDUINO=-Os -Wl,--gc-sections -mmcu=$(MMCU)
 
 
 ## pc-targets ###############################################################
@@ -124,7 +124,7 @@ pc-dbg:
 
 
 ## mega-targets #############################################################
-mega: BASIC_LIBS+=-l$(CORE_LIB)  ## add the arduino-specific lib to LIBS
+mega: BASIC_LIBS+=-l$(CORE_LIB)  ## add the arduino-specific lib to BASIC_LIBS
 mega: GLOBAL_CC=avr-g++
 mega: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS) $(EXTRA_FLAGS) $(BASIC_INCLUDES)
 mega:
@@ -142,7 +142,7 @@ mega:
 	avr-objcopy -O srec $(PROG).elf $(PROG).rom
 
 
-mega-dbg: BASIC_LIBS+=-l$(CORE_LIB)  ## add the arduino-specific lib to LIBS
+mega-dbg: BASIC_LIBS+=-l$(CORE_LIB)  ## add the arduino-specific lib to BASIC_LIBS
 mega-dbg: GLOBAL_CC=avr-g++
 mega-dbg: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS) $(EXTRA_FLAGS) $(BASIC_INCLUDES) $(DEBUG_FLAGS_ARDUINO)
 mega-dbg:

@@ -1,3 +1,30 @@
+
+########################### Added by jogr 110413 #########################
+
+LIB_SRC=moto_driver_functions.c moto_interface.c moto_msg_handler.c moto_msg_manipulation.c
+
+LIB_OBJ = $(LIB_SRC:.c=.o)
+
+%.o: %.c
+	$(GLOBAL_CC) -c -I. $*.c $(GLOBAL_CFLAGS)
+
+lib-pc: $(LIB_OBJ)
+	ar rvs ../lib/libmoto.a $(LIB_OBJ)
+	
+lib-mega: $(LIB_OBJ)
+	@echo Objects: $(LIB_OBJ)
+	avr-ar rvs ../lib/libmoto.a $(LIB_OBJ)
+	
+clean:
+	rm -f *.o
+	
+##########################################################################
+
+
+
+
+
+
 # #######################################################################
 # Makefile for inclusion by other projects
 #   heavily copied from original libarduino sources
@@ -31,12 +58,10 @@ USB_PORT=/dev/tty.usbmodem411
 #########################################################################
 
 # the speed that corresponds to your arduino (normally 16MHz)
-F_CPU=16000000
+#F_CPU=16000000
 #F_CPU=8000000
 
-PROG=moto
-SRC=moto_driver_functions.c moto_interface.c moto_msg_handler.c moto_msg_manipulation.c
-
+#PROG=prog
 #OBJ=bin/*.o
 
 #mega: MMCU=atmega2560
@@ -72,25 +97,6 @@ SRC=moto_driver_functions.c moto_interface.c moto_msg_handler.c moto_msg_manipul
 #	cd bin && avr-objcopy -O srec $(PROG).elf $(PROG).rom
 ##	checksize $(PROG).elf
 #	avrdude -p $(MMCU) -P $(USB_PORT) -c $(STK) -b $(BAUD) -F -u -U flash:w:bin/$(PROG).rom
-
-
-########################### Added by jogr 110413 #########################
-OBJ = $(SRC:.c=.o)
-
-%.o: %.c
-	$(GLOBAL_CC) -c -I. $*.c $(GLOBAL_CFLAGS)
-
-lib-pc: $(OBJ)
-	ar rvs ../lib/libmoto.a $(OBJ)
-	
-lib-mega: $(OBJ)
-	@echo Objects: $(OBJ)
-	avr-ar rvs ../lib/libmoto.a $(OBJ)
-	
-clean:
-	rm -f *.o
-	
-##########################################################################
 
 
 #mega: clean install
