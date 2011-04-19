@@ -28,7 +28,7 @@ unsigned char* moving_closer (int* irDistances)
 {
   
   //an array of 4 values 0 or 1, to be returned
-  unsigned char *movements = calloc(4, sizeof(unsigned char) );
+  unsigned char *movements = ( unsigned char *)calloc(4, sizeof(unsigned char) );
 
  unsigned char i;
   for(i = 0; i < 4; i++)
