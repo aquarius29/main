@@ -11,7 +11,7 @@
 #include "ca_header.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <WProgram.h>
+#include "WProgram.h"
 
 #ifdef ARDUINO
 //************************************************************

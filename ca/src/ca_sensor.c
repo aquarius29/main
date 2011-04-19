@@ -10,9 +10,9 @@
 //#define ENABLE_LIBARDUINO
 
 #ifdef ARDUINO
-#include <WProgram.h>
+#include "WProgram.h"
 #include <stdio.h>
-#include <math.h>
+//#include <math.h>
 #include "ca_header.h"
 
 
