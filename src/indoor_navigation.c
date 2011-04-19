@@ -11,22 +11,45 @@
 #define PRECISION 5
 #define SLEEP_DURATION (0.3 * 1000000000)
 static int count, running;
-static dijkstra_route route;
+static position_list route;
 static progressive_route current;
+static int map[MAP_Y][MAP_X] = {
+{5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},	// 0
+{5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5},
+{5, 1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 5},
+{5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 5},
+{5, 1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 5},	// 4
+{5, 1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 5},
+{5, 1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 5},
+{5, 5, 5, 5, 5, 5, 1, 5, 5, 1, 1, 5},
+{5, 1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 5},	// 8
+{5, 1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 5},
+{5, 1, 1, 1, 1, 1, 5, 5, 5, 1, 1, 5},
+{5, 1, 1, 1, 1, 1, 5, 1, 1, 1, 1, 5},
+{5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5},	// 12
+{5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5}
+};
 
 //Send start and end point received from UI
 //to Dijkstra calculation.
 void init_path(position start, position end){
+	int counterUp;
 	running = 1;
-	route = Dijkstra(&start, &end);
-	current.path = realloc(current.path,sizeof(position) * 2);
 	count = 1;
 	current.num = 1;
-	current.path[0] = route.path[0];
-	current.ending_point = route.path[route.num-1];
-	current.current_destination = route.path[count];
-	current.current_point = route.path[0];
-	navigate_path();
+	route = indoor_dijkstra(&start, &end, map);
+		for(counterUp = 0; counterUp < route.num; counterUp++)
+		{
+			printf("final.x: %f ", route.list[counterUp].lon);
+			printf("final.Y: %f\n", route.list[counterUp].lat);
+		}
+		printf("num: %d\n", route.num);
+		current.path = realloc(current.path,sizeof(point) * 2);
+		current.path[0] = route.list[0];
+		current.ending_point = route.list[route.num-1];
+		current.current_destination = route.list[count];
+		current.current_point = route.list[0];
+		navigate_path();
 }
 void send_direction(double *angle){
 	//Tell movement which way we need to move.
@@ -37,14 +60,14 @@ void send_distance(double *distance){
 	//so UI can display it.
 	printf("Go for %.5f cm.\n", *distance);
 }
-void send_position(position *pos){
+void send_position(point *pos){
 	printf("Longitude = %f\nLatitude = %f\n", pos->lon, pos->lat);
 }
 void send_stop(){
 	//Tell movement to stop (for when we arrive at destination).
 	printf("Destination reached.\n");
 }
-void send_ui_info(position *path){
+void send_ui_info(point *path){
 	//Give ui the path they should draw.
 }
 void reset_timer() {
@@ -57,7 +80,7 @@ void compare_tile(){
 	current.path[current.num] = current.current_point;
 	current.path[current.num].angle = current.current_destination.angle;
 	current.num++;
-	current.path = realloc(current.path, sizeof(position) *
+	current.path = realloc(current.path, sizeof(point) *
 	(current.num+1));
     	if(current.path == NULL){
     		printf("!!!!!\n");
@@ -66,23 +89,28 @@ void compare_tile(){
 	}
 }
 void recalc(){
-	route = Dijkstra(&current.path[current.num-1], &current.ending_point);
+	position a, b;
+	a.x = (current.path[current.num-1].lon/CENTIMETRES_PER_TILE) - TILE_CENTER;
+	a.y = (current.path[current.num-1].lat/CENTIMETRES_PER_TILE) - TILE_CENTER;
+	b.x = (current.ending_point.lon/CENTIMETRES_PER_TILE) - TILE_CENTER;
+	b.y = (current.ending_point.lat/CENTIMETRES_PER_TILE) - TILE_CENTER;
+	route = indoor_dijkstra(&a, &b, map);
 	count=1;
-	current.current_destination = route.path[count];
+	current.current_destination = route.list[count];
 	running = 1;
 	navigate_path();
 }
 void collision_avoided(double direction, struct timeval time){
 	running = 0;
 	current.timer = time;
-	free(route.path);
+	free(route.list);
 	compare_tile();
 	current.current_destination.angle = direction;
 	update_position(&current);
 	compare_tile();
 	recalc();
 }
-int check(position a, position b){
+int check(point a, point b){
 	double diff_x, diff_y;
 	diff_x = fabs(a.lon - b.lon);
 	diff_y = fabs(a.lat - b.lat);
@@ -112,7 +140,7 @@ void navigate_path(){
 				current.path[current.num] = current.current_destination;
 				current.num++;
 				count++;
-				current.path = realloc(current.path, sizeof(position) * (current.num+1));
+				current.path = realloc(current.path, sizeof(point) * (current.num+1));
 			    	if(current.path == NULL){
 			    		printf("!!!!!\n");
 			    		send_stop();
@@ -120,7 +148,7 @@ void navigate_path(){
 				send_stop();
 				bool = 0;
 				free(current.path);
-				free(route.path);
+				free(route.list);
 				break;
 			}
 			else{
@@ -128,12 +156,12 @@ void navigate_path(){
 			   current.num++;
 			   count++;
 			   printf("%d\n", sizeof(position) * (current.num+1));
-			   current.path = realloc(current.path, sizeof(position) * (current.num+1));
+			   current.path = realloc(current.path, sizeof(point) * (current.num+1));
 			    	if(current.path == NULL){
 			    		printf("!!!!!\n");
 			    		send_stop();
 			    	}
-			   current.current_destination = route.path[count];
+			   current.current_destination = route.list[count];
 			   bool = 1;
 			   break;
 			}
@@ -146,10 +174,10 @@ void navigate_path(){
 }
 int main(){
 	position a, b;
-	a.lon = 1;
-	a.lat = 1;
-	b.lon = 9;
-	b.lat = 5;
+	a.x = 1;
+	a.y = 1;
+	b.x = 9;
+	b.y = 5;
 	init_path(a, b);
 	return 1;
 }
