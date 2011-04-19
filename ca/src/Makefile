@@ -1,6 +1,6 @@
 ########################### Added by jogr 110413 #########################
 
-LIB_SRC=ca_interface.c ca_logic.c ca_main.c ca_object_calculations.c ca_sensors.c
+LIB_SRC=ca_interface.c ca_logic.c ca_main.c ca_object_calculations.c ca_sensor.c
 
 LIB_OBJ = $(LIB_SRC:.c=.o)
 
