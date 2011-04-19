@@ -16,18 +16,18 @@
 #include <stdint.h>
 
 
-#ifdef CA
-/* stabilization groups header here */
-/* #include "../../ca/src/ca_sched.h" */
-
-#else
-
-/* dummy interface for stabilization code */
-int16_t caInit(void);
-/* dummy interface for stabilization code */
-int16_t caRun(void);
-
-#endif /* CA */
+// #ifdef CA
+// /* stabilization groups header here */
+// /* #include "../../ca/src/ca_sched.h" */
+// 
+// #else
+// 
+// /* dummy interface for stabilization code */
+// int16_t caInit(void);
+// /* dummy interface for stabilization code */
+// int16_t caRun(void);
+// 
+// #endif /* CA */
 
 
 #ifdef MOVE

@@ -4,6 +4,7 @@
 
 #include "moto_interface.h"
 #include "stab_interface.h" /* tell these guys to rename their interface! */
+#include "ca_header.h" /* remember to change this! */
 #include "sched_stubs.h"
 
 #ifdef PC
@@ -28,7 +29,7 @@ void sched_naive_init(void){
     /* function pointers to modules init functions */
     Fun_t funArrInit[] = {  &protoInit,
                             &moveInit,
-                            &caInit,
+                            &collision_init,
                             &stab_init,
                             &filterInit,
                             &moto_init };
@@ -37,7 +38,7 @@ void sched_naive_init(void){
     Fun_t funArrRun[] = {   &protoRun,
                             &moveRun,
                             &protoRun,
-                            &caRun,
+                            &collision_run,
                             &protoRun,
                             &stab_run,
                             &protoRun,

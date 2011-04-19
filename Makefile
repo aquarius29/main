@@ -213,6 +213,9 @@ clean:
 	cd mov/src && $(MAKE) clean
 	cd mov/lib && rm *.a
 
+	cd ca/src && $(MAKE) clean
+	cd ca/lib && rm *.a
+
 	rm -f $(PROG) $(PROG).elf $(PROG).rom *.o *.map
 
 	
