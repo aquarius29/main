@@ -83,11 +83,3 @@ int collision_run(void)
 
 
 #endif
-
-
-int main(void){
-
-  collision_run();
-  return 1;
-
-}
