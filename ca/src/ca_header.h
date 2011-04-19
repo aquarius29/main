@@ -6,6 +6,7 @@
  * Movement/CA Group
  *****************************************************************************/
 
+#include <stdint.h>
 
 /*******************
  * ca_logic.c
@@ -66,7 +67,7 @@ int get_dir(void);
  * ca_sensor.c
  *******************/
 #ifdef ARDUINO
-int ir_distance(int irpin);
+uint8_t ir_distance(int irpin);
 /* float sonar_distance(int sonarPin); */
 #endif
 

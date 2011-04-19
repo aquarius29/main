@@ -99,7 +99,7 @@ ARDUINO_FLAGS=-Os -w -fno-exceptions -ffunction-sections -fdata-sections -mmcu=$
 DEBUG_FLAGS_ARDUINO=-g -DDEBUG
 
 ##  Linker flags for Arduino
-LDFLAGS_ARDUINO=-Os -Wl,--gc-sections -mmcu=$(MMCU)
+LDFLAGS_ARDUINO=-Os -lm -Wl,--gc-sections -mmcu=$(MMCU)
 
 
 ## pc-targets ###############################################################
