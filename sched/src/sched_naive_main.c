@@ -13,7 +13,7 @@
  */
 
 #ifdef ARDUINO
-#include <WProgram.h>
+#include "WProgram.h"
 #endif /* ARDUINO */
 
 #include "sched_interface.h"

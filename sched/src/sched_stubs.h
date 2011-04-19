@@ -30,22 +30,6 @@ int16_t caRun(void);
 #endif /* CA */
 
 
-#ifdef STAB
-/* stabilization groups header here */
-//#include "../../stab/src/stab_sched.h"
-#include "stab_sched.h"
-
-
-#else
-
-/* dummy interface for stabilization code */
-int16_t stab_init(void);
-/* dummy interface for stabilization code */
-int16_t stab_run(void);
-
-#endif /* STAB */
-
-
 #ifdef MOVE
 /* stabilization groups header here */
 /* #include "../../ca/src/ca_sched.h" */

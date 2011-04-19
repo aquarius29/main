@@ -1,31 +1,19 @@
 
-/*!
- *  @file sched_naive_sched.c
- *
- *  @brief The naive schedulers main code
- *
- *  @author Joakim
- *  @date 2011-04-16
- *  @history    2011-04-10 - wrote original code
- *              2011-04-14 - added Doxygen comments
- *
- *  @details This code was written together with Justin and Sabah \n
- */
-
+#include <stdlib.h>
 #include <stdint.h>
+
+#include "moto_interface.h"
+#include "stab_interface.h" /* tell these guys to rename their interface! */
+#include "sched_stubs.h"
 
 #ifdef PC
 /* non-arduino includes */
 #include <stdio.h>
-#include <stdlib.h>
 
-/* header file for group code stubs here */
-#include "sched_stubs.h"
-#include "moto_interface.h"
 #endif /* PC */
 
 #ifdef ARDUINO
-/* header files for other groups interfaces here */
+
 #endif /* ARDUINO */
 
 #include "sched_naive_sched.h"
@@ -62,14 +50,14 @@ void sched_naive_init(void){
         /* something went wrong during system initialization */
         #ifdef PC
             printf("Error in system initialization sequence!\n");
-            exit(EXIT_FAILURE);
+            exit(1);
         #endif /* PC */
         #ifdef ARDUINO
             /*  
              *  Do we have a way to give fatal error message on arduino,
              *  and exit? 
              */
-            exit(EXIT_FAILURE);
+            exit(1);
             
         #endif /* ARDUINO */
     }
