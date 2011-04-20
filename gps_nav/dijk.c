@@ -355,6 +355,9 @@ void deallocate_link(struct link *list)
 }
 
 
+
+
+
 void deallocate_trac(struct trac *list)
 {
 	struct trac *head = NULL,*curr = NULL;
@@ -369,6 +372,7 @@ void deallocate_trac(struct trac *list)
 }
 
 
+        
 
 
 struct trac* calculate(char startp,char endp,struct link* lk)

@@ -1,3 +1,6 @@
+#ifndef DIJK_H
+#define DIJK_H
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -30,4 +33,6 @@ void deallocate_link(struct link *list);
 void deallocate_trac(struct trac *list);
 
 struct trac* calculate(char startp,char endp,struct link* lk);
+
+#endif
 

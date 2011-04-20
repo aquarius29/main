@@ -1,3 +1,6 @@
+#ifndef PN
+#define PN
+
 #include <math.h>
 #include <stdlib.h>
 
@@ -21,3 +24,4 @@ struct dist* pnode(struct point start, struct point dest, struct point* node, ch
 
 double in_degree(double input);
 
+#endif

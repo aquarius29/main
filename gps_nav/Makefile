@@ -1,5 +1,5 @@
 BIN=outdoor_nav
-SRC=gps_nav.c dijk.c pn.c
+SRC=gps_nav.c dijk.c pn.c serial.c parser.c
 
 
 $(BIN): $(SRC) 

@@ -1,3 +1,14 @@
+/*
+
+	outdoor_structure.h: define some data structure for outdoor nav system.
+	Author: Qiushi Wang
+	Date: April 15th,2011
+
+*/
+
+#ifndef OUTDOOR_STRUCTURE
+#define OUTDOOR_STRUCTURE
+
 struct point
 {
 	char name;
@@ -26,4 +37,4 @@ struct dist
 	double distance;
 };
 
-
+#endif
