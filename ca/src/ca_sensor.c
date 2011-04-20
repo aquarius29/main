@@ -1,20 +1,17 @@
   /*****************************************************************************
   * Product: collision_sensor.c
   * Version: 0.1
-  * Creators: Jin
   * Created: March 30 2011
   * History:
   *
   * Movement/CA Group
   *****************************************************************************/
-//#define ENABLE_LIBARDUINO
 
 #ifdef ARDUINO
 #include "WProgram.h"
 #include <stdio.h>
-//#include <math.h>
-#include "ca_header.h"
-#include <stdint.h>
+#include <math.h>
+#include "ca_interface.h"
 
 
 uint8_t ir_distance(int irpin)
@@ -33,32 +30,23 @@ uint8_t ir_distance(int irpin)
 }
 
 
-/* float sonar_distance(int sonarPin) */
-/* { */
-/*   // establish variables for duration of the ping, */
-/*   // and the distance result in inches and centimeters: */
-/*   long duration; */
+ float sonar_distance(int sonarPin) 
+{
+  /* long duration; */
 
-/*   // The PING))) is triggered by a HIGH pulse of 2 or more microseconds. */
-/*   // Give a short LOW pulse beforehand to ensure a clean HIGH pulse: */
-/*   pinMode(sonarPin, OUTPUT); */
-/*   digitalWrite(sonarPin, LOW); */
-/*   _delay_ms(2); */
-/*   digitalWrite(sonarPin, HIGH); */
-/*   _delay_ms(5); */
-/*   digitalWrite(sonarPin, LOW); */
+  /* pinMode(sonarPin, OUTPUT); */
+  /* digitalWrite(sonarPin, LOW); */
+  /* _delay_ms(2); */
+  /* digitalWrite(sonarPin, HIGH); */
+  /* _delay_ms(5); */
+  /* digitalWrite(sonarPin, LOW); */
 
-/*   // The same pin is used to read the signal from the PING))): a HIGH */
-/*   // pulse whose duration is the time (in microseconds) from the sending */
-/*   // of the ping to the reception of its echo off of an object. */
-/*   pinMode(sonarPin, INPUT); */
-/*   duration = pulseIn(sonarPin, HIGH); */
+  /* pinMode(sonarPin, INPUT); */
+  /* duration = pulseIn(sonarPin, HIGH); */
 
-/*   // The speed of sound is 340 m/s or 29 microseconds per centimeter. */
-/*   // The ping travels out and back, so to find the distance of the */
-/*   // object we take half of the distance travelled. */
-/*   float distance= duration/29/2; */
+  /* float distance= duration/29/2; */
 
-/*   return distance; */
-/* } */
+  /* return distance; */
+  return 1;
+}
 #endif

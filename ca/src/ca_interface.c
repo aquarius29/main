@@ -7,18 +7,18 @@
  *
  * Movement/CA Group
  *****************************************************************************/
-
-#include "ca_header.h"
+#include "ca_interface.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include "WProgram.h"
 
 #ifdef ARDUINO
+#include <WProgram.h>
+
 //************************************************************
 // ARDUINO
 // All collision preperation goes here.
 //************************************************************
-int collision_init(void)
+int ca_init(void)
 {
   return 1;
 }
@@ -28,7 +28,7 @@ int collision_init(void)
 // ARDUINO
 // Collision is started here
 //************************************************************
-int collision_run(void)
+int ca_run(void)
 {
   init();
 
@@ -53,7 +53,7 @@ int collision_run(void)
 // PC
 //  All movement preperation goes here.
 //************************************************************
-int collision_init(void)
+int ca_init(void)
 {
   
 
@@ -66,7 +66,7 @@ int collision_init(void)
 // PC
 // Movement is started here
 //************************************************************
-int collision_run(void)
+int ca_run(void)
 {
 
   int ir1=100;
@@ -84,11 +84,3 @@ int collision_run(void)
 
 
 #endif
-
-
-/* int main(int argc, char *argv[]) */
-/* { */
-/*   collision_run(); */
-/*   return 0; */
-/* } */
-
