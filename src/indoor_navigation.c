@@ -49,7 +49,7 @@ void init_path(position start, position end){
 		current.ending_point = route.list[route.num-1];
 		current.current_destination = route.list[count];
 		current.current_point = route.list[0];
-		navigate_path();
+		//navigate_path();
 }
 void send_direction(double *angle){
 	//Tell movement which way we need to move.
@@ -74,8 +74,10 @@ void reset_timer() {
 	gettimeofday(&current.timer, NULL);
 }
 void compare_tile(){
-	if((int)(current.current_point.lon) != (int)(current.path[current.num-1].lon)
-	|| (int)(current.current_point.lat) != (int)(current.path[current.num-1].lat))
+	if((current.current_point.lon - TILE_CENTER)/CENTIMETRES_PER_TILE
+	!= (current.path[current.num-1].lon - TILE_CENTER)/CENTIMETRES_PER_TILE
+	|| (current.current_point.lat - TILE_CENTER)/CENTIMETRES_PER_TILE
+	!= (current.path[current.num-1].lat - TILE_CENTER)/CENTIMETRES_PER_TILE)
 	{
 	current.path[current.num] = current.current_point;
 	current.path[current.num].angle = current.current_destination.angle;
@@ -90,10 +92,10 @@ void compare_tile(){
 }
 void recalc(){
 	position a, b;
-	a.x = (current.path[current.num-1].lon/CENTIMETRES_PER_TILE) - TILE_CENTER;
-	a.y = (current.path[current.num-1].lat/CENTIMETRES_PER_TILE) - TILE_CENTER;
-	b.x = (current.ending_point.lon/CENTIMETRES_PER_TILE) - TILE_CENTER;
-	b.y = (current.ending_point.lat/CENTIMETRES_PER_TILE) - TILE_CENTER;
+	a.x = (current.path[current.num-1].lon - TILE_CENTER) / CENTIMETRES_PER_TILE;
+	a.y = (current.path[current.num-1].lat - TILE_CENTER) / CENTIMETRES_PER_TILE;
+	b.x = (current.ending_point.lon - TILE_CENTER) / CENTIMETRES_PER_TILE;
+	b.y = (current.ending_point.lat - TILE_CENTER) / CENTIMETRES_PER_TILE;
 	route = indoor_dijkstra(&a, &b, map);
 	count=1;
 	current.current_destination = route.list[count];
