@@ -186,8 +186,8 @@ position_list CreateFinalList(nodeList * closed, const position * goal, const po
 	point temp;  // used to reverse the final list
 	int counterUp, counterDown, closedIndex;
 	final.list = calloc(closed->count, sizeof(point));
-	final.list[0].lon = (double)((goal->x + TILE_CENTER) * CENTIMETRES_PER_TILE);
-	final.list[0].lat = (double)((goal->y + TILE_CENTER) * CENTIMETRES_PER_TILE);
+	final.list[0].lon = (double)((goal->x * CENTIMETRES_PER_TILE) + TILE_CENTER);
+	final.list[0].lat = (double)((goal->y * CENTIMETRES_PER_TILE) + TILE_CENTER);
 	final.num++;
 
 	closedIndex = closed->count - 1;
@@ -200,19 +200,22 @@ position_list CreateFinalList(nodeList * closed, const position * goal, const po
 		closedIndex = NodeInClosed(&closed->list[closedIndex].previous.y,
 		&closed->list[closedIndex].previous.x, closed) - 1;
 
-		final.list[counterUp].lon = (double)((closed->list[closedIndex].pos.x + TILE_CENTER) * CENTIMETRES_PER_TILE);
-		final.list[counterUp].lat = (double)((closed->list[closedIndex].pos.y + TILE_CENTER) * CENTIMETRES_PER_TILE);;
+		final.list[counterUp].lon = (double)(closed->list[closedIndex].pos.x
+		* CENTIMETRES_PER_TILE + TILE_CENTER);
+		final.list[counterUp].lat = (double)(closed->list[closedIndex].pos.y
+		* CENTIMETRES_PER_TILE + TILE_CENTER);
 		final.num++;
 
 		// When the drone node is found in the closed list we stop looping
-		if((int)(final.list[counterUp].lat) == drone->y
-				&& (int)(final.list[counterUp].lon) == drone->x) {
+		if((int)((final.list[counterUp].lat - TILE_CENTER) / CENTIMETRES_PER_TILE) == drone->y
+			&& (int)((final.list[counterUp].lon - TILE_CENTER) / CENTIMETRES_PER_TILE) == drone->x)
+		{
 			break;
 		}
 	}
 
 	// Reverse the final list to get the nodes in the right order
-	for(counterUp = 0, counterDown = final.num /2;
+	for(counterUp = 0, counterDown = final.num-1;
 			counterUp < counterDown; counterUp++, counterDown--)
 	{
 		temp = final.list[counterUp];
@@ -221,8 +224,8 @@ position_list CreateFinalList(nodeList * closed, const position * goal, const po
 	}
 
 	// Free node space that is not needed
-	final.list = realloc(final.list, (final.num/2 + 1) * sizeof(point));
-	final.num = final.num/2 + 1;
+	final.list = realloc(final.list, (final.num) * sizeof(point));
+	//final.num = final.num/2 + 1;
 	return final;
 }
 

@@ -14,7 +14,7 @@
 #define MAP_X 12
 #define NUM_ADJACENT 8
 #define CENTIMETRES_PER_TILE 108
-#define TILE_CENTER 0.54
+#define TILE_CENTER (CENTIMETRES_PER_TILE/2)
 #define NUM_ADJACENT 8
 
 typedef struct{
