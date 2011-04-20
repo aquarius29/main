@@ -3,6 +3,7 @@
 
 # Specific files
 #################
+main.c
 src/main.c
 .gitignore~
 Makefile~
