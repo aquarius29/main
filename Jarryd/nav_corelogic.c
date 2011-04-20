@@ -13,10 +13,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
-#include "CoreLogic.h"
-#include "TMXParser.c"
-
-
+#include "nav_corelogic.h"
+#include "tmxparser.c"
 
 //#include "movementCommands.h"
 

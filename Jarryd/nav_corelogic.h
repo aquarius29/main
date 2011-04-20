@@ -2,8 +2,8 @@
 * Author: Jarryd Hall
 */
 
-#include "Tilemap.h"
-#include "movementCommands.h"
+#include "tilemap.h"
+#include "movementcommands.h"
 #include "gps_nav.h"
 
 #ifndef CORELOGIC_H

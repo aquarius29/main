@@ -11,7 +11,7 @@
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
 #include <libxml/xpath.h>
-#include "Tilemap.h"
+#include "tilemap.h"
 
 xmlXPathObjectPtr retrieveXmlnodeset (xmlDocPtr doc, xmlChar *xpath)
 {
@@ -97,7 +97,7 @@ void getTileDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 	int numMovableTiles = 0;
 	int numCollisionTiles = 0;
 	int totalTiles = 0;
-	int tileValuesArray [width + height]; 
+	int tileValuesArray [width * height]; 
 	int arrayCounter = 0;
 	
 	result = retrieveXmlnodeset (doc, xpath);
@@ -113,12 +113,16 @@ void getTileDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 			
 			if (id == 0)
 			{
+				printf("ArrayCounter is %d\n", arrayCounter);
 				tileValuesArray[arrayCounter] = 0;
 				arrayCounter++;
+				
 				numMovableTiles += 1;
+				printf("Collision tile id : %d for index: %d\n", id, index);
 			}
 			if (id != 0)
 			{
+				printf("ArrayCounter is %d\n", arrayCounter);
 				tileValuesArray[arrayCounter] = 1;
 				arrayCounter++;
 				numCollisionTiles += 1;			
@@ -145,14 +149,18 @@ void createTwoDArray(ThreeDWorld *world, int w, int h, int array[])
 {
 	int one;
 	int two;
+	int arrayCounter = 0;
+	
 	for(one = 0; one < h; one++)
 	{
 		for(two = 0; two < w; two++)
 		{
-			world->representation[one][two] = array[one + two];
-			printf("tile at [%d][%d] is %d", one, two, world->representation[one][two]);
+			//printf("Value in tile array is %d\n", array[one + two]);
+			world->representation[one][two] = array[arrayCounter];
+				printf("  %d", world->representation[one][two]);
 			if(two == 9)
 				printf("\n");	
+			arrayCounter++;
 		}
 	}
 }
