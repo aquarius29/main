@@ -9,14 +9,19 @@ stab_qc() -> adjust all motors
 float d_pitch;
 float d_roll;
 float d_yaw;
+float data.height;
+
 // data from the sensors
 float s_pitch;
 float s_roll;
 float s_yaw;
+float sensor.height;
+
 // dif. data
 float  dif_pitch;
 float  dif_roll;
 float  dif_yaw;
+float  dif_height;
 
 int flag = 0;
 
@@ -103,7 +108,7 @@ desired_roll();
 void ascend()
 {
 	stab_qc();
-	dif_height = d_height - s_desired;
+	dif_height = data.height - sensor.desired;
 	while (dif_height > 0){
 		motor(1,1,1,1);
 		dif_height--;
@@ -114,10 +119,11 @@ void ascend()
 void descend()
 {
 	stab_qc();
-	dif_height = d_height - s_desired;
+	dif_height = data.height - sensor.desired;
 	while (dif_height < 0){
 		motor(-1,-1-,-1,-1);
 		dif_height++;
 	}
+
 }
 
