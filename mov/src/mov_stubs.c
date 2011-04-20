@@ -1,4 +1,13 @@
 
+/*!
+ *  @file mov_stubs.c
+ *
+ *  @brief Stub code for movements run and init functions
+ *
+ *  @author Joakim
+ *  @date 2011-04-20
+ *  @history    2011-04-20 - added this file
+ */
 
 
 #include <stdint.h>
