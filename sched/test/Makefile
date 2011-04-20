@@ -1,9 +1,9 @@
-SRCDIR=../src/arduino/robin_impl_src
+SRCDIR=../src/arduino/batman_impl
 SRC=$(SRCDIR)/sched_scheduler.c  $(SRCDIR)/sched_stubs.c 
 TESTSRC=test_scheduler_h.c $(SRC)
 
 default:
-	@echo "--- test Robin compilation ----------------------------"
+	@echo "--- test batman compilation -----------------------------"
 	@echo "make test    runs test suite"
 	@echo " "
 	@echo "--- Cleaning up -----------------------------------------"

@@ -1,3 +1,19 @@
+/*!
+*   @file sched_scheduler.h
+*
+*   @brief Header file for the batman scheduler's main functions.
+*
+*   @author Anders Treptow
+*   @date 2011-04-19
+*
+*   @history    2011-03-29 wrote prototype
+*               2011-04-04 created process structure
+*               2011-04-10 created processData structure
+*               2011-04-11 all enqueueing written
+*               2011-04-16 time-constraints implemented
+*               2011-04-19 added Doxygen comments
+*/
+
 #ifndef __sched_scheduler_h_
 #define __sched_scheduler_h_
 

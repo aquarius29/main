@@ -1,3 +1,19 @@
+/*!
+*   @file sched_scheduler.c
+*   
+*   @brief Functions for the batman implementation scheduler.
+*
+*   @author Anders Treptow
+*   @date 2011-04-19
+*
+*   @history    2011-03-29 wrote prototype
+*               2011-04-04 created process structure
+*               2011-04-10 created processData structure
+*               2011-04-11 all enqueueing written
+*               2011-04-16 time-constraints implemented
+*               2011-04-19 added Doxygen comments
+*/
+
 #include <stdio.h>
 #include <malloc.h>
 #include <string.h>
@@ -57,10 +73,10 @@ void removeProcessTasks(Task *task)
 /* Enqueues a task to a structer at the last position of queue */
 void enqueueTask(Process *process, Task *task)
 {
-	Task *tmpTask = process->lastTask;
-	if(tmpTask != NULL)
+	Task *pTmpTask = process->lastTask;
+	if(pTmpTask != NULL)
 	{
-        tmpTask->nextTask = task;
+        pTmpTask->nextTask = task;
         process->lastTask = task;
 	}
 	else
@@ -81,11 +97,11 @@ void runIdleTask(Process *process)
 {
 	if(process->firstTask != NULL)
 	{
-		Task *tmpTask = process->idleTask;
-		Fun_t fp = tmpTask->functionPointer;
+		Task *pTmpTask = process->idleTask;
+		Fun_t fp = pTmpTask->functionPointer;
 
-		if(tmpTask->nextTask != NULL)
-			process->idleTask = tmpTask->nextTask;
+		if(pTmpTask->nextTask != NULL)
+			process->idleTask = pTmpTask->nextTask;
 		else
 			process->idleTask = process->firstTask;
 
@@ -239,17 +255,17 @@ void runProcess(int8_t processIndex)
 Task* peekProcess(Process *process, int16_t layer)
 {
     int8_t i;
-    Task *task = process->idleTask;
+    Task *pTask = process->idleTask;
     for(i = 0; i < layer; i++)
     {
-        if(task->nextTask != NULL)
+        if(pTask->nextTask != NULL)
         {
-            task = task->nextTask;
+            pTask = pTask->nextTask;
         }
         else
         {
-            task = process->firstTask;
+            pTask = process->firstTask;
         }
     }
-    return task;
+    return pTask;
 }

@@ -1,3 +1,15 @@
+/*!
+*   @file sched_main.c
+*   
+*   @brief Main scheduling loop.
+*
+*   @author Anders Treptow
+*   @date 2011-04-19
+*
+*   @history    2011-03-29 wrote prototype
+*               2011-04-12 updated process run structure
+*/
+
 #include <stdio.h>
 
 #ifdef PC
@@ -6,15 +18,11 @@
 
 #include "sched_scheduler.h"
 
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-
-void init(void){
+void init(void) {
     initProcessData();
 }
 
-void run(void){
+void run(void) {
     int k;
     ProcessData *processData = getProcessData();
     Process** processQueue = processData->ProcessQueue;
@@ -36,7 +44,5 @@ int main(void){
     init();
     run();
     cleanProcessData();
-    _CrtDumpMemoryLeaks();
-    getch();
     return 0;
 }

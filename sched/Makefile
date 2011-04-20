@@ -11,15 +11,15 @@ default:
 	@echo "--- Cleaning up : windows style -------------------------"
 	@echo "make windows_clean    recursively clean up subdirs"
 
-normal_robin:
-	cd src/arduino/robin_impl_src && $(MAKE) normal
+normal_batman:
+	cd src/arduino/batman_impl && $(MAKE) normal
 
 clean:
-	cd src/arduino/robin_impl_src && $(MAKE) clean
+	cd src/arduino/batman_impl_src && $(MAKE) clean
 
 windows_normal_robin:
-	cd src\arduino\Robin_impl_src && $(MAKE) windows_normal
+	cd src\arduino\batman_impl_src && $(MAKE) windows_normal
 
 windows_clean:
 	del *.exe
-	cd src\arduino\Robin_impl_src && $(MAKE) windows_clean
+	cd src\arduino\batman_impl_src && $(MAKE) windows_clean
