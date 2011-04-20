@@ -13,7 +13,7 @@
 #include <stdint.h>
 
 #include "mov_interface.h"
-/* include protocols interface here */
+#include "proto_mov_motor.h"
 
 static void initMega(void);
 static void runMega(void);
@@ -29,7 +29,7 @@ int16_t mov_init(void){
         initPC();
     #endif /* PC */
     
-    return 1;
+    return 0;
 }
 
 int16_t mov_run(void){
@@ -41,7 +41,7 @@ int16_t mov_run(void){
         runPC();
     #endif /* PC */
     
-    return 1;
+    return 0;
 }
 
 void initMega(void){
@@ -57,5 +57,9 @@ void runMega(void){
 }
 
 void runPC(void){
+    unsigned char message = 0;
+    
+    message = 0x10;
     /* send message to motor here */
+    write_motor(message);
 }

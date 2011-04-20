@@ -4,7 +4,8 @@
 
 #include "moto_interface.h"
 #include "stab_interface.h"
-#include "ca_interface.h" /* remember to change this! */
+#include "ca_interface.h"
+#include "mov_interface.h"
 #include "sched_stubs.h"
 
 #ifdef PC
@@ -28,7 +29,7 @@ static void naive_loop(Fun_t funArrRun[]);
 void sched_naive_init(void){
     /* function pointers to modules init functions */
     Fun_t funArrInit[] = {  &protoInit,
-                            &moveInit,
+                            &mov_init,
                             &ca_init,
                             &stab_init,
                             &filterInit,
@@ -36,7 +37,7 @@ void sched_naive_init(void){
     
     /* function pointers to modules run functions */
     Fun_t funArrRun[] = {   &protoRun,
-                            &moveRun,
+                            &mov_run,
                             &protoRun,
                             &ca_run,
                             &protoRun,
