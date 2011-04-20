@@ -1,7 +1,7 @@
 #include <stdint.h>
 /*
- *  Header file used as an interface for the scheduler
- *  Author: Adam Debbiche
+ *  @brief Header file used as an interface for the scheduler
+ *  @history Adam Debbiche
  */
 
 

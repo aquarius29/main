@@ -1,10 +1,10 @@
 /*************************************************************************
- *  File: filter.c
- * Description: combines the data from the sensors (gyroscope/accelerometer)
- *              in order to eliminate the noise/drift
- * Authors: Adam Debbiche & Yuwen He	       
- * Created: 05/04/2011
- * Log: 
+ * @file filter.c
+ * @brief combines the data from the sensors (gyroscope/accelerometer)
+ *        in order to eliminate the noise/drift
+ * @author Adam Debbiche & Yuwen He	       
+ * @date 05/04/2011
+ * @history 
  *    05/04/2011: Initial version
  *    06/04/2011: Added description and comments
  *    18/04/2011: Updated code to reflect coding standards
@@ -35,7 +35,6 @@
 void init_filter(void);
 float comp_filter(float acc_scal, float gyro_scal, float old_est);
 void convert_acce_raw_to_deg(float acc_x, float acc_y, float acc_z);
-float convert_gyro_raw_to_deg_s(float a);
 
 
 /************************************************************
@@ -81,19 +80,9 @@ void init_filter()
 
 
 /************************************************************
- * Converts the raw data from the gyroscope to the scaled value
- * in degrees/s
- ************************************************************/
-float convert_gyro_raw_to_deg_s(float a)
-{
-  return a / SSF;
-}
-
-
-/************************************************************
- *  Converts the raw data from the accelerometer to the scaled value 
- *  in degrees
- ************************************************************/
+* Converts the raw data from the accelerometer to the scaled value
+* in degrees
+************************************************************/
 void convert_acce_raw_to_deg(float acc_x, float acc_y, float acc_z)
 {
   float R = sqrt((acc_x*acc_x)*(acc_y*acc_y)*(acc_z*acc_z));
@@ -101,3 +90,6 @@ void convert_acce_raw_to_deg(float acc_x, float acc_y, float acc_z)
   acc_vector[1] = acos(acc_y/R);
   acc_vector[2] = acos(acc_z/R);
 }
+
+
+
