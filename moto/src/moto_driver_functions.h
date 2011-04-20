@@ -16,6 +16,7 @@
 #elif defined PC
    #include <stdio.h>
 #endif
+#include <stdint.h>
 
 #define NORMAL_INCREMENT 2
 #define PANIC_INCREMENT 4
@@ -27,10 +28,11 @@
 #define FRONT_MOTOR 4
 #define REAR_MOTOR 5
 
-extern unsigned char rightPulse;
-extern unsigned char leftPulse;
-extern unsigned char frontPulse;
-extern unsigned char rearPulse;
+extern uint16_t rightPulse;
+extern uint16_t leftPulse;
+extern uint16_t frontPulse;
+extern uint16_t rearPulse;
+
 
 /*Motor pulse modification*/
 void moto_startMotors(void);
@@ -68,3 +70,10 @@ void moto_decreaseFrontPanic(void);
 void moto_decreaseRearPanic(void);
 
 void printMotorStatus(void);
+
+struct pulses{
+    uint16_t right;
+    uint16_t left;
+    uint16_t front;
+    uint16_t rear;
+};

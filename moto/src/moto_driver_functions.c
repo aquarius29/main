@@ -20,13 +20,14 @@
 #endif
 
 #include "moto_driver_functions.h"
+#include <stdint.h>
 
 /* These are the variables keeping track of the  */
 /* current state (pulse width) of each motor. */
-unsigned char rightPulse;
-unsigned char leftPulse;
-unsigned char frontPulse;
-unsigned char rearPulse;
+uint16_t rightPulse;
+uint16_t leftPulse;
+uint16_t frontPulse;
+uint16_t rearPulse;
 
 /**
  * Function:    void moto_startMotors()
@@ -524,3 +525,10 @@ void printMotorStatus(void){
     /* PC code end */
 #endif
 }
+
+void sendMsg(void){
+    struct pulses currentPulse = 
+    {rightPulse, leftPulse, frontPulse, rearPulse};
+    /* send(currentPulse);  not sure how the send funcrion till look like */
+}
+

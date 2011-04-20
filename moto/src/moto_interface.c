@@ -15,6 +15,9 @@
    #include <stdio.h>
 #endif
 
+//#include "
+
+#include "proto_mov_motor.h"
 #include "moto_interface.h"
 #include "moto_msg_manipulation.h"
 #include "moto_driver_functions.h"
@@ -22,6 +25,7 @@
 
 msg binary;
 msg_pointer mp;
+unsigned char inputFromProto; 
 
 #ifdef ARDUINO
 /* Pins for testing */
@@ -37,6 +41,7 @@ int ledPin = 13;
  * @return int (0 if correctly carried out)
  */
 int moto_init(void){
+  moto_cyclesSinceLastMsg = 0;
   mp = &binary;
 #ifdef ARDUINO
   pinMode(ledPin, OUTPUT);
@@ -56,10 +61,32 @@ int moto_init(void){
  * @return int (0 if correctly carried out)
  */
 int moto_run(void){
+    moto_cyclesSinceLastMsg++;
 #ifdef ARDUINO
-  binary = INT_TO_BITFIELD(0xa3);
-  examineID(mp);
+    /* Uncomment to read the message from protocol*/
+    /* inputFromProto = proto_read_motor(); */
+    /* binary = INT_TO_BITFIELD(inputFromProto); */
 #endif
+#if defined ARDUINO_DBG
+    binary = scanHexMsgSTDIN();
+#elif defined PC
+    inputFromProto = read_motor();
+    binary = INT_TO_BITFIELD(inputFromProto);
+#endif
+
+    if(BITFIELD_TO_CHAR(mp) == 0xf1)
+    {
+#ifdef ARDUINO_DBG
+      Serial.println("No new message in protocol");
+#elif defined PC
+      printf("No new message in protocol\n");
+#endif
+      return 0;
+    }
+    moto_cyclesSinceLastMsg = 0;
+
+    examineID(mp);
+
 #ifdef ARDUINO_DBG
   printMsg(mp);
   printMotorStatus();
@@ -71,8 +98,6 @@ int moto_run(void){
   /*   digitalWrite(13, LOW); */
 
 #elif defined PC
-    binary = scanHexMsgSTDIN();
-    examineID(mp);
     printMsg(mp);
     printMotorStatus();
     
