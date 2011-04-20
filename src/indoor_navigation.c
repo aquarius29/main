@@ -49,7 +49,7 @@ void init_path(position start, position end){
 		current.ending_point = route.list[route.num-1];
 		current.current_destination = route.list[count];
 		current.current_point = route.list[0];
-		//navigate_path();
+		navigate_path();
 }
 void send_direction(double *angle){
 	//Tell movement which way we need to move.
