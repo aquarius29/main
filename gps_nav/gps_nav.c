@@ -68,10 +68,6 @@ void setup_gps(char *dev,int baud)
 		}
 		}
 }
->>>>>>> 4163fa0dba4965ff1de878fa584296fa7696fe02
-
-
-
 
 void gps_navigation(struct point Destination)
 {

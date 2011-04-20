@@ -1,5 +1,5 @@
 /*
-* Author: Jarryd Hall
+* @Author: Jarryd Hall
 * Purpose: An XML Parser to parse a tilemap
 * Note: The TMX file has been converted to an xml file before hand
 * CommandLine usage: gcc source.c -I/usr/include/libxml2 -lxml2 -o output
@@ -11,6 +11,7 @@
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
 #include <libxml/xpath.h>
+#include "TMXParser.h"
 #include "Tilemap.h"
 
 xmlXPathObjectPtr retrieveXmlnodeset (xmlDocPtr doc, xmlChar *xpath)
@@ -131,8 +132,7 @@ void getTileDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 	//world->height = 
 }
 
-// Helper function to retrieve a the value for the specfied attribute at a specified node
-
+/* Helper function to retrieve a the value for the specfied attribute at a specified node */
 char* getAttributeValueForNode (xmlDocPtr doc, xmlNodePtr cur, char *node, char *attribute)
 {
 	xmlChar *attributeValue;
@@ -151,7 +151,7 @@ char* getAttributeValueForNode (xmlDocPtr doc, xmlNodePtr cur, char *node, char 
 	return (char *)attributeValue;
 }
 
-// TODO: Add functions to return all the data in a struct.
+/* TODO: Add functions to return all the data in a struct. */
 void parseDoc(char *docname, ThreeDWorld *world) 
 {
 	xmlDocPtr doc;
