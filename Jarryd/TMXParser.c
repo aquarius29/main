@@ -11,6 +11,7 @@
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
 #include <libxml/xpath.h>
+#include "Tilemap.h"
 
 xmlXPathObjectPtr retrieveXmlnodeset (xmlDocPtr doc, xmlChar *xpath)
 {
@@ -140,6 +141,22 @@ void getTileDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 	//world->height = 
 }
 
+void createTwoDArray(ThreeDWorld *world, int w, int h, int array[])
+{
+	int one;
+	int two;
+	for(one = 0; one < h; one++)
+	{
+		for(two = 0; two < w; two++)
+		{
+			world->representation[one][two] = array[one + two];
+			printf("tile at [%d][%d] is %d", one, two, world->representation[one][two]);
+			if(two == 9)
+				printf("\n");	
+		}
+	}
+}
+
 /* Helper function to retrieve a the value for the specfied attribute at a specified node */
 char* getAttributeValueForNode (xmlDocPtr doc, xmlNodePtr cur, char *node, char *attribute)
 {
@@ -159,21 +176,7 @@ char* getAttributeValueForNode (xmlDocPtr doc, xmlNodePtr cur, char *node, char 
 	return (char *)attributeValue;
 }
 
-void createTwoDArray(World *world, int w, int h, int array[])
-{
-	int one;
-	int two;
-	for(one = 0; one < height; one++)
-	{
-		for(two = 0; two < width; two++)
-		{
-			world->representation[one][two] = array[one + two];
-			printf("tile at [%d][%d] is %d", one, two, world->representation[one][two]);
-			if(two == 9)
-				printf("\n");	
-		}
-	}
-}
+
 
 
 /* TODO: Add functions to return all the data in a struct. */
@@ -211,18 +214,18 @@ void parseDoc(char *docname, ThreeDWorld *world)
 	return;
 }
 
-//int main(int argc, char **argv) 
-//{
-//	char *docname;
-//
-//	if (argc <= 1) 
-//	{
-//		printf("Usage: %s docname\n", argv[0]);
-//		return(0);
-//	}
-//
-//	docname = argv[1];
-//	parseDoc (docname);
-//	
-//	return (1);
-//}
+int main(int argc, char **argv) 
+{
+	// char *docname;
+	// 
+	// 	if (argc <= 1) 
+	// 	{
+	// 		printf("Usage: %s docname\n", argv[0]);
+	// 		return(0);
+	// 	}
+	ThreeDWorld *world = malloc(sizeof(ThreeDWorld));
+	char *doc = "secondYearSquare.xml";
+	parseDoc (doc, world);
+	
+	return (1);
+}
