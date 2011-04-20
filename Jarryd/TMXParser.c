@@ -1,5 +1,5 @@
 /*
-* @Author: Jarryd Hall
+* @author: Jarryd Hall
 * Purpose: An XML Parser to parse a tilemap
 * Note: The TMX file has been converted to an xml file before hand
 * CommandLine usage: gcc source.c -I/usr/include/libxml2 -lxml2 -o output
@@ -11,8 +11,6 @@
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
 #include <libxml/xpath.h>
-#include "TMXParser.h"
-#include "Tilemap.h"
 
 xmlXPathObjectPtr retrieveXmlnodeset (xmlDocPtr doc, xmlChar *xpath)
 {
@@ -78,12 +76,12 @@ void getMapDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 	}
 }
 
-// A function to return all the tiles and their type. 
-// e.g. background tiles and collision tiles
-// purpose: Outputs the list of tiles and their types which will be used 
-// to create a 2dimensional array representation
-// TODO: add code to create the 2d array representation on the fly
-
+/* A function to return all the tiles and their type. 
+* e.g. background tiles and collision tiles
+* purpose: Outputs the list of tiles and their types which will be used 
+* to create a 2dimensional array representation
+* TODO: add code to create the 2d array representation on the fly
+*/
 void getTileDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 {
 	xmlChar *xpath = (xmlChar*) "//layer[@name=\"collision\"]/data/tile/@gid";
@@ -92,10 +90,14 @@ void getTileDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 
 	xmlChar *keyword;
 
+	int width = world->mapWidth;
+	int height = world->mapHeight;
 	int i;
 	int numMovableTiles = 0;
 	int numCollisionTiles = 0;
 	int totalTiles = 0;
+	int tileValuesArray [width + height]; 
+	int arrayCounter = 0;
 	
 	result = retrieveXmlnodeset (doc, xpath);
 	if (result) 
@@ -110,10 +112,14 @@ void getTileDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 			
 			if (id == 0)
 			{
+				tileValuesArray[arrayCounter] = 0;
+				arrayCounter++;
 				numMovableTiles += 1;
 			}
 			if (id != 0)
 			{
+				tileValuesArray[arrayCounter] = 1;
+				arrayCounter++;
 				numCollisionTiles += 1;			
 				printf("Collision tile id : %d for index: %d\n", id, index);
 			}
@@ -129,6 +135,8 @@ void getTileDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 	printf("number of movable tiles : %d\n", numMovableTiles);
 	printf("Total tiles : %d\n", totalTiles);
 	world->numberOfTilesInMap = totalTiles;
+	
+	createTwoDArray(world, width, height, tileValuesArray);
 	//world->height = 
 }
 
@@ -150,6 +158,23 @@ char* getAttributeValueForNode (xmlDocPtr doc, xmlNodePtr cur, char *node, char 
 	//xmlFree(attributeValue);
 	return (char *)attributeValue;
 }
+
+void createTwoDArray(World *world, int w, int h, int array[])
+{
+	int one;
+	int two;
+	for(one = 0; one < height; one++)
+	{
+		for(two = 0; two < width; two++)
+		{
+			world->representation[one][two] = array[one + two];
+			printf("tile at [%d][%d] is %d", one, two, world->representation[one][two]);
+			if(two == 9)
+				printf("\n");	
+		}
+	}
+}
+
 
 /* TODO: Add functions to return all the data in a struct. */
 void parseDoc(char *docname, ThreeDWorld *world) 
