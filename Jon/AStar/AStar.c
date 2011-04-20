@@ -429,7 +429,7 @@ int8_t NodeInClosed(const uint16_t * nodeY, const uint16_t * nodeX,
 int8_t NodeInOpen(const uint16_t * nodeY, const uint16_t * nodeX,
                   nodeList * open)
 {
-    u_int32_t openCounter;
+    uint32_t openCounter;
     for(openCounter = 0; openCounter < open->count; openCounter++) {
         if(open->list[openCounter].pos.y == *nodeY
         && open->list[openCounter].pos.x == *nodeX)
