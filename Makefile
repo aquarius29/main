@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #############################################################################
 ##  Makefile for use in the project root directory.
 ##  The purpose is to have one makefile to build the whole system
