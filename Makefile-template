@@ -3,9 +3,21 @@
 #   heavily copied from original libarduino sources
 #   (c) 2009, for all changes belong to Henrik Sandklef
 #	which lead to the current version
-#	(c) 2011, for all changes belong to Petre Mihail Anton
+#   (c) 2011, for all changes belong to Petre Mihail Anton
 #######################################################################
 
+<<<<<<< HEAD
+
+# *** Change device port to corespond to your system ***
+# 
+# Example port names: 
+# if you're using GNU/Linux (Ubuntu/Debian/Fedora.....):
+#    USB_PORT=/dev/ttyACM0
+#
+# if you're using Mac:
+#    USB_PORT=/dev/tty.usbmodemfa141
+#
+=======
 #     Change device names to corespond to your system
 #
 # here are various USB device names for various operating system and Arduinos:
@@ -13,13 +25,23 @@
 #	UUSB_PORT=/dev/ttyACM0
 # if you're using Mac:
 #	USB_PORT=/dev/tty.usbmodemfa141 (check name!)
+>>>>>>> 0284c8de55ff017320e469b5b566e60d1e96d17b
 # Hint:
-#    Launch the Arduino program to see what your USB device 
+#    Launch Arduino IDE  to see what your USB device 
 #    is called (look under the port settings)
+<<<<<<< HEAD
+#    Alternatively, type in your terminal:
+#        ls /dev/tty*                                                                                  
+# USB_PORT=/dev/ttyACM0
+USB_PORT=/dev/tty.usbmodem411
+=======
                                                                                   
 USB_PORT=/dev/ttyACM0
 #USB_PORT=/dev/tty.usbmodem411
+>>>>>>> 0284c8de55ff017320e469b5b566e60d1e96d17b
 
+# *** DO NOT EDIT TEXT BELOW! ***
+# *** IF YOU NEED TO ADD YOUR OWN RULES, GO TO THE END OF THE FILE! ***
 #########################################################################
 #########################################################################
 #########################################################################
