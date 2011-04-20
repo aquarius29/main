@@ -71,7 +71,7 @@ int moto_run(void){
     binary = scanHexMsgSTDIN();
 #elif defined PC
     inputFromProto = read_motor();
-    binary = INT_TO_BITFIELD(inputFromProto);
+    binary = INT_TO_BITFIELD(&inputFromProto);
 #endif
 
     if(BITFIELD_TO_CHAR(mp) == 0xf1)
