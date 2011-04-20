@@ -1,13 +1,15 @@
-/**
- * Module:       moto_msg_handler.c
- * Author(s):    Kristofer Hansson Aspman
- *               Reza Moussavi
- *
- * Description:  Contains the functions that
- *               sets the pulse width of the
- *               different motors.
- *
+/*! @author Kristofer Hansson Aspman, Reza Moussavi
+ * @file moto_msg_handler.c
+ * @version v0.01
+ * @date 2011-04-14
+ * @brief Contains the functions that
+ *        sets the pulse width of the
+ *        different motors.
  */
+
+#ifdef ARDUINO_DBG
+	#define ARDUINO
+#endif
 
 #ifdef ARDUINO
    #include "WProgram.h"
@@ -32,29 +34,32 @@
 /* #define GO_FORWARD 0xe3 // 1110 0011 */
 /* #define GO_BACKWARD 0xc3 // 1100 0011 */
 
-void examineID(msg_pointer mp){
-#ifdef ARDUINO
+int examineID(msg_pointer mp){
+#ifdef ARDUINO_DBG
   Serial.print("ID is ");
   Serial.println(mp->ID, DEC);
   if (BITFIELD_TO_CHAR(mp) == BAD_MESSAGE){
     Serial.println("Bad message!");
-    return;
+    return 1;
   }
 #elif defined PC
   printf("ID is %d\n", mp->ID);
   if (BITFIELD_TO_CHAR(mp) == BAD_MESSAGE){
     printf("Bad message!\n");
-    return;
+    return 1;
   }
 #endif
+  if (BITFIELD_TO_CHAR(mp) == BAD_MESSAGE){
+    return 1;
+  }
 
   switch(mp->ID){
 
   case START_ID:
-    _moto_startMotors();
+    moto_startMotors();
     break;
   case STOP_ID:
-    _moto_stopMotors();
+    moto_stopMotors();
     break;
   case CONTROL_ID:
     controlMotors(mp);
@@ -64,13 +69,13 @@ void examineID(msg_pointer mp){
     break;
   }
 
-  return;
+  return 0;
 }
 
 void controlMotors(msg_pointer mp){
-#ifdef ARDUINO
+#ifdef ARDUINO_DBG
   Serial.print("Standard Motor Control Message!\n");
-#elif defined PC  
+#elif defined PC 
   printf("Standard Motor Control Message!\n");
 #endif
 
@@ -78,58 +83,58 @@ void controlMotors(msg_pointer mp){
   //i.e. panic mode not set.
   if (mp->increase == 1 && mp->panic == 0){
     if(mp->left == 1)
-      _moto_increaseLeftNormal();
+      moto_increaseLeftNormal();
     if(mp->right == 1)
-      _moto_increaseRightNormal();
+      moto_increaseRightNormal();
     if(mp->front == 1)
-      _moto_increaseFrontNormal();
+      moto_increaseFrontNormal();
     if(mp->rear == 1)
-      _moto_increaseRearNormal();
+      moto_increaseRearNormal();
   }
 
   //Panic increase of the motors
   //i.e. panic mode set.
   if (mp->increase == 1 && mp->panic == 1){
     if(mp->left == 1)
-      _moto_increaseLeftPanic();
+      moto_increaseLeftPanic();
     if(mp->right == 1)
-      _moto_increaseRightPanic();
+      moto_increaseRightPanic();
     if(mp->front == 1)
-      _moto_increaseFrontPanic();
+      moto_increaseFrontPanic();
     if(mp->rear == 1)
-      _moto_increaseRearPanic();
+      moto_increaseRearPanic();
   }
   
   //Normal decrease of the motors
   //i.e. panic mode not set.
   if (mp->increase == 0 && mp->panic == 0){
     if(mp->left == 1)
-      _moto_decreaseLeftNormal();
+      moto_decreaseLeftNormal();
     if(mp->right == 1)
-      _moto_decreaseRightNormal();
+      moto_decreaseRightNormal();
     if(mp->front == 1)
-      _moto_decreaseFrontNormal();
+      moto_decreaseFrontNormal();
     if(mp->rear == 1)
-      _moto_decreaseRearNormal();
+      moto_decreaseRearNormal();
   }
   
   //Panic decrease of the motors
   //i.e. panic mode set.
   if (mp->increase == 0 && mp->panic == 1){
     if(mp->left == 1)
-      _moto_decreaseLeftPanic();
+      moto_decreaseLeftPanic();
     if(mp->right == 1)
-      _moto_decreaseRightPanic();
+      moto_decreaseRightPanic();
     if(mp->front == 1)
-      _moto_decreaseFrontPanic();
+      moto_decreaseFrontPanic();
     if(mp->rear == 1)
-      _moto_decreaseRearPanic();
+      moto_decreaseRearPanic();
   }
   return;
 }
 
 void specialMotorCommand(msg_pointer mp){
-#ifdef ARDUINO
+#ifdef ARDUINO_DBG
   Serial.print("Special Motor Control Message!\n");
 #elif defined PC
   printf("Special Motor Control Message!\n");
@@ -137,20 +142,20 @@ void specialMotorCommand(msg_pointer mp){
 
   switch(BITFIELD_TO_CHAR(mp)){
   case FORWARD:
-    _moto_goForward();
+    moto_goForward();
     break;
   case BACKWARD:
-    _moto_goBackward();
+    moto_goBackward();
     break;
   case TURN_LEFT:
     break;
   case TURN_RIGHT:
     break;
   case STRAFE_LEFT:
-    _moto_strafeLeft();
+    moto_strafeLeft();
     break;
   case STRAFE_RIGHT:
-    _moto_strafeRight();
+    moto_strafeRight();
     break;
   }
 
@@ -174,7 +179,7 @@ void specialMotorCommand(msg_pointer mp){
 
 msg scanHexMsgSTDIN(void){
 
-#ifdef ARDUINO
+#ifdef ARDUINO_DBG
     unsigned char input;
     Serial.println("Enter the message in hexadecimal!");
   
@@ -212,8 +217,7 @@ msg scanHexMsgSTDIN(void){
  * Inspired by reply number 3 in this thread:
  * http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1191880368
  */
-
-#ifdef ARDUINO
+#ifdef ARDUINO_DBG
 unsigned char serReadUnsignedChar(void)
 {
   int i, numberOfAvailableInputs;

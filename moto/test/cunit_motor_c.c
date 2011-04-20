@@ -1,11 +1,11 @@
 /*Created by Magnus Bergqvist*/
+/* compile with something like this:  gcc function.c -o function -lcunit */
 
 #include <stdio.h>
 #include "CUnit/CUnit.h"
-#include "motorcontrol.h"
+#include "../motorcontrol.h"
 
-/* compile with something like this:  gcc function.c -o function -lcunit */
-
+/*plus_one is just a test function to use while building up the test suite*/
 int plus_one(int num){
     if(num+1 > 0){
         return num+1;
@@ -15,6 +15,8 @@ int plus_one(int num){
     }
 }
 
+/*test_increaseMotorPulse checks so that expected results are returned, even
+when it comes to the higher and lower limits of the spectra*/
 void test_increaseMotorPulse(void){
     CU_ASSERT(increaseMotorPulse(1,0)==3);
     CU_ASSERT(increaseMotorPulse(1,55)==58);
@@ -48,6 +50,12 @@ void test_decreaseMotorPulseX2(void){
 }
 
 
+
+/*check_add_ok() gives a print_out on the screen when a test suite or a test
+has been created, the char** passed to this function should always be in the 
+style:
+    suite "suite name"
+    test "test name"*/
 void check_add_ok(char* msg){
 
     if(CU_get_error() == CUE_SUCCESS){
