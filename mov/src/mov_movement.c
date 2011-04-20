@@ -100,19 +100,24 @@ desired_roll();
 
 }*/
 
-ascend()
+void ascend()
 {
-
-stab_qc();
-
-
+	stab_qc();
+	dif_height = d_height - s_desired;
+	while (dif_height > 0){
+		motor(1,1,1,1);
+		dif_height--;
+	}
+	
 }
 
-descend()
+void descend()
 {
-
-stab_qc();
-
-
+	stab_qc();
+	dif_height = d_height - s_desired;
+	while (dif_height < 0){
+		motor(-1,-1-,-1,-1);
+		dif_height++;
+	}
 }
 
