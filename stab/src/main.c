@@ -17,7 +17,6 @@
  * Different header files are included depending on the mode 
  *(arduino or pc)
  */
-#ifdef STAB
   #include <stdio.h>
   #include "stab.h"
   #include "stab_interface.h"
@@ -32,4 +31,3 @@ int main(void)
   stab_run();
   return 0;
 }
-#endif

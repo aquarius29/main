@@ -15,7 +15,7 @@
  *    11/04/2011: Renamed file to stab_sim (was stab_gyro_sim) // Adam
  *    18/04/2011: Updated code to reflect coding standards
  *************************************************************************/
-#if defined(PC) || defined(STAB)
+#ifdef PC
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>

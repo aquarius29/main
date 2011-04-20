@@ -11,13 +11,13 @@
  *    18/04/2011: Updated the ifdef to reflect new scheduler code //Adam
  *                Updated code to reflect coding standards
  **************************************************************************/
-#if defined(PC) || defined(STAB)
+#ifdef PC 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include "stab_interface.h"
 #include "stab.h"
-#elif defined ARDUINO
+#elif defined ARDUINO 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -50,7 +50,7 @@ struct vector filter_vect;
 int16_t stab_init(void)
 {
   // code to init the hardware goes in here as well
-#if defined (PC) || defined (STAB)
+#if defined PC 
   init_filter();
 #elif defined ARDUINO
   init();
@@ -67,7 +67,7 @@ int16_t stab_init(void)
  */
 int16_t stab_run(void)
 {
-#if defined(PC) || defined(STAB)
+#ifdef PC
   gyro_vect = init_sim();
   accel_vect = init_sim();
   
@@ -81,7 +81,10 @@ int16_t stab_run(void)
   printf("ESTMIATED Z %f\n", filter_vect.z);
   
 #elif defined ARDUINO
-  read_gyro_data();
+  gyro_vect =  read_gyro_data();
+  Serial.println(gyro_vect.x);
+  Serial.println(gyro_vect.y);
+  Serial.println(gyro_vect.z);
   readAccel();
 #endif
   

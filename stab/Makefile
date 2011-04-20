@@ -81,8 +81,7 @@ uno: clean install
 pc: clean
 	gcc -lm -DPC $(SRC) -o src/$(PROG).x
 
-stab: clean 
-	gcc -lm -DSTAB  $(SRC) -o src/$(PROG).x
+
 clean:
 	@ cd src && rm -f *.o *.rom *.elf *.map *~ *.lst *.x
 	@ echo "Project cleaned"
