@@ -59,7 +59,7 @@ void runMega(void){
 void runPC(void){
     unsigned char message = 0;
     
-    message = 0x10;
+    message = 0xFF;
     /* send message to motor here */
     write_motor(message);
 }
