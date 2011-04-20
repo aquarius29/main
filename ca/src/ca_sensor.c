@@ -14,9 +14,9 @@
 #include "ca_interface.h"
 
 
-uint8_t ir_distance(int irpin)
+int ir_distance(int irpin)
 {
-  uint8_t value=analogRead(irpin);
+  int value=analogRead(irpin);
   // printf ("value is %d \n",value);
 
   // value convert to volts
@@ -25,7 +25,7 @@ uint8_t ir_distance(int irpin)
   //convert to the distance according to the formula from luckylarry.co.uk
   
 //  int distance = 65*pow(value*0.0048828125, -1.10);
-  uint8_t distance = 65*pow(value*0.0048828125, -1.10);
+  int distance = 65*pow(value*0.0048828125, -1.10);
   return distance; 
 }
 
