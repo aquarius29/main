@@ -7,33 +7,33 @@
 */
 #include "gps_nav.h"
 
-int main(void)
-{
-	setup_gps();	/* new thread */		
-
-
-
-	struct point destination; /*get the destination from UI*/
-	
-	struct point *pts = init_map(); /*init the map*/
-
-	struct trac *path = outdoor_nav(pts,destination); /* calc the path */
-
-/*under developed
-
-	loop: get_direction(curr,destination,path,pts);
-
-*/
-
-/*dealloc pts and path, kill gps navigation*/
-
-//	int angle = get_direction(curr,destination,path,pts);
-
-	free(pts);
-	deallocate_trac(path);
-
-return 0;
-}
+ int main(void)
+ {
+ 	setup_gps();	/* new thread */		
+ 
+ 
+ 
+ 	struct point destination; /*get the destination from UI*/
+ 	
+ 	struct point *pts = init_map(); /*init the map*/
+ 
+ 	struct trac *path = outdoor_nav(pts,destination); /* calc the path */
+ 
+ /*under developed
+ 
+ 	loop: get_direction(curr,destination,path,pts);
+ 
+ */
+ 
+ /*dealloc pts and path, kill gps navigation*/
+ 
+ //	int angle = get_direction(curr,destination,path,pts);
+ 
+ 	free(pts);
+ 	deallocate_trac(path);
+ 
+ return 0;
+ }
 
 
 

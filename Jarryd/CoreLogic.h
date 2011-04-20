@@ -4,6 +4,7 @@
 
 #include "Tilemap.h"
 #include "movementCommands.h"
+#include "gps_nav.h"
 
 #ifndef CORELOGIC_H
 #define CORELOGIC_H
@@ -63,5 +64,6 @@ void killThread();
 void dealloc();
 double getLat(); // called by UI via connectivity
 double getLong(); // called by UI via connectivity
+void *setupgps(void *ptr);
 
 #endif /* CORELOGIC_H */
