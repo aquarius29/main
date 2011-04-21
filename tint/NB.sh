@@ -1,11 +1,11 @@
 #!/bin/bash
 
-LOG_DIR=/tmp/
+LOG_DIR=${HOME}/emb-test/logg
 
 BUILD_DIR=${HOME}/emb-test
 DATE=$(date '+%Y%m%d')
 
-LOG_FILE=${LOG_DIR}/emb-2011-${DATE}.log
+LOG_FILE=${LOG_DIR}-${DATE}.log
 #rm -f ${LOG_FILE}
 
 
@@ -64,8 +64,33 @@ log "-----------------------"
   log "Leaving dir...."
   log "-------------------"
   
+ 
+ #-----Pull Nav-----  
+  log "Pulling nav ..."
+  cd nav
+  echo "The present working directory is `pwd`"
+  log "    git pull nav" 
+  git pull
+  GIT_RET=$?
+  log "   return $GIT_RET"
+  check_return_value $GIT_RET "git pull nav"
+  cd ..
+  log "Leaving dir...."
+  log "-------------------" 
   
   
+   #-----Pull Conn-----  
+  log "Pulling conn ..."
+  cd conn
+  echo "The present working directory is `pwd`"
+  log "    git pull conn" 
+  git pull
+  GIT_RET=$?
+  log "   return $GIT_RET"
+  check_return_value $GIT_RET "git pull conn"
+  cd ..
+  log "Leaving dir...."
+  log "-------------------" 
   
   #Git Pull ca,cam,conn,filter,main,moto,nav,proto,sched,stab,ui
   #git remote add moto git@github.com:SEMB2011/moto.git
@@ -123,7 +148,7 @@ test_src()
 
 #rm -fr ${BUILD_DIR}
 #mkdir -p ${BUILD_DIR}
-#cd			${BUILD_DIR}
+cd			${BUILD_DIR}
 
 
 #
