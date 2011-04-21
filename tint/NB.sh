@@ -6,7 +6,7 @@ BUILD_DIR=${HOME}/emb-test
 DATE=$(date '+%Y%m%d')
 
 LOG_FILE=${LOG_DIR}-${DATE}.log
-#rm -f ${LOG_FILE}
+rm -f ${LOG_FILE}
 
 
 log()
