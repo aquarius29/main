@@ -1,4 +1,5 @@
 #############################################################################
+##  Description:
 ##  Makefile for use in the project root directory.
 ##  The purpose is to have one makefile to build the whole system
 ##  using flags that gets exported and invoke lower level makefiles
@@ -34,15 +35,19 @@
 ##  Date: 	2011-04-15
 ##
 ##  History:
-##  2011-04-13 - Created this file
+##  2011-04-13 - Created this file. - Joakim
 ##
-##  2011-04-15 - Started work to merge with the arduino-flasher makefile
+##  2011-04-15 - Started work to merge with the arduino-flasher
+##  			 makefile. - Joakim
 ##
 ##  2011-04-18 - Merged with the makefile written by Eugene and Mihail,
 ##				 creating libs and linking with libcoremega and then 
 ##				 uploading to the mega-board now works. Also merged the
 ##				 makefile that worked with PC targets. Added "Usage" part
-##				 in comments.
+##				 in comments. - Joakim
+##
+##  2011-04-20 - Fixed problems with linking so correct math lib is used.
+##				 Order matters among the link-flags! - Joakim
 ##
 ##  Notes:
 ##  Missing instructions in targets not related to basic system. 
