@@ -46,8 +46,9 @@ log "-----------------------"
   echo "The present working directory is `pwd`"
   log "    git pull moto"
   git pull
+  log " 'git pull' "
   GIT_RET=$?
-  log "   return $GIT_RET, '$?'"
+  log "   return $GIT_RET"
   check_return_value $GIT_RET "git pull moto"
   cd ..
   log "Leaving dir...."
@@ -175,7 +176,7 @@ prep_src()
 
 build_src()
 {
-		#cd main
+		cd main
     log "Building in dir $(pwd)"
     make
     check_return_value $? "make/build '$?'"
