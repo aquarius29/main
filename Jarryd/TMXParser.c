@@ -77,6 +77,26 @@ void getMapDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 	}
 }
 
+void createTwoDArray(ThreeDWorld *world, int w, int h, int array[])
+{
+	int one;
+	int two;
+	int arrayCounter = 0;
+	
+	for(one = 0; one < h; one++)
+	{
+		for(two = 0; two < w; two++)
+		{
+			//printf("Value in tile array is %d\n", array[one + two]);
+			world->representation[one][two] = array[arrayCounter];
+            printf("  %d", world->representation[one][two]);
+			if(two == 9)
+				printf("\n");	
+			arrayCounter++;
+		}
+	}
+}
+
 /* A function to return all the tiles and their type. 
 * e.g. background tiles and collision tiles
 * purpose: Outputs the list of tiles and their types which will be used 
@@ -145,26 +165,6 @@ void getTileDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 	//world->height = 
 }
 
-void createTwoDArray(ThreeDWorld *world, int w, int h, int array[])
-{
-	int one;
-	int two;
-	int arrayCounter = 0;
-	
-	for(one = 0; one < h; one++)
-	{
-		for(two = 0; two < w; two++)
-		{
-			//printf("Value in tile array is %d\n", array[one + two]);
-			world->representation[one][two] = array[arrayCounter];
-				printf("  %d", world->representation[one][two]);
-			if(two == 9)
-				printf("\n");	
-			arrayCounter++;
-		}
-	}
-}
-
 /* Helper function to retrieve a the value for the specfied attribute at a specified node */
 char* getAttributeValueForNode (xmlDocPtr doc, xmlNodePtr cur, char *node, char *attribute)
 {
@@ -222,18 +222,18 @@ void parseDoc(char *docname, ThreeDWorld *world)
 	return;
 }
 
-int main(int argc, char **argv) 
-{
-	// char *docname;
-	// 
-	// 	if (argc <= 1) 
-	// 	{
-	// 		printf("Usage: %s docname\n", argv[0]);
-	// 		return(0);
-	// 	}
-	ThreeDWorld *world = malloc(sizeof(ThreeDWorld));
-	char *doc = "secondYearSquare.xml";
-	parseDoc (doc, world);
-	
-	return (1);
-}
+// int main(int argc, char **argv) 
+// {
+// 	// char *docname;
+// 	// 
+// 	// 	if (argc <= 1) 
+// 	// 	{
+// 	// 		printf("Usage: %s docname\n", argv[0]);
+// 	// 		return(0);
+// 	// 	}
+// 	ThreeDWorld *world = malloc(sizeof(ThreeDWorld));
+// 	char *doc = "secondYearSquare.xml";
+// 	parseDoc (doc, world);
+// 	
+// 	return (1);
+// }
