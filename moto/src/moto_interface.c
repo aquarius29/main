@@ -62,16 +62,11 @@ int moto_init(void){
  */
 int moto_run(void){
     moto_cyclesSinceLastMsg++;
-#ifdef ARDUINO
-    /* Uncomment to read the message from protocol*/
-    /* inputFromProto = proto_read_motor(); */
-    /* binary = INT_TO_BITFIELD(inputFromProto); */
-#endif
-#if defined ARDUINO_DBG
-    binary = scanHexMsgSTDIN();
-#elif defined PC
     inputFromProto = read_motor();
     binary = INT_TO_BITFIELD(&inputFromProto);
+
+#if defined ARDUINO_DBG
+    binary = scanHexMsgSTDIN();
 #endif
 
     if(BITFIELD_TO_CHAR(mp) == 0xf1)
