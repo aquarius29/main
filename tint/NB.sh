@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOG_DIR=${HOME}/logg
+LOG_DIR=${HOME}/logg/logg
 
 BUILD_DIR=${HOME}/emb-test
 DATE=$(date '+%Y%m%d')
@@ -33,7 +33,7 @@ get_src()
  #----Working dir------
 cd ..
 cd ..
-cd			${BUILD_DIR}
+#cd			${BUILD_DIR}
 echo "The script you are running has basename `basename $0`,  dirname `dirname $0`"
 echo "The present working directory is `pwd`"
 log "-----------------------"
@@ -91,6 +91,59 @@ log "-----------------------"
   GIT_RET=$?
   log "   return $GIT_RET"
   check_return_value $GIT_RET "git pull conn"
+  cd ..
+  log "Leaving dir...."
+  log "-------------------" 
+  
+  
+     #-----Pull Cam-----  
+  log "Pulling cam ..."
+  cd cam
+  echo "The present working directory is `pwd`"
+  log "    git pull cam" 
+  git pull
+  GIT_RET=$?
+  log "   return $GIT_RET"
+  check_return_value $GIT_RET "git pull cam"
+  cd ..
+  log "Leaving dir...."
+  log "-------------------" 
+  
+    #-----Pull Ca-----  
+  log "Pulling ca ..."
+  cd ca
+  echo "The present working directory is `pwd`"
+  log "    git pull ca" 
+  git pull
+  GIT_RET=$?
+  log "   return $GIT_RET"
+  check_return_value $GIT_RET "git pull ca"
+  cd ..
+  log "Leaving dir...."
+  log "-------------------" 
+  
+      #-----Pull proto-----  
+  log "Pulling proto ..."
+  cd proto
+  echo "The present working directory is `pwd`"
+  log "    git pull proto"
+  git pull
+  GIT_RET=$?
+  log "   return $GIT_RET"
+  check_return_value $GIT_RET "git pull proto"
+  cd ..
+  log "Leaving dir...."
+  log "-------------------" 
+  
+       #-----Pull UI-----  
+  log "Pulling ui ..."
+  cd ui
+  echo "The present working directory is `pwd`"
+  log "    git pull ui"
+  git pull
+  GIT_RET=$?
+  log "   return $GIT_RET"
+  check_return_value $GIT_RET "git pull ui"
   cd ..
   log "Leaving dir...."
   log "-------------------" 
