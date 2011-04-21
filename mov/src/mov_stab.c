@@ -52,21 +52,71 @@ int Stab_pitch(void)
 
 int stab_yaw(void)
 {
-  diff_yaw = abs(data.yaw - sensor.yaw);
+  diff_yaw = data.yaw - sensor.yaw;
   if(diff_yaw == 0){
 	return 0;
-  }else if (diff_yaw < 180){
+  }else if (diff_yaw > 0 ){
+	if (diff_yaw < 180){
 	while (diff_yaw > 0){
 		write_motor(-1,1,-1,1);
-		float new_diff_yaw = abs(data.yaw - sensor.yaw);
-		diff_raw = new_diff_yaw;}
+		float new_diff_yaw = data.yaw - sensor.yaw;
+		diff_yaw = new_diff_yaw;
+			if(diff_yaw = 0) { 
+					return 0;
+				}else if(diff_yaw < 0){
+					printf("\n\n negative new angle of yaw \n\n");	
+				}
+	break;
+	}//end of while
 	} else {
-		while (diff_yaw > 0){
+		while (diff_yaw <= 180){
 		write_motor(1,-1,1,-1);
-		float new_diff_yaw = abs(data.yaw - sensor.yaw);
+		float new_diff_yaw = data.yaw - sensor.yaw;
 		diff_raw = new_diff_yaw;
+			if(diff_yaw = 0) { 
+					return 0;
+				}else if(diff_yaw < 0){
+					printf("\n\n negative new angle of yaw \n\n");	
+				}
+			break;
+		}//end of while
+	}//end of else
+      }// end of internal if
+   }else if (diff_yaw < 0){
+	while(diff_yaw < 0){
+	diff_yaw = diff_yaw + 360;	
+		if(diff_yaw < 180){
+			while ( diff_yaw > 0){
+			write_motor(1,-1,1,-1);
+			float new_diff_yaw = data.yaw - sensor.yaw;
+			diff_yaw = new_diff_yaw;
+				if(diff_yaw = 0) { 
+					return 0;
+				}else if(diff_yaw < 0){
+					printf("\n\n negative new angle of yaw \n\n");	
+					break;
+				}
+				
+			}//end of while
+ 		}else {
+			while ( diff_yaw => 180 ){
+				write_motor(-1,1,-1,1);
+				float new_diff_yaw = data.yaw - sensor.yaw;
+				diff_yaw = new_diff_yaw;
+				if(diff_yaw = 0) { 
+					return 0;
+				}else if(diff_yaw < 0){
+					printf("\n\n negative new angle of yaw \n\n");	
+					break;
+				}
+				
+			}//end of while
 		}
-	}
+
+	break;
+	} // end of while 1
+   }
+	
   return 0;
 }
 
