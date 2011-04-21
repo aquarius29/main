@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOG_DIR=${HOME}/emb-test/logg
+LOG_DIR=${HOME}/logg
 
 BUILD_DIR=${HOME}/emb-test
 DATE=$(date '+%Y%m%d')
