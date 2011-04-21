@@ -1,4 +1,23 @@
 
+/*!
+ *  @file sched_naive_sched.c
+ *
+ *  @brief Very basic scheduler implementation
+ *
+ *  @author Joakim
+ *  @date 2011-04-16
+ *  @history    2011-04-10 - wrote original code - Joakim
+ *              2011-04-14 - added Doxygen comments - Joakim
+ *              2011-04-21 - changed name of global typedef to
+                             conform to coding standard - Joakim
+ *
+ *  @details This implementation is used to get integration going
+ *  and is kept as simple as possible to reduce complexity when focus
+ *  should be on integration. It only uses the init and run functions
+ *  proided by other modules and just loops over these.
+ */
+
+
 #include <stdlib.h>
 #include <stdint.h>
 
@@ -20,30 +39,29 @@
 
 #include "sched_naive_sched.h"
 
-#define NUMBER_OF_RUN_FUNS 10
-#define NUMBER_OF_INIT_FUNS 6
+#define NUMBER_OF_RUN_FUNS 8
+#define NUMBER_OF_INIT_FUNS 5
 
-static int16_t system_init(Fun_t funArrInit[]);
-static void naive_loop(Fun_t funArrRun[]);
+static int16_t system_init(sched_Fun_t funArrInit[]);
+static void naive_loop(sched_Fun_t funArrRun[]);
 
 void sched_naive_init(void){
     /* function pointers to modules init functions */
-    Fun_t funArrInit[] = {  &protoInit,
+    sched_Fun_t funArrInit[] = {  
+                            &protoInit,
                             &mov_init,
                             &ca_init,
                             &stab_init,
-                            &filterInit,
                             &moto_init };
     
     /* function pointers to modules run functions */
-    Fun_t funArrRun[] = {   &protoRun,
+    sched_Fun_t funArrRun[] = {   
+                            &protoRun,
                             &mov_run,
                             &protoRun,
                             &ca_run,
                             &protoRun,
                             &stab_run,
-                            &protoRun,
-                            &filterRun,
                             &protoRun,
                             &moto_run };
     
@@ -70,7 +88,7 @@ void sched_naive_init(void){
     }
 }
 
-int16_t system_init(Fun_t *funArrInit){
+int16_t system_init(sched_Fun_t *funArrInit){
     int16_t i;
     int16_t res;
     
@@ -87,7 +105,7 @@ int16_t system_init(Fun_t *funArrInit){
     return 1;
 }
 
-void naive_loop(Fun_t *funArrRun){
+void naive_loop(sched_Fun_t *funArrRun){
     int16_t i;
     int16_t res;
     
