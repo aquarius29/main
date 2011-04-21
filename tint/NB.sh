@@ -47,7 +47,7 @@ log "-----------------------"
   log "    git pull moto"
   git pull
   GIT_RET=$?
-  log "   return $GIT_RET"
+  log "   return $GIT_RET, '$?'"
   check_return_value $GIT_RET "git pull moto"
   cd ..
   log "Leaving dir...."
