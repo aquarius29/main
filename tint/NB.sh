@@ -31,6 +31,9 @@ get_src()
 {
  
  #----Working dir------
+cd ..
+cd ..
+cd			${BUILD_DIR}
 echo "The script you are running has basename `basename $0`,  dirname `dirname $0`"
 echo "The present working directory is `pwd`"
 log "-----------------------"
@@ -148,7 +151,6 @@ test_src()
 
 #rm -fr ${BUILD_DIR}
 #mkdir -p ${BUILD_DIR}
-cd			${BUILD_DIR}
 
 
 #
