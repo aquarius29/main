@@ -10,6 +10,7 @@
 #include <time.h>
 #define PRECISION 5
 #define SLEEP_DURATION (0.3 * 1000000000)
+#define ALGORITHM 0
 static int count, running;
 static position_list route;
 static progressive_route current;
@@ -37,12 +38,18 @@ void init_path(position start, position end){
 	running = 1;
 	count = 1;
 	current.num = 1;
-	route = indoor_dijkstra(&start, &end, map);
-		for(counterUp = 0; counterUp < route.num; counterUp++)
-		{
-			printf("final.x: %f ", route.list[counterUp].lon);
-			printf("final.Y: %f\n", route.list[counterUp].lat);
-		}
+	if(ALGORITHM == 0) {
+		printf("Dijkstra\n");
+		route = indoor_dijkstra(&start, &end, map);
+	}
+	else{
+		printf("Astar\n");
+		route = indoor_astar(&start, &end, map);
+	}
+	for(counterUp = 0; counterUp < route.num; counterUp++) {
+		printf("final.x: %f ", route.list[counterUp].lon);
+		printf("final.Y: %f\n", route.list[counterUp].lat);
+	}
 		printf("num: %d\n", route.num);
 		current.path = realloc(current.path,sizeof(point) * 2);
 		current.path[0] = route.list[0];

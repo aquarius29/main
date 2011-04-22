@@ -43,7 +43,7 @@ position_list indoor_dijkstra(const position * start, const position * end, int 
 		}
 
 		// Check the neighbors of the first node in the open list
-		AddNeighborsToOpen(&open->list[0], open, closed, map);
+		dijkstra_AddNeighborsToOpen(&open->list[0], open, closed, map);
 
 		// Add the check node to the closed list and remove it
 		// from the open list
@@ -73,7 +73,7 @@ position_list indoor_dijkstra(const position * start, const position * end, int 
  * Goes through the current node's surrounding neighbor nodes and
  * adds reachable nodes to the open list
  */
-void AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed,
+void dijkstra_AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed,
 		int map[MAP_Y][MAP_X]) {
 	int y, x, mapCost, counter;
 	int openListIndex, endNodeCost, neighborY, neighborX;
