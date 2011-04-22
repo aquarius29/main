@@ -1,5 +1,5 @@
 /*
-* Author: Jarryd Hall
+* @author: Jarryd Hall
 * Purpose: Core Logic for controlling which navigation system is in use. 
 * Interface: 
 *
@@ -13,62 +13,94 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
-#include "CoreLogic.h"
-#include "TMXParser.c"
+#include "nav_corelogic.h"
+#include "tmxparser.c"
 #include "gps_nav.h"
 
-
-//#include "movementCommands.h"
-
-// start the gps navigation system
-void nav_run_gps_system(GPSLocation *destination)
+//void nav_run_gps_system(GPSLocation *destination)
+void nav_run_gps_system()
 {
 	printf("Creating manual command handler thread\n");
 	
-	int threadResult; // pthread functions return 0 when successful
+	/* pthread functions return 0 when successful */
+	int manualCommandThreadResult; 
+	int gpsSetupThreadResult;
+	int gpsNavigationThreadResult;
+	
 	char *message = "manual movement thread command started";
+	char *message2 = "gps setup thread started";
+	char *message3 = "gps navigation thread started";
+	
 	pthread_t manualCommandThread;
+	pthread_t gpsSetupThread;
+	pthread_t gpsNavigationThread;
     
-    threadResult = pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
-
-    // check if thread was created
-    if (threadResult == 0)
-		printf("Thread created\n");
-    else
-    {
-		printf("Couldnt create thread\nRetrying.....\n");
-        threadResult = pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
-       
- 		if (threadResult == 0)
-			printf("Thread created\n");
-    }
-
-    printf("Starting GPS System\n");
-
-	setup_gps();
+    manualCommandThreadResult = pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
+	gpsSetupThreadResult = pthread_create(&gpsSetupThread, NULL, setupgps, (void*) message2);
+	gpsNavigationThreadResult = pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
+    
+	// /* check if thread was created */
+	//     if (manualThreadResult == 0)
+	// 	printf("Manual Command Thread created\n");
+	//     else
+	//     {
+	// 	printf("Couldnt create manual command thread\nRetrying.....\n");
+	//         manualThreadResult = pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
+	//        
+	//  		if (manualThreadResult == 0)
+	// 		printf("Thread created\n");
+	//     }
+	// 
+	//     printf("Starting GPS System\n");
+	// 
+	// gpsThreadResult = pthread_create(&gpsThread, NULL, setupgps, (void*) message2);
+	// 
+	// /* check if thread was created */
+	//     if (gpsThreadResult == 0)
+	// 	printf("Manual Command Thread created\n");
+	//     else
+	//     {
+	// 	printf("Couldnt create manual command thread\nRetrying.....\n");
+	//         gpsThreadResult = pthread_create(&manualCommandThread, NULL, setupgps, (void *) message);
+	// 
+	//  		if (gpsThreadResult == 0)
+	// 		printf("Thread created\n");
+	//     }
+	
+	//setup_gps();
     // TODO: start parser
     // TODO: start gps navigation system. Use the destination GPSLocation
 
-    printf("gps system started\n");
-
     pthread_join(manualCommandThread, NULL); // wait for the thread to finish
+	pthread_join(gpsSetupThread, NULL);
+	pthread_join(gpsNavigationThread, NULL);
 
 	printf("Switching off gps system\n");
 }
 
-// start the indoor navigation system
+void *setupgps(void *ptr)
+{
+	setup_gps(UNO,57600);
+}
+
+void *setupgpsnavigation(void *ptr)
+{
+	struct point Destination = {-2,5742.307,1156.002};
+	gps_navigation(Destination);
+}
+
 void nav_run_indoor_system(int startTile, int destinationTile)
 {
 	printf("Creating manual command handler thread\n");
 	
-	int threadResult; // pthread functions return 0 when successful
+	int threadResult; /* pthread functions return 0 when successful */
 	char *message = "manual movement command thread started";
 	pthread_t manualCommandThread;
     
     threadResult = 
     pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
 
-    // check if thread was created
+    /* check if thread was created */
     if (threadResult == 0)
 		printf("Thread created\n");
     else
@@ -284,16 +316,18 @@ void killThread()
 
 double getLat()
 {
-	return curr->lat;
+	return curr.lat;
 }
 
 double getLon()
 {
-	return curr->lon;
+	return curr.lon;
 }
 
-// Dealloc shouldnt be needed during a flight, 
-// unless flight switches between GPS/outdoor system
+/* Dealloc shouldnt be needed during a flight, 
+*unless flight switches between GPS/outdoor system
+*/
+
 void dealloc()
 {
 	free(world);
@@ -301,6 +335,6 @@ void dealloc()
 
 int main(int argc, char **argv) 
 {
-	
-	return 1;
+	nav_run_gps_system();
+	return 0;
 }

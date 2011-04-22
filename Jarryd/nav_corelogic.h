@@ -2,8 +2,8 @@
 * Author: Jarryd Hall
 */
 
-#include "Tilemap.h"
-#include "movementCommands.h"
+#include "tilemap.h"
+#include "movementcommands.h"
 
 #ifndef CORELOGIC_H
 #define CORELOGIC_H
@@ -47,7 +47,9 @@ outdoorRouteRequest;
 // define 3Dworld pointer
 ThreeDWorld *world;
 
-void nav_run_gps_system(GPSLocation *destination); // setup gps system
+
+void nav_run_gps_system();
+//void nav_run_gps_system(GPSLocation *destination); // setup gps system
 void killGPSSystem(); // kill GPS system - e.g only manual input wanted.
 void nav_run_indoor_system(int startTile, int destinationTile); // setup the indoor navigation system
 void killIndoorNavigationSystem(); // kill the navigation system e.g. user wants only manual input.
@@ -63,5 +65,7 @@ void killThread();
 void dealloc();
 double getLat(); // called by UI via connectivity
 double getLong(); // called by UI via connectivity
+void *setupgps(void *ptr);
+void *setupgpsnavigation(void *ptr);
 
 #endif /* CORELOGIC_H */

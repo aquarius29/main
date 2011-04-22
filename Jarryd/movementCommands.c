@@ -4,9 +4,9 @@
 * TODO: Include protocol source and use it to send data to movement
 */
 
-#include "movementCommands.h"
+#include "movementcommands.h"
 
-// Create a movement command 
+/* Create a movement command */
 void sendmovementcommand
 (char type, char order , int height, int distance, int yaw, int pitch , int roll, int speed);
 {
@@ -26,8 +26,8 @@ void sendmovementcommand
 		move->roll = roll;
 		move->speed = speed;
 		
-		// Function from interface to send order goes here 
-		// e.g. InterfaceSendOrder(order);
+		/* Function from interface to send order goes here */
+		/* e.g. InterfaceSendOrder(order); */
 		free(move);
 	}
 }
