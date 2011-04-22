@@ -100,7 +100,7 @@ void enqueue_process(Process *process);
 void run_process(int8_t processIndex);
 
 /* RunTime functions for ProcessData struct */
-void create_process_queue(void);
+void create_process_queue(int16_t excessTime);
 
 /* Main Process Data for the system,
 * should only be access via getProcessData() */

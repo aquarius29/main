@@ -32,22 +32,36 @@ void init(void) {
 
 void run(void) {
     int k;
+    double time;
+    int16_t excessTime;
+    ProcessData *processData;
+    Process ** processQueue;
     #ifdef PC
         clock_t start;
         clock_t stop;
-        double time = 0.0;
+
+        #ifdef LOG
+        FILE *file;
+        file = fopen("scheduler_log.txt", "a+");
+            fprintf(file, "SCHEDULER LOG:\n****************************\n");
+        #endif /* LOG */
+
+        time = 0.0;
     #endif
 
-    ProcessData *processData = get_process_data();
-    Process** processQueue = processData->processQueue;
+    excessTime = 0;
+
+    processData = get_process_data();
+    processQueue = processData->processQueue;
 
     for(k = 0; k < 500; k++) //TODO: 15?
     {
-        int i;
+        int16_t i;
+        int16_t syncTime;
         #ifdef PC
             assert((start = clock()) != -1);
         #endif /* PC */
-        create_process_queue();
+        create_process_queue(excessTime);
         printf("Running processes\n==================\n");
         for(i = 0; i < processData->currentQueueSize; i++)
         {
@@ -57,26 +71,58 @@ void run(void) {
             stop = clock();
             time = (double)(stop-start);
 
-            printf("ExecutionTime: %f\n", time);
+            printf("ExecutionTime: %d\n", (int)time);
+            syncTime = (int)(50 - time);
+            #ifdef LOG
+                fprintf(file, "Ran: %d processes\n", 
+                    processData->currentQueueSize);
+                for(i = 0; i < processData->currentQueueSize; i++)
+                {
+                    fprintf(file, "PID: %d\n", processData->processQueue[i]->Pid);
+                }
+                fprintf(file, "Total Exection Time: %d ms\n", (int)(time));
+                if(syncTime > 0)
+                {
+                    fprintf(file, "Sync. Time: %d ms\n", (syncTime - excessTime));
+                }
+                else
+                {
+                    fprintf(file, "Timeframe was excided by: %d ms\n", (syncTime * -1));
+                }
+            #endif /* LOG */
 
-        #ifdef WINDOWS
-            if(50 - time > 0)
+
+            if(syncTime > 0)
             {
-                printf("Synchronize: %f\n", (50 - time));
-                Sleep(50 - time);
+                printf("Synchronize: %d\n", syncTime);
+                #ifdef WINDOWS
+                    if(syncTime - excessTime > 0)
+                    {
+                        Sleep(syncTime - excessTime);
+                    }
+                #else
+                    usleep(50 - time);
+                #endif /* WINDOWS */
+                excessTime = 0;
             }
             else
             {
                 printf("Failed to keep time constraint!\n");
-                printf("Shutting down scheduler...");
-                break;
+                excessTime = syncTime * -1; /* Making it non-negative */
+                printf("Correcting next iteration with: %d\n", excessTime);
             }
-        #else 
-            usleep(time - 50);
-        #endif /* WINDOWS */
         #endif /* PC */
+        #ifdef ARDUINO
+            /* TODO: Put arduino timing logic here */
+        #endif
         printf("\n");
+        #ifdef LOG
+            fprintf(file, "==================\n");
+        #endif
     }
+    #ifdef LOG
+        fclose(file);
+    #endif
 }
 
 int main(void){

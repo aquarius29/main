@@ -248,10 +248,10 @@ void enqueue_process(Process *process)
     }
 }
 
-void create_process_queue(void)
+void create_process_queue(int16_t excessTime)
 {
     int8_t i;
-    int16_t timeLeft = TIMEFRAME_MS;
+    int16_t timeLeft = TIMEFRAME_MS - excessTime;
     int8_t peekLayer = 0;
     int16_t iterCount = 0;
     int16_t taskTime = 0;
