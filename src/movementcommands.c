@@ -4,6 +4,7 @@
 * TODO: Include protocol source and use it to send data to movement
 */
 
+#include <stdlib.h>
 #include "movementcommands.h"
 
 /* Create a movement command */

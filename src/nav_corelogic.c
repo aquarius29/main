@@ -1,44 +1,49 @@
 /*
-* @author: Jarryd Hall
-* Purpose: Core Logic for controlling which navigation system is in use. 
-* Interface: 
+* 	@author 	Jarryd Hall
+* 
+* 	@details 	Core Logic will be used as an entry point for external sub-systems e.g Connectivity
+*   	       	and will be used to write data using the protocol for e.g. Movement and UI data.
+*          
+*       	   	Core Logic will create a watchdog thread which in turn multithreads the following:
+*          		Manual movement command fetcher for handling manual movement commands and relaying them
+*          		GPS Setup thread which connects to GPS device and reads data from the device
+*          		GPS Navigation thread which calculates gps flight path
 *
-* Function: Switch between functions. Manual input, Auto-pilot(gps/ad-hoc)
-*           User input: Transform user input to an angle, pass it along
-*           Auto-Pilot GPS: Create connection to gps/ start gps parser
-*           Auto-Pilot ad-hoc: Parse TMX File
+*				Core Logic is used to setup the correct system e.g. 
+*				GPS navigation / Indoor Navigation
+* 
 * TODO: Import the path calculation classes and send them the navigation data
 */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <signal.h>
 #include "nav_corelogic.h"
 #include "tmxparser.c"
-#include "gps_nav.h"
+//#include "gps_nav.h"
+
+int gpsRunning = 0;
+int waitingForGpsSetupThread = 1;
+int startGpsThread = 0;
+
 
 //void nav_run_gps_system(GPSLocation *destination)
 void nav_run_gps_system()
 {
-	printf("Creating manual command handler thread\n");
+	gpsRunning = 1;
 	
-	/* pthread functions return 0 when successful */
-	int manualCommandThreadResult; 
-	int gpsSetupThreadResult;
-	int gpsNavigationThreadResult;
+	/* Create watchdog thread to monitor multithreading*/
+	int gpsWatchdogThreadResult;
+	char *watchDogMessage = "Forcing watchdog into slave labour\n";
+	pthread_t gpsWatchdogThread;
 	
-	char *message = "manual movement thread command started";
-	char *message2 = "gps setup thread started";
-	char *message3 = "gps navigation thread started";
-	
-	pthread_t manualCommandThread;
-	pthread_t gpsSetupThread;
-	pthread_t gpsNavigationThread;
+	printf("Attempting to create gps watchdog thread\n");
+    gpsWatchdogThreadResult = pthread_create(&gpsWatchdogThread, NULL, startgpswatchdog, (void *) watchDogMessage);
     
-    manualCommandThreadResult = pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
-	gpsSetupThreadResult = pthread_create(&gpsSetupThread, NULL, setupgps, (void*) message2);
-	gpsNavigationThreadResult = pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
-    
+	/* wait for the watchdog thread to finish */
+	pthread_join(gpsWatchdogThread, NULL);
+	
 	// /* check if thread was created */
 	//     if (manualThreadResult == 0)
 	// 	printf("Manual Command Thread created\n");
@@ -71,22 +76,92 @@ void nav_run_gps_system()
     // TODO: start parser
     // TODO: start gps navigation system. Use the destination GPSLocation
 
-    pthread_join(manualCommandThread, NULL); // wait for the thread to finish
-	pthread_join(gpsSetupThread, NULL);
-	pthread_join(gpsNavigationThread, NULL);
-
 	printf("Switching off gps system\n");
+}
+
+/* watchdog function to handle multithreading */
+void *startgpswatchdog(void *ptr)
+{
+	char *setupMessage;
+    setupMessage = (char *) ptr;
+    printf("%s\n", setupMessage);
+
+	int manualCommandThreadResult; 
+	int gpsSetupThreadResult;
+	int gpsNavigationThreadResult;
+	
+	char *message = "manual movement thread command started";
+	char *message2 = "gps setup thread started";
+	char *message3 = "gps navigation thread started";
+	
+	pthread_t manualCommandThread;
+	pthread_t gpsSetupThread;
+	pthread_t gpsNavigationThread;
+    
+	/* pthread functions return 0 when successful */
+	printf("Attempting to create manual command handler thread\n");
+    manualCommandThreadResult = pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
+
+	printf("Attempting to create GPS setup thread\n");
+	gpsSetupThreadResult = pthread_create(&gpsSetupThread, NULL, setupgps, (void*) message2);
+	
+	do
+	{
+		if (waitingForGpsSetupThread == 0)
+		{
+			printf("Attempting to create GPS Navigation thread\n");
+			gpsNavigationThreadResult = 
+			pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
+			break;
+		}
+	}
+	while (gpsRunning == 1);
+	
+	
+	
+	// while (gpsRunning == 1)
+	// 	{
+	// 		if (pthread_kill(manualCommandThread, 0) == 0)
+	// 		{
+	// 			printf("Manual Command Thread was murdered\nRessurecting....\n");
+	// 			manualCommandThreadResult = pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
+	// 		}
+	// 		if (pthread_kill(gpsSetupThread, 0) == 0)
+	// 		{
+	// 			printf("GPS Setup Thread died a horrible death\nRessurecting....\n");
+	// 			gpsSetupThreadResult = pthread_create(&gpsSetupThread, NULL, setupgps, (void*) message2);
+	// 		}
+	// 		if (pthread_kill(gpsNavigationThread, 0) == 0)
+	// 		{
+	// 			printf("GPS Navigation Thread was digitally destroyed\nReconstructing....\n");
+	// 			gpsNavigationThreadResult = pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
+	// 		}
+	// 	}
+	
+	/* wait for the threads to finish */
+	pthread_join(manualCommandThread, NULL); 
+	pthread_join(gpsSetupThread, NULL);
+	pthread_join(gpsNavigationThread, NULL);	
 }
 
 void *setupgps(void *ptr)
 {
-	setup_gps(UNO,57600);
+	char *message;
+    message = (char *) ptr;
+    printf("%s\n", message);
+
+	waitingForGpsSetupThread = 0;
+	// setup_gps(UNO,57600);
 }
 
 void *setupgpsnavigation(void *ptr)
 {
-	struct point Destination = {-2,5742.307,1156.002};
-	gps_navigation(Destination);
+	char *message;
+    message = (char *) ptr;
+    printf("%s\n", message);
+
+	// struct point Destination = {-2,5742.307,1156.002};
+	// gps_navigation(Destination);
 }
 
 void nav_run_indoor_system(int startTile, int destinationTile)
@@ -141,7 +216,7 @@ void setGPSDestination(GPSLocation *destination)
 // function to kill GPS system - e.g only manual input wanted.
 void killGPSSystem()
 {
-	
+	gpsRunning = 0;
 }
 
 // function to kill the navigation system e.g. the user wants only manual input.
@@ -279,7 +354,7 @@ void *commandFetcher(void *ptr)
     char *message;
     message = (char *) ptr;
     printf("%s\n", message);
-	
+
 	// check if it is neccesary to malloc command if it is simply being relayed
 	// movementCommand *data = malloc(sizeof movementCommand);
 	// 	if (data == NULL)
@@ -314,15 +389,15 @@ void killThread()
 	printf("KILLED\n");
 }
 
-double getLat()
-{
-	return curr.lat;
-}
-
-double getLon()
-{
-	return curr.lon;
-}
+// double getLat()
+// {
+// 	return curr.lat;
+// }
+// 
+// double getLon()
+// {
+// 	return curr.lon;
+// }
 
 /* Dealloc shouldnt be needed during a flight, 
 *unless flight switches between GPS/outdoor system

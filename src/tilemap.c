@@ -3,6 +3,7 @@
 * @Purpose: Tilemap representation
 */
 
+#include <stdlib.h>
 #include "tilemap.h"
 
 /* function to take coordinates and determine the tile index */
