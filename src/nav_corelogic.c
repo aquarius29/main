@@ -119,19 +119,20 @@ void *startgpswatchdog(void *ptr)
 	
 	
 	
+	
 	// while (gpsRunning == 1)
 	// 	{
-	// 		if (pthread_kill(manualCommandThread, 0) == 0)
+	// 		if (pthread_kill(manualCommandThread, 0) != 0)
 	// 		{
 	// 			printf("Manual Command Thread was murdered\nRessurecting....\n");
 	// 			manualCommandThreadResult = pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
 	// 		}
-	// 		if (pthread_kill(gpsSetupThread, 0) == 0)
+	// 		if (pthread_kill(gpsSetupThread, 0) != 0)
 	// 		{
 	// 			printf("GPS Setup Thread died a horrible death\nRessurecting....\n");
 	// 			gpsSetupThreadResult = pthread_create(&gpsSetupThread, NULL, setupgps, (void*) message2);
 	// 		}
-	// 		if (pthread_kill(gpsNavigationThread, 0) == 0)
+	// 		if (pthread_kill(gpsNavigationThread, 0) != 0)
 	// 		{
 	// 			printf("GPS Navigation Thread was digitally destroyed\nReconstructing....\n");
 	// 			gpsNavigationThreadResult = pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
