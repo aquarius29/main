@@ -87,7 +87,7 @@ struct vector read_gyro_data()
   vect.y = convert_gyro_raw_to_deg_s(y);
   vect.z = convert_gyro_raw_to_deg_s(z);
 
-  //Serial.println(x);
+  //Serial.println("READ DATA");
   //Serial.println(y);
   //Serial.println(z);
 

@@ -72,15 +72,15 @@ void readAccel()
     temp = Wire.receive();
     if (temp&0x80) temp|=0xff00;
   }
-/*  result = Wire.endTransmission();*/
-/*  Serial.print("raw data: ");*/
-/*  Serial.print("X=");*/
-/*  Serial.print(x);*/
-/*  Serial.print(" Y=");*/
-/*  Serial.print(y);*/
-/*  Serial.print(" Z=");*/
-/*  Serial.print(z);*/
-/*  Serial.println();*/
+ result = Wire.endTransmission();
+ Serial.print("raw data: ");
+ Serial.print("X=");
+ Serial.print(x);
+ Serial.print(" Y=");
+ Serial.print(y);
+ Serial.print(" Z=");
+ Serial.print(z);
+ Serial.println();
 }
 
 /*

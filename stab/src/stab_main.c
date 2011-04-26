@@ -81,11 +81,22 @@ int16_t stab_run(void)
   printf("ESTMIATED Z %f\n", filter_vect.z);
   
 #elif defined ARDUINO
-  gyro_vect =  read_gyro_data();
-  Serial.println(gyro_vect.x);
-  Serial.println(gyro_vect.y);
-  Serial.println(gyro_vect.z);
-  readAccel();
+  while(1)
+    {
+      //Serial.println("Just before reading");  
+      gyro_vect =  read_gyro_data();
+      
+      // printf("X Gyro:  %f", gyro_vect.x);
+      //printf("  Y Gyro:  %f", gyro_vect.y);
+      //printf("  Z Gyro:  %f\n", gyro_vect.z);
+      
+      Serial.println(gyro_vect.x);
+      Serial.println(gyro_vect.y);
+      Serial.println(gyro_vect.z);
+      Serial.println();
+      readAccel();
+      delay(1000);
+    }
 #endif
   
   return 0;
