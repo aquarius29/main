@@ -1,31 +1,38 @@
-/*****************************************************************************
- * Product: movementInterface.c
- * Version: 0.1
- * Created: April 7, 2011
- * History:
- *          
- *
- * Movement/CA Group
- *****************************************************************************/
-#include "ca_interface.h"
+/*
+ * file:         ca_interface.c
+ * brief:
+ * author:       Amber Olsson, Yanling Jin
+ * date:         2011-04-26
+ * version:      0.1
+ * history       2011-04-07 create the file
+ * detail:
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 
 #ifdef ARDUINO
 #include <WProgram.h>
+#endif
 
+#include "ca_interface.h"
+//#include "proto_ca.h"
+
+
+#ifdef ARDUINO
 /*
  * ARDUINO
  * All collision preperation goes here.
  */
 int ca_init(void)
 {
-	//to init the print serial
+	/* to init the print serial */
 	Serial.begin(9600);
 
-	//to init the arduino lib
+	/* to init the arduino lib */
 	init();
-	return 1;
+
+	return 0;
 }
 
 
@@ -38,8 +45,7 @@ int ca_run(void)
 
 	write_to_move(direction_filter());
 
-	return 1;
-
+	return 0;
 }
 
 
@@ -51,7 +57,7 @@ int ca_run(void)
 int ca_init(void)
 {
 
-	return 1;
+	return 0;
 }
 
 
@@ -61,10 +67,9 @@ int ca_init(void)
  */
 int ca_run(void)
 {
-	//fake data here
-	write_to_move(direction_filter(100, 100, 100, 100));
-
-	return 1;
+	/* fake data here*/
+	write_to_move(direction_filter(100,100,100,100));
+	return 0;
 }
 
 #endif
@@ -97,6 +102,7 @@ int get_dir(void)
  */
 void write_to_move(int direction){
 
-	//	write(direction)
+	/* 0 hover 1 front 2 back 3 left 4 right REST free to go */
 
+	//	write(direction)
 }
