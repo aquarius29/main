@@ -133,20 +133,15 @@ void getTileDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 			
 			if (id == 0)
 			{
-				printf("ArrayCounter is %d\n", arrayCounter);
 				tileValuesArray[arrayCounter] = 0;
 				arrayCounter++;
-				
 				numMovableTiles += 1;
-				printf("Collision tile id : %d for index: %d\n", id, index);
 			}
 			if (id != 0)
 			{
-				printf("ArrayCounter is %d\n", arrayCounter);
 				tileValuesArray[arrayCounter] = 1;
 				arrayCounter++;
-				numCollisionTiles += 1;			
-				printf("Collision tile id : %d for index: %d\n", id, index);
+				numCollisionTiles += 1;
 			}
 			 		
 			xmlFree(keyword);

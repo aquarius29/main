@@ -21,16 +21,23 @@
 #include <signal.h>
 #include "nav_corelogic.h"
 #include "tmxparser.c"
-//#include "gps_nav.h"
+#include "gps_nav.h"
+
+static pthread_mutex_t watchdogMutex = PTHREAD_MUTEX_INITIALIZER;
+static pthread_cond_t watchdogCond = PTHREAD_COND_INITIALIZER;
 
 int gpsRunning = 0;
 int waitingForGpsSetupThread = 1;
 int startGpsThread = 0;
 
+/* Add global variables (within mutex scope) that need to be modified outside and inside threads*/
+
 
 //void nav_run_gps_system(GPSLocation *destination)
 void nav_run_gps_system()
 {
+	printf("Initiating GPS System\n");
+	
 	gpsRunning = 1;
 	
 	/* Create watchdog thread to monitor multithreading*/
@@ -105,17 +112,23 @@ void *startgpswatchdog(void *ptr)
 	printf("Attempting to create GPS setup thread\n");
 	gpsSetupThreadResult = pthread_create(&gpsSetupThread, NULL, setupgps, (void*) message2);
 	
-	do
-	{
-		if (waitingForGpsSetupThread == 0)
-		{
-			printf("Attempting to create GPS Navigation thread\n");
-			gpsNavigationThreadResult = 
-			pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
-			break;
-		}
-	}
-	while (gpsRunning == 1);
+	pthread_cond_wait(&watchdogCond, &watchdogMutex); /* Set watchdog to wait for mutex unlock */
+	
+	printf("Attempting to create GPS Navigation thread\n");
+	gpsNavigationThreadResult = 
+	pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
+	
+	// do
+	// 	{
+	// 		if (waitingForGpsSetupThread == 0)
+	// 		{
+	// 			printf("Attempting to create GPS Navigation thread\n");
+	// 			gpsNavigationThreadResult = 
+	// 			pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
+	// 			break;
+	// 		}
+	// 	}
+	// 	while (gpsRunning == 1);
 	
 	
 	
@@ -151,8 +164,23 @@ void *setupgps(void *ptr)
     message = (char *) ptr;
     printf("%s\n", message);
 
+	int result;
+
+	result = pthread_mutex_lock( &watchdogMutex);
+	if (result != 0)
+		printf("error locking pthread mutex\n");
+	
 	waitingForGpsSetupThread = 0;
-	// setup_gps(UNO,57600);
+	
+	result = pthread_mutex_unlock( &watchdogMutex );
+	if (result != 0)
+	printf("error unlocking pthread mutex\n");
+	
+	result = pthread_cond_signal(&watchdogCond); /* Wake watchdog */
+	if (result != 0)
+	printf("error with conditional signal\n");
+	
+	 setup_gps(UNO,57600);
 }
 
 void *setupgpsnavigation(void *ptr)
@@ -161,9 +189,11 @@ void *setupgpsnavigation(void *ptr)
     message = (char *) ptr;
     printf("%s\n", message);
 
-	// struct point Destination = {-2,5742.307,1156.002};
-	// gps_navigation(Destination);
+	 struct point Destination = {-2,5742.307,1156.002};
+	 gps_navigation(Destination);
 }
+
+
 
 void nav_run_indoor_system(int startTile, int destinationTile)
 {
