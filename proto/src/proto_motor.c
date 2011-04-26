@@ -17,14 +17,14 @@
 
 char motor_ctrl = 0; // from Filter to Motor Control; DEFAULT is 0
 
-void write_motor_ctrl(char value){
+void proto_write_motor_ctrl(char value){
 	motor_ctrl = value;
 #ifdef PC
 	printf("Motor value set to: %c\n", motor_ctrl);
 #endif
 }
 	
-char read_motor_ctrl(void){
+char proto_read_motor_ctrl(void){
 #ifdef PC
 	printf("Motor value is: %c\n", motor_ctrl);
 #endif

@@ -11,6 +11,6 @@
 * <IT University of Goteborg>
 *****************************************************************************/
 
-void write_stab_ctrl(char);
+void proto_write_stab_ctrl(char);
 	
-char read_stab_ctrl(void);
+char proto_read_stab_ctrl(void);

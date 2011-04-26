@@ -11,6 +11,6 @@
 * <IT University of Goteborg>
 *****************************************************************************/
 
-void write_motor_ctrl(char);
+void proto_write_motor_ctrl(char);
 	
-char read_motor_ctrl(void);
+char proto_read_motor_ctrl(void);

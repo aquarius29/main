@@ -25,26 +25,26 @@ unsigned int direction;
  
  
 //write speed from movement to collision avodance  
-void write_speed(int value);// proto API 
+void proto_write_speed(int value);// proto API 
  
  
 //read speed from movement to collision avodance 
-unsigned int read_speed(void);// proto API 
+unsigned int proto_read_speed(void);// proto API 
  
 
 //write direction from movement to collision avodance  
-void write_direction(int value);// proto API 
+void proto_write_direction(int value);// proto API 
  
  
 //read direction from movement to collision avodance  
-unsigned int read_direction(void);// proto API 
+unsigned int proto_read_direction(void);// proto API 
  
  
 /***************************************************************************** 
     Implementations 
 *****************************************************************************/ 
  
-void write_speed(int value){ 
+void proto_write_speed(int value){ 
     speed = value;
 #ifdef PC
 	printf("Movement value set to: %c\n", speed);
@@ -52,7 +52,7 @@ void write_speed(int value){
 } 
  
  
-unsigned int read_speed(void){ 
+unsigned int proto_read_speed(void){ 
 #ifdef PC
 	printf("Movement value is: %c\n", speed);
 #endif
@@ -61,7 +61,7 @@ unsigned int read_speed(void){
 } 
 
 
-void write_direction(int value){ 
+void proto_write_direction(int value){ 
     direction = value;
 #ifdef PC
 	printf("Movement value set to: %c\n", direction);
@@ -70,7 +70,7 @@ void write_direction(int value){
 } 
  
  
-unsigned int read_direction(void){ 
+unsigned int proto_read_direction(void){ 
 #ifdef PC
 	printf("Movement value is: %c\n", direction);
 #endif

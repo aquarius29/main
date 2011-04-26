@@ -12,24 +12,24 @@
 *****************************************************************************/
 
 //write height from movement to collision avodance  
-void write_height(int value);// proto API 
+void proto_write_height(int value);// proto API 
  
  
 //read height from movement to collision avodance 
-unsigned int read_height(void);// proto API 
+unsigned int proto_read_height(void);// proto API 
  
 
 //get direction from movement to collision avodance  
-void write_direction(int value);// proto API 
+void proto_write_direction(int value);// proto API 
  
  
 //read direction from movement to collision avodance  
-unsigned int read_direction(void);// proto API 
+unsigned int proto_read_direction(void);// proto API 
 
 
 //write distance from movement to collision avodance  
-void write_distance(int value);// proto API 
+void proto_write_distance(int value);// proto API 
  
  
 //read distance from movement to collision avodance  
-unsigned int read_distance(void);// proto API 
+unsigned int proto_read_distance(void);// proto API 

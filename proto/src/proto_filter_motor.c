@@ -9,14 +9,14 @@
 unsigned char filter_message;
 unsigned char motor_message;
 
-void write_filter(unsigned char message){
+void proto_write_filter(unsigned char message){
 	filter_message=message;
 #ifdef PC
 	printf("filter value set to: %c\n", filter_message);
 #endif
 }
 
-unsigned char read_filter(void){
+unsigned char proto_read_filter(void){
 	unsigned char temp=filter_message;
 	filter_message=0;
 
@@ -27,14 +27,14 @@ unsigned char read_filter(void){
 	return temp;
 }
 
-void write_motor(unsigned char message){
+void proto_write_motor(unsigned char message){
 	motor_message=message;
 #ifdef PC
 	printf("motor value set to: %c\n", motor_message);
 #endif
 
 }    
-unsigned char read_motor(void){
+unsigned char proto_read_motor(void){
 	unsigned char temp=motor_message;
 	motor_message=0;
 #ifdef PC

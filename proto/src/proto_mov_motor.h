@@ -6,5 +6,5 @@
 //
 
 
-void write_motor(unsigned char message);
-unsigned char read_motor(void);
+void proto_write_motor(unsigned char message);
+unsigned char proto_read_motor(void);

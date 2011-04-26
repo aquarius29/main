@@ -10,6 +10,6 @@
 * 
 * <IT University of Goteborg> 
 *****************************************************************************/  
-unsigned char read_navi_to_connectivity(void); //API
+unsigned char proto_read_navi_to_connectivity(void); //API
  
-void send_navi_to_connectivity(unsigned char msg); //API
+void proto_send_navi_to_connectivity(unsigned char msg); //API

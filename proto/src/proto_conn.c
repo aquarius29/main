@@ -20,30 +20,30 @@
     Definitions 
 *****************************************************************************/ 
  
-unsigned char navi_to_connectivity_msg; 
+unsigned char proto_navi_to_connectivity_msg; 
 //unsigned char nav_msg; 
  
  
-unsigned char read_navi_to_connectivity(void); 
+unsigned char proto_read_navi_to_connectivity(void); 
  
-void send_navi_to_connectivity(unsigned char msg); 
+void proto_send_navi_to_connectivity(unsigned char msg); 
  
 /***************************************************************************** 
     Implementations 
 *****************************************************************************/ 
  
  
-unsigned char read_navi_to_connectivity(void){ 
+unsigned char proto_read_navi_to_connectivity(void){ 
 #ifdef PC
-	printf("navigation msg value set to: %c\n", navi_to_connectivity_msg );
+	printf("navigation msg value set to: %c\n", proto_navi_to_connectivity_msg );
 #endif
-    return navi_to_connectivity_msg; 
+    return proto_navi_to_connectivity_msg; 
     
 } 
  
-void send_navi_to_connectivity(unsigned char msg){ 
-    navi_to_connectivity_msg = msg; 
+void proto_send_navi_to_connectivity(unsigned char msg){ 
+    proto_navi_to_connectivity_msg = msg; 
 #ifdef PC
-	printf("navigation msg value set to: %c\n", navi_to_connectivity_msg );
+	printf("navigation msg value set to: %c\n", proto_navi_to_connectivity_msg );
 #endif
 } 

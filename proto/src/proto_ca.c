@@ -26,32 +26,32 @@ unsigned int direction = 0; // from Collision Avoidance Movement to; DEFAULT is 
  
  
 //write height from movement to collision avodance  
-void write_height(int value);// proto API 
+void proto_write_height(int value);// proto API 
  
  
 //read height from movement to collision avodance 
-unsigned int read_height(void);// proto API 
+unsigned int proto_read_height(void);// proto API 
  
 
 //write direction from movement to collision avodance  
-void write_direction(int value);// proto API 
+void proto_write_direction(int value);// proto API 
 
  
 //read direction from movement to collision avodance  
-unsigned int read_direction(void);// proto API 
+unsigned int proto_read_direction(void);// proto API 
  
 //write distance from movement to collision avodance  
-void write_distance(int value);// proto API 
+void proto_write_distance(int value);// proto API 
 
  
 //read distance from movement to collision avodance  
-unsigned int read_distance(void);// proto API 
+unsigned int proto_read_distance(void);// proto API 
  
 /***************************************************************************** 
     Implementations 
 *****************************************************************************/ 
  
-void write_height(int value){ 
+void proto_write_height(int value){ 
     height = value;
 #ifdef PC
 	printf("collision avodance value set to: %c\n", height);
@@ -59,7 +59,7 @@ void write_height(int value){
 } 
  
  
-unsigned int read_height(void){ 
+unsigned int proto_read_height(void){ 
 #ifdef PC
 	printf("collision avodance value is: %c\n", height);
 #endif
@@ -68,7 +68,7 @@ unsigned int read_height(void){
 } 
 
 
-void write_direction(int value){ 
+void proto_write_direction(int value){ 
     direction = value;
 #ifdef PC
 	printf("collision avodance value set to: %c\n", direction);
@@ -77,14 +77,14 @@ void write_direction(int value){
 } 
  
  
-unsigned int read_direction(void){ 
+unsigned int proto_read_direction(void){ 
 #ifdef PC
 	printf("collision avodance value is: %c\n", direction);
 #endif
     return direction; 
 }
 
-void write_distance(int value){ 
+void proto_write_distance(int value){ 
     distance = value;
 #ifdef PC
 	printf("collision avodance value set to: %c\n", distance);
@@ -93,7 +93,7 @@ void write_distance(int value){
 } 
  
  
-unsigned int read_distance(void){ 
+unsigned int proto_read_distance(void){ 
 #ifdef PC
 	printf("collision avodance value is: %c\n", distance);
 #endif

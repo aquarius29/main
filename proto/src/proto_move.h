@@ -11,18 +11,18 @@
 * <IT University of Goteborg>
 *****************************************************************************/
 //write speed from movement to collision avodance  
-void write_speed(int value);// proto API 
+void proto_write_speed(int value);// proto API 
  
  
 //read speed from movement to collision avodance 
-unsigned int read_speed(void);// proto API 
+unsigned int proto_read_speed(void);// proto API 
  
 
 //write direction from movement to collision avodance  
-void write_direction(int value);// proto API 
+void proto_write_direction(int value);// proto API 
  
  
 //read direction from movement to collision avodance  
-unsigned int read_direction(void);// proto API 
+unsigned int proto_read_direction(void);// proto API 
 
 
