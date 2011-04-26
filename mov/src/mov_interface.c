@@ -1,30 +1,37 @@
 /*****************************************************************************
-  * Product: movementInterface.c
-  * Version: 0.1
-  * Created: April 7, 2011
-  * History:
-  *          
-  *
-  *
-  * Movement/CA Group
-  *****************************************************************************/
+ * Product: mov_Interface.c
+ * Version: 0.1
+ * Created: April 7, 2011
+ * History:
+ *          
+ *
+ *
+ * Movement/CA Group
+ *****************************************************************************/
 
 
-#include "mov_header.h"
-
+#include "mov_interface.h"
 #include <stdlib.h>
 #include <stdio.h>
+
+#ifdef PC
+#include <time.h>
+#endif
+
+
 
 #ifdef ARDUINO
 //************************************************************
 // ARDUINO
 // All movement preperation goes here.
 //************************************************************
-int movement_init()
+int mov_init()
 {
-  //start magnetometer
+	//start magnetometer
+	start_time=0;
+	duration=0;
 
-  return 1;
+	return 1;
 }
 
 
@@ -32,11 +39,19 @@ int movement_init()
 // ARDUINO
 // Movement is started here
 //************************************************************
-int movement_run()
+int mov_run()
 {
+	if(start_time != 0){
+		duration = millis() - start_time;
+}
   
+	//stabilize based on last movement 
+  
+	//move
 
-  return 1;
+	start_time = millis();
+  
+	return 1;
 
 }
 #endif
@@ -48,11 +63,12 @@ int movement_run()
 // PC
 //  All movement preperation goes here.
 //************************************************************
-int movement_init()
+int mov_init()
 {
-  
+	start_time=0;
+	duration=0;
 
-  return 1;
+	return 1;
 
 }
 
@@ -60,10 +76,20 @@ int movement_init()
 // PC
 // Movement is started here
 //************************************************************
-int movement_run()
+int mov_run()
 {
+	if(start_time != 0){
+		duration = clock() / (CLOCKS_PER_SEC / 1000) - start_time;
+	}
 
+	//stabilize based on last movement 
+  
+	//move
 
-  return 1;
+	start_time =  clock() / (CLOCKS_PER_SEC / 1000);
+  
+	printf("%d", start_time);
+
+	return 1;
 }
 #endif

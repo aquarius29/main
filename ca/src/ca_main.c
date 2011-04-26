@@ -4,6 +4,6 @@
 
 int main(int argc, char *argv[])
 {
-  ca_run();
-  return 0;
+	ca_run();
+	return 0;
 }

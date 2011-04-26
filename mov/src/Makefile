@@ -1,6 +1,6 @@
 ########################### Added by jogr 110413 #########################
 
-LIB_SRC=mov_stubs.c
+LIB_SRC=mov_interface.c
 
 LIB_OBJ = $(LIB_SRC:.c=.o)
 

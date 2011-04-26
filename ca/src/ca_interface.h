@@ -53,7 +53,7 @@ unsigned char *moving_closer_filter(unsigned char *is_moving, unsigned char*dire
  */
 int final_direction(int currentDir, unsigned char *directions);
 
-// for print the data
+/*for print data*/
 char * translate(int i);
 void outputIR(unsigned char *result);
 void outputdirection(int direction);
@@ -66,13 +66,8 @@ void print_result(unsigned char *result);
 int direction_filter(void);
 
 #elif defined PC
-int direction_filter(int speed,int dir,
-		     int ir1, int ir2, int ir3, int ir4);
+int direction_filter(int ir1, int ir2, int ir3, int ir4);
 #endif 
-
-int get_speed(void);
-int get_dir(void);
-
 
 /*
  * ca_sensors.c
@@ -99,4 +94,8 @@ int ca_run(void);
 int ca_init(void);
 int ca_run(void);
 #endif 
+
+int get_speed(void);
+int get_dir(void);
+void write_to_move(int direction);
 

@@ -254,6 +254,7 @@ char * translate(int i)
   return result;
 }
 
+
 /*translate the output of IR*/
 void outputIR(unsigned char *result)
 {

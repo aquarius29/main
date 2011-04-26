@@ -14,80 +14,89 @@
 #ifdef ARDUINO
 #include <WProgram.h>
 
-//************************************************************
-// ARDUINO
-// All collision preperation goes here.
-//************************************************************
+/*
+ * ARDUINO
+ * All collision preperation goes here.
+ */
 int ca_init(void)
 {
-  return 1;
+	//to init the print serial
+	Serial.begin(9600);
+
+	//to init the arduino lib
+	init();
+	return 1;
 }
 
 
-//************************************************************
-// ARDUINO
-// Collision is started here
-//************************************************************
+/*
+ * ARDUINO
+ * Collision is started here
+ */
 int ca_run(void)
 {
-  init();
 
-  /* //init the serial output */
-  // serial_init();
-  // fdevopen(serial_putchar, serial_getchar);
+	write_to_move(direction_filter());
 
-  int i=0;
-  while(i<1000)
-    {
-      direction_filter();
-      i++;
-    }
-
-  return 1;
+	return 1;
 
 }
 
 
 #elif defined PC
-//************************************************************
-// PC
-//  All movement preperation goes here.
-//************************************************************
+/*
+ * PC
+ * All collision preperation goes here.
+ */
 int ca_init(void)
 {
-  
 
-  return 1;
-
-
+	return 1;
 }
 
-//************************************************************
-// PC
-// Movement is started here
-//************************************************************
+
+/*
+ * PC
+ * Collision is started here
+ */
 int ca_run(void)
 {
+	//fake data here
+	write_to_move(direction_filter(100, 100, 100, 100));
 
-  //Protocol
-  // int direction = read_direction(void);
-  // int speed = read_speed(void);
-  int ir1=100;
-  int ir2=100;
-  int ir3=100;
-  int ir4=100;
-  int i=0;
-  /* while (i<5){
-    direction_filter(get_speed(),get_dir(),ir1, ir2, ir3, ir4);
-    i++;
-    }*/
+	return 1;
+}
 
-   int direction = direction_filter(speed,direction,ir1, ir2, ir3, ir4);
+#endif
 
-  //Protocol 
-  //write(direction);
-  return 1;
+
+/*
+ * return the flying speed.
+ */
+int get_speed(void)
+{
+	//	int speed = read_speed();
+	int speed=1;
+	return  speed;
 }
 
 
-#endif
+/*
+ * return the flying direction.
+ */
+int get_dir(void)
+{
+	//	int dir = read_direction();
+	int dir=1;
+	return  dir;
+}
+
+
+/*
+ * send to the movement
+ */
+void write_to_move(int direction){
+
+	//	write(direction)
+
+}
