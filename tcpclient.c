@@ -1,5 +1,4 @@
-/* Author Yuhan Qiu and Shuang Wu */
-
+/*tcpclient is by @Yuhan Qiu and @Shuang Wu*/
 #include<stdlib.h>
 #include<stdio.h>
 #include<errno.h>
@@ -15,7 +14,7 @@ int main(int argc,char *argv[])
   struct sockaddr_in server_addr;
   struct hostent *host;
   int portnumber,nbytes;
-
+while(1){
   if(3!=argc){
     fprintf(stderr,"Usage:%s hostname portnumber\a\n",argv[0]);
     exit(1);
@@ -57,5 +56,6 @@ int main(int argc,char *argv[])
   buffer[nbytes]='\0';
   printf("I have received:%s\n",buffer);
   close(sockfd);
+}
   exit(0);
 }
