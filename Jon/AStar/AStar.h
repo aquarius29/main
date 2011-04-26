@@ -32,22 +32,22 @@ typedef struct {
     uint16_t count;
 }positionList;
 
-void AddNodeToOpen(node * current, nodeList * open);
-void RemoveNodeFromOpen(node * current, nodeList * open);
-void AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed,
+void addNodeToOpen(node * current, nodeList * open);
+void removeNodeFromOpen(node * current, nodeList * open);
+void addNeighborsToOpen(node * current, nodeList * open, nodeList * closed,
                         int8_t map[][MAP_X], const position * end);
-void FreeAllocatedList(nodeList * list);
-positionList * AStar(const position * start, const position * end,
+void freeAllocatedList(nodeList * list);
+positionList * aStar(const position * start, const position * end,
                      int8_t map[][MAP_X]);
-int8_t ListMemoryAllocation(nodeList ** open, nodeList ** closed);
-positionList * CreateFinalList(nodeList * closed, const position * goal,
+int8_t listMemoryAllocation(nodeList ** open, nodeList ** closed);
+positionList * createFinalList(nodeList * closed, const position * goal,
                                const position * drone);
-int8_t NodeInClosed(const uint16_t * nodeY, const uint16_t * nodeX,
+int8_t nodeInClosed(const uint16_t * nodeY, const uint16_t * nodeX,
                     nodeList * closed);
-int8_t NodeInOpen(const uint16_t * nodeY, const uint16_t * nodeX,
+int8_t nodeInOpen(const uint16_t * nodeY, const uint16_t * nodeX,
                   nodeList * open);
-node * AddNodeToClosed(node * current, nodeList * closed);
-int32_t GetHeuristicCost(const position * currentNode,
+node * addNodeToClosed(node * current, nodeList * closed);
+int32_t getHeuristicCost(const position * currentNode,
                          const position * goalNode);
 
 #endif	/* DIJKSTRA_H */

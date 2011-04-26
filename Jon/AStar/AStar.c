@@ -33,12 +33,11 @@ int main(void) {
         {5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5},  // 12
         {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5}   // 13
     };
-    /*
-     * 1 = normal walk
-     * 5 = wall
-     */
 
-    final = AStar(&drone, &goal, map);
+    // 1 = normal walk
+    // 5 = wall
+
+    final = aStar(&drone, &goal, map);
     if(final == NULL) {
         printf("No goal could be found!\n");
     }
@@ -56,6 +55,7 @@ int main(void) {
     return 0;
 }
 
+
 /*
  * Takes the drone position, goal position, and a tile map
  * If the goal is found a dynamic list of the nodes making up the
@@ -63,7 +63,7 @@ int main(void) {
  * If the goal is not reachable or if there is a problem to allocate
  * memory NULL is returned
  */
-positionList * AStar(const position * start, const position * end,
+positionList * aStar(const position * start, const position * end,
         int8_t map[][MAP_X])
 {
     nodeList * open;            /* open list */
@@ -72,7 +72,7 @@ positionList * AStar(const position * start, const position * end,
     positionList * final;       /* the shortest path */
 
     /* Allocate space for both the open and the closed list */
-    if(!ListMemoryAllocation(&open, &closed)) {
+    if(!listMemoryAllocation(&open, &closed)) {
         return NULL;
     }
 
@@ -82,7 +82,7 @@ positionList * AStar(const position * start, const position * end,
     open->list[0].previous.y = -1;
     open->list[0].previous.x = -1;
     open->list[0].totalCost = 0;
-    open->list[0].heuristic = GetHeuristicCost(&open->list[0].pos, end);
+    open->list[0].heuristic = getHeuristicCost(&open->list[0].pos, end);
 
     while(open->count > 0) {
         /* Check if we have reach the goal */
@@ -90,7 +90,7 @@ positionList * AStar(const position * start, const position * end,
         && open->list[0].pos.y == end->y)
         {
             /* If so, add the goal node to the closed list and stop looping */
-            closed->list = AddNodeToClosed(&open->list[0], closed);
+            closed->list = addNodeToClosed(&open->list[0], closed);
             break;
         }
 
@@ -101,11 +101,11 @@ positionList * AStar(const position * start, const position * end,
          * Add the check node to the closed list and remove it
          * from the open list
          */
-        closed->list = AddNodeToClosed(&currentNode, closed);
-        RemoveNodeFromOpen(&currentNode, open);
+        closed->list = addNodeToClosed(&currentNode, closed);
+        removeNodeFromOpen(&currentNode, open);
 
         /* Check the neighbors of the first node in the open list */
-        AddNeighborsToOpen(&currentNode, open, closed, map, end);
+        addNeighborsToOpen(&currentNode, open, closed, map, end);
     }
 
     /* If we found the goal, a list with the shortest path will be created */
@@ -113,16 +113,16 @@ positionList * AStar(const position * start, const position * end,
     && closed->list[closed->count - 1].pos.y == end->y)
     {
         /* Create final list and return it to the caller */
-        final = CreateFinalList(closed, end, start);
-        FreeAllocatedList(open);
-        FreeAllocatedList(closed);
+        final = createFinalList(closed, end, start);
+        freeAllocatedList(open);
+        freeAllocatedList(closed);
         return final;
     }
     /* If we could not get to the goal, there is no solution */
     else {
         printf("Could not find goal!\n");
-        FreeAllocatedList(open);
-        FreeAllocatedList(closed);
+        freeAllocatedList(open);
+        freeAllocatedList(closed);
         return NULL;
     }
 }
@@ -131,7 +131,7 @@ positionList * AStar(const position * start, const position * end,
  * Goes through the current node's surrounding neighbor nodes and
  * adds reachable nodes to the open list
  */
-void AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed,
+void addNeighborsToOpen(node * current, nodeList * open, nodeList * closed,
         int8_t map[][MAP_X], const position * end) {
     int8_t sortCounter = 0;
     int8_t y = 0;
@@ -223,11 +223,11 @@ void AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed,
             }
 
             /* If the node is already in the closed list we don't check it */
-            if(NodeInClosed(&neighborY, &neighborX, closed)) {
+            if(nodeInClosed(&neighborY, &neighborX, closed)) {
                 continue;
             }
             /* If node is already in the open list */
-            else if((openListIndex = NodeInOpen(&neighborY,
+            else if((openListIndex = nodeInOpen(&neighborY,
                                                 &neighborX, open)))
             {
                 p_adjacentNode = &open->list[openListIndex - 1];
@@ -250,7 +250,7 @@ void AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed,
                 p_adjacentNode->pos.y = neighborY;
                 p_adjacentNode->pos.x = neighborX;
                 p_adjacentNode->heuristic =
-                		GetHeuristicCost(&p_adjacentNode->pos, end);
+                		getHeuristicCost(&p_adjacentNode->pos, end);
             }
 
             /* Update values for node in open list or add values for new
@@ -260,8 +260,8 @@ void AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed,
             p_adjacentNode->previous = current->pos;
 
             /* If the node was not previously in the open list we add it */
-            if(!NodeInOpen(&neighborY, &neighborX, open)) {
-                AddNodeToOpen(p_adjacentNode, open);
+            if(!nodeInOpen(&neighborY, &neighborX, open)) {
+                addNodeToOpen(p_adjacentNode, open);
 
                 /*
                  * Sort the open list so the node with the smallest cost,
@@ -287,7 +287,7 @@ void AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed,
 }
 
 /* Creates the final list and returns a pointer to it */
-positionList * CreateFinalList(nodeList * closed, const position * goal,
+positionList * createFinalList(nodeList * closed, const position * goal,
         const position * drone)
 {
     position temp;  /* used to reverse the final list */
@@ -314,7 +314,7 @@ positionList * CreateFinalList(nodeList * closed, const position * goal,
      */
     for(counterUp = 1; counterUp < closed->count; counterUp++) {
         /* Get the position of the "parent" node in the closed list */
-        closedIndex = NodeInClosed(&closed->list[closedIndex].previous.y,
+        closedIndex = nodeInClosed(&closed->list[closedIndex].previous.y,
                                    &closed->list[closedIndex].previous.x,
                                    closed) - 1;
 
@@ -345,7 +345,7 @@ positionList * CreateFinalList(nodeList * closed, const position * goal,
 }
 
 /* Get the heuristic cost from a node to the goal node */
-int32_t GetHeuristicCost(const position * currentNode,
+int32_t getHeuristicCost(const position * currentNode,
                          const position * goalNode)
 {
     return (abs(currentNode->y - goalNode->y)
@@ -353,7 +353,7 @@ int32_t GetHeuristicCost(const position * currentNode,
 }
 
 /* Dynamically allocates space for the open and closed list */
-int8_t ListMemoryAllocation(nodeList ** open, nodeList ** closed) {
+int8_t listMemoryAllocation(nodeList ** open, nodeList ** closed) {
     *open = calloc(1, sizeof(nodeList));
     if(open == NULL) {
         printf("Could not allocate memory for the open list struct\n");
@@ -379,14 +379,14 @@ int8_t ListMemoryAllocation(nodeList ** open, nodeList ** closed) {
 }
 
 /* Add node to the open list */
-void AddNodeToOpen(node * current, nodeList * open) {
+void addNodeToOpen(node * current, nodeList * open) {
     open->count++;
 
     open->list[open->count - 1] = *current;
 }
 
 /* Add a node to the closed list */
-node * AddNodeToClosed(node * current, nodeList * closed) {
+node * addNodeToClosed(node * current, nodeList * closed) {
     closed->count++;
 
     closed->list = realloc(closed->list, closed->count * sizeof(node));
@@ -396,7 +396,7 @@ node * AddNodeToClosed(node * current, nodeList * closed) {
 }
 
 /* Remove a node from the open list */
-void RemoveNodeFromOpen(node * current, nodeList * open) {
+void removeNodeFromOpen(node * current, nodeList * open) {
     int32_t counter;
 
     for(counter = 1; counter < open->count; counter++) {
@@ -407,7 +407,7 @@ void RemoveNodeFromOpen(node * current, nodeList * open) {
 }
 
 /* Check if a node is already in the closed list */
-int8_t NodeInClosed(const uint16_t * nodeY, const uint16_t * nodeX,
+int8_t nodeInClosed(const uint16_t * nodeY, const uint16_t * nodeX,
         nodeList * closed)
 {
 	uint16_t closedCounter;
@@ -426,7 +426,7 @@ int8_t NodeInClosed(const uint16_t * nodeY, const uint16_t * nodeX,
 }
 
 /* Check if a node is already in the open list */
-int8_t NodeInOpen(const uint16_t * nodeY, const uint16_t * nodeX,
+int8_t nodeInOpen(const uint16_t * nodeY, const uint16_t * nodeX,
                   nodeList * open)
 {
     uint32_t openCounter;
@@ -442,7 +442,7 @@ int8_t NodeInOpen(const uint16_t * nodeY, const uint16_t * nodeX,
 }
 
 /* Help function to free all memory for a node list */
-void FreeAllocatedList(nodeList * list) {
+void freeAllocatedList(nodeList * list) {
     free(list->list);
     free(list);
 }
