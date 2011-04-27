@@ -1,7 +1,8 @@
 # Compiled source #
 ###################
 *.o
-
+*.a
+*.beam
 
 # OS & temporary files #
 ########################

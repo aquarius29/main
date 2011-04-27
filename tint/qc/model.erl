@@ -15,7 +15,7 @@
 
 init([]) ->
 %%% !!! eqc_c:start(main, [{c_src, "src/main.c"}, {cflags, "-DPC -Isrc -Llib -lmoto"}]). !!!`
-    eqc_c:start(main, [verbose, {c_src, "src/main.c"}, {cflags, "-DPC -Isrc -Llib -lmoto"}]),
+    eqc_c:start(main, [verbose, {c_src, "src/main.c"}, {cflags, "-DPC -I../../moto/src -I../../proto/src -L../../moto/lib -L../../proto/lib -lmoto -lproto"}]),
 %    eqc_c:start(main, [verbose, {c_src, "src/main.c"}, {additional_files, ["src/moto_driver_functions.c", "src/moto_interface.c", "src/moto_msg_handler.c", "src/moto_msg_manipulation.c"]}, {cflags, "-DPC -Isrc -Llib -lmoto"}]),
 
 %, {additional_files, ["libmoto.a"]}]),
