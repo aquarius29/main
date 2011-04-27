@@ -13,21 +13,23 @@
 *               2011-04-16 - time-constraints implemented
 *               2011-04-19 - added Doxygen comments
 *               2011-04-20 - changed init_process_data() based on\n
-*                            naive implementation
+* naive implementation
 *               2011-04-21 - Made execution time measurement
 */
 
+#ifdef PC
 #include <stdio.h>
 #include <malloc.h>
 #include <string.h>
 #include <stdlib.h>
 
-#include "sched_batman_scheduler.h"
-
-#ifdef PC
 /* stubs represent other modules */
 #include "sched_stubs.h"
-#endif
+#elif ARDUINO
+/* ARDUINO stuff here */
+#endif /* PC ARDUINO*/
+
+#include "sched_batman_scheduler.h"
 
 Process* create_process(int8_t pid)
 {
@@ -48,7 +50,7 @@ void end_process(Process *process)
 }
 
 Task* create_task(const char *name, 
-                    Fun_t functionPointer, int16_t executionTime)
+                    sched_Fun_t functionPointer, int16_t executionTime)
 {
     int16_t strLen = strlen(name) + 1;
 	Task *task = (Task*)malloc(sizeof(Task));
@@ -97,7 +99,7 @@ void run_idle_task(Process *process)
 	if(process->firstTask != NULL)
 	{
 		Task *pTmpTask = process->idleTask;
-		Fun_t fp = pTmpTask->functionPointer;
+		sched_Fun_t fp = pTmpTask->functionPointer;
 
 		if(pTmpTask->nextTask != NULL)
 			process->idleTask = pTmpTask->nextTask;
@@ -112,14 +114,14 @@ void run_idle_task(Process *process)
 int16_t init_process_data(void)
 {
     /* function pointers to modules init functions */
-    Fun_t funArrInit[] = {  &motoInit,
+    sched_Fun_t funArrInit[] = { &motoInit,
                             &caInit,
                             &moveInit,
                             &stabInit,
                             &connInit };
 
     /* function pointers to modules run functions */
-    Fun_t funnArrRun[] = {  &motoRun,
+    sched_Fun_t funnArrRun[] = { &motoRun,
                                 &caRun,
                                 &moveRun,
                                 &stabRun,
@@ -137,15 +139,14 @@ int16_t init_process_data(void)
         #ifdef PC
             printf("Error in system initialization sequence!\n");
             exit(1);
-        #endif /* PC */
-        #ifdef ARDUINO
+        #elif ARDUINO
             /*  
              *  Do we have a way to give fatal error message on arduino,
              *  and exit? 
              */
             exit(1);
             
-        #endif /* ARDUINO */
+        #endif /* PC ARDUINO */
     }
     else /* If system_init returned success, set up processes*/
     {
@@ -183,6 +184,7 @@ int16_t init_process_data(void)
 
         pProcessData->idleProcessToSchedule = 1;
         pProcessData->totalExecutionTime = 0;
+
         #ifdef PC
             printf("DONE\n\n");
         #endif
@@ -191,7 +193,7 @@ int16_t init_process_data(void)
 }
 
 /* Author: Joakim */
-int16_t system_init(Fun_t funArrInit[TOTAL_NO_PROCESSES]){
+int16_t system_init(sched_Fun_t funArrInit[TOTAL_NO_PROCESSES]){
     int16_t i;
     int16_t res;
     
@@ -237,7 +239,6 @@ void null_queue(void)
     pProcessData->totalExecutionTime = 0;
 }
 
-/* If */
 void enqueue_process(Process *process)
 {
     ProcessData *processData = get_process_data();
@@ -261,37 +262,45 @@ void create_process_queue(int16_t excessTime)
     int8_t *pIdleToSchedule = &pProcessData->idleProcessToSchedule;
 
     null_queue();
-    enqueue_process(pProcessList[0]);
-    taskTime = peek_process(pProcessList[0], peekLayer)->executionTime;
-    timeLeft -= peek_process(pProcessList[0], peekLayer)->executionTime;
-    pProcessData->totalExecutionTime += taskTime;
 
-    for(i = 1; i < MAX_PROC_ITER; i++)
+    if(timeLeft < 0)
     {
-        if(i % TOTAL_NO_PROCESSES == 0)
-        {
-            peekLayer++;
-        }
-        taskTime = peek_process(pProcessList[*pIdleToSchedule], 
-                                peekLayer)->executionTime;
-        if(timeLeft - taskTime > 0)
-        {
-            enqueue_process(pProcessList[*pIdleToSchedule]);
-            pProcessData->totalExecutionTime += taskTime;
-            timeLeft -= taskTime;
-        }
-        else
-        {
-            break;
-        }
+        /* Do nothing */
+    }
+    else
+    {
+        /*enqueue_process(pProcessList[0]);
+        taskTime = peek_process(pProcessList[0], peekLayer)->executionTime;
+        timeLeft -= peek_process(pProcessList[0], peekLayer)->executionTime;
+        pProcessData->totalExecutionTime += taskTime;*/
 
-        if(*pIdleToSchedule + 1 < TOTAL_NO_PROCESSES)
+        for(i = 1; i < MAX_PROC_ITER; i++)
         {
-            *pIdleToSchedule += 1;
-        }
-        else
-        {
-            *pIdleToSchedule = 1;
+            if(i % TOTAL_NO_PROCESSES == 0)
+            {
+                peekLayer++;
+            }
+            taskTime = peek_process(pProcessList[*pIdleToSchedule], 
+                                    peekLayer)->executionTime;
+            if(timeLeft - taskTime > 0)
+            {
+                enqueue_process(pProcessList[*pIdleToSchedule]);
+                pProcessData->totalExecutionTime += taskTime;
+                timeLeft -= taskTime;
+            }
+            else
+            {
+                break;
+            }
+
+            if(*pIdleToSchedule + 1 < TOTAL_NO_PROCESSES)
+            {
+                *pIdleToSchedule += 1;
+            }
+            else
+            {
+                *pIdleToSchedule = 0;
+            }
         }
     }
 
@@ -299,7 +308,6 @@ void create_process_queue(int16_t excessTime)
     printf("Current Process Queue\n==================\n");
     for(i = 0; i < pProcessData->currentQueueSize; i++)
     {
-        printf("%s\t", pQueue[i]->name);    
         printf("%d\n", pQueue[i]->idleTask->executionTime);
     }
     printf("SLEEP-TIME: %d\n", timeLeft);
