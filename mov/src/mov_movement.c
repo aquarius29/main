@@ -17,6 +17,7 @@
 #define G 0.9807 //m/s^2
 #define PI 3.14159265358979323846f
 
+
 /* 
  * Print out the data from the navigation
  * For testing purpose only
@@ -100,7 +101,6 @@ void lift_off(float height) {
     float f;
 
     f = (QUAD_MASS * G + QUAD_MASS * calc_accel(height, navCommand.speed)) / 4;
-
     write_to_motor(f, f, f, f);
 }
 
@@ -113,21 +113,8 @@ void hover(void) {
     float f;
 
     f = (QUAD_MASS * G) / 4;
-
 	write_to_motor(f, f, f, f);
 }
-
-/*
- * land
- */
-void land(float height) {
- 
-    float f;
-    f = (QUAD_MASS * G - QUAD_MASS * calc_accel(height, navCommand.speed)) / 4;
-    //write to motor
-	write_to_motor(f, f, f, f);
-}
-
 
 
 /*
@@ -144,8 +131,8 @@ void rotate(float angle) {
     } else {
 		//m2 + m4 > m1 + m3
     }
-}
 
+}
 
 
 /*
@@ -188,18 +175,32 @@ float normalize_angle(float angle) {
  */
 float degree2radians (float x)
 {
-	if(x>=0 && x<=180) {
-		x=-x*PI/180;
-	}
-	else{
-		x = (360-x)*PI/180;
-	}
+	if(x>=0 && x<=180)
+		{
+			x=-x*PI/180;
+		}
+	else
+		{
+			x = (360-x)*PI/180;
+		}
 	return x;
 }
 
 float radians2degree(float x){
 
 	return x*180/PI;
+}
+
+
+/*
+ * land
+ */
+void land(float height) {
+ 
+    float f;
+    f = (QUAD_MASS * G - QUAD_MASS * calc_accel(height, navCommand.speed)) / 4;
+    //write to motor
+	write_to_motor(f, f, f, f);
 }
 
 
@@ -266,4 +267,50 @@ float get_quad_angle(float roll, float pitch) {
 
 }
 
+//***************************************************************************************
 
+//Earth Axis
+float linearVelocities[3][1] = { {0},
+			                    {0},
+			                    {0}};
+
+float linearAcceleration[3][1] = {{0},
+			                       {0},
+			                       {0}};
+
+//Quadrocopter
+float angularVelocities[3][1] =  {{0},
+			                       {0},
+			                       {0}};
+
+float angularAccelerations[3][1] =  {{0},
+			                            {0},
+			                            {0}};
+float roll;
+float yaw;
+float pitch;
+
+float thrust1;
+float thrust2;
+float thrust3;
+float thrust4;
+
+float forceVector[3] = {0,0,0}
+
+
+
+
+void  get_linearAccelerations_EarthAxis(){
+
+    float forceMass[1][3];
+    MatrixScale((1/QUADRO_MASS),forceVector,forceMass);
+    
+    float gravityQuadro[1][3] = {{-1 * sin(pitch)},  //- sin pitch
+			       {cos(pitch) * sin(roll])}, //cos pitch * sin roll
+			       {cos(pitch) * sin(roll)}} //cos pitch * sin roll
+    
+    float gForce[1][3];
+    MatrixScale(G, gravityQuadro, gForce);
+    
+    
+}
