@@ -7,6 +7,10 @@ void Matrix_3Mult1(int m1[][3], int m2[][1], int answer[][1]);
 void PrintMatrix (int ar[][3]);
 void PrintMatrix2 (int ar[][1]);
 
+void rotationMatrix(float roll, float pitch, float yaw, float rotation_matrix[][3]);
+void transposeMatrix3(float rotation_matrix[][3], float transpose_rotation_matrix[][3]);
+void transposeMatrix1(float matrix1[3],float matrix2[][1]);
+
 //http://www.edcc.edu/faculty/paul.bladek/Cmpsc142/matmult.htm
 /* int main(void) */
 /* { */
@@ -44,6 +48,44 @@ void PrintMatrix2 (int ar[][1]);
 1 	[1][0] 	[1][1] 	[1][2]
 2 	[2][0] 	[2][1] 	[2][2]
  */
+
+
+
+void rotationMatrix(float roll, float pitch, float yaw, float rotation_matrix[][3]){
+	rotation_matrix[0][0]=cos(pitch)*cos(yaw);
+	rotation_matrix[0][1]=cos(pitch)*sin(yaw);
+	rotation_matrix[0][2]=-sin(pitch);
+	rotation_matrix[1][0]=sin(yaw)*sin(pitch)*cos(yaw)-cos(roll)*sin(yaw);
+	rotation_matrix[1][1]=cos(roll)*cos(yaw)+sin(roll)*sin(pitch)*sin(yaw);
+	rotation_matrix[1][2]=sin(roll)*cos(pitch);
+	rotation_matrix[2][0]=cos(roll)*sin(pitch)*cos(yaw)+sin(roll)*sin(yaw);
+	rotation_matrix[2][1]=sin(pitch)*cos(roll)*sin(yaw)-sin(roll)*cos(yaw);
+	rotation_matrix[2][2]=cos(pitch)*cos(roll);
+}
+
+
+void transposeMatrix3(float rotation_matrix[][3], float transpose_rotation_matrix[][3]){
+	transpose_rotation_matrix[0][0]=rotation_matrix[0][0];
+	transpose_rotation_matrix[0][1]=rotation_matrix[1][0];
+	transpose_rotation_matrix[0][2]=rotation_matrix[2][0];
+	transpose_rotation_matrix[1][0]=rotation_matrix[0][1];
+	transpose_rotation_matrix[1][1]=rotation_matrix[1][1];
+	transpose_rotation_matrix[1][2]=rotation_matrix[2][1];
+	transpose_rotation_matrix[2][0]=rotation_matrix[0][2];
+	transpose_rotation_matrix[2][1]=rotation_matrix[1][2];
+	transpose_rotation_matrix[2][2]=rotation_matrix[2][2];
+} 
+
+void transposeMatrix1(float matrix1[3],float matrix2[][1]){
+	matrix2[0][0]=matrix1[0];
+	matrix2[0][1]=matrix1[1];
+	matrix2[0][2]=matrix1[2];
+}
+
+
+
+
+
 void  Matrix_3Mult3(int m1[][3], int m2[][3], int answer[][3])
 {
 	int i = 0;

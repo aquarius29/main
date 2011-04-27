@@ -10,7 +10,7 @@
 
 
 /*
-PID CONTROLLER -> ANGLES IN RADIANS
+ * PID CONTROLLER -> ANGLES IN RADIANS
  */
 
 extern int old_x_desired;
