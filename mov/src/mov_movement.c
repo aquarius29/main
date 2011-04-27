@@ -118,6 +118,18 @@ void hover(void) {
 
 
 /*
+ * land
+ */
+void land(float height) {
+ 
+    float f;
+    f = (QUAD_MASS * G - QUAD_MASS * calc_accel(height, navCommand.speed)) / 4;
+    //write to motor
+	write_to_motor(f, f, f, f);
+}
+
+
+/*
  * rotate
  */
 void rotate(float angle) {
@@ -175,14 +187,12 @@ float normalize_angle(float angle) {
  */
 float degree2radians (float x)
 {
-	if(x>=0 && x<=180)
-		{
-			x=-x*PI/180;
-		}
-	else
-		{
-			x = (360-x)*PI/180;
-		}
+	if(x>=0 && x<=180){
+		x=-x*PI/180;
+	}
+	else{
+		x = (360-x)*PI/180;
+	}
 	return x;
 }
 
@@ -191,17 +201,6 @@ float radians2degree(float x){
 	return x*180/PI;
 }
 
-
-/*
- * land
- */
-void land(float height) {
- 
-    float f;
-    f = (QUAD_MASS * G - QUAD_MASS * calc_accel(height, navCommand.speed)) / 4;
-    //write to motor
-	write_to_motor(f, f, f, f);
-}
 
 
 /*
@@ -227,7 +226,7 @@ float assign_time(float distance, float speed) {
 
 
 /*
- * lift off
+ * 
  */
 float calc_pitch_roll(float height, float distance){
 
@@ -271,21 +270,21 @@ float get_quad_angle(float roll, float pitch) {
 
 //Earth Axis
 float linearVelocities[3][1] = { {0},
-			                    {0},
-			                    {0}};
+								 {0},
+								 {0}};
 
 float linearAcceleration[3][1] = {{0},
-			                       {0},
-			                       {0}};
+								  {0},
+								  {0}};
 
 //Quadrocopter
 float angularVelocities[3][1] =  {{0},
-			                       {0},
-			                       {0}};
+								  {0},
+								  {0}};
 
 float angularAccelerations[3][1] =  {{0},
-			                            {0},
-			                            {0}};
+									 {0},
+									 {0}};
 float roll;
 float yaw;
 float pitch;
