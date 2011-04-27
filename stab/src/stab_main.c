@@ -67,6 +67,7 @@ int16_t stab_init(void)
   init_filter();
 #elif defined ARDUINO
   init();
+  init_filter();
   Serial.begin(9600);
   Wire.begin();
   init_gyro_hardware();
@@ -86,14 +87,14 @@ int16_t stab_run(void)
   gyro_vect = init_sim();
   accel_vect = init_sim();
   
-  filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x); // filtered pitch angle
-  filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y); // filtered roll angle
-  //filter_est[2] = comp_filter(acc_vector[2], gyro_vect[2], filter_est[2]);
-  filter_vect.z = gyro_vect.z;
+  //filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x); // filtered pitch angle
+  //filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y); // filtered roll angle
+  //filter_est[2] = comp_filter(acc_vector[2], gyro_vect[2], filter_est[2]); // filtered yaw angle
+  //filter_vect.z = gyro_vect.z;
   
-  printf("ESTIMATED X %f\n", filter_vect.x);
-  printf("ESTMIATED Y %f\n", filter_vect.y);
-  printf("ESTMIATED Z %f\n", filter_vect.z);
+  //printf("ESTIMATED X %f\n", filter_vect.x);
+  //printf("ESTMIATED Y %f\n", filter_vect.y);
+  //printf("ESTMIATED Z %f\n", filter_vect.z);
   
 #elif defined ARDUINO
   while(1)
@@ -127,6 +128,16 @@ int16_t stab_run(void)
       Serial.println("Barometer data now:");
       Serial.println(baro.temp);
       Serial.println(baro.pressure);
+      Serial.println();
+
+      filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x); // filtered pitch angle
+      filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y); // filtered roll angle
+      filter_vect.z = comp_filter(heading, gyro_vect.z, filter_vect.z); // filtered yaw angle
+      
+      Serial.println("Filtered data now:");
+      Serial.println(filter_vect.x);
+      Serial.println(filter_vect.y);
+      Serial.println(filter_vect.z);
       Serial.println();
 
       delay(1000);

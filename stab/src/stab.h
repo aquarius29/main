@@ -17,6 +17,8 @@ float read_gyro();
 float read_accel();
 struct vector init_sim(void);
 #elif ARDUINO
+float comp_filter(float acc_scal, float gyro_scal, float old_est);
+void init_filter();
 void init_gyro_hardware();
 void init_magn_hardware();
 struct vector read_gyro_data();
