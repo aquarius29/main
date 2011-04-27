@@ -1,11 +1,15 @@
-/*
- *  camera_conn_protocol.c
- *  
- *
- *  Created by Nena Stojova on 4/20/11.
- *  Copyright 2011 __MyCompanyName__. All rights reserved.
- *
- */
+/*****************************************************************************
+* Product: 
+* Version: 
+* Released: April 20 2011
+* Updated: 
+*
+* Copyright (C) 2011 Nena Stojova
+*
+* 
+*
+* <IT University of Goteborg>
+*****************************************************************************/
 
 #include <stdio.h>
 
