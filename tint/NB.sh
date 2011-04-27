@@ -1,18 +1,51 @@
 #!/bin/bash
 
-LOG_DIR=${HOME}/logg/logg
+## TINT script
+## -------------------------------------------------------------------------------
+## Authors: Eugene Groshev, Nikita Englund
+## Change history:
+##     2011-04-26, Eugene:
+##         - $1 now specifies sript run mode (server or izimbra (Eugene's local))
+##         - git pull now done in a loop
+##         - git pull results are assigned to STATUS variable 
+##         - overall status of the project assigned to PROJECT_CHANGED
 
-BUILD_DIR=${HOME}/emb-test
+
+
+# Setting build directory for server mode
+if [ $1 = "server" ]
+then
+    BUILD_DIR=${HOME}/emb-test
+    LOG_DIR=${HOME}/emb-test/log
+fi
+
+# Setting build directory for Eugene's local mode
+if [ $1 = "izimbra" ]
+then
+    BUILD_DIR=$SEMB
+    LOG_DIR=$SEMB/log
+fi
+
+# Optional Nikita mode here
+
+echo " Starting script in _$1_ mode"
+echo " Build directory is: $BUILD_DIR"
+echo " Log directory is: $LOG_DIR"
+echo "   "
+
 DATE=$(date '+%Y%m%d')
 
-LOG_FILE=${LOG_DIR}-${DATE}.log
+LOG_FILE=${LOG_DIR}/${DATE}.log
 rm -f ${LOG_FILE}
 
 
+echo $DATE
+echo $LOG_FILE
+
 log()
 {
-  echo "$*" 
-	echo "[$(date)] $*"  >> $LOG_FILE
+  echo "$*" # may be turned off
+	echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"  >> "${LOG_FILE}" #quotes because of the whitespaces in file path  
 }
 
 check_return_value()
@@ -26,6 +59,35 @@ check_return_value()
   	exit $RET_VAL
    fi
 }
+
+git_pull()
+{
+
+# cd to build dir
+cd ..
+cd ..
+
+PROJECT_CHANGED=0 # variable to store the change state of the project
+
+# loop through local repos and pull from remotes
+for REPO in ca cam conn moto nav proto sched stab ui
+do
+    log "Pulling $REPO"
+    cd $REPO
+    STATUS=`git pull origin master`
+    log $STATUS 
+    if [ "$STATUS" != "Already up-to-date." ]
+    then
+        PROJECT_CHANGED=1
+    fi
+    cd ..
+done
+
+echo $PROJECT_CHANGED
+
+  
+}
+
 
 get_src()
 {
@@ -210,10 +272,20 @@ test_src()
 #
 #  Get code from GIT
 #
+log "----------------------------"
+log " Pulling code "
+log "----------------------------"
 
-get_src
+git_pull
 
-
+# Eventual exit, if no code has been changed
+if [ $PROJECT_CHANGED = 0 ]
+then
+    log "----------------------------"
+    log " EXIT: No new code"
+    log "----------------------------"
+    exit $PROJECT_CHANGED
+fi
 
 # Create the configure script
 prep_src
@@ -223,7 +295,10 @@ prep_src
 build_src
 
 # Test it
-test_src
+test_src # unit tests, gcov, lcov, quickcheck
+
+# Generate docs and copy them to www
+
 
 
 #Mail it to me
