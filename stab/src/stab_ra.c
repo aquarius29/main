@@ -12,6 +12,13 @@
 #include <Wire.h>
 #include "WProgram.h"
 
+struct vector
+{
+  float x;
+  float y;
+  float z;
+};
+
 /* 
  *address of the accelerometer on the board 
  */
@@ -21,66 +28,41 @@
  *Function prototypes
  */
 void init_accel();
-void readAccel();
-
-
-
-/*int main()*/
-/*//void setup()*/
-/*{*/
-/*  init();*/
-/*  Wire.begin();*/
-/*  Serial.begin(9600);*/
-/*// initBMA180() should be done once, it will write appropriate adjustments for range and mode. */
-/*//  init_accel();*/
-/*//  delay(2000);*/
-/*	while(1){*/
-/*  readAccel();*/
-/*  delay(300);*/
-/*	}*/
-/*  return 0;*/
-/*}*/
-
+struct vector readAccel();
 
 /*Read data from accelerometer memory*/
-void readAccel()
+struct vector readAccel()
 {
-    unsigned int result;
-    int x,y,z;
-    int temp;
-
+  struct vector vect;
+  unsigned int result;
+  int x,y,z;
+  int temp;
+  
   Wire.beginTransmission(ADDRESS);
-  Wire.send(0x02);  							/*start of x LSB for reading data*/
+  Wire.send(0x02); /*start of x LSB for reading data*/
   Wire.endTransmission();
   Wire.requestFrom((int)ADDRESS, 7);
   
   if(Wire.available()==7)
-  {
-    int lsb = Wire.receive()>>2;
-    int msb = Wire.receive();
-    x=(msb<<6)+lsb; 
-    if (x&0x2000) x|=0xc000;
-/* shift 2 unused bits */
-    lsb = Wire.receive()>>2;
-    msb = Wire.receive();
-    y=(msb<<6)+lsb;
-    if (y&0x2000) y|=0xc000;
-    lsb = Wire.receive()>>2;
-    msb = Wire.receive();
-    z=(msb<<6)+lsb;
-    if (z&0x2000) z|=0xc000;
-    temp = Wire.receive();
-    if (temp&0x80) temp|=0xff00;
-  }
- result = Wire.endTransmission();
- Serial.print("raw data: ");
- Serial.print("X=");
- Serial.print(x);
- Serial.print(" Y=");
- Serial.print(y);
- Serial.print(" Z=");
- Serial.print(z);
- Serial.println();
+    {
+      int lsb = Wire.receive()>>2;
+      int msb = Wire.receive();
+      vect.x =(msb<<6)+lsb; 
+      if (x&0x2000) x|=0xc000;
+      /* shift 2 unused bits */
+      lsb = Wire.receive()>>2;
+      msb = Wire.receive();
+      vect.y =(msb<<6)+lsb;
+      if (y&0x2000) y|=0xc000;
+      lsb = Wire.receive()>>2;
+      msb = Wire.receive();
+      vect.z =(msb<<6)+lsb;
+      if (z&0x2000) z|=0xc000;
+      temp = Wire.receive();
+      if (temp&0x80) temp|=0xff00;
+    }
+  
+  return vect;
 }
 
 /*

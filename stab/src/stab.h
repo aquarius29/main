@@ -18,9 +18,12 @@ float read_accel();
 struct vector init_sim(void);
 #elif ARDUINO
 void init_gyro_hardware();
+void init_magn_hardware();
 struct vector read_gyro_data();
-void readAccel();
+struct vector readAccel();
+struct vector read_magn_data();
 void read_stream(byte addr, int bytes_to_read, byte buffer[]);
+void write_data(byte addr, byte value, byte sensor_addr);
 #endif	
 
 

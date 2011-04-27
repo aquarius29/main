@@ -41,7 +41,9 @@ struct vector
 
 struct vector gyro_vect;
 struct vector accel_vect;
+struct vector magn_vect;
 struct vector filter_vect;
+float heading; // heading from magnetometer
 
 /*
  * Inits the main hardware components of the shield
@@ -57,6 +59,7 @@ int16_t stab_init(void)
   Serial.begin(9600);
   Wire.begin();
   init_gyro_hardware();
+  init_magn_hardware();
 #endif
   return 0; 
 
@@ -71,8 +74,8 @@ int16_t stab_run(void)
   gyro_vect = init_sim();
   accel_vect = init_sim();
   
-  filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x);
-  filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y);
+  filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x); // filtered pitch angle
+  filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y); // filtered roll angle
   //filter_est[2] = comp_filter(acc_vector[2], gyro_vect[2], filter_est[2]);
   filter_vect.z = gyro_vect.z;
   
@@ -83,18 +86,30 @@ int16_t stab_run(void)
 #elif defined ARDUINO
   while(1)
     {
-      //Serial.println("Just before reading");  
       gyro_vect =  read_gyro_data();
-      
-      // printf("X Gyro:  %f", gyro_vect.x);
-      //printf("  Y Gyro:  %f", gyro_vect.y);
-      //printf("  Z Gyro:  %f\n", gyro_vect.z);
-      
+      accel_vect = readAccel();
+      magn_vect = read_magn_data();
+      heading = (atan2(magn_vect.y , magn_vect.x)+M_PI)*180/M_PI;
+
+      Serial.println("Gyro data now:");
       Serial.println(gyro_vect.x);
       Serial.println(gyro_vect.y);
       Serial.println(gyro_vect.z);
       Serial.println();
-      readAccel();
+      
+      Serial.println("Accel data now:");
+      Serial.println(accel_vect.x);
+      Serial.println(accel_vect.y);
+      Serial.println(accel_vect.z);
+      Serial.println();
+      
+      Serial.println("Magnetometer data now:");
+      Serial.println(magn_vect.x);
+      Serial.println(magn_vect.y);
+      Serial.println(magn_vect.z);
+      Serial.println(heading);
+      Serial.println();
+
       delay(1000);
     }
 #endif
