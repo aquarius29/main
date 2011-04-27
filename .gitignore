@@ -1,0 +1,10 @@
+# Compiled source #
+###################
+*.o
+
+
+# OS & temporary files #
+########################
+*~
+.DS_Store?
+Thumbs.db
