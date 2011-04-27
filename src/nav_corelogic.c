@@ -23,11 +23,27 @@
 #include "tmxparser.c"
 #include "gps_nav.h"
 
+/* Possible thread patterns 
+*	1: GPS I/O Thread + GPS Navigation Thread > GPS I/O Thread dies, kill GPS Nav Thread OR Restart GPS I/O Thread
+*	2:
+*
+*
+*
+*
+*/
+
+pthread_t manualCommandThread;
+pthread_t gpsSetupThread;
+pthread_t gpsNavigationThread;
+
 static pthread_mutex_t watchdogMutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t watchdogCond = PTHREAD_COND_INITIALIZER;
 
-int gpsRunning = 0;
 int waitingForGpsSetupThread = 1;
+
+static pthread_mutex_t gpsRunningMutex = PTHREAD_MUTEX_INITIALIZER;
+
+int gpsRunning = 0;
 int startGpsThread = 0;
 
 /* Add global variables (within mutex scope) that need to be modified outside and inside threads*/
@@ -78,11 +94,6 @@ void nav_run_gps_system()
 	//  		if (gpsThreadResult == 0)
 	// 		printf("Thread created\n");
 	//     }
-	
-	//setup_gps();
-    // TODO: start parser
-    // TODO: start gps navigation system. Use the destination GPSLocation
-
 	printf("Switching off gps system\n");
 }
 
@@ -100,11 +111,7 @@ void *startgpswatchdog(void *ptr)
 	char *message = "manual movement thread command started";
 	char *message2 = "gps setup thread started";
 	char *message3 = "gps navigation thread started";
-	
-	pthread_t manualCommandThread;
-	pthread_t gpsSetupThread;
-	pthread_t gpsNavigationThread;
-    
+
 	/* pthread functions return 0 when successful */
 	printf("Attempting to create manual command handler thread\n");
     manualCommandThreadResult = pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
@@ -118,39 +125,34 @@ void *startgpswatchdog(void *ptr)
 	gpsNavigationThreadResult = 
 	pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
 	
-	// do
-	// 	{
-	// 		if (waitingForGpsSetupThread == 0)
-	// 		{
-	// 			printf("Attempting to create GPS Navigation thread\n");
-	// 			gpsNavigationThreadResult = 
-	// 			pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
-	// 			break;
-	// 		}
-	// 	}
-	// 	while (gpsRunning == 1);
-	
-	
-	
-	
-	// while (gpsRunning == 1)
-	// 	{
-	// 		if (pthread_kill(manualCommandThread, 0) != 0)
-	// 		{
-	// 			printf("Manual Command Thread was murdered\nRessurecting....\n");
-	// 			manualCommandThreadResult = pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
-	// 		}
-	// 		if (pthread_kill(gpsSetupThread, 0) != 0)
-	// 		{
-	// 			printf("GPS Setup Thread died a horrible death\nRessurecting....\n");
-	// 			gpsSetupThreadResult = pthread_create(&gpsSetupThread, NULL, setupgps, (void*) message2);
-	// 		}
-	// 		if (pthread_kill(gpsNavigationThread, 0) != 0)
-	// 		{
-	// 			printf("GPS Navigation Thread was digitally destroyed\nReconstructing....\n");
-	// 			gpsNavigationThreadResult = pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
-	// 		}
-	// 	}
+	while (gpsRunning == 1)
+	{
+		// if (pthread_kill(manualCommandThread, 0) != 0)
+		// 	{
+		// 		printf("Manual Command Thread was murdered\nRessurecting....\n");
+		// 		manualCommandThreadResult = pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
+		// 	}
+		if (pthread_kill(gpsSetupThread, 0) != 0)
+		{
+			int cancelResult;
+			
+			cancelResult = pthread_cancel( gpsNavigationThread );
+			printf("cancel result is %d\n", cancelResult);
+			while(cancelResult != 0)
+			{
+				//printf(".....");
+				cancelResult = pthread_cancel( gpsNavigationThread );
+			}
+			// /* Create new thread for gps setup*/
+			// 		printf("GPS Setup Thread died a horrible death\nRessurecting....\n");
+			// 		gpsSetupThreadResult = pthread_create(&gpsSetupThread, NULL, setupgps, (void*) message2);
+		}
+		// if (pthread_kill(gpsNavigationThread, 0) == 0)
+		// 		{
+		// 			printf("GPS Navigation Thread was digitally destroyed\nReconstructing....\n");
+		// 			gpsNavigationThreadResult = pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
+		// 		}
+	}
 	
 	/* wait for the threads to finish */
 	pthread_join(manualCommandThread, NULL); 
@@ -181,6 +183,16 @@ void *setupgps(void *ptr)
 	printf("error with conditional signal\n");
 	
 	 setup_gps(UNO,57600);
+	
+	result = pthread_mutex_lock( &gpsRunningMutex );
+	if (result != 0)
+		printf("error locking pthread mutex\n");
+			
+	gpsRunning = 0;
+			
+		result = pthread_mutex_unlock(&gpsRunningMutex );
+	if (result != 0)
+		printf("error unlocking pthread mutex\n");
 }
 
 void *setupgpsnavigation(void *ptr)
@@ -244,10 +256,15 @@ void setGPSDestination(GPSLocation *destination)
 	
 }
 
-// function to kill GPS system - e.g only manual input wanted.
+/* Kill the gps system */
 void killGPSSystem()
 {
+	int result;
+	result = pthread_mutex_lock( &watchdogMutex);
 	gpsRunning = 0;
+	result = pthread_mutex_unlock( &watchdogMutex );
+
+	result = pthread_cancel(gpsNavigationThread);
 }
 
 // function to kill the navigation system e.g. the user wants only manual input.
@@ -420,23 +437,14 @@ void killThread()
 	printf("KILLED\n");
 }
 
-// double getLat()
-// {
-// 	return curr.lat;
-// }
-// 
-// double getLon()
-// {
-// 	return curr.lon;
-// }
-
-/* Dealloc shouldnt be needed during a flight, 
-*unless flight switches between GPS/outdoor system
-*/
-
-void dealloc()
+double getLat()
 {
-	free(world);
+	return curr.lat;
+}
+
+double getLon()
+{
+	return curr.lon;
 }
 
 int main(int argc, char **argv) 
