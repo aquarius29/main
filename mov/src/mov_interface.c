@@ -93,3 +93,31 @@ int mov_run()
 	return 1;
 }
 #endif
+
+
+
+
+void write_to_motor(float f1, float f2, float f3, float f4) {
+
+	printf("write to motor here");
+	unsigned char message = 0;
+    
+    message = 0xFF;
+    /* send message to motor here */
+	// write_motor(message);
+}
+
+
+void write_to_nav() {
+	//write to navigation
+}
+
+
+void read_navCommand() {
+	//read navigation command
+}
+
+
+void write_to_collision() {
+	//write to collision
+}
