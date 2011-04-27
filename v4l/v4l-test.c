@@ -48,7 +48,7 @@ int read_frame()
     }
   }
 
-  encode(bs);
+  camera_input_stream_encode(bs);
   send(bs);
 
   if(ioctl(fd, VIDIOC_QBUF, &b) == -1)

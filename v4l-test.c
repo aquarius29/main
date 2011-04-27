@@ -55,8 +55,8 @@ int read_frame()
     }
   }
 
-  //encode(bs);
-  //tcp_send(bs, sockfd);
+  camera_input_stream_encode(bs);
+  tcp_send(bs, sockfd);
 
   if(ioctl(fd, VIDIOC_QBUF, &b) == -1)
   {
