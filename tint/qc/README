@@ -1,0 +1,11 @@
+To get all this shit to compile outside the scheduler context create a main.c and put this code inside it. main.c is ignored by the .gitignore rules because there should be no such file in the final product.
+
+/* main.c */
+#include "moto_interface.h"
+
+int main(void){
+
+  moto_init();
+  moto_run();
+
+}
