@@ -2,14 +2,13 @@
 * @Author: Jarryd Hall
 * @Purpose: Tilemap representation
 */
-
 #include <stdlib.h>
 #include "tilemap.h"
 
 /* function to take coordinates and determine the tile index */
 CGPoint* tileForCoordinates (CGPoint position, short width, short height)
 {	
-	CGPoint *tileCoordinate = (CGPoint*)malloc(sizeof(CGPoint));
+	CGPoint *tileCoordinate = malloc(sizeof(CGPoint));
 	tileCoordinate->xPosition = (position.xPosition / width);
 	tileCoordinate->yPosition = (position.yPosition / height);
 	
@@ -27,7 +26,7 @@ void setIndexValue(ThreeDWorld *world, int index, int value)
 /* check a tile for its contents */
 int checkTileValue(ThreeDWorld *world, int index)
 {
-	int value = NULL; /* value for tile e.g. 0 = free, 1 = collision 2 = destination */
+	int value = 0; /* value for tile e.g. 0 = free, 1 = collision 2 = destination */
 	int first = index / world->mapWidth;
 	int second =  index % world->mapWidth;
 	

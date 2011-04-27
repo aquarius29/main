@@ -9,7 +9,6 @@
 #include <sys/time.h>
 #include <math.h>
 
-#define COORDINATE_LIMIT 4
 #define MAP_Y 14
 #define MAP_X 12
 #define NUM_ADJACENT 8
@@ -55,8 +54,8 @@ typedef struct {
 	int num;
 }position_list;
 
-position_list indoor_dijkstra(const position * start, const position * end, int map[MAP_Y][MAP_X]);
-position_list indoor_astar(const position * start, const position * end, int map[MAP_Y][MAP_X]);
+position_list indoor_dijkstra(const position * start, const position * end);
+position_list indoor_astar(const position * start, const position * end);
 void set_direction(progressive_route *path);
 void set_distance(progressive_route *path);
 void update_position(progressive_route *path);

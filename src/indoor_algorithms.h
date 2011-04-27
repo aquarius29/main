@@ -11,9 +11,8 @@
 
 void AddNodeToOpen(node * current, nodeList * open);
 void RemoveNodeFromOpen(node * current, nodeList * open);
-void dijkstra_AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed, int map[MAP_Y][MAP_X]);
-void astar_AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed, int map[MAP_Y][MAP_X],
-const position * end);
+void dijkstra_AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed);
+void astar_AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed, const position * end);
 void FreeAllocatedList(nodeList * list);
 int ListMemoryAllocation(nodeList ** open, nodeList ** closed);
 position_list CreateFinalList(nodeList * closed, const position * goal, const position * drone);

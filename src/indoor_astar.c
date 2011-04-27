@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include "indoor_algorithms.h"
 #include "path_structure.h"
+#include "tilemap.h"
 /*
  * Takes the drone position, goal position, and a tile map
  * If the goal is found a dynamic list of the nodes making up the
@@ -14,8 +15,7 @@
  * If the goal is not reachable or if there is a problem to allocate
  * memory NULL is returned
  */
-position_list indoor_astar(const position * start, const position * end,
-		int map[MAP_Y][MAP_X])
+position_list indoor_astar(const position * start, const position * end)
 {
 	nodeList * open;            /* open list */
 	nodeList * closed;          /* closed list */
@@ -56,7 +56,7 @@ position_list indoor_astar(const position * start, const position * end,
 		RemoveNodeFromOpen(&currentNode, open);
 
 		/* Check the neighbors of the first node in the open list */
-		astar_AddNeighborsToOpen(&currentNode, open, closed, map, end);
+		astar_AddNeighborsToOpen(&currentNode, open, closed, end);
 	}
 
 	/* If we found the goal, a list with the shortest path will be created */
@@ -82,8 +82,9 @@ position_list indoor_astar(const position * start, const position * end,
  * Goes through the current node's surrounding neighbor nodes and
  * adds reachable nodes to the open list
  */
-void astar_AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed,
-		int map[][MAP_X], const position * end) {
+void astar_AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed, const position * end) {
+	ThreeDWorld map;
+	fill_map(&map);
 	int sortCounter = 0;
 	int y = 0;
 	int x = 0;
@@ -129,13 +130,13 @@ void astar_AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed
 			if((neighborY >= 0 && neighborY < MAP_Y)
 					&& (neighborX >= 0 && neighborX < MAP_X))
 			{
-				mapCost = map[neighborY][neighborX];
+				mapCost = map.representation[neighborY][neighborX];
 			}
 			else { /* If we're outside the map, we check the next neighbor */
 				continue;
 			}
 
-			if(mapCost == 5) { /* hit a wall so we try the next connection */
+			if(mapCost == 1) { /* hit a wall so we try the next connection */
 				continue;
 			}
 			/*
@@ -144,33 +145,33 @@ void astar_AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed
 			 */
 			else if(counter % 2 == 0) {
 				if(counter == north_west) {
-					if(map[neighborY + 1][neighborX] == 5 	/* west */
-							|| map[neighborY][neighborX + 1] == 5)	/* north */
+					if(map.representation[neighborY + 1][neighborX] == 1 	/* west */
+							|| map.representation[neighborY][neighborX + 1] == 1)	/* north */
 						continue;
 				}
 				else if(counter == north_east) {
-					if(map[neighborY][neighborX - 1] == 5 	/* North */
-							|| map[neighborY + 1][neighborX] == 5)	/* East */
+					if(map.representation[neighborY][neighborX - 1] == 1 	/* North */
+							|| map.representation[neighborY + 1][neighborX] == 1)	/* East */
 						continue;
 				}
 				else if(counter == south_east) {
-					if(map[neighborY - 1][neighborX] == 5 	/* East */
-							|| map[neighborY][neighborX - 1] == 5)	/* South */
+					if(map.representation[neighborY - 1][neighborX] == 1 	/* East */
+							|| map.representation[neighborY][neighborX - 1] == 1)	/* South */
 						continue;
 				}
 				else if(counter == south_west) {
-					if(map[neighborY][neighborX + 1] == 5 	/* South */
-							|| map[neighborY - 1][neighborX] == 5)	/* West */
+					if(map.representation[neighborY][neighborX + 1] == 1 	/* South */
+							|| map.representation[neighborY - 1][neighborX] == 1)	/* West */
 						continue;
 				}
 			}
 
 			/* Calculate the cost to get to the neighbor node */
 			if(counter % 2 == 0) {  // move diagonally
-				endNodeCost = current->totalCost + (mapCost * 10) + 4;
+				endNodeCost = current->totalCost + 1;
 			}
 			else {  // move straight
-				endNodeCost = current->totalCost + (mapCost * 10);
+				endNodeCost = current->totalCost + 1;
 			}
 
 			/* If the node is already in the closed list we don't check it */
@@ -201,7 +202,7 @@ void astar_AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed
 				p_adjacentNode->pos.y = neighborY;
 				p_adjacentNode->pos.x = neighborX;
 				p_adjacentNode->heuristic =
-						GetHeuristicCost(&p_adjacentNode->pos, end);
+				GetHeuristicCost(&p_adjacentNode->pos, end);
 			}
 
 			/* Update values for node in open list or add values for new
@@ -235,6 +236,7 @@ void astar_AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed
 			}
 		}
 	}
+	free(map.representation);
 }
 /* Get the heuristic cost from a node to the goal node */
 int GetHeuristicCost(const position * currentNode, const position * goalNode)

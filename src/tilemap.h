@@ -31,5 +31,6 @@ CGPoint* tileForCoordinates (CGPoint position, short width, short height); /* de
 
 void setIndexValue(ThreeDWorld *world, int index, int value); /* modify world represnetation set the index to value e.g. 1 or 0 */
 int checkTileValue(ThreeDWorld *world, int index); /* check a tile for its contents e.g. 0 = free, 1 = collision, 2 = destination */
+void fill_map(ThreeDWorld * world);
 
 #endif /* TILEMAP_H */

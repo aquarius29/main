@@ -14,22 +14,6 @@
 static int count, running;
 static position_list route;
 static progressive_route current;
-static int map[MAP_Y][MAP_X] = {
-{5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5},	// 0
-{5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5},
-{5, 1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 5},
-{5, 5, 5, 5, 5, 5, 5, 5, 5, 1, 1, 5},
-{5, 1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 5},	// 4
-{5, 1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 5},
-{5, 1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 5},
-{5, 5, 5, 5, 5, 5, 1, 5, 5, 1, 1, 5},
-{5, 1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 5},	// 8
-{5, 1, 1, 1, 1, 1, 1, 1, 5, 1, 1, 5},
-{5, 1, 1, 1, 1, 1, 5, 5, 5, 1, 1, 5},
-{5, 1, 1, 1, 1, 1, 5, 1, 1, 1, 1, 5},
-{5, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5},	// 12
-{5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5}
-};
 
 //Send start and end point received from UI
 //to Dijkstra calculation.
@@ -40,11 +24,11 @@ void init_path(position start, position end){
 	current.num = 1;
 	if(ALGORITHM == 0) {
 		printf("Dijkstra\n");
-		route = indoor_dijkstra(&start, &end, map);
+		route = indoor_dijkstra(&start, &end);
 	}
 	else{
 		printf("Astar\n");
-		route = indoor_astar(&start, &end, map);
+		route = indoor_astar(&start, &end);
 	}
 	for(counterUp = 0; counterUp < route.num; counterUp++) {
 		printf("final.x: %f ", route.list[counterUp].lon);
@@ -56,7 +40,7 @@ void init_path(position start, position end){
 		current.ending_point = route.list[route.num-1];
 		current.current_destination = route.list[count];
 		current.current_point = route.list[0];
-		navigate_path();
+		//navigate_path();
 }
 void send_direction(double *angle){
 	//Tell movement which way we need to move.
@@ -103,7 +87,7 @@ void recalc(){
 	a.y = (current.path[current.num-1].lat - TILE_CENTER) / CENTIMETRES_PER_TILE;
 	b.x = (current.ending_point.lon - TILE_CENTER) / CENTIMETRES_PER_TILE;
 	b.y = (current.ending_point.lat - TILE_CENTER) / CENTIMETRES_PER_TILE;
-	route = indoor_dijkstra(&a, &b, map);
+	route = indoor_dijkstra(&a, &b);
 	count=1;
 	current.current_destination = route.list[count];
 	running = 1;
