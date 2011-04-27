@@ -17,7 +17,6 @@
  *  proided by other modules and just loops over these.
  */
 
-
 #include <stdlib.h>
 #include <stdint.h>
 
@@ -27,15 +26,14 @@
 #include "mov_interface.h"
 #include "sched_stubs.h"
 
+#include "sched_stubs.h"
+
 #ifdef PC
 /* non-arduino includes */
 #include <stdio.h>
-
-#endif /* PC */
-
-#ifdef ARDUINO
-
-#endif /* ARDUINO */
+#elif ARDUINO
+/* arduino includes */
+#endif /* PC ARDUINO */
 
 #include "sched_naive_sched.h"
 
@@ -55,6 +53,7 @@ void sched_naive_init(void){
                             &moto_init };
     
     /* function pointers to modules run functions */
+
     sched_Fun_t funArrRun[] = {   
                             &protoRun,
                             &mov_run,
@@ -101,7 +100,6 @@ int16_t system_init(sched_Fun_t *funArrInit){
         #endif /* DEBUG */
         #endif /* PC */
     }
-    
     return 1;
 }
 

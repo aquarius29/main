@@ -16,18 +16,18 @@
 #include <stdint.h>
 
 
-// #ifdef CA
-// /* stabilization groups header here */
-// /* #include "../../ca/src/ca_sched.h" */
-// 
-// #else
-// 
-// /* dummy interface for stabilization code */
-// int16_t caInit(void);
-// /* dummy interface for stabilization code */
-// int16_t caRun(void);
-// 
-// #endif /* CA */
+#ifdef CA
+/* stabilization groups header here */
+/* #include "../../ca/src/ca_sched.h" */
+
+#else
+
+/* dummy interface for stabilization code */
+int16_t caInit(void);
+/* dummy interface for stabilization code */
+int16_t caRun(void);
+
+#endif /* CA */
 
 
 #ifdef MOVE
@@ -42,6 +42,19 @@ int16_t moveInit(void);
 int16_t moveRun(void);
 
 #endif /* MOVE */
+
+#ifdef STAB
+/* stabilization groups header here */
+/* #include "../../ca/src/ca_sched.h" */
+
+#else
+
+/* dummy interface for stabilization code */
+int16_t stabInit(void);
+/* dummy interface for stabilization code */
+int16_t stabRun(void);
+
+#endif /* STAB */
 
 
 #ifdef MOTO
@@ -72,17 +85,17 @@ int16_t protoRun(void);
 #endif /* PROTO */
 
 
-#ifdef FILTER
+#ifdef CONN
 /* stabilization groups header here */
 /* #include "../../ca/src/ca_sched.h" */
 
 #else
 
 /* dummy interface for stabilization code */
-int16_t filterInit(void);
+int16_t connInit(void);
 /* dummy interface for stabilization code */
-int16_t filterRun(void);
+int16_t connRun(void);
 
-#endif /* FILTER */
+#endif /* CONN */
 
 #endif /* SCHED_STUBS_H */
