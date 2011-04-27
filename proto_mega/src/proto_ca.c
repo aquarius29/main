@@ -2,7 +2,7 @@
 * Product: 
 * Version: 
 * Released: April 7 2011
-* Updated: April 12 2011
+* Updated: April 27 2011
 *
 * Copyright (C) 2011 Elnaz Shahmehr
 *
@@ -20,17 +20,11 @@
     Definitions 
 *****************************************************************************/ 
  
-unsigned int height = 0; // from Collision Avoidance Movement to; DEFAULT is 0
-unsigned int distance ;
+//unsigned int height = 0; // from Collision Avoidance Movement to; DEFAULT is 0
+
 unsigned int direction = 0; // from Collision Avoidance Movement to; DEFAULT is 0
  
  
-//write height from movement to collision avodance  
-void proto_write_height(int value);// proto API 
- 
- 
-//read height from movement to collision avodance 
-unsigned int proto_read_height(void);// proto API 
  
 
 //write direction from movement to collision avodance  
@@ -41,31 +35,16 @@ void proto_write_direction(int value);// proto API
 unsigned int proto_read_direction(void);// proto API 
  
 //write distance from movement to collision avodance  
-void proto_write_distance(int value);// proto API 
+//void proto_write_distance(int value);// proto API 
 
  
 //read distance from movement to collision avodance  
-unsigned int proto_read_distance(void);// proto API 
+//unsigned int proto_read_distance(void);// proto API 
  
 /***************************************************************************** 
     Implementations 
 *****************************************************************************/ 
  
-void proto_write_height(int value){ 
-    height = value;
-#ifdef PC
-	printf("collision avodance value set to: %c\n", height);
-#endif
-} 
- 
- 
-unsigned int proto_read_height(void){ 
-#ifdef PC
-	printf("collision avodance value is: %c\n", height);
-#endif
-
-    return height; 
-} 
 
 
 void proto_write_direction(int value){ 
@@ -84,6 +63,7 @@ unsigned int proto_read_direction(void){
     return direction; 
 }
 
+/*
 void proto_write_distance(int value){ 
     distance = value;
 #ifdef PC
@@ -100,5 +80,5 @@ unsigned int proto_read_distance(void){
     return distance; 
 }
 
-
+*/
 
