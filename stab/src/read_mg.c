@@ -68,9 +68,7 @@ void read_stream(byte addr, int bytes_to_read, char buffer[])
 {
   Wire.beginTransmission(MAGN_ADDRESS);
   Wire.send(addr);
-  Wire.endTransmission();
-  Serial.println(n);
-    
+  Wire.endTransmission();    
   Wire.beginTransmission(MAGN_ADDRESS);  
   Wire.requestFrom(MAGN_ADDRESS, bytes_to_read); 
   

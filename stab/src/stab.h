@@ -24,6 +24,8 @@ struct vector readAccel();
 struct vector read_magn_data();
 void read_stream(byte addr, int bytes_to_read, byte buffer[]);
 void write_data(byte addr, byte value, byte sensor_addr);
+void init_baro_hardware();
+struct baro_data read_baro_data();
 #endif	
 
 

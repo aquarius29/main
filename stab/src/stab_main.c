@@ -10,6 +10,8 @@
  *    06/04/2011: Added description and comments //Adam
  *    18/04/2011: Updated the ifdef to reflect new scheduler code //Adam
  *                Updated code to reflect coding standards
+ *    26/04/2011: Magn and accel is now read from here / integrated //Adam
+ *    27/04/2011: Barometer code included //Adam
  **************************************************************************/
 #ifdef PC 
 #include <stdio.h>
@@ -39,9 +41,16 @@ struct vector
   float z;
 };
 
+struct baro_data
+{
+  int temp;
+  long pressure;
+};
+
 struct vector gyro_vect;
 struct vector accel_vect;
 struct vector magn_vect;
+struct baro_data baro;
 struct vector filter_vect;
 float heading; // heading from magnetometer
 
@@ -60,6 +69,7 @@ int16_t stab_init(void)
   Wire.begin();
   init_gyro_hardware();
   init_magn_hardware();
+  init_baro_hardware();
 #endif
   return 0; 
 
@@ -90,7 +100,8 @@ int16_t stab_run(void)
       accel_vect = readAccel();
       magn_vect = read_magn_data();
       heading = (atan2(magn_vect.y , magn_vect.x)+M_PI)*180/M_PI;
-
+      baro = read_baro_data();
+      
       Serial.println("Gyro data now:");
       Serial.println(gyro_vect.x);
       Serial.println(gyro_vect.y);
@@ -108,6 +119,11 @@ int16_t stab_run(void)
       Serial.println(magn_vect.y);
       Serial.println(magn_vect.z);
       Serial.println(heading);
+      Serial.println();
+
+      Serial.println("Barometer data now:");
+      Serial.println(baro.temp);
+      Serial.println(baro.pressure);
       Serial.println();
 
       delay(1000);

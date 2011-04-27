@@ -6,11 +6,13 @@
 * @history
 * 14/04/2011: Initial version // Siyang
 * 18/04/2011: Code now reflects coding standards and add comment //Siyang
+* 27/04/2011: Renamed some functions and integrated code with the rest //Adam
 ****************************************************************************/
 #ifdef ARDUINO
 #include <inttypes.h>
 #include <Wire.h>
 #include "WProgram.h"
+#include "stab.h"
 
 /* From the datasheet the BMP module address LSB distinguishes
  * between read (1) and write (0) operations, corresponding to 
@@ -20,6 +22,12 @@
  */
 #define BARO_ADDRESS 0x77
 #define TO_READ 22
+
+struct baro_data
+{
+  int temp;
+  long pressure;
+}barom;
 
 /*sensor registers from the BOSCH BMP085 datasheet*/
 int ac1, ac2, ac3, b1, b2, mb, mc, md;
@@ -34,8 +42,6 @@ uint8_t pwait_time[4] = { 5, 8, 14, 26 };
 long read_press();
 unsigned int read_temp();
 void calculate();
-void read_data();
-void baro_init();
 void write_register(unsigned char r, unsigned char v);
 char read_register(unsigned char r);
 
@@ -49,7 +55,7 @@ long Press = 0;
 /*
 *initialize baro
 */
-void baro_init() {
+void init_baro_hardware() {
 
   byte buff[TO_READ];
   int i=0;
@@ -90,17 +96,21 @@ void baro_init() {
   Serial.println(mc);
   Serial.println(md);
 }
+
 /*
 *
 */
-void read_baro_data() {
+struct baro_data read_baro_data() {
   
   calculate();
-  Serial.print("Temp: ");
-  Serial.print(Temp, DEC);
-  Serial.print("\tPress: ");
-  Serial.println(Press, DEC);
-  Serial.println("=================");
+  barom.temp = Temp;
+  barom.pressure = Press;
+  return barom;
+  //Serial.print("Temp: ");
+  //Serial.print(Temp, DEC);
+  //Serial.print("\tPress: ");
+  //Serial.println(Press, DEC);
+  //Serial.println("=================");
 }
 /*
 *write register
@@ -199,22 +209,6 @@ void calculate() {
   Press = p + ((x1 + x2 + 3791) >> 4);
 
 }
-/*
-
-int main(void) {
-  init();
-  Serial.begin(9600);
-  Serial.println("Setting up BARO");
-  
-  Wire.begin();
-  baro_init();
-  while(1) {
-      read_data();
-      delay(500);
-  }
-
-  return 0;
-}*/
 #endif
 
     
