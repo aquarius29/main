@@ -1,11 +1,11 @@
-#############################################################
+###################################################################
 #
-#	Makefile for generating the Protocol library for Mega
-#       Created By Elnaz Shahmehr and Mihail Anton
+#	Makefile for generating the Protocol library for panda
+#       Create by Mihail Anton and Elnaz Shahmehr
 #
-#############################################################
+###################################################################
 
-CODE_PATH=src/
+CODE_PATH=src
 
 pc: C=gcc
 pc: AR=ar
