@@ -10,6 +10,7 @@ void PrintMatrix2 (int ar[][1]);
 void rotationMatrix(float roll, float pitch, float yaw, float rotation_matrix[][3]);
 void transposeMatrix3(float rotation_matrix[][3], float transpose_rotation_matrix[][3]);
 void transposeMatrix1(float matrix1[3],float matrix2[][1]);
+void Matrix_1Add1(float m1[][1], float m2[][1], float answer[][1] );
 
 //http://www.edcc.edu/faculty/paul.bladek/Cmpsc142/matmult.htm
 /* int main(void) */
@@ -82,6 +83,13 @@ void transposeMatrix1(float matrix1[3],float matrix2[][1]){
 	matrix2[0][2]=matrix1[2];
 }
 
+void Matrix_1Add1(float m1[][1], float m2[][1], float answer[][1] ){
+	int i=0; n =3;
+	for (i =0; i<n; i++){
+		answer[i][0]=m1[i][0]+m2[i][0];
+	}
+
+}
 
 
 
