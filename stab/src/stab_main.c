@@ -19,6 +19,7 @@
 #include <stdint.h>
 #include "stab_interface.h"
 #include "stab.h"
+#include "math.h"
 #elif defined ARDUINO 
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,6 +28,7 @@
 #include "stab.h"
 #include <Wire.h>
 #include <WProgram.h>
+#include "math.h"
 #endif 
 /************************************************************
  * Global variables used to save input/output of the algorithm:
@@ -53,7 +55,7 @@ struct vector magn_vect;
 struct baro_data baro;
 struct vector filter_vect;
 float heading; // heading from magnetometer
-
+void convert_accel_raw_to_deg();
 /*
  * Inits the main hardware components of the shield
  * A LOT OF CHANGES EXPECTED 
@@ -98,6 +100,7 @@ int16_t stab_run(void)
     {
       gyro_vect =  read_gyro_data();
       accel_vect = readAccel();
+      convert_accel_raw_to_deg();
       magn_vect = read_magn_data();
       heading = (atan2(magn_vect.y , magn_vect.x)+M_PI)*180/M_PI;
       baro = read_baro_data();
@@ -112,7 +115,7 @@ int16_t stab_run(void)
       Serial.println(accel_vect.x);
       Serial.println(accel_vect.y);
       Serial.println(accel_vect.z);
-      Serial.println();
+      Serial.println(); 
       
       Serial.println("Magnetometer data now:");
       Serial.println(magn_vect.x);
@@ -131,4 +134,18 @@ int16_t stab_run(void)
 #endif
   
   return 0;
+}
+
+
+/************************************************************
+* Converts the raw data from the accelerometer to the scaled value
+* in degrees
+************************************************************/
+void convert_accel_raw_to_deg()
+{
+  float R = sqrt((pow(accel_vect.x, 2))+(pow(accel_vect.y, 2))+(pow(accel_vect.z, 2)));
+  accel_vect.x = acos(accel_vect.x/R);
+  accel_vect.y = acos(accel_vect.y/R);
+  accel_vect.z = acos(accel_vect.z/R);
+
 }

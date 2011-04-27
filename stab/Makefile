@@ -17,7 +17,7 @@
 #    Launch the Arduino program to see what your USB device 
 #    is called (look under the port settings)
                                                                                   
-USB_PORT=/dev/ttyACM0
+USB_PORT=/dev/ttyACM2
 #USB_PORT=/dev/tty.usbmodem411
 
 #########################################################################

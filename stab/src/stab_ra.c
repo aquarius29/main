@@ -107,6 +107,5 @@ void init_accel()
   }
 }
 
-
 #endif
 
