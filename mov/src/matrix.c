@@ -11,6 +11,7 @@ void rotationMatrix(float roll, float pitch, float yaw, float rotation_matrix[][
 void transposeMatrix3(float rotation_matrix[][3], float transpose_rotation_matrix[][3]);
 void transposeMatrix1(float matrix1[3],float matrix2[][1]);
 void Matrix_1Add1(float m1[][1], float m2[][1], float answer[][1] );
+void Matrix_1Minus1(float m1[][1], float m2[][1], float answer[][1] );
 
 //http://www.edcc.edu/faculty/paul.bladek/Cmpsc142/matmult.htm
 /* int main(void) */
@@ -66,31 +67,40 @@ void rotationMatrix(float roll, float pitch, float yaw, float rotation_matrix[][
 
 
 void transposeMatrix3(float rotation_matrix[][3], float transpose_rotation_matrix[][3]){
-	transpose_rotation_matrix[0][0]=rotation_matrix[0][0];
-	transpose_rotation_matrix[0][1]=rotation_matrix[1][0];
-	transpose_rotation_matrix[0][2]=rotation_matrix[2][0];
-	transpose_rotation_matrix[1][0]=rotation_matrix[0][1];
-	transpose_rotation_matrix[1][1]=rotation_matrix[1][1];
-	transpose_rotation_matrix[1][2]=rotation_matrix[2][1];
-	transpose_rotation_matrix[2][0]=rotation_matrix[0][2];
-	transpose_rotation_matrix[2][1]=rotation_matrix[1][2];
-	transpose_rotation_matrix[2][2]=rotation_matrix[2][2];
+
+	int i;
+	int j;
+	int n=3;
+	for (j=0;j<n; j++){
+		for (i=0;i<n; i++){
+			transpose_rotation_matrix[j][i]=rotation_matrix[i][j];
+		}
+	}
 } 
 
 void transposeMatrix1(float matrix1[3],float matrix2[][1]){
-	matrix2[0][0]=matrix1[0];
-	matrix2[0][1]=matrix1[1];
-	matrix2[0][2]=matrix1[2];
+	int i=0;
+	int n=3;
+	for (i=0;i<n;i++){
+		matrix2[0][i]=matrix1[i];
+	}
 }
 
 void Matrix_1Add1(float m1[][1], float m2[][1], float answer[][1] ){
-	int i=0; n =3;
+	int i=0;
+	int n =3;
 	for (i =0; i<n; i++){
 		answer[i][0]=m1[i][0]+m2[i][0];
 	}
-
 }
 
+void Matrix_1Minus1(float m1[][1], float m2[][1], float answer[][1] ){
+	int i=0;
+	int n =3;
+	for (i =0; i<n; i++){
+		answer[i][0]=m1[i][0]-m2[i][0];
+	}
+}
 
 
 
