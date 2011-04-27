@@ -49,6 +49,9 @@
 ##  2011-04-20 - Fixed problems with linking so correct math lib is used.
 ##				 Order matters among the link-flags! - Joakim
 ##
+##  2011-04-27 - re-structured and merged scheduler implementations and added
+##				 SCHED_FLAG to define implementation. - Anders
+##
 ##  Notes:
 ##  Missing instructions in targets not related to basic system. 
 ##  By no means done and decided with regards to what flags are set and
@@ -70,10 +73,10 @@ BASIC_LIBS=-Lstab/lib -Lsched/lib -Lmoto/lib -Lmov/lib -Lca/lib -Lproto/lib -Lli
 BASIC_INCLUDES=-I../../stab/src -I../../moto/src -I../../mov/src -I../../ca/src -I../../proto/src -I../../include
 
 ##  Set scheduler implementation (-DBATMAN|-DNAIVE)
-SCHED_FLAG=-DBATMAN
+SCHED_FLAG=-DNAIVE
 
 ##  Free of charge
-EXTRA_FLAGS=-DWINDOWS
+EXTRA_FLAGS=
 
 ##  Name of micro controller
 MMCU=atmega2560
