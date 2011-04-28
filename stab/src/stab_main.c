@@ -56,6 +56,7 @@ struct baro_data baro;
 struct vector filter_vect;
 float heading; // heading from magnetometer
 void convert_accel_raw_to_deg();
+float data(float x, float y, float z);
 /*
  * Inits the main hardware components of the shield
  * A LOT OF CHANGES EXPECTED 
@@ -99,48 +100,51 @@ int16_t stab_run(void)
 #elif defined ARDUINO
   while(1)
     {
-      gyro_vect =  read_gyro_data();
-      accel_vect = readAccel();
-      convert_accel_raw_to_deg();
+      //gyro_vect =  read_gyro_data();
+      //accel_vect = readAccel();
+      //convert_accel_raw_to_deg();
       magn_vect = read_magn_data();
       heading = (atan2(magn_vect.y , magn_vect.x)+M_PI)*180/M_PI;
-      baro = read_baro_data();
+      //baro = read_baro_data();
       
-      Serial.println("Gyro data now:");
-      Serial.println(gyro_vect.x);
-      Serial.println(gyro_vect.y);
-      Serial.println(gyro_vect.z);
-      Serial.println();
+      /* Serial.println("Gyro data now:"); */
+      /* Serial.println(gyro_vect.x); */
+      /* Serial.println(gyro_vect.y); */
+      /* Serial.println(gyro_vect.z); */
+      /* Serial.println(); */
       
-      Serial.println("Accel data now:");
-      Serial.println(accel_vect.x);
-      Serial.println(accel_vect.y);
-      Serial.println(accel_vect.z);
-      Serial.println(); 
+      /* Serial.println("Accel data now:"); */
+      /* Serial.println(accel_vect.x); */
+      /* Serial.println(accel_vect.y); */
+      /* Serial.println(accel_vect.z); */
+      /* Serial.println(); */
       
+      float d = data(magn_vect.x, magn_vect.y, magn_vect.z);
       Serial.println("Magnetometer data now:");
       Serial.println(magn_vect.x);
       Serial.println(magn_vect.y);
       Serial.println(magn_vect.z);
       Serial.println(heading);
+      Serial.print("The constant is: ");
+      Serial.println(d);
       Serial.println();
 
-      Serial.println("Barometer data now:");
-      Serial.println(baro.temp);
-      Serial.println(baro.pressure);
-      Serial.println();
+      /* Serial.println("Barometer data now:"); */
+      /* Serial.println(baro.temp); */
+      /* Serial.println(baro.pressure); */
+      /* Serial.println(); */
 
-      filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x); // filtered pitch angle
-      filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y); // filtered roll angle
-      filter_vect.z = comp_filter(heading, gyro_vect.z, filter_vect.z); // filtered yaw angle
+      /* filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x); // filtered pitch angle */
+      /* filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y); // filtered roll angle */
+      /* filter_vect.z = comp_filter(heading, gyro_vect.z, filter_vect.z); // filtered yaw angle */
       
-      Serial.println("Filtered data now:");
-      Serial.println(filter_vect.x);
-      Serial.println(filter_vect.y);
-      Serial.println(filter_vect.z);
-      Serial.println();
+      /* Serial.println("Filtered data now:"); */
+      /* Serial.println(filter_vect.x); */
+      /* Serial.println(filter_vect.y); */
+      /* Serial.println(filter_vect.z); */
+      /* Serial.println(); */
 
-      delay(1000);
+      delay(500);
     }
 #endif
   
@@ -159,4 +163,9 @@ void convert_accel_raw_to_deg()
   accel_vect.y = acos(accel_vect.y/R);
   accel_vect.z = acos(accel_vect.z/R);
 
+}
+
+float data(float x, float y, float z)
+{
+  return sqrt((pow(x, 2))+(pow(y, 2))+(pow(z, 2)));
 }

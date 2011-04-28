@@ -22,7 +22,6 @@
 /*
  *Function prototypes
  */
-//void write_data(byte addr, byte value);
 
 struct vector
 {
@@ -31,7 +30,7 @@ struct vector
   float z;
 };
 
-void read_stream(byte addr, int bytes_to_read, char buffer[]);
+void read_stream_mg(byte addr, int bytes_to_read, byte buffer[]);
 
 void init_magn_hardware()
 {
@@ -44,18 +43,20 @@ void init_magn_hardware()
 struct vector read_magn_data()
 {
   struct vector vect;
-  char buffer[6];
+  byte buffer[6];
   int addr = 0x03;
-  read_stream(addr, 6, buffer);
+  read_stream_mg(addr, 6, buffer);
   
-  int x, y, z;
- 
-  vect.x = ((buffer[0] << 8) | buffer[1]);
-  vect.y = ((buffer[2] << 8) | buffer[3]);
+  vect.x = -((buffer[0] << 8) | buffer[1]);
+  vect.y = -((buffer[2] << 8) | buffer[3]);
   vect.z = ((buffer[4] << 8) | buffer[5]);
-  Serial.println(vect.x);
-  Serial.println(vect.y);
-  Serial.println(vect.z);
+
+  //vect.x = ((vect.x*M_PI)/180.0) - 15;
+  //vect.y = ((vect.y*M_PI)/180.0) + 4.5;
+  //vect.z = ((vect.z*M_PI)/180.0) - 31;
+  //Serial.println(vect.x);
+  //Serial.println(vect.y);
+  //Serial.println(vect.z);
 
   return vect;
 }
@@ -64,7 +65,7 @@ struct vector read_magn_data()
  * Reads the bytes from the I2C bus and saves it to 
  * the buffer
  */
-void read_stream(byte addr, int bytes_to_read, char buffer[])
+void read_stream_mg(byte addr, int bytes_to_read, byte buffer[])
 {
   Wire.beginTransmission(MAGN_ADDRESS);
   Wire.send(addr);
@@ -102,4 +103,5 @@ void calibrate_magn()
     }
 
 }
+
 #endif
