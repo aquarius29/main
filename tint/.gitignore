@@ -1,0 +1,11 @@
+# other groups' source code will be ignored on this branch
+*.a
+*.o
+../ca/lib/*
+../moto/*
+../moto/lib/*
+../mov/*
+../proto/lib/*
+../sched/lib/*
+../stab/lib/*
+qc/*
