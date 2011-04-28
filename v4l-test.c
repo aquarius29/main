@@ -10,11 +10,18 @@
 #include <sys/mman.h>
 #include <errno.h>
 
+#include<stdlib.h>
+#include<errno.h>
+#include<netdb.h>
+#include<sys/types.h>
+#include<netinet/in.h>
+#include<sys/socket.h>
+
 #include "v4l-test.h"
-#include "encode.h"
+
 #include "network.h"
 
-#define DEVICE_PATH "/dev/v4l/by-id/usb-046d_0809_F15A496F-video-index0"
+#define DEVICE_PATH "/dev/video0"
 
 #define CAMERA_WIDTH 800
 #define CAMERA_HEIGHT 600
@@ -49,7 +56,7 @@ int read_frame()
   }
 
   camera_input_stream_encode(bs);
-  send(bs);
+  tcp_send(bs, sockfd);
 
   if(ioctl(fd, VIDIOC_QBUF, &b) == -1)
   {
@@ -61,7 +68,64 @@ int read_frame()
 }
 
 int main(int argc, char **argv)
-{
+{ /*--Begin---this part is added by @Yuhan Qiu and @Shuang Wu* for creating the server*/
+  int sockfd;
+
+  struct sockaddr_in server_addr;
+  struct sockaddr_in client_addr;
+
+  int portnumber;
+
+  if(2!=argc){
+  
+    fprintf(stderr,"Usage:%s portnumber\a\n",argv[0]);
+
+    exit(1);
+  }
+
+  if((portnumber=atoi(argv[1]))<0){
+
+    fprintf(stderr,"Usage:%s portnumber\a\n",argv[0]);
+    exit(1);
+  }
+
+  //creating the server
+  if(1==(sockfd=socket(AF_INET,SOCK_STREAM,0))){
+
+    fprintf(stderr,"Socket error:%s portnumber\a\n",strerror(errno));
+
+    exit(1);
+  }
+
+  printf("Socket id is %d\n",sockfd);
+
+  bzero(&server_addr,sizeof(struct sockaddr_in));
+
+  server_addr.sin_family=AF_INET;
+  server_addr.sin_addr.s_addr=htonl(INADDR_ANY);
+  server_addr.sin_port=portnumber;
+  
+  //binding sockfd
+
+  if(-1==bind(sockfd,(struct sockaddr *)(&server_addr),sizeof(struct sockaddr))){
+    fprintf(stderr,"Bind error:%s\n\a",strerror(errno));
+
+    exit(1);
+
+  }
+
+  printf("Bind\n");
+
+
+  //listening sockfd
+  if(-1==(listen(sockfd,5))){
+    fprintf(stderr,"Listen error:%s\n\a",strerror(errno));
+    exit(1);
+  }
+  printf("Listen\n");
+
+/*--end--this part is added by @Yuhan Qiu and @Shuang Wu*/
+
   /* open the v4l2 device, get a file descriptor */
 
   printf("Opening device...\n");
@@ -207,46 +271,9 @@ int main(int argc, char **argv)
 
   printf("Capturing...\n");
 
-  unsigned int count;
 
-  while(1)
-  {
-    fd_set fds;
-    struct timeval tv;
-
-    int r;
-
-    FD_ZERO (&fds);
-    FD_SET (fd, &fds);
-
-    tv.tv_sec = 2;
-    tv.tv_usec = 0;
-
-    r = select(fd + 1, &fds, NULL, NULL, &tv);
-
-    if(r == -1)
-    {
-      if(EINTR == errno)
-      {
-        continue;
-      }
-
-      fprintf(stderr, "Select error.\n");
-      return -1;
-    }
-
-    if(r == 0)
-    {
-      fprintf(stderr, "Select time-out.\n");
-      return -1;
-    }
-
-    if(read_frame() == -1)
-    {
-      fprintf(stderr, "read_frame() error.\n");
-      return -1;
-    }
-  }
+    tcp_send(bs, sockfd);
+  
 
   // todo: dispose of everything
 

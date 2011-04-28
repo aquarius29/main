@@ -1,6 +1,6 @@
 #include "encode.h"
 
-void encode(struct buffer* b)
+void camera_input_stream_encode(struct buffer* b)
 {
   // TODO: Encode the buffer to VP8.
 }

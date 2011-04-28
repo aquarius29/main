@@ -1,3 +1,3 @@
 #include "v4l-test.h"
 
-void encode(struct buffer *b);
+void camera_input_stream_encode(struct buffer *b);
