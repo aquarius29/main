@@ -301,12 +301,12 @@ float forceVector[3][1] = {{0},{0},{0}};
 void  get_linearAccelerations_EarthAxis(){
 
     float forceMass[3][1];
-    MatrixScale3x1((1/QUAD_MASS),forceVector,forceMass);
+    MatrixScale3x1((1/QUAD_MASS),forceVector,forceMass,3);
     
-    float gravityQuadro[1][3] = {{-1 * sin(pitch)},  //- sin pitch
-			       {cos(pitch) * sin(roll])}, //cos pitch * sin roll
-			       {cos(pitch) * sin(roll)}} //cos pitch * sin roll
+    float gravityQuadro[3][1] = {{-1 * sin(pitch)},  //- sin pitch
+								 {cos(pitch) * sin(roll)}, //cos pitch * sin roll
+								 {cos(pitch) * sin(roll)}}; //cos pitch * sin roll
     
     float gForce[3][1];
-    MatrixScale3x1(G, gravityQuadro, gForce);
+    MatrixScale3x1(G, gravityQuadro, gForce,3 );
 }
