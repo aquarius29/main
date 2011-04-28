@@ -270,12 +270,12 @@ float get_quad_angle(float roll, float pitch) {
 
 //Earth Axis
 float linearVelocities[3][1] = { {0},
-								 {0},
-								 {0}};
+			               	      {0},
+			                 	 {0}};
 
 float linearAcceleration[3][1] = {{0},
-								  {0},
-								  {0}};
+				                  {0},
+				               {0}};
 
 //Quadrocopter
 float angularVelocities[3][1] =  {{0},
@@ -294,22 +294,19 @@ float thrust2;
 float thrust3;
 float thrust4;
 
-float forceVector[3] = {0,0,0}
-
+float forceVector[3][1] = {{0},{0},{0}};
 
 
 
 void  get_linearAccelerations_EarthAxis(){
 
-    float forceMass[1][3];
-    MatrixScale((1/QUADRO_MASS),forceVector,forceMass);
+    float forceMass[3][1];
+    MatrixScale3x1((1/QUAD_MASS),forceVector,forceMass);
     
     float gravityQuadro[1][3] = {{-1 * sin(pitch)},  //- sin pitch
 			       {cos(pitch) * sin(roll])}, //cos pitch * sin roll
 			       {cos(pitch) * sin(roll)}} //cos pitch * sin roll
     
-    float gForce[1][3];
-    MatrixScale(G, gravityQuadro, gForce);
-    
-    
+    float gForce[3][1];
+    MatrixScale3x1(G, gravityQuadro, gForce);
 }
