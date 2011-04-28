@@ -24,11 +24,11 @@
 unsigned int direction_ca = 0; // from Collision Avoidance Movement to; DEFAULT is 0
  
 //write direction from movement to collision avodance  
-void proto_write_direction(int value);// proto API 
+void proto_write_direction_ca(int value);// proto API 
 
  
 //read direction from movement to collision avodance  
-unsigned int proto_read_direction(void);// proto API 
+unsigned int proto_read_direction_ca(void);// proto API 
  
 //write distance from movement to collision avodance  
 //void proto_write_distance(int value);// proto API 
@@ -41,7 +41,7 @@ unsigned int proto_read_direction(void);// proto API
     Implementations 
 *****************************************************************************/ 
 
-void proto_write_direction(int value){ 
+void proto_write_direction_ca(int value){ 
     direction_ca = value;
 #ifdef PC
 	storeForTint(WRITE, COLLISION, UNKNOWN, value);
@@ -53,7 +53,7 @@ void proto_write_direction(int value){
 } 
  
  
-unsigned int proto_read_direction(void){ 
+unsigned int proto_read_direction_ca(void){ 
 #ifdef PC
 	storeForTint(READ, MOVEMENT, UNKNOWN, direction_ca);
 	#ifdef DEBUG

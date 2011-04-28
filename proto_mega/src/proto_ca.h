@@ -20,11 +20,11 @@
  
 
 //get direction from movement to collision avodance  
-void proto_write_direction(int value);// proto API 
+void proto_write_direction_ca(int value);// proto API 
  
  
 //read direction from movement to collision avodance  
-unsigned int proto_read_direction(void);// proto API 
+unsigned int proto_read_direction_ca(void);// proto API 
 
 
 //write distance from movement to collision avodance  
