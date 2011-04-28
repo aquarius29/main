@@ -20,7 +20,7 @@
 #define MOVEMENT 7
 #define CONNECTIVITY 8
 #define CAMERA 9
-
+#define FILTER 10
 #define UNKNOWN -1
 
 struct Message {
