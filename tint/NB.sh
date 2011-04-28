@@ -4,6 +4,9 @@
 ## -------------------------------------------------------------------------------
 ## Authors: Eugene Groshev, Nikita Englund
 ## Change history:
+##     2011-04-28, Eugene:
+##         - added echolog() function which both print outs and logs passed arguments
+##         - made $1 a compulsory argument to specify script run mode
 ##     2011-04-26, Eugene:
 ##         - $1 now specifies sript run mode (server or izimbra (Eugene's local))
 ##         - git pull now done in a loop
@@ -14,40 +17,23 @@
 # "==========================================================" - 58 characters
 # "----------------------------------------------------------"
 
-# Setting build directory for server mode
-if [ $1 = "server" ]
-then
-    BUILD_DIR=${HOME}/emb-test
-    LOG_DIR=${HOME}/emb-test/log
-fi
-
-# Setting build directory for Eugene's local mode
-if [ $1 = "izimbra" ]
-then
-    BUILD_DIR=$SEMB
-    LOG_DIR=$SEMB/log
-fi
-
-# Optional Nikita mode here
-
-echo " Starting script in _$1_ mode"
-echo " Build directory is: $BUILD_DIR"
-echo " Log directory is: $LOG_DIR"
-echo "   "
-
-DATE=$(date '+%Y%m%d')
-
-LOG_FILE=${LOG_DIR}/${DATE}.log
-rm -f ${LOG_FILE}
 
 
-echo $DATE
-echo $LOG_FILE
+## -------------------------------------------------------------------------------
+## Local functions used in the script, scroll down for actual script
+## -------------------------------------------------------------------------------
 
+# Writes all passed arguments to a log file
 log()
 {
-  echo "$*" # may be turned off
-	echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"  >> "${LOG_FILE}" #quotes because of the whitespaces in file path  
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"  >> "${LOG_FILE}" #quotes because of the whitespaces in file path  
+}
+
+# First prints out, then writes all passed arguments to a log file
+echolog()
+{
+    echo "$*"
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"  >> "${LOG_FILE}" #quotes because of the whitespaces in file path 
 }
 
 check_return_value()
@@ -252,6 +238,54 @@ test_src()
     make check
     check_return_value $? "make test"
 }
+
+
+## -------------------------------------------------------------------------------
+## Script initialization section
+## -------------------------------------------------------------------------------
+
+# If no mode is specified, script exits with an error message
+if [ $# -lt 1 ]
+then
+    echo "Please specify script mode:"
+    echo "    NB.sh server - runs script in server mode"
+    echo "    NB.sh izimbra - runs script in Eugene's local mode" 
+    exit -1
+fi
+
+# Setting build directory for server mode
+if [ $1 = "server" ]
+then
+    BUILD_DIR=${HOME}/emb-test
+    LOG_DIR=${HOME}/emb-test/log
+fi
+
+# Setting build directory for Eugene's local mode
+if [ $1 = "izimbra" ]
+then
+    BUILD_DIR=$SEMB
+    LOG_DIR=$SEMB/log
+fi
+
+# Optional Nikita mode here
+
+
+
+echolog " Starting TINT script in _$1_ mode"
+echolog " Build directory is: $BUILD_DIR"
+echolog " Log directory is: $LOG_DIR"
+
+DATE=$(date '+%Y%m%d')
+
+LOG_FILE=${LOG_DIR}/${DATE}.log
+rm -f "${LOG_FILE}" #quotes because of the whitespaces in file path 
+
+echolog " Log file is: $LOG_FILE"
+echo "   "
+
+
+
+
 
 
 #
