@@ -1,5 +1,3 @@
-/* Author Yuhan Qiu and Shuang Wu */
-
 #include<stdlib.h>
 #include<stdio.h>
 #include<errno.h>
@@ -28,7 +26,7 @@ int main(int argc,char *argv[])
 
   if((portnumber=atoi(argv[2]))<0){
     fprintf(stderr,"Usage:%s hostname portnumber\a\n",argv[0]);
-    exit(1);   
+    exit(1);
   }
 
   if(1==(sockfd=socket(AF_INET,SOCK_STREAM,0))){
