@@ -177,14 +177,6 @@ void  Matrix_3Mult1(float m1[][3], float m2[][1], float answer[][1])
 
 
 /*
- * calculate the multiplication of a 3x1 matrix with a 3x3 matrix
- */
-void Matrix_1Mult3(float m1[][1], float m2[][3], float answer[][3]){
-	//it seems there's no such thing TT
-}
-
-
-/*
  * print a 3 column array
  */
 void PrintMatrix3x3 (float answer[][3],int row)
