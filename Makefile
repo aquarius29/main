@@ -73,7 +73,7 @@ BASIC_LIBS=-Lstab/lib -Lsched/lib -Lmoto/lib -Lmov/lib -Lca/lib -Lproto/lib -Lli
 BASIC_INCLUDES=-I../../stab/src -I../../moto/src -I../../mov/src -I../../ca/src -I../../proto/src -I../../include
 
 ##  Set scheduler implementation (-DBATMAN|-DNAIVE)
-SCHED_FLAG=-DNAIVE
+SCHED_FLAG=-DBATMAN
 
 ##  Free of charge
 EXTRA_FLAGS=
@@ -238,7 +238,7 @@ clean:
 	cd proto/src && $(MAKE) clean
 	cd proto/lib && rm *.a
 
-	rm -f $(PROG) $(PROG).elf $(PROG).rom *.o *.map
+	rm -f $(PROG) $(PROG).exe $(PROG).elf $(PROG).rom *.o *.map
 
 	
 

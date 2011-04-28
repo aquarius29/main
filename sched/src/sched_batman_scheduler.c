@@ -29,6 +29,11 @@
 /* ARDUINO stuff here */
 #endif /* PC ARDUINO*/
 
+#include "moto_interface.h"
+#include "stab_interface.h"
+#include "ca_interface.h"
+#include "mov_interface.h"
+
 #include "sched_batman_scheduler.h"
 
 Process* create_process(int8_t pid)
@@ -114,22 +119,19 @@ void run_idle_task(Process *process)
 int16_t init_process_data(void)
 {
     /* function pointers to modules init functions */
-    sched_Fun_t funArrInit[] = { &motoInit,
-                            &caInit,
-                            &moveInit,
-                            &stabInit,
-                            &connInit };
+    sched_Fun_t funArrInit[] = { &moto_init,
+                            &ca_init,
+                            &mov_init,
+                            &stab_init };
 
     /* function pointers to modules run functions */
-    sched_Fun_t funnArrRun[] = { &motoRun,
-                                &caRun,
-                                &moveRun,
-                                &stabRun,
-                                &connRun };
+    sched_Fun_t funArrRun[] = { &moto_run,
+                                &ca_run,
+                                &mov_run,
+                                &stab_run };
 
     ProcessData *pProcessData;
-    Process *process;
-    Task *task;
+    
 
     #ifdef PC
         printf("Initializing system...\n");
@@ -157,38 +159,56 @@ int16_t init_process_data(void)
         
         pProcessData = get_process_data();
 
-        process = create_process(MOTOR_PID);
-        task = create_task(MOTOR_TASK_1, funnArrRun[0], 10);
-        enqueue_task(process, task);
-        pProcessData->processList[0] = process;
+        if(process_setup(pProcessData, funArrRun) != EXIT_SUCCESS)
+        {
+#ifdef PC
+            printf("FAILED\n\n");
+            exit(1);
+#elif ARDUINO
+            exit(1);
+#endif /* PC ARDUINO */
+        }
 
-        process = create_process(CA_PID);
-        task = create_task(COLLISION_TASK_1, funnArrRun[1], 10);
-        enqueue_task(process, task);
-        pProcessData->processList[1] = process;
-
-        process = create_process(MOVE_PID);
-        task = create_task(MOVE_TASK_1, funnArrRun[2], 10);
-        enqueue_task(process, task);
-        pProcessData->processList[2] = process;
-
-        process = create_process(STAB_PID);
-        task = create_task(STAB_TASK_1, funnArrRun[3], 10);
-        enqueue_task(process, task);
-        pProcessData->processList[3] = process;
-
-        process = create_process(CONN_PID);
-        task = create_task(CONN_TASK_1, funnArrRun[4], 10);
-        enqueue_task(process, task);
-        pProcessData->processList[4] = process;
-
-        pProcessData->idleProcessToSchedule = 1;
+        pProcessData->idleProcessToSchedule = 0;
         pProcessData->totalExecutionTime = 0;
 
         #ifdef PC
             printf("DONE\n\n");
         #endif
     }
+    return EXIT_SUCCESS;
+}
+
+int16_t process_setup(ProcessData *pProcessData, sched_Fun_t funArrRun[TOTAL_NO_PROCESSES])
+{
+    Process *process;
+    Task *task;
+
+    process = create_process(MOTOR_PID);
+    task = create_task(MOTOR_TASK_1, funArrRun[0], 10);
+    enqueue_task(process, task);
+    pProcessData->processList[0] = process;
+
+    process = create_process(CA_PID);
+    task = create_task(COLLISION_TASK_1, funArrRun[1], 10);
+    enqueue_task(process, task);
+    pProcessData->processList[1] = process;
+
+    process = create_process(MOVE_PID);
+    task = create_task(MOVE_TASK_1, funArrRun[2], 10);
+    enqueue_task(process, task);
+    pProcessData->processList[2] = process;
+
+    process = create_process(STAB_PID);
+    task = create_task(STAB_TASK_1, funArrRun[3], 10);
+    enqueue_task(process, task);
+    pProcessData->processList[3] = process;
+
+    /*process = create_process(CONN_PID);
+    task = create_task(CONN_TASK_1, funArrRun[4], 10);
+    enqueue_task(process, task);
+    pProcessData->processList[4] = process;*/
+
     return EXIT_SUCCESS;
 }
 
@@ -249,10 +269,10 @@ void enqueue_process(Process *process)
     }
 }
 
-void create_process_queue(int16_t excessTime)
+void create_process_queue(int16_t timeFrame)
 {
     int8_t i;
-    int16_t timeLeft = TIMEFRAME_MS - excessTime;
+    int16_t timeLeft = timeFrame;
     int8_t peekLayer = 0;
     int16_t iterCount = 0;
     int16_t taskTime = 0;

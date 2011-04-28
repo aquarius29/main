@@ -35,7 +35,6 @@ void sched_batman_init(void) {
 void sched_batman_run(void) {
     int16_t k;
     double time;
-    int8_t excessTime;
     ProcessData *processData;
     Process ** processQueue;
 #ifdef PC
@@ -51,7 +50,7 @@ void sched_batman_run(void) {
     time = 0.0;
 #endif
 
-    excessTime = 0;
+    int16_t timeFrame = TIMEFRAME_MS;
 
     processData = get_process_data();
     processQueue = processData->processQueue;
@@ -59,28 +58,24 @@ void sched_batman_run(void) {
 #ifdef PC
     printf("starting scheduler: running processes\n");
 #endif /* PC */
-    for(k = 0; k < 500; k++) //TODO: iterations?
+    for(k = 0; k < 10; k++) //TODO: iterations?
     {
         int16_t i;
         int16_t syncTime;
 #ifdef PC
         assert((start = clock()) != -1);
 #endif /* PC */
-        create_process_queue(excessTime);
-#ifdef DEBUG
-        printf("Running processes\n==================\n");
-#endif /* DEBUG */
+
+        create_process_queue(timeFrame);
+
         for(i = 0; i < processData->currentQueueSize; i++){
             run_process(i);
         }
-    #ifdef PC
+#ifdef PC
         stop = clock();
         time = (double)(stop-start);
 
-        #ifdef DEBUG
-            printf("ExecutionTime: %d\n", (int)time);
-        #endif /* DEBUG */
-        syncTime = (int)(TIMEFRAME_MS - time);
+        syncTime = (int)(timeFrame - time);
         #ifdef LOG
             fprintf(file, "Ran: %d processes\n", 
                 processData->currentQueueSize);
@@ -91,7 +86,7 @@ void sched_batman_run(void) {
             fprintf(file, "Total Execution Time: %d ms\n", (int)(time));
             if(syncTime > 0)
             {
-                fprintf(file, "Sync. Time: %d ms\n", (syncTime - excessTime));
+                fprintf(file, "Sync. Time: %d ms\n", (syncTime));
             }
             else
             {
@@ -99,44 +94,36 @@ void sched_batman_run(void) {
             }
         #endif /* LOG */
 
-        if(syncTime > 0)
+        if(syncTime >= 0)
         {
-#ifdef DEBUG
-                printf("Synchronize: %d\n", syncTime);
-#endif /* DEBUG */
-            if(syncTime - excessTime > 0 && syncTime - excessTime < TIMEFRAME_MS)
-            {
 #ifdef WINDOWS
-                Sleep(syncTime - excessTime);
+            Sleep(syncTime);
 #else
-                usleep(syncTime - excessTime);
+            usleep(syncTime);
 #endif /* WINDOWS */
-            }
-            else
-            {
-                /*TODO: Something is very wrong...*/
-            }
-               
-            excessTime = 0; /* Reset excessTime */
+            timeFrame = TIMEFRAME_MS;
+        }
+        else if((syncTime * -1) > 1000)
+        {
+            /* DEADLINE has been exceeded
+            /* System faulure: THIS IS DANGEROUS */
+            break;
         }
         else 
         {
-#ifdef DEBUG
-            printf("Correcting next iteration with: %d\n", excessTime);
-            printf("Failed to keep time constraint!\n");
-#endif
-            excessTime = syncTime * -1; /* Making it non-negative */
+            /* If the timeframe was exceeded with more time than what fits in the TIMEFRAME
+            * then the timeframe should be set to the time of the last timeframe since the other
+            * timeframes will equal to 0 there is no point in running them */
+            timeFrame = (syncTime * -1) % TIMEFRAME_MS; /* Setting the (last) timeframe  */
         }
-#endif /* PC */
-#ifdef ARDUINO
+#elif ARDUINO
         /* TODO: Put arduino timing logic here OR 
         * change time functions in PC version with #ifdef's */
-#endif
-#ifdef DEBUG
-        printf("\n");
-#elif PC
+#endif /* ARDUINO */
+
+#ifdef PC
         printf(".");
-#endif /* DEBUG PC */
+#endif /* PC */
 #ifdef LOG
         fprintf(file, "==================\n");
 #endif

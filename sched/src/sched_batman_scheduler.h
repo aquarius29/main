@@ -19,7 +19,7 @@
 #define __sched_scheduler_h_
 
 #include <stdint.h>
-#define TOTAL_NO_PROCESSES 5 /* Total number of processes */
+#define TOTAL_NO_PROCESSES 4 /* Total number of processes */
 #define MAX_PROC_ITER 30 /* maximum number of processes per iteration*/
 #define TIMEFRAME_MS 50 /* The timeframe amount in milliseconds */
 
@@ -79,6 +79,7 @@ typedef struct tagProcessData {
 }ProcessData;
 
 /* Functions that handle a process */
+int16_t process_setup(ProcessData *pProcessData, sched_Fun_t funArrRun[TOTAL_NO_PROCESSES]);
 Process* create_process(int8_t pid);
 void end_process(Process *process);
 void enqueue_task(Process *process, Task *task);
