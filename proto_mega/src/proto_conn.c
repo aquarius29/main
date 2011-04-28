@@ -10,10 +10,13 @@
 * 
 * <IT University of Goteborg> 
 *****************************************************************************/ 
- 
-#include<stdio.h> 
-#include<stdlib.h>  
-#include"proto_conn.h" 
+
+#ifdef PC
+	#include<stdio.h> 
+	#include<stdlib.h>  
+	#include"proto_conn.h"
+	#include "proto_tint.h"
+#endif
  
  
 /***************************************************************************** 
@@ -22,7 +25,6 @@
  
 unsigned char proto_navi_to_connectivity_msg; 
 //unsigned char nav_msg; 
- 
  
 unsigned char proto_read_navi_to_connectivity(void); 
  
@@ -35,7 +37,10 @@ void proto_send_navi_to_connectivity(unsigned char msg);
  
 unsigned char proto_read_navi_to_connectivity(void){ 
 #ifdef PC
-	printf("navigation msg value set to: %c\n", proto_navi_to_connectivity_msg );
+	storeForTint(READ, CONNECTIVITY, UNKNOWN, proto_navi_to_connectivity_msg);
+	#ifdef DEBUG
+		printf("navigation msg value set to: %c\n", proto_navi_to_connectivity_msg );
+	#endif
 #endif
     return proto_navi_to_connectivity_msg; 
     
@@ -44,6 +49,9 @@ unsigned char proto_read_navi_to_connectivity(void){
 void proto_send_navi_to_connectivity(unsigned char msg){ 
     proto_navi_to_connectivity_msg = msg; 
 #ifdef PC
-	printf("navigation msg value set to: %c\n", proto_navi_to_connectivity_msg );
+	storeForTint(WRITE, NAV, UNKNOWN, proto_navi_to_connectivity_msg);
+	#ifdef DEBUG
+		printf("navigation msg value set to: %c\n", proto_navi_to_connectivity_msg );
+	#endif
 #endif
 } 

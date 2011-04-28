@@ -6,15 +6,12 @@
 *
 * Copyright (C) 2011 Elnaz Shahmehr
 *
-* 
-*
 * <IT University of Goteborg>
 *****************************************************************************/
-
- 
- #ifdef PC
+#ifdef PC
    #include <stdio.h>
    #include "proto_move.h" 
+   #include "proto_tint.h"
 #endif
 /***************************************************************************** 
     Definitions 
@@ -47,14 +44,20 @@ unsigned int proto_read_direction(void);// proto API
 void proto_write_speed(int value){ 
     speed = value;
 #ifdef PC
-	printf("Movement value set to: %c\n", speed);
+	storeForTint(WRITE, MOVEMENT, UNKNOWN, speed);
+	#ifdef DEBUG
+		printf("Movement value set to: %c\n", speed);
+	#endif
 #endif
 } 
  
  
 unsigned int proto_read_speed(void){ 
 #ifdef PC
-	printf("Movement value is: %c\n", speed);
+	storeForTint(READ, COLLISION, UNKNOWN, speed);
+	#ifdef DEBUG
+		printf("Movement value is: %c\n", speed);
+	#endif
 #endif
 
     return speed; 

@@ -32,5 +32,5 @@ test:
 clean:
 	@ rm -f *.a $(CODE_PATH)*.o
 
-.PHONY: compile clean pc arduino
+.PHONY: compile clean pc arduino test
 .SILENT: compile

@@ -1,7 +1,6 @@
-#include <stdio.h>
-
- #ifdef PC
-   #include <stdio.h>
+#ifdef PC
+	#include <stdio.h>
+	#include "proto_tint.h"
 #endif
 
 unsigned char filter_message;
@@ -9,15 +8,14 @@ unsigned char motor_message;
 
 void proto_write_filter(unsigned char message){
 	filter_message=message;
-#ifdef PC
-	printf("filter value set to: %c\n", filter_message);
-#endif
+#ifdef DEBUG
+		printf("filter value set to: %c\n", filter_message);
+#endif	
 }
 
 unsigned char proto_read_filter(void){
 	unsigned char temp=filter_message;
 	filter_message=0;
-
 #ifdef PC
 	printf("filter value set to: %c\n", temp);
 #endif

@@ -10,11 +10,10 @@
 *
 * <IT University of Goteborg>
 *****************************************************************************/
-
- 
- #ifdef PC
+#ifdef PC
    #include <stdio.h>
    #include "proto_move.h" 
+   #include "proto_tint.h"
 #endif
 /***************************************************************************** 
     Definitions 
@@ -24,9 +23,6 @@
 
 unsigned int direction = 0; // from Collision Avoidance Movement to; DEFAULT is 0
  
- 
- 
-
 //write direction from movement to collision avodance  
 void proto_write_direction(int value);// proto API 
 
@@ -44,13 +40,14 @@ unsigned int proto_read_direction(void);// proto API
 /***************************************************************************** 
     Implementations 
 *****************************************************************************/ 
- 
-
 
 void proto_write_direction(int value){ 
     direction = value;
 #ifdef PC
+	storeForTint(WRITE, COLLISION, UNKNOWN, value);
+	#ifdef DEBUG
 	printf("collision avodance value set to: %c\n", direction);
+	#endif
 #endif
  
 } 
@@ -58,7 +55,10 @@ void proto_write_direction(int value){
  
 unsigned int proto_read_direction(void){ 
 #ifdef PC
+	storeForTint(READ, MOVEMENT, UNKNOWN, direction);
+	#ifdef DEBUG
 	printf("collision avodance value is: %c\n", direction);
+	#endif
 #endif
     return direction; 
 }
@@ -72,7 +72,6 @@ void proto_write_distance(int value){
  
 } 
  
- 
 unsigned int proto_read_distance(void){ 
 #ifdef PC
 	printf("collision avodance value is: %c\n", distance);
@@ -81,4 +80,3 @@ unsigned int proto_read_distance(void){
 }
 
 */
-

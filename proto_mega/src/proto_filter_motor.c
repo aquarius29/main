@@ -1,6 +1,4 @@
-#include <stdio.h>
-
- #ifdef PC
+#ifdef PC
    #include <stdio.h>
    #include"proto_filter_motor.h"
 #endif
