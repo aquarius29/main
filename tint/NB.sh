@@ -11,6 +11,8 @@
 ##         - overall status of the project assigned to PROJECT_CHANGED
 
 
+# "==========================================================" - 58 characters
+# "----------------------------------------------------------"
 
 # Setting build directory for server mode
 if [ $1 = "server" ]
@@ -72,7 +74,8 @@ PROJECT_CHANGED=0 # variable to store the change state of the project
 # loop through local repos and pull from remotes
 for REPO in ca cam conn moto nav proto sched stab ui
 do
-    log "Pulling $REPO"
+    log "----------------------------------------------------------"
+	log "Pulling $REPO"
     cd $REPO
     STATUS=`git pull origin master`
     log $STATUS 
@@ -83,7 +86,7 @@ do
     cd ..
 done
 
-echo $PROJECT_CHANGED
+#echo $PROJECT_CHANGED
 
   
 }
@@ -272,18 +275,18 @@ test_src()
 #
 #  Get code from GIT
 #
-log "----------------------------"
+log "=========================================================="
 log " Pulling code "
-log "----------------------------"
+log "=========================================================="
 
 git_pull
 
 # Eventual exit, if no code has been changed
 if [ $PROJECT_CHANGED = 0 ]
 then
-    log "----------------------------"
+    log "=========================================================="
     log " EXIT: No new code"
-    log "----------------------------"
+    log "=========================================================="
     exit $PROJECT_CHANGED
 fi
 
