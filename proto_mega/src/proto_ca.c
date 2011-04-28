@@ -21,7 +21,7 @@
  
 //unsigned int height = 0; // from Collision Avoidance Movement to; DEFAULT is 0
 
-unsigned int direction = 0; // from Collision Avoidance Movement to; DEFAULT is 0
+unsigned int direction_ca = 0; // from Collision Avoidance Movement to; DEFAULT is 0
  
 //write direction from movement to collision avodance  
 void proto_write_direction(int value);// proto API 
@@ -42,11 +42,11 @@ unsigned int proto_read_direction(void);// proto API
 *****************************************************************************/ 
 
 void proto_write_direction(int value){ 
-    direction = value;
+    direction_ca = value;
 #ifdef PC
 	storeForTint(WRITE, COLLISION, UNKNOWN, value);
 	#ifdef DEBUG
-	printf("collision avodance value set to: %c\n", direction);
+	printf("collision avodance value set to: %c\n", direction_ca);
 	#endif
 #endif
  
@@ -55,12 +55,12 @@ void proto_write_direction(int value){
  
 unsigned int proto_read_direction(void){ 
 #ifdef PC
-	storeForTint(READ, MOVEMENT, UNKNOWN, direction);
+	storeForTint(READ, MOVEMENT, UNKNOWN, direction_ca);
 	#ifdef DEBUG
-	printf("collision avodance value is: %c\n", direction);
+	printf("collision avodance value is: %c\n", direction_ca);
 	#endif
 #endif
-    return direction; 
+    return direction_ca; 
 }
 
 /*

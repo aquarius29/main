@@ -2,83 +2,61 @@
 * Product: 
 * Version: 
 * Released: April 8 2011
-* Updated: April 27 2011
+* Updated: April 28 2011
 *
 * Copyright (C) 2011 Elnaz Shahmehr
 *
+* 
+*
 * <IT University of Goteborg>
 *****************************************************************************/
-#ifdef PC
+
+ 
+ #ifdef PC
    #include <stdio.h>
-   #include "proto_move.h" 
-   #include "proto_tint.h"
+   #include "proto_move.h"
+#include "proto_tint.h"
 #endif
 /***************************************************************************** 
     Definitions 
 *****************************************************************************/ 
- 
-unsigned int speed = 0; // from Movement to Collision Avoidance; DEFAULT is 0
-unsigned int direction; 
- 
- 
-//write speed from movement to collision avodance  
-void proto_write_speed(int value);// proto API 
- 
- 
-//read speed from movement to collision avodance 
-unsigned int proto_read_speed(void);// proto API 
- 
 
-//write direction from movement to collision avodance  
-void proto_write_direction(int value);// proto API 
- 
- 
-//read direction from movement to collision avodance  
-unsigned int proto_read_direction(void);// proto API 
+#include <stdio.h>
+#include <string.h>
+
+
+struct move move_ca;
+
  
  
 /***************************************************************************** 
     Implementations 
 *****************************************************************************/ 
  
-void proto_write_speed(int value){ 
-    speed = value;
+void proto_write(struct move mv){ 
+    move_ca = mv;
 #ifdef PC
-	storeForTint(WRITE, MOVEMENT, UNKNOWN, speed);
+ storeForTint(WRITE, MOVEMENT, UNKNOWN, mv.speed);
+ storeForTint(WRITE, MOVEMENT, UNKNOWN, mv.direction_move);
 	#ifdef DEBUG
-		printf("Movement value set to: %c\n", speed);
-	#endif
+	printf("Movement value set to: %d , %d\n", mv.speed , mv.direction_move);
+  #endif
 #endif
 } 
  
  
-unsigned int proto_read_speed(void){ 
+struct move proto_read(){ 
 #ifdef PC
-	storeForTint(READ, COLLISION, UNKNOWN, speed);
+  storeForTint(READ, COLLISION, UNKNOWN, move_ca.speed);
+  storeForTint(READ, COLLISION, UNKNOWN, move_ca.direction_move);
 	#ifdef DEBUG
-		printf("Movement value is: %c\n", speed);
-	#endif
+	printf("Movement value set to: %d , %d\n", move_ca.speed , move_ca.direction_move);
+  #endif
 #endif
 
-    return speed; 
+    return move_ca; 
 } 
 
-
-void proto_write_direction(int value){ 
-    direction = value;
-#ifdef PC
-	printf("Movement value set to: %c\n", direction);
-#endif
- 
-} 
- 
- 
-unsigned int proto_read_direction(void){ 
-#ifdef PC
-	printf("Movement value is: %c\n", direction);
-#endif
-    return direction; 
-}
 
 
 
