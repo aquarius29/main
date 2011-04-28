@@ -3,24 +3,6 @@
 #include <math.h>
 #include "mov_interface.h"
 
-void PrintMatrix3x3 (float ar[][3], int row);
-void PrintMatrix3x1 (float ar[][1], int row);
-
-
-void Matrix_3Mult3(float a1[][3], float a2[][3], float a3[][3] );
-void Matrix_3Mult1(float m1[][3], float m2[][1], float answer[][1]);
-
-void rotationMatrix(float roll, float pitch, float yaw, float rotation_matrix[][3]);
-
-void transposeMatrix3x3(float rotation_matrix[][3], float transpose_rotation_matrix[][3]);
-void transposeMatrix3x1(float matrix1[][3],float matrix2[][1]);//tested
-
-void MatrixScale3x1(float s, float matrix[][1],float newMatrix[][1], int row);
-void MatrixScale3x3(float s, float matrix[][3],float newMatrix[][3], int row);
-
-void Matrix_1Add1(float m1[][1], float m2[][1], float answer[][1] );
-void Matrix_1Minus1(float m1[][1], float m2[][1], float answer[][1]);
-
 /* int main(void) */
 /* { */
 /* 	float m1[3][3] = {{4, 3, 1}, */
