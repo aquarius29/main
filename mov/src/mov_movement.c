@@ -266,7 +266,7 @@ float get_quad_angle(float roll, float pitch) {
 
 }
 
-//***************************************************************************************
+//***************************************************************************************//
 
 //Earth Axis
 float linearVelocities[3][1] = { {0},
@@ -296,17 +296,51 @@ float thrust4;
 
 float forceVector[3][1] = {{0},{0},{0}};
 
+float moment_of_inertiaXY;
+float moment_of_inertiaZ;
 
+float  torqueNet  [3][1] = {{0},
+	  			         {0},
+				         {0}};
 
 void  get_linearAccelerations_EarthAxis(){
 
     float forceMass[3][1];
     MatrixScale3x1((1/QUAD_MASS),forceVector,forceMass);
     
-    float gravityQuadro[1][3] = {{-1 * sin(pitch)},  //- sin pitch
+    float gravityQuadro[3][1] = {{-1 * sin(pitch)},  //- sin pitch
 			       {cos(pitch) * sin(roll])}, //cos pitch * sin roll
 			       {cos(pitch) * sin(roll)}} //cos pitch * sin roll
     
     float gForce[3][1];
     MatrixScale3x1(G, gravityQuadro, gForce);
 }
+
+
+void get_torqueNet(){
+
+    /*principal moments of inertia.*/
+    float Mx =momentOfInertia('x');
+    float My = momentOfInertia('y');
+    float Mz = momemntOfInertia('z');
+    
+    
+    float yz = angularVelocities[2][1] * angularVelocities[3][1];
+    float zx = angularVelocities[3][1] * angularVelocities[1][1];
+    float xy = angularVelocities[1][1] * angularVelocities[2][1];
+
+    float  torque1[3][1] = { {Mx * angularAccelerations[1][1]},
+                                 	 {My * angularAccelerations[2][1]} ,
+	                                 {Mz * angularAccelerations[3][1]}};
+
+
+
+    float  torque2[3][1] = { {(Mz - My) * yz},
+		                	 {(Mx - Mz) * zx]} ,
+			                 {(My - Mx) * xy}};
+
+    Matrix_1Add1 (torque1, torque2, torqueNet);
+}
+
+
+
