@@ -306,14 +306,19 @@ float  torqueNet  [3][1] = {{0},
 void  get_linearAccelerations_EarthAxis(){
 
     float forceMass[3][1];
-    MatrixScale3x1((1/QUAD_MASS),forceVector,forceMass);
+    MatrixScale3x1((1/QUAD_MASS),forceVector,forceMass,3);
     
     float gravityQuadro[3][1] = {{-1 * sin(pitch)},  //- sin pitch
+<<<<<<< HEAD
 			       {cos(pitch) * sin(roll])}, //cos pitch * sin roll
 			       {cos(pitch) * sin(roll)}} //cos pitch * sin roll
+=======
+								 {cos(pitch) * sin(roll)}, //cos pitch * sin roll
+								 {cos(pitch) * sin(roll)}}; //cos pitch * sin roll
+>>>>>>> 15dbcf4a5baa0760c660e1ae3f15c41e870c33cf
     
     float gForce[3][1];
-    MatrixScale3x1(G, gravityQuadro, gForce);
+    MatrixScale3x1(G, gravityQuadro, gForce,3 );
 }
 
 
