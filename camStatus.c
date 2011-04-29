@@ -1,8 +1,15 @@
+/*
+*
+*
+*created by Mahdi Abdinejadi, Jon Kristensen
+*
+*
+*/
+
+
 #include <fcntl.h>
 #include <stdio.h>
 
-
-// Authors : Mahdi Abdinejadi, Jon Kristensen
 
 
 // This fuction is for test only
