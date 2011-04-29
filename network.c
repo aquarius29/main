@@ -1,4 +1,11 @@
-/* This file is written by @Shuang Wu and @Yuhan Qiu. */
+/*
+*
+*
+*Created by @Shuang Wu and @Yuhan Qiu.
+*
+*
+*
+*/
 #include<stdlib.h>
 #include<stdio.h>
 #include<errno.h>

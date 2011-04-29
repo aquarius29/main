@@ -1,4 +1,12 @@
-/*Author Abdirashid Jama*/
+/*
+*
+*
+*
+*created by Abdirashid Jama
+*
+*
+*
+*/
 
 #include <stdio.h>      
 #include <sys/socket.h> 
