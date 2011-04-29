@@ -16,23 +16,25 @@
 
 
 struct nav *p = &navCommand;
+FILE *file;
 
 /*
  * 
  */
 int main(int argc, char *argv[]){
    
-	/* start anything that needs to be started ahead of time */
+    /* start anything that needs to be started ahead of time */
     mov_init(); 
 
-    FILE *file;
+    
     file = fopen("input.txt", "r");
-    while (file != NULL) {
-		if (read_command(file) == 0) {
-			printf("**end of the file**\n");
-			break;
-		}
-    }
+
+    /*Movement Loop*/
+	int loop = 0;
+	while(loop == 0)  {
+		loop = mov_run();
+	}
+
     fclose(file);
     return 1;
 }
@@ -41,10 +43,10 @@ int main(int argc, char *argv[]){
 /*
  * 
  */
-int read_command(FILE * file){
+int read_command(){
 
     char line[60];
-
+    if(arrived == 1){
     if (fgets(line, sizeof(line) + 1, file) != NULL) {
 		printf("line is %s", line);
 		int i;
@@ -57,18 +59,18 @@ int read_command(FILE * file){
 			assignValue(i, temp);
 			free(temp);
 		}	
-	
-	/* run the move command here*/
-	int next_command = 0;
-	while(next_command == 0)  {
-		next_command = mov_run();
-	}
 		return 1;
     } 
 	else {
 		return 0;
     }
+	}
+    else {
+	arrived = 0;
+	return 1;
+    }
 }
+
 
 
 /*
@@ -126,3 +128,6 @@ int get_loc(char line[], char c, int indexOfChar){
     }
     return i;
 }
+
+
+  

@@ -7,8 +7,13 @@
  *****************************************************************************/
 #include <stdio.h>
 
+//simulator variables
+int arrived;
+
 
 /*movement*/
+void moveL(void);
+
 struct nav
 {
 	char type;         // (manual/auto)
@@ -18,6 +23,7 @@ struct nav
 	int yaw;
 	int speed;
 };
+
 
 void test(void);  //test only, remove soon
 void parse_naviInfo(void);
@@ -50,11 +56,12 @@ int old_z_desired;
 
 struct nav navCommand;
 
-int read_command(FILE *file);
+int read_command();
 int get_loc(char line[],char c,int indexOfColumn);
 void assignValue(int index,char *temp);
 
 /*stab*/
+void stabL(void);
 int error_calc(int desired, int measured);
 int pid_X(void);
 int pid_Y(void);
@@ -65,10 +72,8 @@ int mov_init();
 int mov_run();
 
 //global time variables
-int start_time;
-int duration;
-
-
+static int start_time;
+ int duration;
 
 
 /*mov_matrix*/

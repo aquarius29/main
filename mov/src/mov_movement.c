@@ -34,6 +34,11 @@ void test(void) {
     printf("==============================\n");
 }
 
+void moveL(){
+	printf("\nmove! ");
+	parse_naviInfo();
+}
+
 
 /*
  * parse the navigation information
@@ -153,6 +158,7 @@ void rotate(float angle) {
  * calcute the moment of inertia 
  */
 float momentOfInertia(char i) {
+
     if (i == 'x') {
 		float lxx=MOTOR_MASS *pow(MOTOR_RADUIS,2)/2+MOTOR_MASS*pow(MOTOR_HEIGHT,2)/6
 			+2*MOTOR_MASS*pow(PROPELLER_RADUIS,2)+QUAD_MASS*pow(QUAD_RADUIS,2)/4
@@ -245,7 +251,6 @@ void move(float height ,float distance, float pitch, float roll) {
     float force_direction = QUAD_MASS * calc_accel(distance,navCommand.speed);
     float fx = cos(get_direction_angle(height ,distance)) * force_direction;
     float ftotal = fx / sin(get_quad_angle(roll, pitch));
-
 }
 
 

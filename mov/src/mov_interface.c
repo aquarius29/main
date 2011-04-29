@@ -78,19 +78,27 @@ int mov_init()
 //************************************************************
 int mov_run()
 {
+
+    //duration since last time we ran
 	if(start_time != 0){
 		duration = clock() / (CLOCKS_PER_SEC / 1000) - start_time;
+		printf("duration: %d", duration);
 	}
 
+	int x = read_command();
+    		if (x == 0) {
+    			printf("**end of the file**\n");
+    		}
+    
 	//stabilize based on last movement 
-  
+	stabL();
+
 	//move
+	moveL();
 
 	start_time =  clock() / (CLOCKS_PER_SEC / 1000);
-  
-	printf("%d", start_time);
-
-	return 1;
+	
+	    return 1;
 }
 #endif
 

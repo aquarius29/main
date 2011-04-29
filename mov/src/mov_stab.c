@@ -35,6 +35,13 @@ int old_error_angleZ2 = 0;
 
 int change_in_time;
 
+
+
+void stabL(void){
+
+printf("stabilzing!");
+}
+
 /*
  * PID system is based on the equation and information on wikipedia: http://en.wikipedia.org/wiki/PID_controller
  */
