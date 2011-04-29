@@ -5,13 +5,14 @@
 */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "movementcommands.h"
 
 /* Create a movement command */
 void sendmovementcommand
-(char type, char order , int height, int distance, int yaw, int pitch , int roll, int speed);
+(char type, char order , int height, int distance, int yaw, int pitch , int roll, int speed)
 {
-	moveCommand *move = malloc(sizeof(movementCommand));
+	movementCommand *move = malloc(sizeof(movementCommand));
 	if (move == NULL)
 	{
 		printf("Memory couldnt be allocated for move command\n");

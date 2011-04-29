@@ -29,13 +29,11 @@ void send_position(point *pos){
 }
 void send_expected_path(position_list *path){
 	//Give corelogic the calculated path.
-	printf("This is the path given by path calc.\nLines should be drawn between" +
-	"each point in list.\n");
+	printf("This is the path given by path calc.\nLines should be drawn between each point in list.\n");
 }
 void send_actual_path(progressive_route *path){
 	//Give corelogic the finalized path after destination reached.
-	printf("This is the path actually taken to until destination reached/" +
-	"nav interrupted.\n");
+	printf("This is the path actually taken to until destination reached/nav interrupted.\n");
 }
 void send_stop(){
 	//Tell corelogic to tell movement to stop (for when we arrive at destination).
