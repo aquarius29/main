@@ -24,12 +24,12 @@
 	Definitions
 *****************************************************************************/
 
-unsigned char nav_to_mov_ca_msg;
-unsigned char mov_ca_msg;
-unsigned char connect_msg;
-unsigned char connect_to_nav_msg;
-unsigned char current_loc;
-unsigned char destination_msg;
+unsigned char nav_to_mov_ca_msg = 0x13;
+unsigned char mov_ca_msg = 0x14;
+unsigned char connect_msg = 0x15;
+unsigned char connect_to_nav_msg = 0x16;
+unsigned char current_loc = 0x17;
+unsigned char destination_msg = 0x18;
 
 
 // Read msg from navigation to Movement and C/A
