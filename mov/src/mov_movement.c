@@ -124,6 +124,7 @@ void hover(void) {
 void land(float height) {
  
     float f;
+
     f = (QUAD_MASS * G - QUAD_MASS * calc_accel(height, navCommand.speed)) / 4;
     //write to motor
 	write_to_motor(f, f, f, f);
@@ -267,110 +268,237 @@ float get_quad_angle(float roll, float pitch) {
 
 }
 
-//***************************************************************************************//
 
-//Earth Axis
-float linearVelocities[3][1] = {{0},
-								 {0},
-			                 	 {0}};
 
-float linearAcceleration[3][1] = {{0},
-				                  {0},
-								  {0}};
 
-//Quadrocopter
-float angularVelocities[3][1] =  {{0},
-								  {0},
-								  {0}};
 
-float angularAccelerations[3][1] =  {{0},
-									 {0},
-									 {0}};
-float roll;
-float yaw;
-float pitch;
 
-float thrust1;
-float thrust2;
-float thrust3;
-float thrust4;
 
-float forceVector[3][1] = {{0},{0},{0}};
 
-float moment_of_inertiaXY;
-float moment_of_inertiaZ;
 
-float  torqueNet  [3][1] = {{0},
-	  			         {0},
-				         {0}};
 
-float momentx;
-float momenty;
-float momentz;
 
-/*principal moments of inertia.*/
-float Mx;
-float My ;
-float Mz;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* float Vx; */
+/* float Vy; */
+/* float Vz; */
+
+/* float turnAngle; */
+
+/* float Ax; */
+/* float Ay; */
+/* float Az; */
+
+/* float linearVelocities[3][1]={{Vx},{Vy},{Vz}}; */
+/* float linearAccelerations[3][1]={{Ax},{Ay},{Az}}; */
+
+
+/* void get_linearVelocity(float height, float distance){ */
+/* 	float speed=navCommand.speed; */
+/* 	Vz=get_direction_angle(height, distance)*speed; */
+/* 	Vy=sqrt(pow(speed,2)-pow(Vz,2))*cos(turnAngle); */
+/* 	Vx=sqrt(pow(speed,2)-pow(Vz,2))*sin(turnAngle); */
+/* } */
+
+/* void get_linearAcceleration(float height, float distance){ */
+/* 	float acc=calc_accel(distance,navCommand,speed); */
+/* 	Az=get_direction_angle(height, distance)*acc; */
+/* 	Ay=sqrt(pow(acc,2)-pow(Az,2))*cos(turnAngle); */
+/* 	Ax=sqrt(pow(acc,2)-pow(Az,2))*sin(turnAngle); */
+/* } */
+
+/* float q0,q1,q2,q3; */
+/* float roll, pitch, yaw; */
+/* void get_quaternion(){ */
+/* 	float temp1=cos(roll/2)*cos(pitch/2)*cos(yaw/2); */
+/* 	float temp2=sin(roll/2)*sin(pitch/2)*sin(yaw/2); */
+
+/* 	float temp3=cos(yaw/2)*sin(pitch/2)*cos(roll/2); */
+/* 	float temp4=sin(yaw/2)*cos(pitch/2)*sin(roll/2); */
+/* 	float temp5=sin(yaw/2)*cos(pitch/2)*cos(roll/2); */
+/* 	float temp6=cos(yaw/2)*sin(pitch/2)*sin(roll/2); */
+/* 	q0=temp1+temp2; */
+/* 	q1=temp1-temp2; */
+/* 	q3=temp3+temp4; */
+/* 	q4=temp5-temp6; */
+/* } */
+
+/* void get_pictch_roll_yaw(){ */
+
+/* 	roll=atan(2*(q2*q3+q0*q1)/(pow(q0,2)-pow(q1,2)-pow(q2,2)-pow(q3,2))); */
+/* 	pitch=asin(-1*(q1*q3-q0*q2)); */
+/* 	yaw=atan(2*(q2*q3+q0*q1)/(pow(q0,2)+pow(q1,2)-pow(q2,2)-pow(q3,2))); */
+
+
+/* } */
+
+
+
+
+/* //\***************************************************************************************\// */
+
+/* //Earth Axis */
+/* float linearVelocities[3][1] = {{0}, */
+/* 								 {0}, */
+/* 			                 	 {0}}; */
+
+/* float linearAcceleration[3][1] = {{0}, */
+/* 				                  {0}, */
+/* 								  {0}}; */
+
+/* //Quadrocopter */
+/* float angularVelocities[3][1] =  {{0}, */
+/* 								  {0}, */
+/* 								  {0}}; */
+
+/* float angularAccelerations[3][1] =  {{0}, */
+/* 									 {0}, */
+/* 									 {0}}; */
+/* float roll; */
+/* float yaw; */
+/* float pitch; */
+
+/* float thrust1; */
+/* float thrust2; */
+/* float thrust3; */
+/* float thrust4; */
+
+/* float forceVector[3][1] = {{0},{0},{0}}; */
+
+/* float moment_of_inertiaXY; */
+/* float moment_of_inertiaZ; */
+
+/* float  torqueNet  [3][1] = {{0}, */
+/* 	  			         {0}, */
+/* 				         {0}}; */
+
+/* float momentx; */
+/* float momenty; */
+/* float momentz; */
+
+/* /\*principal moments of inertia.*\/ */
+/* float Mx; */
+/* float My ; */
+/* float Mz; */
     
-float yz;
-float zx ;
-float xy;
+/* float yz; */
+/* float zx ; */
+/* float xy; */
   
 
-void  get_linearAccelerations_EarthAxis(){
+/* void  get_linearAccelerations_EarthAxis(){ */
 
-    float forceMass[3][1];
-    MatrixScale3x1((1/QUAD_MASS),forceVector,forceMass,3);
+/*     float forceMass[3][1]; */
+/*     MatrixScale3x1((1/QUAD_MASS),forceVector,forceMass,3); */
     
-    float gravityQuadro[3][1] = {{-1 * sin(pitch)},  //- sin pitch
-								 {cos(pitch) * sin(roll)}, //cos pitch * sin roll
-								 {cos(pitch) * sin(roll)}}; //cos pitch * sin roll
+/*     float gravityQuadro[3][1] = {{-1 * sin(pitch)},  //- sin pitch */
+/* 								 {cos(pitch) * sin(roll)}, //cos pitch * sin roll */
+/* 								 {cos(pitch) * sin(roll)}}; //cos pitch * sin roll */
     
-    float gForce[3][1];
-    MatrixScale3x1(G, gravityQuadro, gForce,3 );
-}
+/*     float gForce[3][1]; */
+/*     MatrixScale3x1(G, gravityQuadro, gForce,3 ); */
+/* } */
 
 
-void get_torqueNet(){
-	float Mx =momentOfInertia('x');
-	float My = momentOfInertia('y');
-	float Mz = momentOfInertia('z');
-	float yz = angularVelocities[2][1] * angularVelocities[3][1];
-	float zx = angularVelocities[3][1] * angularVelocities[1][1];
-	float xy = angularVelocities[1][1] * angularVelocities[2][1];
+/* void get_torqueNet(){ */
+/* 	float Mx =momentOfInertia('x'); */
+/* 	float My = momentOfInertia('y'); */
+/* 	float Mz = momentOfInertia('z'); */
+/* 	float yz = angularVelocities[2][1] * angularVelocities[3][1]; */
+/* 	float zx = angularVelocities[3][1] * angularVelocities[1][1]; */
+/* 	float xy = angularVelocities[1][1] * angularVelocities[2][1]; */
 
     
 
-    float  torque1[3][1] = { {Mx * angularAccelerations[1][1]},
-							 {My * angularAccelerations[2][1]} ,
-							 {Mz * angularAccelerations[3][1]}};
+/*     float  torque1[3][1] = { {Mx * angularAccelerations[1][1]}, */
+/* 							 {My * angularAccelerations[2][1]} , */
+/* 							 {Mz * angularAccelerations[3][1]}}; */
 
-    float  torque2[3][1] = { {(Mz - My) * yz},
-		                	 {(Mx - Mz) * zx},
-			                 {(My - Mx) * xy}};
+/*     float  torque2[3][1] = { {(Mz - My) * yz}, */
+/* 		                	 {(Mx - Mz) * zx}, */
+/* 			                 {(My - Mx) * xy}}; */
 
-    Matrix_1Add1 (torque1, torque2, torqueNet);
-}
+/*     Matrix_1Add1 (torque1, torque2, torqueNet); */
+/* } */
 
 
-void calc_moments(){
-	float temp[3][1]={{(Mz - My) * yz/Mx},
-					  {(Mx - Mz) * zx/My},
-					  {(My - Mx) * xy/Mz}};
-	float temp2[3][1];
-	Matrix_1Add1(temp,angularAccelerations, temp2);
+/* void calc_moments(){ */
+/* 	float temp[3][1]={{(Mz - My) * yz/Mx}, */
+/* 					  {(Mx - Mz) * zx/My}, */
+/* 					  {(My - Mx) * xy/Mz}}; */
+/* 	float temp2[3][1]; */
+/* 	Matrix_1Add1(temp,angularAccelerations, temp2); */
 
-	/* momentx=(thrust4-thrust2)*QUAD_RADUIS; */
-	/* momenty=(thrust1-thrust3)*QUAD_RADUIS; */
-	/* momentz=(thrust1+thrust3-thrust2-thrust4)*KTM; */
+/* 	/\* momentx=(thrust4-thrust2)*QUAD_RADUIS; *\/ */
+/* 	/\* momenty=(thrust1-thrust3)*QUAD_RADUIS; *\/ */
+/* 	/\* momentz=(thrust1+thrust3-thrust2-thrust4)*KTM; *\/ */
 
-	/* momentx=temp2[0][0]*Mx; */
-	/* momenty=temp2[1][0]*My; */
-	/* momentz=temp2[2][0]*Mz; */
+/* 	/\* momentx=temp2[0][0]*Mx; *\/ */
+/* 	/\* momenty=temp2[1][0]*My; *\/ */
+/* 	/\* momentz=temp2[2][0]*Mz; *\/ */
 
-	/* thrust2=thrust4-temp2[0][0]*Mx/QUAD_RADUIS; */
-	/* thrust3=thrust1-temp2[1][0]*My/QUAD_RADUIS; */
-	/* thrust1-thrust4=( temp2[2][0]*Mz/KTM+temp2[1][0]*My/QUAD_RADUIS-temp2[0][0]*Mx/QUAD_RADUIS)/2; */
-}
+/* 	/\* thrust2=thrust4-temp2[0][0]*Mx/QUAD_RADUIS; *\/ */
+/* 	/\* thrust3=thrust1-temp2[1][0]*My/QUAD_RADUIS; *\/ */
+/* 	/\* thrust1-thrust4=( temp2[2][0]*Mz/KTM+temp2[1][0]*My/QUAD_RADUIS-temp2[0][0]*Mx/QUAD_RADUIS)/2; *\/ */
+/* } */
+
 
