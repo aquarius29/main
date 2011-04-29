@@ -11,8 +11,8 @@
 /*movement*/
 struct nav
 {
-	char type; // (manual/auto)
-	char order; //(lift off/ hovering/ moving/ land)
+	char type;         // (manual/auto)
+	char order;       //(lift off/ hovering/ moving/ land)
 	int height;
 	int distance;
 	int yaw;
@@ -20,20 +20,26 @@ struct nav
 };
 
 void test(void);  //test only, remove soon
-
 void parse_naviInfo(void);
 void parse_auto_order(void);
 void parse_manual_order(float distance, float height);
+
 void lift_off(float height);
 void hover(void);
 void land(float height);
+
+
 float assign_time(float distance,float speed);
 float calc_accel(float distance,float speed);
+float calc_pitch_roll(float height, float distance);
+
+
 float normalize_angle(float angle);
 float get_direction_angle(float height, float distance);
 float get_quad_angle(float roll, float pitch);
+
+
 float momentOfInertia(char i);
-float calc_pitch_roll(float height, float distance);
 void move(float height ,float distance, float pitch, float roll);
 void write_to_motor(float f1, float f2, float f3, float f4);
 
