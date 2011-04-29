@@ -84,7 +84,9 @@ void sendto_CONNECTIVITY(unsigned char data){
 #else
 
 void rec(){
-
+ 	 #ifdef PC
+	printf("motor msg value set to: %c\n", data );
+     #endif
  //read from serial  m      
 }
 
