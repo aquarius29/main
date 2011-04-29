@@ -15,19 +15,25 @@ static int count, running;
 static position_list route;
 static progressive_route current;
 
-void send_direction(double *angle){
+void send_direction(double *angle) {
 	//Give angle to core logic, so it can tell movement
 	//which way we need to move.
-	printf("Move at angle %.5f\n", *angle);
+	//N 90 E 180 S -90 W -180
+	if(*angle > 0) {
+		printf("Move at angle %.5f\n", -(*angle/ (M_PI/180)));
+	}
+	else {
+		printf("Move at angle %.5f\n", *angle / (M_PI/180) + 180);
+	}
 }
-void send_distance(double *distance){
+void send_distance(double *distance) {
 	//Send distance between two coords to corelogic
 	printf("Go for %.5f cm.\n", *distance);
 }
 void send_position(point *pos){
 	printf("Longitude = %f\nLatitude = %f\n", pos->lon, pos->lat);
 }
-void send_expected_path(position_list *path){
+void send_expected_path(position_list *path) {
 	//Give corelogic the calculated path.
 	printf("This is the path given by path calc.\nLines should be drawn between each point in list.\n");
 }
