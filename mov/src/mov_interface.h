@@ -7,6 +7,9 @@
  *****************************************************************************/
 #include <stdio.h>
 
+//simulator variables
+int arrived;
+
 
 /*movement*/
 void moveL(void);
@@ -64,9 +67,7 @@ int mov_run();
 
 //global time variables
 static int start_time;
-static int duration;
-
-
+ int duration;
 
 
 /*mov_matrix*/

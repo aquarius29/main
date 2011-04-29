@@ -35,8 +35,8 @@ void test(void) {
 }
 
 void moveL(){
-	printf("I move!");
-	write_to_motor(1,2,3,4);
+	printf("\nmove! ");
+	parse_naviInfo();
 }
 
 

@@ -85,8 +85,11 @@ int mov_run()
 		printf("duration: %d", duration);
 	}
 
-	read_command();
-
+	int x = read_command();
+    		if (x == 0) {
+    			printf("**end of the file**\n");
+    		}
+    
 	//stabilize based on last movement 
 	stabL();
 
@@ -95,7 +98,7 @@ int mov_run()
 
 	start_time =  clock() / (CLOCKS_PER_SEC / 1000);
 	
-	return 0;
+	    return 1;
 }
 #endif
 
