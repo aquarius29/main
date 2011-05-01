@@ -11,7 +11,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "movement.h"
+#include "mov_interface.h"
 
 
 // BitMasking example http://www.indiabix.com/technical/c/bits-and-bytes/
@@ -22,8 +22,6 @@
 #define WEIGHT 5
 #define G 9.81
 #define INCREMENT 5
-
-///////struct control_message motor_msg;
 
 
 //Movement Command received from CA or Navigation

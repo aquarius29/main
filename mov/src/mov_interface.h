@@ -7,6 +7,15 @@
  *****************************************************************************/
 #include <stdio.h>
 
+
+/**************************NEW*/
+
+//mov_logic.c
+char to_MotorMessage(char ID0, char ID1, char increasing, char panicMode, char motor1,char motor2, char motor3, char motor4)
+
+
+
+/*******************
 //simulator variables
 int arrived;
 
