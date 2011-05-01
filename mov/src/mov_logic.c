@@ -23,17 +23,24 @@
 #define G 9.81
 #define INCREMENT 5
 
+int isHovering = 1;
+
 ///////struct control_message motor_msg;
 
-
-//Movement Command received from CA or Navigation
-struct MoveCommand 
-{
-  char order;
-  int  height;
-  int direction;
-};
-
+/* 
+ * Print out the data from the navigation
+ * For testing purpose only
+ */
+void test(void) {
+    printf("==============================\n");
+    printf("Type = %c\n", navCommand.type);
+    printf("Order = %c\n", navCommand.order);
+    printf("Height = %d\n", navCommand.height);
+    printf("Distance = %d\n", navCommand.distance);
+    printf("Yaw = %d\n", navCommand.yaw);
+    printf("Speed = %d\n", navCommand.speed);
+    printf("==============================\n");
+}
 
 //************************************************************
 // 
@@ -56,79 +63,50 @@ void stop_motors()
   pWrite(msg);
 }
 
+//check the drone height
+void check_height(void){
+	int height_desire =navCommand.height;
+	int height_current =sensor.height;
 
-//************************************************************
-//stay_hover_nr
-//
-//number of times to send lift up message to get the drone stay hover
-//************************************************************
-int stay_hover_nr(){
-  int n;
-  n = WEIGHT*G/4/INCREMENT;
-  return n;
+	if(height_desire > height_current){	
+		hover();	
+		//increase all motors
+	}
+	else if(height_desire<height_current){
+		hover();
+		//decrease all motors
+	}
+	else{
+		hover();
+	}
 }
 
+void check_heading(void){
 
-//************************************************************
-//lift_up 
-//
-//lift up and hover in a certain height
-//************************************************************
-void lift_up(int n, int up_level){
-  int i=n+up_level;
-  while(i>0){
-    char msg= to_AffectedMotorBinary(1,1,1,1);
-    msg=to_MotorMessage(0,0,msg);
-    pWrite(msg);
-    i--;
-  }
-  while (up_level>0){
-    char msg= to_AffectedMotorBinary(0,0,0,0);
-    msg=to_MotorMessage(0,0,msg);
-    pWrite(msg);
-    up_level--;
-  }
+
+	int heading_desire=navCommand.yaw;
+	int heading_current=sensor.yaw;
+
+	if(heading_desire-heading_current>0){
+		//rotate right
+	}
+	else if(heading_desire-heading_current<0){
+		//rotate left
+	}
+	else{
+		hover();
+	}
 }
 
-//************************************************************
-//go_down
-//
-//going down and hover in a certain height
-//************************************************************
+void check_pitch_roll(void){
 
-void go_down(int n, int down_level){
-  if(down_level<n){
-    int i=down_level;
+	int pitch_current=sensor.pitch;
+	int roll_current=sensor.roll;
+	if()
 
-    while(down_level>0){
-      char msg= to_AffectedMotorBinary(0,0,0,0);
-      msg=to_MotorMessage(0,0,msg);
-      pWrite(msg);
-      down_level--;
-    }
-    while(i>0){
-      char msg= to_AffectedMotorBinary(1,1,1,1);
-      msg=to_MotorMessage(0,0,msg);
-      pWrite(msg);
-      i--;
-    }
-  }
+
+
 }
-
-
-
-
-//************************************************************
-//land
-//
-//************************************************************
-void land(){
-  char msg= to_AffectedMotorBinary(0,0,0,0);
-  msg=to_MotorMessage(0,0,msg);
-  pWrite(msg);
-}
-
-
 
 //************************************************************
 //
