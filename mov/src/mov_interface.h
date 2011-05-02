@@ -52,6 +52,9 @@ int speed;
 int distanceToTravel;
 int distanceTraveled;
 
+int yawArrived;
+int heightArrived;
+
 void updateDistanceToTravel(void);
 
 
