@@ -124,34 +124,34 @@ void *startgpswatchdog(void *ptr)
 	gpsNavigationThreadResult = 
 	pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
 	
-	while (gpsRunning == 1)
-	{
+	//while (gpsRunning == 1)
+	//{
 		// if (pthread_kill(manualCommandThread, 0) != 0)
 		// 	{
 		// 		printf("Manual Command Thread was murdered\nRessurecting....\n");
 		// 		manualCommandThreadResult = pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
 		// 	}
-		if (pthread_kill(gpsSetupThread, 0) != 0)
-		{
-			int cancelResult;
-			
-			cancelResult = pthread_cancel( gpsNavigationThread );
-			printf("cancel result is %d\n", cancelResult);
-			while(cancelResult != 0)
-			{
-				//printf(".....");
-				cancelResult = pthread_cancel( gpsNavigationThread );
-			}
+		// if (pthread_kill(gpsSetupThread, 0) != 0)
+		// 		{
+		// 			int cancelResult;
+		// 			
+		// 			cancelResult = pthread_cancel( gpsNavigationThread );
+		// 			printf("cancel result is %d\n", cancelResult);
+		// 			while(cancelResult != 0)
+		// 			{
+		// 				//printf(".....");
+		// 				cancelResult = pthread_cancel( gpsNavigationThread );
+		// 			}
 			// /* Create new thread for gps setup*/
 			// 		printf("GPS Setup Thread died a horrible death\nRessurecting....\n");
 			// 		gpsSetupThreadResult = pthread_create(&gpsSetupThread, NULL, setupgps, (void*) message2);
-		}
+	//	}
 		// if (pthread_kill(gpsNavigationThread, 0) == 0)
 		// 		{
 		// 			printf("GPS Navigation Thread was digitally destroyed\nReconstructing....\n");
 		// 			gpsNavigationThreadResult = pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
 		// 		}
-	}
+//	}
 	
 	/* wait for the threads to finish */
 	pthread_join(manualCommandThread, NULL); 
@@ -164,34 +164,44 @@ void *setupgps(void *ptr)
 	char *message;
     message = (char *) ptr;
     printf("%s\n", message);
+	
+	int data = get_goodData();
 
-	int result;
+	while(data != 1)
+	{
+		data = get_goodData;
+	}
+	
+	if (data ==  1)
+	{
+		int result;
 
-	result = pthread_mutex_lock( &watchdogMutex);
-	if (result != 0)
-		printf("error locking pthread mutex\n");
-	
-	waitingForGpsSetupThread = 0;
-	
-	result = pthread_mutex_unlock( &watchdogMutex );
-	if (result != 0)
-	printf("error unlocking pthread mutex\n");
-	
-	result = pthread_cond_signal(&watchdogCond); /* Wake watchdog */
-	if (result != 0)
-	printf("error with conditional signal\n");
-	
-	 setup_gps(UNO,57600);
-	
-	result = pthread_mutex_lock( &gpsRunningMutex );
-	if (result != 0)
-		printf("error locking pthread mutex\n");
-			
-	gpsRunning = 0;
-			
-		result = pthread_mutex_unlock(&gpsRunningMutex );
-	if (result != 0)
+		result = pthread_mutex_lock( &watchdogMutex);
+		if (result != 0)
+			printf("error locking pthread mutex\n");
+
+		waitingForGpsSetupThread = 0;
+
+		result = pthread_mutex_unlock( &watchdogMutex );
+		if (result != 0)
 		printf("error unlocking pthread mutex\n");
+
+		result = pthread_cond_signal(&watchdogCond); /* Wake watchdog */
+		if (result != 0)
+		printf("error with conditional signal\n");
+
+		 setup_gps(UNO,57600);
+
+		// result = pthread_mutex_lock( &gpsRunningMutex );
+		// if (result != 0)
+		// 	printf("error locking pthread mutex\n");
+		// 		
+		// gpsRunning = 0;
+		// 		
+		// 	result = pthread_mutex_unlock(&gpsRunningMutex );
+		// if (result != 0)
+		// 	printf("error unlocking pthread mutex\n");	
+	}
 }
 
 void *setupgpsnavigation(void *ptr)
