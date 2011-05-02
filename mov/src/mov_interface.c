@@ -89,18 +89,18 @@ int mov_run()
 	}
 	else
 	    {
-		duration = 0;
+			duration = 0;
 	    }
 
 	if(distanceToTravel <= 0)
 	    {
-	int x = read_command();
+			int x = read_command();
     		if (x == 0) {
     			printf("**end of the file**\n");
-			return 1;
+				return 1;
     		}
-		else
-		    moveL(); //move
+			else
+				moveL(); //move
 	    }
 
 	printOrientation();
@@ -109,7 +109,7 @@ int mov_run()
 	stabL();
 
 	start_time =  clock() / (CLOCKS_PER_SEC / 1000);
-	    return 0;
+	return 0;
 }
 #endif
 
