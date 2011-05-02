@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Product: mov_header.h
+ * Product: mov_interface.h
  * Version: 0.1
  * Created: April 4 2011
  *

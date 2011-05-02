@@ -92,7 +92,6 @@ int pid_Y(void)
 int desired_angleY = old_y_desired;
 int errorY = error_calc(desired_angleY, measured_angleY);
 
-
  int y = old_angleY + gain(errorY,old_error_angleY) + integral(errorY) + derivative(gain(errorY,old_error_angleY),errorY,old_error_angleY, old_error_angleY2);
 
  old_error_angleY = errorY;

@@ -15,7 +15,7 @@
 
 
 // BitMasking example http://www.indiabix.com/technical/c/bits-and-bytes/
-#define BIT_POS(N)            ( 1U << (N) )
+#define BIT_POS(N)              ( 1U << (N) )
 #define SET_FLAG(N, F)        ( (N) |= (F) )
 #define CLR_FLAG(N, F)        ( (N) &= -(F) )
 
