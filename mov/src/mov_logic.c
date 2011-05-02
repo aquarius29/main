@@ -37,6 +37,73 @@ void testNavCommand(void) {
     printf("==============================\n");
 }
 
+void moveL(){
+	printf("\nmove! ");
+	parse_naviInfo();
+}
+
+
+/*
+ * parse the navigation information
+ */
+void parse_naviInfo(void) {
+    if (navCommand.type == 0){
+		//auto mode 
+		parse_auto_order();
+	}
+	else{
+		//manual mode
+		float distanceToTravel =100; //guess a distance?
+		float height= 100;//guess a height?
+		parse_manual_order(distanceToTravel,height);
+	}
+}
+
+
+/*
+ * parse the order when it's the auto mode
+ */
+void parse_auto_order(void) {
+
+    char order = navCommand.order;
+    float speed = navCommand.speed;
+    distanceToTravel = 100;
+
+    /* if (order == 0) { */
+    /* 		lift_off(navCommand.height); */
+    /* } else if (order == 1) { */
+    /* 		hover(); */
+    /* } else if (order == 2) { */
+    /* 		float angle= calc_pitch_roll(navCommand.height, navCommand.distance); */
+    /* 		move(navCommand.height, navCommand.distance, angle, angle); */
+    /* } else { */
+    /* 		float height = 1;//read sensor data, remember to change */
+    /* 	    land(height); */
+    /* } */
+}
+
+/*
+ * parse the order when it's the manual mode
+ */
+void parse_manual_order(float distance, float height) {
+
+    char order = navCommand.order;
+    distanceToTravel = 100;
+    
+    /* if (order == 0) { */
+    /* 		lift_off(height); */
+    /* } else if (order == 1) { */
+    /* 		hover(); */
+    /* } else if (order == 2) { */
+    /* 		float angle = calc_pitch_roll(height, distance); */
+    /* 		move(height,distance, angle, angle); */
+    /* } else { */
+    /* 		float height = 1;//read sensor data, remember to change */
+    /* 	    land(height); */
+    /* } */
+}
+
+
 /* 
  * 01 00 00 00
  */
@@ -414,4 +481,28 @@ void print_char_to_Binary(char bin)
 	printf("\n");
 }
 
+int pRead_speed(){
+    return 10; 
+}
+
 //************End of Testing methods
+
+void get_speed(void){
+
+   speed = pRead_speed();
+}
+
+void get_distance_travelled(void){
+
+   get_speed();
+   distanceTraveled = speed * (duration/1000);
+  printf("\n \n \n TRAVELED %d", distanceTraveled);
+}
+
+void updateDistanceToTravel(void){
+
+    get_distance_travelled();
+    distanceToTravel = distanceToTravel - distanceTraveled ;
+}
+
+

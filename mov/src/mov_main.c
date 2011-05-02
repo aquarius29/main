@@ -22,7 +22,8 @@ FILE *file;
  * 
  */
 int main(int argc, char *argv[]){
-   
+
+
     /* start anything that needs to be started ahead of time */
     mov_init(); 
 
@@ -46,7 +47,6 @@ int main(int argc, char *argv[]){
 int read_command(){
 
     char line[60];
-    if(arrived == 1){
     if (fgets(line, sizeof(line) + 1, file) != NULL) {
 		printf("line is %s", line);
 		int i;
@@ -60,16 +60,12 @@ int read_command(){
 			free(temp);
 		}	
 		return 1;
-    } 
+    }
 	else {
 		return 0;
     }
-	}
-    else {
-	arrived = 0;
-	return 1;
-    }
 }
+
 
 
 

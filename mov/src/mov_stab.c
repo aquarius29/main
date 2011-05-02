@@ -39,7 +39,7 @@ int change_in_time;
 
 void stabL(void){
 
-printf("stabilzing!");
+    printf("stab!");
 }
 
 /*
