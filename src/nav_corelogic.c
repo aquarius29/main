@@ -54,7 +54,8 @@ void nav_run_gps_system()
 	printf("Initiating GPS System\n");
 	
 	gpsRunning = 1;
-	
+	ON_OFF = 1;
+    
 	/* Create watchdog thread to monitor multithreading*/
 	int gpsWatchdogThreadResult;
 	char *watchDogMessage = "Forcing watchdog into slave labour\n";
