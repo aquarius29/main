@@ -43,7 +43,7 @@ int mov_run()
 {
 	if(start_time != 0){
 		duration = millis() - start_time;
-}
+	}
   
 	//stabilize based on last movement 
   
@@ -80,35 +80,39 @@ int mov_init()
 int mov_run()
 {
 
-    //duration since last time we ran
-	if(start_time != 0){
-	    duration =  clock() / (CLOCKS_PER_SEC / 1000) - start_time;
-	    updateDistanceToTravel();
-	    printf("duration: %d", duration);
-	    printf("\n \n \n distance to travel  %d", distanceToTravel);
-	}
-	else
-	    {
-			duration = 0;
-	    }
+    /* //duration since last time we ran */
+    /* 	if(start_time != 0){ */
+    /* 	    duration =  clock() / (CLOCKS_PER_SEC / 1000) - start_time; */
+    /* 	    updateDistanceToTravel(); */
+    /* 	    printf("duration: %d", duration); */
+    /* 	    printf("\n \n \n distance to travel  %d", distanceToTravel); */
+    /* 	} */
+    /* 	else */
+    /* 	    { */
+    /* 		duration = 0; */
+    /* 	    } */
 
-	if(distanceToTravel <= 0)
+
+	/*If the distanceToTravel is less than or equal to 0, we have probably arrived**/
+	if(distanceToTravel <= 0 && heightArrived == 1 && yawArrived == 1)
 	    {
 			int x = read_command();
-    		if (x == 0) {
-    			printf("**end of the file**\n");
+			if (x == 0) {  /***check if there is a valid command***/
+				printf("**end of the file**\n");
 				return 1;
     		}
-			else
-				moveL(); //move
 	    }
-
+	
 	printOrientation();
+	
+	command_logic();
 
 	//stabilize based on last movement 
 	stabL();
 
-	start_time =  clock() / (CLOCKS_PER_SEC / 1000);
+
+	/* start_time =  clock() / (CLOCKS_PER_SEC / 1000); */
+	duration = 10;
 	return 0;
 }
 #endif

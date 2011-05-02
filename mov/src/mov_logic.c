@@ -38,10 +38,8 @@ void testNavCommand(void) {
     printf("==============================\n");
 }
 
-
-
 /*
- * parse the navigation information
+ * 
  */
 void command_logic(void) {
     char order = navCommand.order;
@@ -60,7 +58,6 @@ void command_logic(void) {
 		land();  	
     }
 }
-
 
 
 /* 
@@ -89,9 +86,7 @@ void stop_motors(void)
  */
 void increase_rear_motor(void){
 
-    /* simulated */
-    sensorCommand.pitch = readSensorTest(sensorCommand.pitch, 'i');
-
+ 
 	char msg = to_MotorMessage(1,0,1,0,0,0,0,1);
 	printf ("increase rear motor");
 	pWrite(msg);
@@ -176,10 +171,12 @@ void decrease_right_motor(void){
  *  11 10 00 11
  */
 void increase_rear_decrease_front(void){
-
-	char msg = to_MotorMessage(1,1,1,0,0,0,1,1);
-	printf ("increase rear decrease front");
-	pWrite(msg);
+    /* simulated */
+    sensorCommand.roll = readSensorTest(sensorCommand.roll, 'i');
+   
+    char msg = to_MotorMessage(1,1,1,0,0,0,1,1);
+    printf ("increase rear decrease front");
+    pWrite(msg);
 }
 
 
@@ -187,9 +184,12 @@ void increase_rear_decrease_front(void){
  *  11 00 00 11
  */
 void increase_front_decrease_rear(void){
-	char msg = to_MotorMessage(1,1,0,0,0,0,1,1);
-	printf ("increase front decrease rear");
-	pWrite(msg);
+    /* simulated */
+    sensorCommand.roll = readSensorTest(sensorCommand.roll, 'd');
+   
+    char msg = to_MotorMessage(1,1,0,0,0,0,1,1);
+    printf ("increase front decrease rear");
+    pWrite(msg);
 
 }
 
@@ -197,19 +197,24 @@ void increase_front_decrease_rear(void){
  *  11 10 11 00
  */
 void increase_left_decrease_right(void){
-	char msg = to_MotorMessage(1,1,1,0,1,1,0,0);
-	printf ("increase left decrease right");
-	pWrite(msg);
+    /* simulated */
+    sensorCommand.pitch = readSensorTest(sensorCommand.pitch, 'd');
+   
+    char msg = to_MotorMessage(1,1,1,0,1,1,0,0);
+    printf ("increase left decrease right");
+    pWrite(msg);
 }
 
 /*
  *  11 00 11 00
  */
 void increase_right_decrease_left(void){
+    /* simulated */
+    sensorCommand.pitch = readSensorTest(sensorCommand.pitch, 'i');
 
-	char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
-	printf ("increase right decrease left");
-	pWrite(msg);
+    char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
+    printf ("increase right decrease left");
+    pWrite(msg);
 }
 
 /*
@@ -319,36 +324,38 @@ void land(void){
 //check the drone height
 void check_height(void)
 {
-	int height_desire =navCommand.height;
-	int height_current =sensorCommand.height;
+    int height_desire =navCommand.height;
+    int height_current =sensorCommand.height;
 
-	if(height_desire > height_current+BUFF_DISTSNCE){	
-		hover();	
-		increase_all();
-	}
-	else if(height_desire<height_current-BUFF_DISTSNCE){
-		hover();
-		decrease_all();
-	}
-	else{
-		//great
-	}
+    if(height_desire > height_current+BUFF_DISTSNCE){	
+	hover();	
+	increase_all();
+    }
+    else if(height_desire<height_current-BUFF_DISTSNCE){
+	hover();
+	decrease_all();
+    }
+    else{
+	heightArrived = 1;
+	//great
+    }
 }
 
 void check_heading(void)
 {
-	int heading_desire=navCommand.yaw;
-	int heading_current=sensorCommand.yaw;
+    int heading_desire=navCommand.yaw;
+    int heading_current=sensorCommand.yaw;
 
-	if(heading_desire>heading_current+BUFF_YAW){
-		turn_right();
-	}
-	else if(heading_desire<heading_current-BUFF_YAW){
-		turn_left();
-	}
-	else{
-		//great
-	}
+    if(heading_desire>heading_current+BUFF_YAW){
+	turn_right();
+    }
+    else if(heading_desire<heading_current-BUFF_YAW){
+	turn_left();
+    }
+    else{
+	//great
+	yawArrived = 1;
+    }
 }
 
 void check_pitch_roll(int isHovering) {
@@ -456,7 +463,7 @@ void print_char_to_Binary(char bin)
 }
 
 int pRead_speed(){
-    return 2; 
+    return 5; 
 }
 
 int readSensorTest(int currentSensor, char command){
@@ -499,9 +506,7 @@ void get_distance_travelled(void){
 }
 
 void updateDistanceToTravel(void){
-
+    
     get_distance_travelled();
     distanceToTravel = distanceToTravel - distanceTraveled ;
 }
-
-
