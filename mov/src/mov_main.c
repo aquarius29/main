@@ -50,7 +50,7 @@ int read_command(){
     if (fgets(line, sizeof(line) + 1, file) != NULL) {
 		printf("line is %s", line);
 		int i;
-		for (i = 1; i < 7; i++) {
+		for (i = 1; i < 6; i++) {
 			int start = get_loc(line, ':', i);
 			int end = get_loc(line, ' ', i);
 			int length = end - start;
@@ -95,10 +95,6 @@ void assignValue(int index, char *temp){
 		p->yaw = atoi(temp);
 		printf("Yaw is %d\n", navCommand.yaw);
 		break;
-    case 6:
-		p->speed = atoi(temp);
-		printf("Speed is %d\n", navCommand.speed);
-		break;
     default:
 		printf("Don't give me invalid value\n");
 		break;
@@ -110,7 +106,7 @@ void assignValue(int index, char *temp){
 /*
  * 
  */
-//TYPE: 0 ORDER: 2 HEIGHT: 5 DISTANCE: 0 YAW: 0 SPEED:25
+//TYPE: 0 ORDER: 2 HEIGHT: 5 DISTANCE: 0 YAW: 0
 //0123456789012345678901234
 int get_loc(char line[], char c, int indexOfChar){
     int i = 0;
