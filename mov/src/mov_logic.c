@@ -120,6 +120,7 @@ void start_motors(void)
  */
 void stop_motors(void)
 {
+
 	char msg = to_MotorMessage(0,0,0,0,0,0,0,0);
 	printf ("stop motors");
 	pWrite(msg);
@@ -246,7 +247,7 @@ void increase_left_decrease_right(void){
 /*
  *  11 00 11 00
  */
-void incease_right_decrease_left(void){
+void increase_right_decrease_left(void){
 
 	char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
 	printf ("increase right decrease left");
@@ -319,26 +320,32 @@ void strafe_right(void)
  *  11 10 11 00
  */
 void turn_left(void){
-	char msg = to_MotorMessage(1,1,1,0,1,1,0,0);
-	printf ("turn left");
-	pWrite(msg);
+    
+      /* simulated */
+    sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'i');
 
+    char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
+    printf ("turn left");
+    pWrite(msg);
 }
 
 /*
  *  11 00 11 00
  */
-void turn_right(void){
-	char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
-	printf ("turn right");
-	pWrite(msg);
+void turn_right(void)
+{
+     /* simulated */
+    sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'd');
 
-
+    char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
+    printf ("turn right");
+    pWrite(msg);
 }
 
 /*
  *  11 11 11 11
  */
+
 void hover(void)
 {
 	char msg =to_MotorMessage(1,1,1,1,1,1,1,1);
@@ -460,7 +467,7 @@ char to_MotorMessage(char ID0, char ID1, char increasing, char panicMode,
 	return motors;
 }
 
-//*******TEST METHODS
+//******TEST METHODS ***/
 void pWrite(char msg)
 {
 	printf("\nProtocol has this written to it: ");
@@ -487,7 +494,7 @@ void print_char_to_Binary(char bin)
 }
 
 int pRead_speed(){
-    return 10; 
+    return 2; 
 }
 
 int readSensorTest(int currentSensor, char command){
@@ -508,6 +515,13 @@ int readSensorTest(int currentSensor, char command){
 	return new;
 }
 
+
+void printOrientation(void){
+    printf("\n {pitch: %d roll: %d, yaw: %d height %d }", 
+	   sensorCommand.pitch, sensorCommand.roll,sensorCommand.yaw,
+	   sensorCommand.height);
+}
+
 //************End of Testing methods
 
 void get_speed(void){
@@ -518,7 +532,7 @@ void get_speed(void){
 void get_distance_travelled(void){
 
    get_speed();
-   distanceTraveled = speed * (duration/1000);
+   distanceTraveled = speed * duration;
   printf("\n \n \n TRAVELED %d", distanceTraveled);
 }
 

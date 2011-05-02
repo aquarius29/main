@@ -65,6 +65,7 @@ int mov_run()
 //************************************************************
 int mov_init()
 {
+    distanceToTravel = 0;
 	start_time=0;
 	duration=0;
 
@@ -82,15 +83,14 @@ int mov_run()
     //duration since last time we ran
 	if(start_time != 0){
 	    duration =  clock() / (CLOCKS_PER_SEC / 1000) - start_time;
-		printf("duration: %d", duration);
-		updateDistanceToTravel();
-		printf("\n \n \n distance to travel  %d", distanceToTravel);
+	    updateDistanceToTravel();
+	    printf("duration: %d", duration);
+	    printf("\n \n \n distance to travel  %d", distanceToTravel);
 	}
 	else
 	    {
 		duration = 0;
 	    }
-
 
 	if(distanceToTravel <= 0)
 	    {
@@ -103,7 +103,7 @@ int mov_run()
 		    moveL(); //move
 	    }
 
-    	 
+	printOrientation();
 
 	//stabilize based on last movement 
 	stabL();
