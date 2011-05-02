@@ -44,6 +44,7 @@ void testNavCommand(void) {
 void start_motors(void)
 {
 	char msg = to_MotorMessage(0,1,0,0,0,0,0,0);
+	printf ("start motors");
 	pWrite(msg);
 }
 
@@ -53,6 +54,7 @@ void start_motors(void)
 void stop_motors(void)
 {
 	char msg = to_MotorMessage(0,0,0,0,0,0,0,0);
+	printf ("stop motors");
 	pWrite(msg);
 }
 
@@ -61,6 +63,7 @@ void stop_motors(void)
  */
 void increase_rear_motor(void){
 	char msg = to_MotorMessage(1,0,1,0,0,0,0,1);
+	printf ("increase rear motor");
 	pWrite(msg);
 
 }
@@ -71,6 +74,7 @@ void increase_rear_motor(void){
 void decrease_rear_motor(void){
 
 	char msg = to_MotorMessage(1,0,0,0,0,0,0,1);
+	printf ("decrease rear motors");
 	pWrite(msg);
 }
 
@@ -80,6 +84,7 @@ void decrease_rear_motor(void){
 void increase_front_motor(void){
 
 	char msg = to_MotorMessage(1,0,1,0,0,0,1,0);
+	printf ("increase front motor");
 	pWrite(msg);
 }
 
@@ -89,6 +94,7 @@ void increase_front_motor(void){
 void decrease_front_motor(void){
 
 	char msg = to_MotorMessage(1,0,0,0,0,0,1,0);
+	printf ("decrease front motor");
 	pWrite(msg);
 }
 
@@ -97,6 +103,7 @@ void decrease_front_motor(void){
  */
 void increase_left_motor(void){
 	char msg = to_MotorMessage(1,0,1,0,0,1,0,0);
+	printf ("increase left motor");
 	pWrite(msg);
 
 }
@@ -108,6 +115,7 @@ void increase_left_motor(void){
 void decrease_left_motor(void){
 
 	char msg = to_MotorMessage(1,0,0,0,0,1,0,0);
+	printf ("decrease left motor");
 	pWrite(msg);
 }
 
@@ -118,6 +126,7 @@ void decrease_left_motor(void){
 void increase_right_motor(void){
 
 	char msg = to_MotorMessage(1,0,1,0,1,0,0,0);
+	printf ("increase right motor");
 	pWrite(msg);
 }
 
@@ -127,6 +136,7 @@ void increase_right_motor(void){
  */
 void decrease_right_motor(void){
 	char msg = to_MotorMessage(1,0,0,0,1,0,0,0);
+	printf ("decrease right motor");
 	pWrite(msg);
 
 }
@@ -138,6 +148,7 @@ void decrease_right_motor(void){
 void increase_rear_decrease_front(void){
 
 	char msg = to_MotorMessage(1,1,1,0,0,0,1,1);
+	printf ("increase rear decrease front");
 	pWrite(msg);
 }
 
@@ -147,6 +158,7 @@ void increase_rear_decrease_front(void){
  */
 void increase_front_decrease_rear(void){
 	char msg = to_MotorMessage(1,1,0,0,0,0,1,1);
+	printf ("increase front decrease rear");
 	pWrite(msg);
 
 }
@@ -156,6 +168,7 @@ void increase_front_decrease_rear(void){
  */
 void increase_left_decrease_right(void){
 	char msg = to_MotorMessage(1,1,1,0,1,1,0,0);
+	printf ("increase left decrease right");
 	pWrite(msg);
 }
 
@@ -165,6 +178,7 @@ void increase_left_decrease_right(void){
 void incease_right_decrease_left(void){
 
 	char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
+	printf ("increase right decrease left");
 	pWrite(msg);
 }
 
@@ -173,6 +187,7 @@ void incease_right_decrease_left(void){
  */
 void increase_all(void){
 	char msg = to_MotorMessage(1,0,1,0,1,1,1,1);
+	printf ("increase all motors");
 	pWrite(msg);
 
 }
@@ -182,6 +197,7 @@ void increase_all(void){
  */
 void decrease_all(void){
 	char msg = to_MotorMessage(1,0,0,0,1,1,1,1);
+	printf ("decrease all motors");
 	pWrite(msg);
 }
 
@@ -192,6 +208,7 @@ void decrease_all(void){
 void go_forwards(void)
 {
 	char msg = to_MotorMessage(1,1,0,0,0,0,1,0);
+	printf ("go forward");
 	pWrite(msg);
 }
 
@@ -202,6 +219,7 @@ void go_backwards(void)
 {
 
 	char msg = to_MotorMessage(1,1,0,0,0,0,0,1);
+	printf ("go backward");
 	pWrite(msg);
 }
 
@@ -211,6 +229,7 @@ void go_backwards(void)
 void strafe_left(void)
 {
 	char msg = to_MotorMessage(1,1,1,0,0,1,0,0);
+	printf ("scrafe left");
 	pWrite(msg);
 }
 
@@ -221,6 +240,7 @@ void strafe_left(void)
 void strafe_right(void)
 {
 	char msg = to_MotorMessage(1,1,0,0,1,0,0,0);
+	printf ("scrafe right");
 	pWrite(msg);
 }
 
@@ -229,6 +249,7 @@ void strafe_right(void)
  */
 void turn_left(void){
 	char msg = to_MotorMessage(1,1,1,0,1,1,0,0);
+	printf ("turn left");
 	pWrite(msg);
 
 }
@@ -238,6 +259,7 @@ void turn_left(void){
  */
 void turn_right(void){
 	char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
+	printf ("turn right");
 	pWrite(msg);
 
 
@@ -249,6 +271,7 @@ void turn_right(void){
 void hover(void)
 {
 	char msg =to_MotorMessage(1,1,1,1,1,1,1,1);
+	printf ("hover");
 	pWrite(msg);
 }
 
@@ -261,11 +284,11 @@ void check_height(void)
 
 	if(height_desire > height_current){	
 		hover();	
-		//increase all motors
+		increase_all();
 	}
 	else if(height_desire<height_current){
 		hover();
-		//decrease all motors
+		decrease_all();
 	}
 	else{
 		hover();
@@ -274,16 +297,14 @@ void check_height(void)
 
 void check_heading(void)
 {
-
-
 	int heading_desire=navCommand.yaw;
 	int heading_current=sensorCommand.yaw;
 
 	if(heading_desire-heading_current>0){
-		//rotate right
+		turn_right();
 	}
 	else if(heading_desire-heading_current<0){
-		//rotate left
+		turn_left();
 	}
 	else{
 		hover();
@@ -306,10 +327,10 @@ void check_pitch_roll(int isHovering) {
 	}
 	//pitch clac
 	if(pitch_current>pitch_desire){
-		//pitch less
+		increase_left_decrease_right();
 	}
 	else if(pitch_current<pitch_desire){
-		//pitch more
+		increase_right_decrease_left();
 	}
 	else{
 		//great
@@ -317,10 +338,10 @@ void check_pitch_roll(int isHovering) {
 
 	//roll calc
 	if(roll_current>roll_desire){
-		//roll less
+		increase_front_decrease_rear();
 	}
 	else if(roll_current<roll_desire){
-		//roll more
+		increase_rear_decrease_front();
 	}
 	else{
 		//great
