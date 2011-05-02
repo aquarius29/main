@@ -85,8 +85,11 @@ void sendto_CONNECTIVITY(unsigned char data){
 
 void rec(){
  	 #ifdef PC
+         storeForTint(READ, MOTOR, UNKNOWN, data);
+	#ifdef DEBUG
 	printf("motor msg value set to: %c\n", data );
      #endif
+#endif
  //read from serial  m      
 }
 
