@@ -44,13 +44,16 @@ void testNavCommand(void) {
 void command_logic(void) {
     char order = navCommand.order;
     float speed = navCommand.speed;
-    distanceToTravel = navCommand.distance;
+    
 	//lift off
     if (order == 0 || order==1) {
+	distanceToTravel = 0;
 		check_pitch_roll(0);
 		check_height();
 		check_heading();
     } else if (order == 2) {
+	distanceToTravel = navCommand.distance;
+	updateDistanceToTravel();
 		check_pitch_roll(1);
 		check_height();
 		check_heading();
@@ -231,9 +234,9 @@ void increase_all(void){
  *  10 00 11 11
  */
 void decrease_all(void){
-	char msg = to_MotorMessage(1,0,0,0,1,1,1,1);
-	printf ("decrease all motors");
-	pWrite(msg);
+    char msg = to_MotorMessage(1,0,0,0,1,1,1,1);
+    printf ("decrease all motors");
+    pWrite(msg);
 }
 
 
@@ -285,7 +288,7 @@ void strafe_right(void)
 void turn_left(void){
     
       /* simulated */
-    sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'i');
+    sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'd');
 
     char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
     printf ("turn left");
@@ -298,7 +301,7 @@ void turn_left(void){
 void turn_right(void)
 {
      /* simulated */
-    sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'd');
+    sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'i');
 
     char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
     printf ("turn right");
@@ -319,7 +322,6 @@ void hover(void)
 void land(void){
 	hover();
 	decrease_all();
-
 }
 //check the drone height
 void check_height(void)
@@ -330,10 +332,14 @@ void check_height(void)
     if(height_desire > height_current+BUFF_DISTSNCE){	
 	hover();	
 	increase_all();
+		 /* simulated */
+    sensorCommand.height = readSensorTest(sensorCommand.height, 'i');
     }
     else if(height_desire<height_current-BUFF_DISTSNCE){
 	hover();
 	decrease_all();
+	 /* simulated */
+    sensorCommand.height = readSensorTest(sensorCommand.height, 'd');
     }
     else{
 	heightArrived = 1;
@@ -483,7 +489,6 @@ int readSensorTest(int currentSensor, char command){
 	
 	return new;
 }
-
 
 void printOrientation(void){
     printf("\n {pitch: %d roll: %d, yaw: %d height %d }", 
