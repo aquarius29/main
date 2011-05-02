@@ -28,8 +28,6 @@
 *	2:
 *
 *
-*
-*
 */
 
 pthread_t manualCommandThread;

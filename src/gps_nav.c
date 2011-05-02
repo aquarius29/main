@@ -2,46 +2,42 @@
 
 	gps_nav.c: integrate the gps-outdoor-navigation system. Give interface to CoreLogic of Navigation.
 
-	Author: Qiushi Wang
+	@author: Qiushi Wang
 
-	Date: April 16th, 2011
+	Date: May 1st, 2011
 
 	to do:
-		1. call calc_angle(), give direction
-		2. thread for setup_gps()
-		3. send movement command
-
-
+		1. handle bad data in parser.c .
+		3. fix init functions in serial.c 
+		2. send movement command.
 */
 #include "gps_nav.h"
 
 /*
 int main(void)
 {
-	struct point Destination = {-2,5742.307,1156.002};
+//	struct point Destination = {-2,in_degree(5742.307),in_degree(1156.002)};
 
-	setup_gps(UNO,57600);				
+	ON_OFF = 1;
 
-	gps_navigation(Destination);
+	setup_gps(UNO1,57600);			
+
+//	gps_navigation(Destination);
 
 return 0;
 }
 */
 
 
-
-
 void setup_gps(char *dev,int baud)
 {
-
 //	setup the GPS receiver, build Serial communication, keep updating the current position.
-	curr.name = 0;
-	curr.lat = 5742.353;
-	curr.lon = 1156.275;
 
+	curr.name = 0;
+	curr.lat = 57.7071;
+	curr.lon = 11.9377;
 //	curr.lat = 5742.386;	
 //	curr.lon = 1156.063;	
-
 
 	int fd = 0;
 	char buf [256];
@@ -49,25 +45,35 @@ void setup_gps(char *dev,int baud)
 	fd = dev_init(dev,baud);
 
 	if(fd == -1)
+	{
+	printf("can not init device\n");
 	return;
+	}
 
 	usleep(1000*1000);
 
 	while(ON_OFF){
+
 	    	serial_read(fd,buf,10);
 
 		if (strncmp(buf, "$GPRMC",6) == 0)
 		{
-		    	printf("%s",buf);
-			struct point *position = parser(buf);
-			curr.name = 0;
-			curr.lat = position->lat;
-			curr.lon = position->lon;
-			free(position);
-			printf("lat: %f ",curr.lat);
-			printf("lon: %f\n",curr.lon);	
+
+			if(check_gps_output(buf))
+			{			
+		    		printf("%s",buf);
+				struct point *position = parser(buf);
+
+				curr.name = 0;
+				curr.lat = in_degree(position->lat);
+				curr.lon = in_degree(position->lon);
+				free(position);
+			
+				printf("lat: %f ",curr.lat);
+				printf("lon: %f\n",curr.lon);
+			}	
 		}
-		}
+	}
 }
 
 
@@ -75,15 +81,15 @@ void setup_gps(char *dev,int baud)
 
 void gps_navigation(struct point Destination)
 {
-	struct point *pts = init_map(); 			/* init the map */
+	struct point *pts = init_map(); 			
 
-	struct trac *path = outdoor_nav(pts,Destination); 	/* calc the path */
+	struct trac *path = outdoor_nav(pts,Destination); 	
 
 	struct trac *next_Node = path;
 
 	int angle = 0; 
 
-while(ON_OFF){
+	while(ON_OFF){
 
 	next_Node = update_path(curr,Destination,pts,next_Node);
 /*	
@@ -92,14 +98,12 @@ while(ON_OFF){
 */
 	angle = give_angle(curr,Destination,pts,next_Node);
 
-	printf("angle : %s","fake angle\n");
+	printf("angle : %d\n",angle);
 
 /*
 	send movement command here.
 */
-
 	sleep(1);
-
 }
 	free(pts);
 	deallocate_trac(path);
@@ -122,7 +126,7 @@ int give_angle(struct point currp,struct point dest,struct point *pts,struct tra
 	{	
 		next_Point = dest;
 
-//		angle = calc_angle(currp,next_Point);
+		angle = (int)calc_angle(currp,next_Point);
 
 		if(calc_dist(currp,next_Point)<10)
 		{
@@ -132,10 +136,11 @@ int give_angle(struct point currp,struct point dest,struct point *pts,struct tra
 	else
 	{
 		next_Point = pts [next_Node->p - 1];
-//		angle = calc_angle(currp,next_Point);			
+		angle = (int)calc_angle(currp,next_Point);			
 	}	
 	return angle;		
 }
+
 
 
 
@@ -155,10 +160,7 @@ struct trac* update_path(struct point currp,struct point dest,struct point *pts,
 	}
 	else
 	{
-//		printf("++++++++\n");
-
 		next_Point = pts [next_Node->p - 1];
-
 
 		if(calc_dist(currp,next_Point) <= 10)
 		{
@@ -192,7 +194,6 @@ void get_startp(struct point *pt)
 
 
 
-
 struct link* connect_nodes(struct dist *st1,struct dist *st2,struct dist *end1,struct dist *end2,struct point *pts,struct link* lk)
 {
 	if(st1->name == end1->name && st1->name == 0)
@@ -220,7 +221,8 @@ struct link* connect_nodes(struct dist *st1,struct dist *st2,struct dist *end1,s
 	lk = add_link(end2->name,-2,end2->distance,lk);
 	
 	lk = init_link(lk,pts);
-}
+	}
+
 	return lk;
 }
 
@@ -236,30 +238,24 @@ struct trac *outdoor_nav(struct point *pts,struct point destination)
 	struct trac *path;
 
 	struct point startp;
+
 	get_startp(&startp);
 
 	struct point endp;
 	endp.name = -2;
-//	endp.lat= 5742.307;
-//	endp.lon= 1156.002;
-
-//	endp.lat= 5742.313;
-//	endp.lon= 1156.022;
-
 	endp.lat = destination.lat;
 	endp.lon = destination.lon;
 
 	st_1 = pnode(startp,endp,pts,0);
-		//printf("st1 %d\n", st_1->name);	
+							//printf("st1 %d\n", st_1->name);	
 	st_2 = pnode(startp,endp,pts,1);
-		//printf("st2 %d\n", st_2->name);
+							//printf("st2 %d\n", st_2->name);
 	end_1 = pnode(endp,startp,pts,0);
-		//printf("end1 %d\n", end_1->name);
+							//printf("end1 %d\n", end_1->name);
 	end_2 = pnode(endp,startp,pts,1);
-		//printf("end2 %d\n", end_2->name);
+							//printf("end2 %d\n", end_2->name);
 
 	lk = connect_nodes(st_1,st_2,end_1,end_2,pts,lk);
-
 
 	if(lk->last == NULL)	/*you can go there straight, no necessary to run dijkstra*/
 	{
@@ -299,26 +295,35 @@ struct trac *outdoor_nav(struct point *pts,struct point destination)
 		}	
 		head = head->last;
 	}
-/*---------------------- deallocate memory ------------------------------*/
+
+/*---- deallocate memory ----*/
 	free(st_1);
 	free(st_2);
 	free(end_1);
 	free(end_2);
 	deallocate_link(lk);
+
 return path;
 }
 
 
-/*
-void move_a_step(struct point *currp,struct point nextp)
+
+/* check that the output of gps is available */
+int check_gps_output(char buf [])
 {
-	double x_move = 0;
-	double y_move = 0;
+	int i = 0;
+	int num = 0;
 
-	x_move = (in_degree(nextp.lat) - in_degree(currp->lat))/10;
-	y_move = (in_degree(nextp.lon) - in_degree(currp->lon))/10;
-
-	currp->lat += x_move;
-	currp->lon += y_move;
+	while(buf [i] != 10)
+	{
+		if(buf [i] == 44)
+		num++;
+	i++;
+	}	
+	
+	if( num == 12)
+	return 1;
+	else
+	return 0;
 }
-*/
+

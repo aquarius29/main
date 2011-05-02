@@ -21,10 +21,10 @@
  */
 double calc_dist(struct point start, struct point node){
     double dist;
-    double dRadLatitude1 = in_degree(start.lat)*PI/180.0;
-    double dRadLatitude2 = in_degree(node.lat)*PI/180.0;
+    double dRadLatitude1 = start.lat*PI/180.0;
+    double dRadLatitude2 = node.lat*PI/180.0;
     double dDisLatitude = dRadLatitude1 - dRadLatitude2;
-    double dDisLongitude = in_degree(start.lon)*PI/180.0 - in_degree(node.lon)*PI/180.0;
+    double dDisLongitude = start.lon*PI/180.0 - node.lon*PI/180.0;
     dist= 2 * asin(sqrt(pow(sin(dDisLatitude/2),2) + cos(dRadLatitude1)*cos(dRadLatitude2)*pow(sin(dDisLongitude/2),2)));
     dist *= EARTH_RADIUS*1000;
     return dist;
@@ -39,7 +39,7 @@ double calc_dist(struct point start, struct point node){
  */
 double calc_k(struct point start, struct point dest){
     double k,c;	
-    k= (in_degree(start.lon) - in_degree(dest.lon))/ (in_degree(start.lat)-in_degree(dest.lat));
+    k= (start.lon - dest.lon)/(start.lat-dest.lat);
     return k;	
     }
 
@@ -52,8 +52,8 @@ double calc_k(struct point start, struct point dest){
  */
 double calc_c(struct point start,struct point dest){
     double k,c;
-    k= (in_degree(start.lon) - in_degree(dest.lon))/ (in_degree(start.lat)-in_degree(dest.lat));	
-    c=in_degree(start.lon)-k*in_degree(start.lat);	
+    k= (start.lon- dest.lon)/ (start.lat-dest.lat);	
+    c=start.lon-k*start.lat;	
     return c;	
     }
 
@@ -67,7 +67,7 @@ double calc_c(struct point start,struct point dest){
 
 int check_position(double k, double c, struct point node){
     double position;
-    position = in_degree(node.lon) - k*in_degree(node.lat)-c;
+    position = node.lon - k*node.lat-c;
     if (position>0)        /*position>0, the node is up of line,return 1*/          
     return 1;
     if (position<0)
@@ -139,13 +139,6 @@ struct dist* pnode(struct point start, struct point dest, struct point* node, ch
 	}
 
 
-/* convert latitude and longitude to degree unit
- *
- *@param double lat or lon
- *@return converted double lat or lon (degree as unit)
- *
- *
- */
 
 /* in longitudinal */
 double in_degree(double input)
@@ -176,5 +169,35 @@ double degree_minutes(double input)
 	output = (input - degree)*60 + degree*100;
 
 	return output;
+}
+
+
+/* Calculate the direction between 2 points, the angle is in degree(0~360)
+ *
+ *
+ */
+double calc_angle(struct point start, struct point dest){
+     double x,y,angle;
+     x=dest.lon-start.lon;
+     y=dest.lat-start.lat;
+     if(x>=0 && y>0){
+          angle = atan(x/y)*180/PI;   // 0 <=angle<90 
+     }
+     else if(x<0 && y>0){
+          angle = 360+atan(x/y)*180/PI; // 270<angle<360
+     }
+     else if(x<=0 && y<0){
+          angle = 180+atan(x/y)*180/PI; // 180 <=angle <270 
+     }
+     else if(x>0 && y<0){
+          angle = 180+atan(x/y)*180/PI; // 90<angle<180 
+     }
+     else if(x>=0 && y==0){
+          angle = 90;   //angle =90
+     }
+     else if(x<=0 && y==0){
+          angle = 270; // angle =270
+     }
+     return angle;
 }
 

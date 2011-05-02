@@ -68,7 +68,7 @@ int serial_init(const char* port, int baud)
     int fd;
     fd = open(port, O_RDWR | O_NOCTTY | O_NDELAY);   /*open a prot and set it as read and write*/ 
     if (fd == -1)  {
-        printf("init_serialport: Unable to open port\n ");    /*fail in opening file*/
+        printf("init_serialport: Unable to open port\n");    /*fail in opening file*/
         return -1;
     }
 
@@ -116,8 +116,6 @@ void serial_kill(int fd){
 
 
 
-
-
 /* loop for init gps device 
  *
  *@param char* device_name and int baudrate
@@ -130,7 +128,7 @@ int dev_init(char* dev,int baud)
     int i = 0;	    		    
     while(fd == -1)
     {
-        if(i==100)
+        if(i==5)
         return -1;
     fd = serial_init(dev,baud);	
     i++;

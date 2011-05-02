@@ -26,4 +26,6 @@ double in_degree(double input);
 
 double degree_minutes(double input);
 
+double calc_angle(struct point start, struct point dest);
+
 #endif

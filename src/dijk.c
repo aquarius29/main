@@ -1,10 +1,12 @@
 /*
 
-	File:	dijk.c
-	Author: Qiushi Wang & Amanpreet Kaur
-	Date:   Apr 6th,2011
+	@file:	dijk.c
 	
-	Description: load map info, set start point and end point,then calculate best path.
+	@author: Qiushi Wang & Amanpreet Kaur
+
+	@date:   Apr 6th,2011
+	
+	@brief: load map info, set start point and end point,then calculate best path.
 
 */
 #include "dijk.h"
@@ -15,68 +17,68 @@ struct point* init_map()
 
 struct point *p1 = malloc(sizeof(struct point));
 p1 [0].name = 1;	
-p1 [0].lat = 5742.4090;
-p1 [0].lon = 1156.2460;
+p1 [0].lat = 57.7068;
+p1 [0].lon = 11.9374;
 
 p1 = realloc(p1,2*sizeof(struct point));
 p1 [1].name = 2;	
-p1 [1].lat = 5742.3850;
-p1 [1].lon = 1156.2290;
+p1 [1].lat = 57.7064;
+p1 [1].lon = 11.9371;
 
 p1 = realloc(p1,3*sizeof(struct point));
 p1 [2].name = 3;	
-p1 [2].lat = 5742.3730;
-p1 [2].lon = 1156.2690;
+p1 [2].lat = 57.70622;
+p1 [2].lon = 11.93784;
 
 p1 = realloc(p1,4*sizeof(struct point));
 p1 [3].name = 4;	
-p1 [3].lat = 5742.3480;
-p1 [3].lon = 1156.2480;
+p1 [3].lat = 57.70581;
+p1 [3].lon = 11.93749;
 
 p1 = realloc(p1,5*sizeof(struct point));
 p1 [4].name = 5;	
-p1 [4].lat = 5742.3600;
-p1 [4].lon = 1156.2020;
+p1 [4].lat = 57.70597;
+p1 [4].lon = 11.93672;
 
 p1 = realloc(p1,6*sizeof(struct point));
 p1 [5].name = 6;	
-p1 [5].lat = 5742.3710;
-p1 [5].lon = 1156.1540;
+p1 [5].lat = 57.70619;
+p1 [5].lon = 11.93589;
 
 p1 = realloc(p1,7*sizeof(struct point));
 p1 [6].name = 7;	
-p1 [6].lat = 5742.3810;
-p1 [6].lon = 1156.1190;
+p1 [6].lat = 57.70636;
+p1 [6].lon = 11.93526;
 
 p1 = realloc(p1,8*sizeof(struct point));
 p1 [7].name = 8;	
-p1 [7].lat = 5742.3970;
-p1 [7].lon = 1156.1770;
+p1 [7].lat = 57.70622;
+p1 [7].lon = 11.93626;
 
 p1 = realloc(p1,9*sizeof(struct point));
 p1 [8].name = 9;	
-p1 [8].lat = 5742.4060;
-p1 [8].lon = 1156.1410;
+p1 [8].lat = 57.70679;
+p1 [8].lon = 11.93568;
 
 p1 = realloc(p1,10*sizeof(struct point));
 p1 [9].name = 10;	
-p1 [9].lat = 5742.4250;
-p1 [9].lon = 1156.2010;
+p1 [9].lat = 57.70707;
+p1 [9].lon = 11.93670;
 
 p1 = realloc(p1,11*sizeof(struct point));
 p1 [10].name = 11;	
-p1 [10].lat = 5742.4340;
-p1 [10].lon = 1156.1670;
+p1 [10].lat = 57.70723;
+p1 [10].lon = 11.93612;
 
 p1 = realloc(p1,12*sizeof(struct point));
 p1 [11].name = 12;	
-p1 [11].lat = 5742.3270;
-p1 [11].lon = 1156.0560;
+p1 [11].lat = 57.70545;
+p1 [11].lon = 11.93424;
 
 p1 = realloc(p1,13*sizeof(struct point));
 p1 [12].name = 13;	
-p1 [12].lat = 5742.3010;
-p1 [12].lon = 1156.1490;
+p1 [12].lat = 57.70502;
+p1 [12].lon = 11.93583;
 	
 p1 = realloc(p1,14*sizeof(struct point));
 p1 [13].name = -1;	
