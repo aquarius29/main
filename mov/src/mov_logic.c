@@ -11,7 +11,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "movement.h"
+#include "mov_interface.h"
 
 
 // BitMasking example http://www.indiabix.com/technical/c/bits-and-bytes/
@@ -23,7 +23,10 @@
 #define G 9.81
 #define INCREMENT 5
 
+<<<<<<< HEAD
 int isHovering = 1;
+=======
+>>>>>>> 223ece499c18c9454a45621fcfa1b8fbd582f737
 
 ///////struct control_message motor_msg;
 
@@ -196,28 +199,22 @@ void go_backwards()
 //<<46>> or 00100110
 //<<protocol:2 = 0, increase/decrease:1 = 1, mode:1 = 0, motors:4 = 6>>
 //************************************************************
-char to_MotorMessage(char increasing, char panicMode, char motors)
+char to_MotorMessage(char ID0, char ID1, char increasing, char panicMode, char motor1,char motor2, char motor3, char motor4)
 {
+  char motors = 0;
+
+   if(ID0 == 1)
+    SET_FLAG(motors, BIT_POS(7)); 
+  
+  if(ID1 == 1)
+    SET_FLAG(motors, BIT_POS(6));
+
   if(increasing == 1)
     SET_FLAG(motors, BIT_POS(5));
 
   if(panicMode == 1)
     SET_FLAG(motors, BIT_POS(4));
-  
-  return motors;
-}
 
-
-//************************************************************
-//
-// Receives 0 or 1 status for 4 motors.
-// Returns the 4 bits as the end part of 8 bits of a char
-// 
-//************************************************************
-char to_AffectedMotorBinary(char motor1, char motor2, char motor3, char motor4)
-{
-  char motors = 0;
- 
   if(motor1 == 1) 
     SET_FLAG(motors, BIT_POS(3));
 
@@ -229,11 +226,9 @@ char to_AffectedMotorBinary(char motor1, char motor2, char motor3, char motor4)
 
   if(motor4 == 1)
     SET_FLAG(motors, BIT_POS(0)) ;
-
+  
   return motors;
-} 
-
-
+}
 
 //*******TEST METHODS
 void pWrite(char msg)
