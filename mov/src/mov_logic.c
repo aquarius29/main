@@ -259,3 +259,5 @@ void print_char_to_Binary(char bin){
 }
 
 //************End of Testing methods
+
+
