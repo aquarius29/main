@@ -114,13 +114,13 @@ void lift_off(float height) {
 /*
  * hover
  */
-void hover(void) {
+/* void hover(void) { */
 
-    float f;
+/*     float f; */
 
-    f = (QUAD_MASS * G) / 4;
-	write_to_motor(f, f, f, f);
-}
+/*     f = (QUAD_MASS * G) / 4; */
+/* 	write_to_motor(f, f, f, f); */
+/* } */
 
 
 /*

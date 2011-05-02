@@ -24,23 +24,28 @@
 #define INCREMENT 5
 
 
-//Movement Command received from CA or Navigation
-struct MoveCommand 
-{
-  char order;
-  int  height;
-  int direction;
-};
-
+/* 
+ * Print out the data from the navigation
+ * For testing purpose only
+ */
+void testNavCommand(void) {
+    printf("==============================\n");
+    printf("Type = %c\n", navCommand.type);
+    printf("Order = %c\n", navCommand.order);
+    printf("Height = %d\n", navCommand.height);
+    printf("Distance = %d\n", navCommand.distance);
+    printf("Yaw = %d\n", navCommand.yaw);
+    printf("Speed = %d\n", navCommand.speed);
+    printf("==============================\n");
+}
 
 //************************************************************
 // 
 // 0100 0000 (start)
 //************************************************************
-void start_motors()
+void start_motors(void)
 {
-  char msg = 0;
-  SET_FLAG(msg, BIT_POS(6));
+	char msg = to_MotorMessage(0,1,0,0,0,0,0,0);
   pWrite(msg);
 }
 
@@ -48,94 +53,93 @@ void start_motors()
 //
 //  0000 0000 (stop)
 //************************************************************
-void stop_motors()
+void stop_motors(void)
 {
-  char msg = 0;
+	char msg = to_MotorMessage(0,0,0,0,0,0,0,0);
   pWrite(msg);
 }
 
+//check the drone height
+void check_height(void)
+{
+	int height_desire =navCommand.height;
+	int height_current =sensorCommand.height;
 
-//************************************************************
-//stay_hover_nr
-//
-//number of times to send lift up message to get the drone stay hover
-//************************************************************
-int stay_hover_nr(){
-  int n;
-  n = WEIGHT*G/4/INCREMENT;
-  return n;
+	if(height_desire > height_current){	
+		hover();	
+		//increase all motors
+	}
+	else if(height_desire<height_current){
+		hover();
+		//decrease all motors
+	}
+	else{
+		hover();
+	}
 }
 
+void check_heading(void)
+{
 
-//************************************************************
-//lift_up 
-//
-//lift up and hover in a certain height
-//************************************************************
-void lift_up(int n, int up_level){
-  int i=n+up_level;
-  while(i>0){
-    char msg= to_AffectedMotorBinary(1,1,1,1);
-    msg=to_MotorMessage(0,0,msg);
-    pWrite(msg);
-    i--;
-  }
-  while (up_level>0){
-    char msg= to_AffectedMotorBinary(0,0,0,0);
-    msg=to_MotorMessage(0,0,msg);
-    pWrite(msg);
-    up_level--;
-  }
+
+	int heading_desire=navCommand.yaw;
+	int heading_current=sensorCommand.yaw;
+
+	if(heading_desire-heading_current>0){
+		//rotate right
+	}
+	else if(heading_desire-heading_current<0){
+		//rotate left
+	}
+	else{
+		hover();
+	}
 }
 
-//************************************************************
-//go_down
-//
-//going down and hover in a certain height
-//************************************************************
+void check_pitch_roll(int isHovering) {
 
-void go_down(int n, int down_level){
-  if(down_level<n){
-    int i=down_level;
+	int pitch_current=sensorCommand.pitch;
+	int roll_current=sensorCommand.roll;
+	int pitch_desire;
+	int roll_desire;
+	if(isHovering==1){
+		pitch_desire=0;
+		roll_desire=0;
+	}
+	else{
+		pitch_desire=20;
+		roll_desire=20;
+	}
+	//pitch clac
+	if(pitch_current>pitch_desire){
+		//pitch less
+	}
+	else if(pitch_current<pitch_desire){
+		//pitch more
+	}
+	else{
+		//great
+	}
 
-    while(down_level>0){
-      char msg= to_AffectedMotorBinary(0,0,0,0);
-      msg=to_MotorMessage(0,0,msg);
-      pWrite(msg);
-      down_level--;
-    }
-    while(i>0){
-      char msg= to_AffectedMotorBinary(1,1,1,1);
-      msg=to_MotorMessage(0,0,msg);
-      pWrite(msg);
-      i--;
-    }
-  }
+	//roll calc
+	if(roll_current>roll_desire){
+		//roll less
+	}
+	else if(roll_current<roll_desire){
+		//roll more
+	}
+	else{
+		//great
+	}
 }
-
-
-
-
-//************************************************************
-//land
-//
-//************************************************************
-void land(){
-  char msg= to_AffectedMotorBinary(0,0,0,0);
-  msg=to_MotorMessage(0,0,msg);
-  pWrite(msg);
-}
-
-
 
 //************************************************************
 //
 //  1111 1111 (hover)
 //************************************************************
-void hover()
+void hover(void)
 {
-  char msg = 0;
-  msg = ~msg;
+	char msg =to_MotorMessage(1,1,1,1,1,1,1,1);
   pWrite(msg);
 }
 
@@ -145,11 +149,9 @@ void hover()
 //Go Left without turning (Strafe)
 //0110 1100 (left, decreases left motor and increases right motor)
 //************************************************************
-void go_left_no_strafe()
+void go_left_no_strafe(void)
 {
-  char msg = to_AffectedMotorBinary(1,1,0,0);
-  SET_FLAG(msg, BIT_POS(6));
-  msg = to_MotorMessage(1,0,msg);
+	char msg = to_MotorMessage(0,1,1,0,1,1,0,0);
   pWrite(msg);
 }
 
@@ -159,11 +161,9 @@ void go_left_no_strafe()
 //Go Right without turning (Strafe)
 //0100 1100 (right, increases left motor and decreases right motor)
 //************************************************************
-void go_right_no_strafe()
+void go_right_no_strafe(void)
 {
-  char msg = to_AffectedMotorBinary(1,1,0,0);
-  SET_FLAG(msg, BIT_POS(6));
-  msg = to_MotorMessage(0,0,msg);
+	char msg = to_MotorMessage(0,1,0,0,1,1,0,0);
   pWrite(msg);
 }
 
@@ -173,7 +173,7 @@ void go_right_no_strafe()
 //
 //0110 0011 (forward, decreases front motor and increases rear motor)
 //************************************************************
-void go_forwards()
+void go_forwards(void)
 {
 
      /*   motor_msg.rear=1;
@@ -181,9 +181,7 @@ void go_forwards()
 	motor_msg.increase=1;
 	motor_msg.panic=1;*/
 
-  char msg = to_AffectedMotorBinary(0,0,1,1);
-  SET_FLAG(msg, BIT_POS(6));
-  msg = to_MotorMessage(1,0,msg);
+	char msg = to_MotorMessage(0,1,1,0,0,0,1,1);
   pWrite(msg);
 }
 
@@ -192,17 +190,11 @@ void go_forwards()
 //
 //0100 0011 (forward, decreases front motor and increases rear motor)
 //************************************************************
-void go_backwards()
+void go_backwards(void)
 {
 
-  char msg = to_AffectedMotorBinary(0,0,1,1);
-	/*motor_msg.rear=1;
-	motor_msg.right=1;
-	motor_msg.increase=1;
-	motor_msg.panic=1;*/
-  SET_FLAG(msg, BIT_POS(6));
-  msg = to_MotorMessage(0,0,msg);
-  pWrite(msg);
+	char msg = to_MotorMessage(0,1,0,0,0,0,1,1);
+	pWrite(msg);
 }
 
 
@@ -216,7 +208,8 @@ void go_backwards()
 //<<46>> or 00100110
 //<<protocol:2 = 0, increase/decrease:1 = 1, mode:1 = 0, motors:4 = 6>>
 //************************************************************
-char to_MotorMessage(char ID0, char ID1, char increasing, char panicMode, char motor1,char motor2, char motor3, char motor4)
+char to_MotorMessage(char ID0, char ID1, char increasing, char panicMode,
+					 char motor1,char motor2, char motor3, char motor4)
 {
   char motors = 0;
 
