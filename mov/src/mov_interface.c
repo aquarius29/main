@@ -81,24 +81,35 @@ int mov_run()
 
     //duration since last time we ran
 	if(start_time != 0){
-		duration = clock() / (CLOCKS_PER_SEC / 1000) - start_time;
+	    duration =  clock() / (CLOCKS_PER_SEC / 1000) - start_time;
 		printf("duration: %d", duration);
+		updateDistanceToTravel();
+		printf("\n \n \n distance to travel  %d", distanceToTravel);
 	}
+	else
+	    {
+		duration = 0;
+	    }
 
+
+	if(distanceToTravel <= 0)
+	    {
 	int x = read_command();
     		if (x == 0) {
     			printf("**end of the file**\n");
+			return 1;
     		}
-    
+		else
+		    moveL(); //move
+	    }
+
+    	 
+
 	//stabilize based on last movement 
 	stabL();
 
-	//move
-	moveL();
-
 	start_time =  clock() / (CLOCKS_PER_SEC / 1000);
-	
-	    return 1;
+	    return 0;
 }
 #endif
 

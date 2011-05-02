@@ -38,9 +38,9 @@ void updateDistanceToTravel(void);
 
 
 //*******************
-//simulator variables
+//simulator variables & functions
 int arrived;
-
+int readSensorTest(int currentSensor, char command);
 
 /*movement*/
 void moveL(void);

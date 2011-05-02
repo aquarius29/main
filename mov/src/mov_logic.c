@@ -11,6 +11,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+
 #include "mov_interface.h"
 
 /* BitMasking example http://www.indiabix.com/technical/c/bits-and-bytes/ */
@@ -128,6 +129,10 @@ void stop_motors(void)
  *  10 10 00 01
  */
 void increase_rear_motor(void){
+
+    /* simulated */
+    sensorCommand.pitch = readSensorTest(sensorCommand.pitch, 'i');
+
 	char msg = to_MotorMessage(1,0,1,0,0,0,0,1);
 	printf ("increase rear motor");
 	pWrite(msg);
@@ -396,7 +401,7 @@ void check_pitch_roll(int isHovering) {
 		increase_left_decrease_right();
 	}
 	else if(pitch_current<pitch_desire-BUFF_PR){
-		increase_right_decrease_left();
+	    increase_right_decrease_left();
 	}
 	else{
 		//great
@@ -483,6 +488,24 @@ void print_char_to_Binary(char bin)
 
 int pRead_speed(){
     return 10; 
+}
+
+int readSensorTest(int currentSensor, char command){
+
+    srand(time(NULL));
+    int i = (rand() % (5 + 5 + 1) - 5);  // between 5 and -5 degree variation
+
+    int new;
+    switch (command) {
+    case 'i':
+	new = currentSensor + 1 + i;
+	break;
+    case 'd':
+	new = currentSensor - 1 + i;
+	break;
+    }
+	
+	return new;
 }
 
 //************End of Testing methods
