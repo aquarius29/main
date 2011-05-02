@@ -118,11 +118,20 @@ void *startgpswatchdog(void *ptr)
 	printf("Attempting to create GPS setup thread\n");
 	gpsSetupThreadResult = pthread_create(&gpsSetupThread, NULL, setupgps, (void*) message2);
 	
-	pthread_cond_wait(&watchdogCond, &watchdogMutex); /* Set watchdog to wait for mutex unlock */
-	
-	printf("Attempting to create GPS Navigation thread\n");
-	gpsNavigationThreadResult = 
-	pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
+//	pthread_cond_wait(&watchdogCond, &watchdogMutex); /* Set watchdog to wait for mutex unlock */
+
+	int data = 0;
+	while(data != 1)
+	{
+		data = get_goodData();
+		
+		if (data == 1)
+		{
+			printf("Attempting to create GPS Navigation thread\n");
+			gpsNavigationThreadResult = 
+			pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
+		}
+	}
 	
 	//while (gpsRunning == 1)
 	//{
@@ -164,44 +173,34 @@ void *setupgps(void *ptr)
 	char *message;
     message = (char *) ptr;
     printf("%s\n", message);
+
+	int result;
+
+	result = pthread_mutex_lock( &watchdogMutex);
+	if (result != 0)
+		printf("error locking pthread mutex\n");
 	
-	int data = get_goodData();
-
-	while(data != 1)
-	{
-		data = get_goodData;
-	}
+	waitingForGpsSetupThread = 0;
 	
-	if (data ==  1)
-	{
-		int result;
-
-		result = pthread_mutex_lock( &watchdogMutex);
-		if (result != 0)
-			printf("error locking pthread mutex\n");
-
-		waitingForGpsSetupThread = 0;
-
-		result = pthread_mutex_unlock( &watchdogMutex );
-		if (result != 0)
-		printf("error unlocking pthread mutex\n");
-
-		result = pthread_cond_signal(&watchdogCond); /* Wake watchdog */
-		if (result != 0)
-		printf("error with conditional signal\n");
-
-		 setup_gps(UNO,57600);
-
-		// result = pthread_mutex_lock( &gpsRunningMutex );
-		// if (result != 0)
-		// 	printf("error locking pthread mutex\n");
-		// 		
-		// gpsRunning = 0;
-		// 		
-		// 	result = pthread_mutex_unlock(&gpsRunningMutex );
-		// if (result != 0)
-		// 	printf("error unlocking pthread mutex\n");	
-	}
+	result = pthread_mutex_unlock( &watchdogMutex );
+	if (result != 0)
+	printf("error unlocking pthread mutex\n");
+	
+	// result = pthread_cond_signal(&watchdogCond); /* Wake watchdog */
+	// 	if (result != 0)
+	// 	printf("error with conditional signal\n");
+	
+	 setup_gps(UNO,57600);
+	
+	// result = pthread_mutex_lock( &gpsRunningMutex );
+	// if (result != 0)
+	// 	printf("error locking pthread mutex\n");
+	// 		
+	// gpsRunning = 0;
+	// 		
+	// 	result = pthread_mutex_unlock(&gpsRunningMutex );
+	// if (result != 0)
+	// 	printf("error unlocking pthread mutex\n");
 }
 
 void *setupgpsnavigation(void *ptr)
