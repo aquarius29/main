@@ -92,11 +92,6 @@ int mov_run()
     /* 		duration = 0; */
     /* 	    } */
 
-    
-    updateDistanceToTravel();
-    check_height();
-    check_heading();
-
 	/*If the distanceToTravel is less than or equal to 0, we have probably arrived**/
 	if(distanceToTravel <= 0 && heightArrived == 1 && yawArrived == 1)
 	    {

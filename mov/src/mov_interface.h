@@ -37,6 +37,7 @@ void strafe_left(void);
 void strafe_right(void);
 void turn_left(void);
 void turn_right(void);
+void land(void);
 
 
 char to_MotorMessage(char ID0, char ID1, char increasing, char panicMode, 
@@ -93,7 +94,6 @@ void parse_manual_order(float distance, float height);
 
 void lift_off(float height);
 //void hover(void);
-void land(float height);
 
 float assign_time(float distance,float speed);
 float calc_accel(float distance,float speed);
