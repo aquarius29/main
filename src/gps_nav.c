@@ -33,11 +33,17 @@ void setup_gps(char *dev,int baud)
 {
 //	setup the GPS receiver, build Serial communication, keep updating the current position.
 
+	good_data = 0;
+
 	curr.name = 0;
-	curr.lat = 57.7071;
-	curr.lon = 11.9377;
+//	curr.lat = 57.7071;
+//	curr.lon = 11.9377;
 //	curr.lat = 5742.386;	
 //	curr.lon = 1156.063;	
+
+	curr.lat = 0;
+	curr.lon = 0;
+
 
 	int fd = 0;
 	char buf [256];
@@ -68,7 +74,13 @@ void setup_gps(char *dev,int baud)
 				curr.lat = in_degree(position->lat);
 				curr.lon = in_degree(position->lon);
 				free(position);
-			
+		
+
+				if(curr.lat != 0)
+				{
+					good_data = 1;
+				}
+	
 				printf("lat: %f ",curr.lat);
 				printf("lon: %f\n",curr.lon);
 			}	
@@ -325,5 +337,12 @@ int check_gps_output(char buf [])
 	return 1;
 	else
 	return 0;
+}
+
+
+
+int get_goodData()
+{
+	return good_data;
 }
 

@@ -13,6 +13,8 @@ extern int ON_OFF;
 
 extern struct point curr;	/* current position, this data will be modified by gps device reader */ 
 
+int good_data;
+
 void setup_gps(char *dev,int baud);
 
 struct trac* outdoor_nav(struct point *pts,struct point destination);
@@ -30,5 +32,7 @@ int give_angle(struct point currp,struct point dest,struct point *pts,struct tra
 void move_a_step(struct point *currp,struct point nextp);
 
 int check_gps_output(char buf []);
+
+int get_goodData();
 
 #endif
