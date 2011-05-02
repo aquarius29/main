@@ -22,7 +22,7 @@
 #include "nav_corelogic.h"
 #include "tmxparser.c"
 #include "gps_nav.h"
-#include "path_structure.h"
+//#include "path_structure.h"
 
 /* Possible thread patterns 
 *	1: GPS I/O Thread + GPS Navigation Thread > GPS I/O Thread dies, kill GPS Nav Thread OR Restart GPS I/O Thread
@@ -200,7 +200,7 @@ void *setupgpsnavigation(void *ptr)
     message = (char *) ptr;
     printf("%s\n", message);
 
-	 struct point Destination = {-2,5742.307,1156.002};
+	 struct point Destination = {-2,57.7053,11.9340};
 	 gps_navigation(Destination);
 }
 
@@ -230,7 +230,7 @@ void nav_run_indoor_system(position startTile, position destinationTile)
  		if (threadResult == 0)
 			printf("Thread created\n");
     }
-    init_path(startTile, destinationTile);
+   // init_path(startTile, destinationTile);
 	printf("indoor navigation system started\n");
 }
 

@@ -10,7 +10,7 @@
 #define CORELOGIC_H
 
 struct point curr;
-int ON_OFF:
+int ON_OFF;
 
 
 typedef struct

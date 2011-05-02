@@ -38,6 +38,8 @@ int serial_read(int fd, char* buf, char until)
     char b[1];
     int i=0;
     do {
+
+		usleep(1*1000);
         int n = read(fd, b, 1);  		/* read a char once */
         if( n == -1)
             return -1;    		        /* couldn't read, reutrn -1*/
