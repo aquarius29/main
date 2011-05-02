@@ -394,6 +394,26 @@ void print_char_to_Binary(char bin)
 	printf("\n");
 }
 
+int pRead_speed(){
+    return 10; 
+}
+
 //************End of Testing methods
+
+int get_speed(){
+  speed = pRead_speed();
+   return speed;
+}
+
+int get_distance_travelled(){
+
+   distanceTraveled = speed/duration;
+   return distanceTraveled;
+}
+
+int updateDistanceToTravel(){
+ 
+    distanceToTravel = distanceToTravel - distanceTraveled ;
+}
 
 

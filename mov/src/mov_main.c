@@ -22,7 +22,7 @@ FILE *file;
  * 
  */
 int main(int argc, char *argv[]){
-    get_EarthRef( 0, 0, 0, 10, 10,10);
+
 
     /* start anything that needs to be started ahead of time */
     mov_init(); 
