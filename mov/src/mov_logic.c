@@ -18,10 +18,9 @@
 #define SET_FLAG(N, F)        ( (N) |= (F) )
 #define CLR_FLAG(N, F)        ( (N) &= -(F) )
 
-#define WEIGHT 5
-#define G 9.81
-#define INCREMENT 5
-
+#define BUFF_YAW 5
+#define BUFF_DISTSNCE 0.2
+#define BUFF_PR 1
 
 /* 
  * Print out the data from the navigation
@@ -282,16 +281,16 @@ void check_height(void)
 	int height_desire =navCommand.height;
 	int height_current =sensorCommand.height;
 
-	if(height_desire > height_current){	
+	if(height_desire > height_current+BUFF_DISTSNCE){	
 		hover();	
 		increase_all();
 	}
-	else if(height_desire<height_current){
+	else if(height_desire<height_current-BUFF_DISTSNCE){
 		hover();
 		decrease_all();
 	}
 	else{
-		hover();
+		//great
 	}
 }
 
@@ -300,14 +299,14 @@ void check_heading(void)
 	int heading_desire=navCommand.yaw;
 	int heading_current=sensorCommand.yaw;
 
-	if(heading_desire-heading_current>0){
+	if(heading_desire>heading_current+BUFF_YAW){
 		turn_right();
 	}
-	else if(heading_desire-heading_current<0){
+	else if(heading_desire<heading_current-BUFF_YAW){
 		turn_left();
 	}
 	else{
-		hover();
+		//great
 	}
 }
 
@@ -326,10 +325,10 @@ void check_pitch_roll(int isHovering) {
 		roll_desire=20;
 	}
 	//pitch clac
-	if(pitch_current>pitch_desire){
+	if(pitch_current>pitch_desire+BUFF_PR){
 		increase_left_decrease_right();
 	}
-	else if(pitch_current<pitch_desire){
+	else if(pitch_current<pitch_desire-BUFF_PR){
 		increase_right_decrease_left();
 	}
 	else{
@@ -337,10 +336,10 @@ void check_pitch_roll(int isHovering) {
 	}
 
 	//roll calc
-	if(roll_current>roll_desire){
+	if(roll_current>roll_desire+BUFF_PR){
 		increase_front_decrease_rear();
 	}
-	else if(roll_current<roll_desire){
+	else if(roll_current<roll_desire-BUFF_PR){
 		increase_rear_decrease_front();
 	}
 	else{
