@@ -11,11 +11,25 @@
 /**************************NEW*/
 
 //mov_logic.c
-char to_MotorMessage(char ID0, char ID1, char increasing, char panicMode, char motor1,char motor2, char motor3, char motor4)
+void testNavCommand(void);
 
+void start_motors(void);
+void stop_motors(void);
+void hover(void);
+void go_left_no_strafe(void);
+void go_right_no_strafe(void);
+void go_forwards(void);
+void go_backwards(void);
+char to_MotorMessage(char ID0, char ID1, char increasing, char panicMode, 
+					 char motor1,char motor2, char motor3, char motor4);
+void pWrite(char msg);
+void print_char_to_Binary(char bin);
 
+void check_height(void);
+void check_heading(void);
+void check_pitch_roll(int isHovering);
 
-/*******************
+//*******************
 //simulator variables
 int arrived;
 
@@ -33,6 +47,13 @@ struct nav
 	int speed;
 };
 
+struct sensor
+{
+	int pitch;
+	int roll;
+	int yaw;
+	int height;
+};
 
 void test(void);  //test only, remove soon
 void parse_naviInfo(void);
@@ -40,9 +61,8 @@ void parse_auto_order(void);
 void parse_manual_order(float distance, float height);
 
 void lift_off(float height);
-void hover(void);
+//void hover(void);
 void land(float height);
-
 
 float assign_time(float distance,float speed);
 float calc_accel(float distance,float speed);
@@ -64,6 +84,7 @@ int old_y_desired;
 int old_z_desired;
 
 struct nav navCommand;
+struct sensor sensorCommand;
 
 int read_command();
 int get_loc(char line[],char c,int indexOfColumn);
@@ -82,7 +103,7 @@ int mov_run();
 
 //global time variables
 static int start_time;
- int duration;
+int duration;
 
 
 /*mov_matrix*/
