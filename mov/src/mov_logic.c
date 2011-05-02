@@ -43,25 +43,25 @@ void testNavCommand(void) {
 // 
 // 0100 0000 (start)
 //************************************************************
-void start_motors(void)
-{
-	char msg = to_MotorMessage(0,1,0,0,0,0,0,0);
-  pWrite(msg);
+void start_motors(void){
+
+    char msg = to_MotorMessage(0,1,0,0,0,0,0,0);
+    pWrite(msg);
 }
 
 //************************************************************
 //
 //  0000 0000 (stop)
 //************************************************************
-void stop_motors(void)
-{
-	char msg = to_MotorMessage(0,0,0,0,0,0,0,0);
-  pWrite(msg);
+void stop_motors(void){
+
+    char msg = to_MotorMessage(0,0,0,0,0,0,0,0);
+    pWrite(msg);
 }
 
 //check the drone height
-void check_height(void)
-{
+void check_height(void){
+
 	int height_desire =navCommand.height;
 	int height_current =sensorCommand.height;
 
@@ -78,9 +78,7 @@ void check_height(void)
 	}
 }
 
-void check_heading(void)
-{
-
+void check_heading(void){
 
 	int heading_desire=navCommand.yaw;
 	int heading_current=sensorCommand.yaw;
@@ -137,10 +135,10 @@ void check_pitch_roll(int isHovering) {
 //
 //  1111 1111 (hover)
 //************************************************************
-void hover(void)
-{
-	char msg =to_MotorMessage(1,1,1,1,1,1,1,1);
-  pWrite(msg);
+void hover(void){
+
+    char msg =to_MotorMessage(1,1,1,1,1,1,1,1);
+    pWrite(msg);
 }
 
 
@@ -149,10 +147,10 @@ void hover(void)
 //Go Left without turning (Strafe)
 //0110 1100 (left, decreases left motor and increases right motor)
 //************************************************************
-void go_left_no_strafe(void)
-{
-	char msg = to_MotorMessage(0,1,1,0,1,1,0,0);
-  pWrite(msg);
+void go_left_no_strafe(void){
+
+    char msg = to_MotorMessage(0,1,1,0,1,1,0,0);
+    pWrite(msg);
 }
 
 
@@ -161,10 +159,10 @@ void go_left_no_strafe(void)
 //Go Right without turning (Strafe)
 //0100 1100 (right, increases left motor and decreases right motor)
 //************************************************************
-void go_right_no_strafe(void)
-{
-	char msg = to_MotorMessage(0,1,0,0,1,1,0,0);
-  pWrite(msg);
+void go_right_no_strafe(void){
+
+    char msg = to_MotorMessage(0,1,0,0,1,1,0,0);
+    pWrite(msg);
 }
 
 
@@ -173,16 +171,10 @@ void go_right_no_strafe(void)
 //
 //0110 0011 (forward, decreases front motor and increases rear motor)
 //************************************************************
-void go_forwards(void)
-{
-
-     /*   motor_msg.rear=1;
-	motor_msg.left=1;
-	motor_msg.increase=1;
-	motor_msg.panic=1;*/
-
-	char msg = to_MotorMessage(0,1,1,0,0,0,1,1);
-  pWrite(msg);
+void go_forwards(void){
+  
+    char msg = to_MotorMessage(0,1,1,0,0,0,1,1);
+    pWrite(msg);
 }
 
 //************************************************************
@@ -241,14 +233,14 @@ char to_MotorMessage(char ID0, char ID1, char increasing, char panicMode,
 }
 
 //*******TEST METHODS
-void pWrite(char msg)
-{
+void pWrite(char msg){
+
   printf("\nProtocol has this written to it: ");
   print_char_to_Binary(msg);
 }
 
-void print_char_to_Binary(char bin)
-{
+void print_char_to_Binary(char bin){
+
   char counter,temp,bit;
 
   counter =sizeof(bin) * 8;
