@@ -15,8 +15,41 @@ static int count, running;
 static position_list route;
 static progressive_route current;
 
-//Send start and end point received from UI
-//to Dijkstra calculation.
+void send_direction(double *angle) {
+	//Give angle to core logic, so it can tell movement
+	//which way we need to move.
+	//N 90 E 180 S -90 W -180
+	if(*angle > 0) {
+		printf("Move at angle %.5f\n", -(*angle/ (M_PI/180)));
+	}
+	else {
+		printf("Move at angle %.5f\n", *angle / (M_PI/180) + 180);
+	}
+}
+void send_distance(double *distance) {
+	//Send distance between two coords to corelogic
+	printf("Go for %.5f cm.\n", *distance);
+}
+void send_position(point *pos){
+	printf("Longitude = %f\nLatitude = %f\n", pos->lon, pos->lat);
+}
+void send_expected_path(position_list *path) {
+	//Give corelogic the calculated path.
+	printf("This is the path given by path calc.\nLines should be drawn between each point in list.\n");
+}
+void send_actual_path(progressive_route *path){
+	//Give corelogic the finalized path after destination reached.
+	printf("This is the path actually taken to until destination reached/nav interrupted.\n");
+}
+void send_stop(){
+	//Tell corelogic to tell movement to stop (for when we arrive at destination).
+	printf("Destination reached or indoor navigation interrupted.\n");
+	send_actual_path(&current);
+	free(current.path);
+	free(route.list);
+}
+//Send start and end point received from corelogic
+//to path calculation.
 void init_path(position start, position end){
 	int counterUp;
 	running = 1;
@@ -40,26 +73,8 @@ void init_path(position start, position end){
 		current.ending_point = route.list[route.num-1];
 		current.current_destination = route.list[count];
 		current.current_point = route.list[0];
-		//navigate_path();
-}
-void send_direction(double *angle){
-	//Tell movement which way we need to move.
-	printf("Move at angle %.5f\n", *angle);
-}
-void send_distance(double *distance){
-	//Send distance between two coords
-	//so UI can display it.
-	printf("Go for %.5f cm.\n", *distance);
-}
-void send_position(point *pos){
-	printf("Longitude = %f\nLatitude = %f\n", pos->lon, pos->lat);
-}
-void send_stop(){
-	//Tell movement to stop (for when we arrive at destination).
-	printf("Destination reached.\n");
-}
-void send_ui_info(point *path){
-	//Give ui the path they should draw.
+		send_expected_path(&route);
+		navigate_path();
 }
 void reset_timer() {
 	gettimeofday(&current.timer, NULL);
@@ -91,6 +106,7 @@ void recalc(){
 	count=1;
 	current.current_destination = route.list[count];
 	running = 1;
+	send_expected_path(&route);
 	navigate_path();
 }
 void collision_avoided(double direction, struct timeval time){
@@ -140,8 +156,6 @@ void navigate_path(){
 			    	}
 				send_stop();
 				bool = 0;
-				free(current.path);
-				free(route.list);
 				break;
 			}
 			else{
@@ -165,7 +179,7 @@ void navigate_path(){
 	navigate_path();
 	}
 }
-int main(){
+/*int main(){
 	position a, b;
 	a.x = 1;
 	a.y = 1;
@@ -173,4 +187,4 @@ int main(){
 	b.y = 5;
 	init_path(a, b);
 	return 1;
-}
+}*/

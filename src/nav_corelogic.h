@@ -4,6 +4,7 @@
 
 #include "tilemap.h"
 #include "movementcommands.h"
+#include "path_structure.h"
 
 #ifndef CORELOGIC_H
 #define CORELOGIC_H
@@ -31,9 +32,8 @@ GPSLocation;
 
 typedef struct
 {
-	ThreeDWorld *world;
-	int startTile;
-	int destinationTile;
+	position startTile;
+	position destinationTile;
 }
 indoorRouteRequest;
 
@@ -44,14 +44,11 @@ typedef struct
 }
 outdoorRouteRequest;
 
-// define 3Dworld pointer
-ThreeDWorld *world;
-
 
 void nav_run_gps_system();
 //void nav_run_gps_system(GPSLocation *destination); // setup gps system
 void killGPSSystem(); /* kill GPS system - e.g only manual input wanted. */
-void nav_run_indoor_system(int startTile, int destinationTile); /* setup the indoor navigation system */
+void nav_run_indoor_system(position startTile, position destinationTile); /* setup the indoor navigation system */
 void killIndoorNavigationSystem(); /* kill the navigation system e.g. user wants only manual input. */
 void relayManualMovementCommand(movementCommand *_command); /* relay movementCommand /Connectivity > core > movement */
 void sendMovementCommand(movementCommand *move); /* send the movement to the movement for handling. */

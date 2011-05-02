@@ -22,6 +22,7 @@
 #include "nav_corelogic.h"
 #include "tmxparser.c"
 #include "gps_nav.h"
+#include "path_structure.h"
 
 /* Possible thread patterns 
 *	1: GPS I/O Thread + GPS Navigation Thread > GPS I/O Thread dies, kill GPS Nav Thread OR Restart GPS I/O Thread
@@ -205,7 +206,7 @@ void *setupgpsnavigation(void *ptr)
 
 
 
-void nav_run_indoor_system(int startTile, int destinationTile)
+void nav_run_indoor_system(position startTile, position destinationTile)
 {
 	printf("Creating manual command handler thread\n");
 	
@@ -229,23 +230,8 @@ void nav_run_indoor_system(int startTile, int destinationTile)
  		if (threadResult == 0)
 			printf("Thread created\n");
     }
-
+    init_path(startTile, destinationTile);
 	printf("indoor navigation system started\n");
-	
-	world = malloc(sizeof(ThreeDWorld));
-	
-	if (world == NULL)
-	{
-		printf("Youre world is fuckd! couldnt create existance\n");
-	}
-	else
-	{
-		char *doc = "secondYearSquare.xml";
-		// send the world pointer to the parser for on-the-fly ThreeDWorld setup
-		parseDoc(doc, world);
-		// TODO: call path calculation functions and send in the world pointer
-		// send the startTile and DestinationTile with the world data
-	}
 }
 
 // set the gps destination

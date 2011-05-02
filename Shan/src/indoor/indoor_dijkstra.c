@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include "indoor_algorithms.h"
 #include "path_structure.h"
+#include "tilemap.h"
 
 static position_list final;
 /*
@@ -17,7 +18,7 @@ static position_list final;
  * If the goal is not reachable or if there is a problem to allocate
  * memory NULL is returned
  */
-position_list indoor_dijkstra(const position * start, const position * end, int map[MAP_Y][MAP_X])
+position_list indoor_dijkstra(const position * start, const position * end)
 {
 	nodeList * open, * closed;	// open and closed list
 	node startNode;				// the starting node
@@ -43,7 +44,7 @@ position_list indoor_dijkstra(const position * start, const position * end, int 
 		}
 
 		// Check the neighbors of the first node in the open list
-		AddNeighborsToOpen(&open->list[0], open, closed, map);
+		dijkstra_AddNeighborsToOpen(&open->list[0], open, closed);
 
 		// Add the check node to the closed list and remove it
 		// from the open list
@@ -54,7 +55,6 @@ position_list indoor_dijkstra(const position * start, const position * end, int 
 	if(closed->list[closed->count - 1].pos.x == end->x
 			&& closed->list[closed->count - 1].pos.y == end->y) 	{
 		// Create final list and return it to the caller
-		printf("222\n");
 		final = CreateFinalList(closed, end, start);
 		FreeAllocatedList(open);
 		FreeAllocatedList(closed);
@@ -73,12 +73,12 @@ position_list indoor_dijkstra(const position * start, const position * end, int 
  * Goes through the current node's surrounding neighbor nodes and
  * adds reachable nodes to the open list
  */
-void AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed,
-		int map[MAP_Y][MAP_X]) {
+void dijkstra_AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed) {
 	int y, x, mapCost, counter;
 	int openListIndex, endNodeCost, neighborY, neighborX;
 	node adjacentNode, * p_adjacentNode;
-
+	ThreeDWorld map;
+	fill_map(&map);
 	counter = 0;  // used for checking if a neighbor node is diagonally placed
 	enum diagonal {
 		north_west = 0,
@@ -86,7 +86,6 @@ void AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed,
 		south_west = 6,
 		south_east = 8,
 	};
-
 	// Loop through the neighbor nodes
 	for(y = -1; y < 2; y++) {
 		for(x = -1; x < 2; x++, counter++) {
@@ -96,52 +95,54 @@ void AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed,
 			// If x and y is 0 we have the current node
 			// and skips to next loop iteration
 			if(neighborY == current->pos.y
-					&& neighborX == current->pos.x)
+			&& neighborX == current->pos.x){
 				continue;
+			}
 
 			// If the node is inside the map boundaries we get the map
 			// cost for that node
 			if((neighborY >= 0 && neighborY < MAP_Y)
-					&& (neighborX >= 0 && neighborX < MAP_X)) {
-				mapCost = map[neighborY][neighborX];
+				&& (neighborX >= 0 && neighborX < MAP_X)) {
+				mapCost = map.representation[neighborY][neighborX];
 			}
 			else { // If we're outside the map, we check the next neighbor
 				continue;
 			}
 
-			if(mapCost == 5) { // We hit a wall so we try the next connection
+			if(mapCost == 1) { // We hit a wall so we try the next connection
 				continue;
 			}
 			// Check diagonal move for blocking neighbor nodes
 			// The condition evaluation will yield zero for diagonal neighbors
 			else if(counter % 2 == 0) {
 				if(counter == north_west) {
-					if(map[neighborY + 1][neighborX] == 5 	// west
-							|| map[neighborY][neighborX + 1] == 5)	// north
+					if(map.representation[neighborY + 1][neighborX] == 1 	// west
+							|| map.representation[neighborY][neighborX + 1] == 1)	// north
 						continue;
 				}
 				else if(counter == north_east) {
-					if(map[neighborY][neighborX - 1] == 5 	// North
-							|| map[neighborY + 1][neighborX] == 5)	// East
+					if(map.representation[neighborY][neighborX - 1] == 1 	// North
+							|| map.representation[neighborY + 1][neighborX] == 1)	// East
 						continue;
 				}
 				else if(counter == south_east) {
-					if(map[neighborY - 1][neighborX] == 5 	// East
-							|| map[neighborY][neighborX - 1] == 5)	// South
+					if(map.representation[neighborY - 1][neighborX] == 1 	// East
+							|| map.representation[neighborY][neighborX - 1] == 1)	// South
 						continue;
 				}
 				else if(counter == south_west) {
-					if(map[neighborY][neighborX + 1] == 5 	// South
-							|| map[neighborY - 1][neighborX] == 5)	// West
+					if(map.representation[neighborY][neighborX + 1] == 1	// South
+							|| map.representation[neighborY - 1][neighborX] == 1)	// West
+
 						continue;
 				}
 			}
 
 			// Calculate the cost to get to the neighbor node
 			if(counter % 2 == 0) // move diagonally
-				endNodeCost = current->totalCost + (mapCost * 10) + 4;
+				endNodeCost = current->totalCost + 1;
 			else // move straight
-				endNodeCost = current->totalCost + (mapCost * 10);
+				endNodeCost = current->totalCost + 1;
 
 
 			// If the node is already in the closed list we don't check it
@@ -177,6 +178,7 @@ void AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed,
 			}
 		}
 	}
+	free(map.representation);
 }
 
 /*
@@ -186,8 +188,8 @@ position_list CreateFinalList(nodeList * closed, const position * goal, const po
 	point temp;  // used to reverse the final list
 	int counterUp, counterDown, closedIndex;
 	final.list = calloc(closed->count, sizeof(point));
-	final.list[0].lon = (double)((goal->x + TILE_CENTER) * CENTIMETRES_PER_TILE);
-	final.list[0].lat = (double)((goal->y + TILE_CENTER) * CENTIMETRES_PER_TILE);
+	final.list[0].lon = (double)((goal->x * CENTIMETRES_PER_TILE) + TILE_CENTER);
+	final.list[0].lat = (double)((goal->y * CENTIMETRES_PER_TILE) + TILE_CENTER);
 	final.num++;
 
 	closedIndex = closed->count - 1;
@@ -200,19 +202,22 @@ position_list CreateFinalList(nodeList * closed, const position * goal, const po
 		closedIndex = NodeInClosed(&closed->list[closedIndex].previous.y,
 		&closed->list[closedIndex].previous.x, closed) - 1;
 
-		final.list[counterUp].lon = (double)((closed->list[closedIndex].pos.x + TILE_CENTER) * CENTIMETRES_PER_TILE);
-		final.list[counterUp].lat = (double)((closed->list[closedIndex].pos.y + TILE_CENTER) * CENTIMETRES_PER_TILE);;
+		final.list[counterUp].lon = (double)(closed->list[closedIndex].pos.x
+		* CENTIMETRES_PER_TILE + TILE_CENTER);
+		final.list[counterUp].lat = (double)(closed->list[closedIndex].pos.y
+		* CENTIMETRES_PER_TILE + TILE_CENTER);
 		final.num++;
 
 		// When the drone node is found in the closed list we stop looping
-		if((int)(final.list[counterUp].lat) == drone->y
-				&& (int)(final.list[counterUp].lon) == drone->x) {
+		if((int)((final.list[counterUp].lat - TILE_CENTER) / CENTIMETRES_PER_TILE) == drone->y
+			&& (int)((final.list[counterUp].lon - TILE_CENTER) / CENTIMETRES_PER_TILE) == drone->x)
+		{
 			break;
 		}
 	}
 
 	// Reverse the final list to get the nodes in the right order
-	for(counterUp = 0, counterDown = final.num /2;
+	for(counterUp = 0, counterDown = final.num-1;
 			counterUp < counterDown; counterUp++, counterDown--)
 	{
 		temp = final.list[counterUp];
@@ -221,8 +226,8 @@ position_list CreateFinalList(nodeList * closed, const position * goal, const po
 	}
 
 	// Free node space that is not needed
-	final.list = realloc(final.list, (final.num/2 + 1) * sizeof(point));
-	final.num = final.num/2 + 1;
+	final.list = realloc(final.list, (final.num) * sizeof(point));
+	//final.num = final.num/2 + 1;
 	return final;
 }
 

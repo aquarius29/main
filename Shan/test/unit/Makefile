@@ -5,23 +5,13 @@
 #      Author: Shan Huang
 # 
 
-SRCPATH = ../../src
+SRCPATH = ../../src/indoor
 SRCOBJS = $(wildcard $(SRCPATH)/*.o)
 TESTSRCS = $(wildcard *.c)
 
 unit: testsuite
 	@echo Running tests...
 	./testsuite
-
-cov: EXTRAGCCFLAGS+= -fprofile-arcs -ftest-coverage
-cov: unit
-	gcov -b -c testsuite
-	cd $(SRCPATH) && gcov -b -c main.c indoor_navigation.c path_data.c
-
-val: EXTRAGCCFLAGS+= -g
-val: testsuite
-	@echo Running tests under valgrind...
-	valgrind --leak-check=full ./testsuite 
 
 testsuite.o: $(TESTSRCS)
 	gcc -c unitmain.c -o testsuite.o $(EXTRAGCCFLAGS)

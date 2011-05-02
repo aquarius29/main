@@ -7,7 +7,7 @@
 
 #include "CUnit/Basic.h"
 
-#include "simulations.c"
+#include "unit_tests.c"
 
 int main() {
     CU_pSuite simSuite = NULL;
@@ -25,8 +25,8 @@ int main() {
     }
 
   /* Add tests to suite */
-    if(	NULL == CU_add_test(simSuite, "Single Destination", single_destination)
-        || NULL == CU_add_test(pSuite1, "Multiple Destinations", multiple_destinations)
+    if(	NULL == CU_add_test(simSuite, "Single Destination", test_init_list)
+        // || NULL == CU_add_test(simSuite, "Multiple Destinations", multiple_destinations)
     ) {
         CU_cleanup_registry();
         return CU_get_error();
