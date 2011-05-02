@@ -12,6 +12,7 @@
 
 //mov_logic.c
 void testNavCommand(void);
+void command_logic(void);
 
 void start_motors(void);
 void stop_motors(void);
@@ -26,7 +27,7 @@ void decrease_right_motor(void);
 void increase_rear_decrease_front(void);
 void increase_front_decrease_rear(void);
 void increase_left_decrease_right(void);
-void incease_right_decrease_left(void);
+void increase_right_decrease_left(void);
 void increase_all(void);
 void decrease_all(void);
 void hover(void);
@@ -59,10 +60,10 @@ void updateDistanceToTravel(void);
 
 
 //*******************
-//simulator variables & functions
+//simulator variables
 int arrived;
 int readSensorTest(int currentSensor, char command);
-void printOrientation(void);
+
 
 /*movement*/
 void moveL(void);
