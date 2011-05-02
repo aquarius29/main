@@ -24,6 +24,21 @@
 #define INCREMENT 5
 
 
+/* 
+ * Print out the data from the navigation
+ * For testing purpose only
+ */
+void testNavCommand(void) {
+    printf("==============================\n");
+    printf("Type = %c\n", navCommand.type);
+    printf("Order = %c\n", navCommand.order);
+    printf("Height = %d\n", navCommand.height);
+    printf("Distance = %d\n", navCommand.distance);
+    printf("Yaw = %d\n", navCommand.yaw);
+    printf("Speed = %d\n", navCommand.speed);
+    printf("==============================\n");
+}
+
 //************************************************************
 // 
 // 0100 0000 (start)
