@@ -18,6 +18,7 @@
 #define BUFF_YAW 5
 #define BUFF_DISTSNCE 0.2
 #define BUFF_PR 1
+#define SPEED 5
 
 /* 
  * Print out the data from the navigation
@@ -30,7 +31,6 @@ void testNavCommand(void) {
     printf("Height = %d\n", navCommand.height);
     printf("Distance = %d\n", navCommand.distance);
     printf("Yaw = %d\n", navCommand.yaw);
-    printf("Speed = %d\n", navCommand.speed);
     printf("==============================\n");
 }
 
@@ -38,18 +38,16 @@ void testNavCommand(void) {
  * 
  */
 void command_logic(void) {
-    char order = navCommand.order;
-    float speed = navCommand.speed;
-    
+    char order = navCommand.order;  
 	//lift off
-    if (order == 0 || order==1) {
-	distanceToTravel = 0;
+    if (order == 0) {
+		distanceToTravel = 0;
 		check_pitch_roll(0);
 		check_height();
 		check_heading();
-    } else if (order == 2) {
-	distanceToTravel = navCommand.distance;
-	updateDistanceToTravel();
+    } else if (order == 1) {
+		distanceToTravel = navCommand.distance;
+		updateDistanceToTravel();
 		check_pitch_roll(1);
 		check_height();
 		check_heading();
@@ -65,20 +63,19 @@ void check_height(void)
     int height_current =sensorCommand.height;
 
     if(height_desire > height_current+BUFF_DISTSNCE){	
-	hover();	
-	increase_all();
-		 /* simulated */
-    sensorCommand.height = readSensorTest(sensorCommand.height, 'i');
+		hover();	
+		increase_all();
+		/* simulated */
+		sensorCommand.height = readSensorTest(sensorCommand.height, 'i');
     }
     else if(height_desire<height_current-BUFF_DISTSNCE){
-	hover();
-	decrease_all();
-	 /* simulated */
-    sensorCommand.height = readSensorTest(sensorCommand.height, 'd');
+		hover();
+		decrease_all();
+		/* simulated */
+		sensorCommand.height = readSensorTest(sensorCommand.height, 'd');
     }
     else{
-	heightArrived = 1;
-	//great
+		heightArrived = 1;
     }
 }
 
@@ -88,14 +85,13 @@ void check_heading(void)
     int heading_current=sensorCommand.yaw;
 
     if(heading_desire>heading_current+BUFF_YAW){
-	turn_right();
+		turn_right();
     }
     else if(heading_desire<heading_current-BUFF_YAW){
-	turn_left();
+		turn_left();
     }
     else{
-	//great
-	yawArrived = 1;
+		yawArrived = 1;
     }
 }
 
@@ -137,9 +133,7 @@ void check_pitch_roll(int isHovering) {
 }
 
 
-int pRead_speed(){
-    return 5; 
-}
+
 
 int readSensorTest(int currentSensor, char command){
 
@@ -149,11 +143,11 @@ int readSensorTest(int currentSensor, char command){
     int new;
     switch (command) {
     case 'i':
-	new = currentSensor + 1 + i;
-	break;
+		new = currentSensor + 1 + i;
+		break;
     case 'd':
-	new = currentSensor - 1 + i;
-	break;
+		new = currentSensor - 1 + i;
+		break;
     }
 	
 	return new;
@@ -161,21 +155,15 @@ int readSensorTest(int currentSensor, char command){
 
 void printOrientation(void){
     printf("\n {pitch: %d roll: %d, yaw: %d height %d }", 
-	   sensorCommand.pitch, sensorCommand.roll,sensorCommand.yaw,
-	   sensorCommand.height);
+		   sensorCommand.pitch, sensorCommand.roll,sensorCommand.yaw,
+		   sensorCommand.height);
 }
 
 
-void get_speed(void){
+void get_distance_travelled(void){ 
 
-   speed = pRead_speed();
-}
-
-void get_distance_travelled(void){
-
-   get_speed();
-   distanceTraveled = speed * duration;
-  printf("\n \n \n TRAVELED %d", distanceTraveled);
+	distanceTraveled = SPEED * duration;
+	printf("\n \n \n TRAVELED %d", distanceTraveled);
 }
 
 void updateDistanceToTravel(void){
