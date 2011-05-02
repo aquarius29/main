@@ -30,9 +30,12 @@ void check_heading(void);
 void check_pitch_roll(int isHovering);
 
 int speed;
-int distance;
+
 int distanceToTravel;
 int distanceTraveled;
+
+void updateDistanceToTravel(void);
+
 
 //*******************
 //simulator variables
