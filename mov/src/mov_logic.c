@@ -241,7 +241,7 @@ void increase_left_decrease_right(void){
 /*
  *  11 00 11 00
  */
-void incease_right_decrease_left(void){
+void increase_right_decrease_left(void){
 
 	char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
 	printf ("increase right decrease left");
@@ -323,7 +323,8 @@ void turn_left(void){
 /*
  *  11 00 11 00
  */
-void turn_right(void){
+void turn_right(void)
+{
 	char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
 	printf ("turn right");
 	pWrite(msg);
@@ -396,7 +397,7 @@ void check_pitch_roll(int isHovering) {
 		increase_left_decrease_right();
 	}
 	else if(pitch_current<pitch_desire-BUFF_PR){
-		increase_right_decrease_left();
+			increase_right_decrease_left();
 	}
 	else{
 		//great
