@@ -7,7 +7,7 @@
 #include "serial.h"
 #include "parser.h"
 
-#include "threadTest.h"
+#include "nav_corelogic.h"
 
 extern int ON_OFF; 
 

@@ -9,7 +9,9 @@
 #ifndef CORELOGIC_H
 #define CORELOGIC_H
 
-extern struct point curr;
+struct point curr;
+int ON_OFF:
+
 
 typedef struct
 {
