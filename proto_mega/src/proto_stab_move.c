@@ -33,7 +33,7 @@ struct stab stab_move;
     Implementations 
 *****************************************************************************/ 
  
-void stabWriteAttitude(struct stab sb){ 
+void proto_stabWriteAttitude(struct stab sb){ 
     stab_move = sb;
 #ifdef PC
  storeForTint(WRITE, STAB, UNKNOWN, sb.roll);
@@ -46,7 +46,7 @@ void stabWriteAttitude(struct stab sb){
 } 
  
  
-void stabWriteAcc(struct stab sb){ 
+void proto_stabWriteAcc(struct stab sb){ 
     stab_move = sb;
 #ifdef PC
  storeForTint(WRITE, STAB, UNKNOWN, sb.acc_x);
@@ -59,7 +59,7 @@ void stabWriteAcc(struct stab sb){
 } 
 
 
-void stabWriteHeading(struct stab sb){ 
+void proto_stabWriteHeading(struct stab sb){ 
     stab_move = sb;
 #ifdef PC
  storeForTint(WRITE, STAB, UNKNOWN, sb.heading);
@@ -71,7 +71,7 @@ void stabWriteHeading(struct stab sb){
 } 
 
 
-void stabWritePressure(struct stab sb){ 
+void proto_stabWritePressure(struct stab sb){ 
     stab_move = sb;
 #ifdef PC
  storeForTint(WRITE, STAB, UNKNOWN, sb.pressure);

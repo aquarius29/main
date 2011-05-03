@@ -23,13 +23,13 @@ struct stab {
 };
 
 
-void stabWriteAttitude(struct stab);
+void proto_stabWriteAttitude(struct stab);
 
-void stabWriteAcc(struct stab);
+void proto_stabWriteAcc(struct stab);
 
-void stabWriteHeading(struct stab);
+void proto_stabWriteHeading(struct stab);
 
-void stabWritePressure(struct stab);
+void proto_stabWritePressure(struct stab);
 
 
 
