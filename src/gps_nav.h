@@ -11,7 +11,9 @@
 
 extern int ON_OFF; 
 
-extern struct point curr;	/* current position, this data will be modified by gps device reader */ 
+extern GPSLocation currentOutdoorPosition;	/* current position, this data will be modified by gps device reader */ 
+
+struct point curr;
 
 int good_data;
 

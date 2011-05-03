@@ -35,14 +35,18 @@ void setup_gps(char *dev,int baud)
 
 	good_data = 0;
 
-	curr.name = 0;
+//	curr.name = 0;
 //	curr.lat = 57.7071;
 //	curr.lon = 11.9377;
 //	curr.lat = 5742.386;	
 //	curr.lon = 1156.063;	
 
-	curr.lat = 0;
-	curr.lon = 0;
+//	curr.lat = 0;
+//	curr.lon = 0;
+
+	currentOutdoorPosition.latitude = 0;
+	currentOutdoorPosition.longitude = 0;
+
 
 
 	int fd = 0;
@@ -68,21 +72,25 @@ void setup_gps(char *dev,int baud)
 			if(check_gps_output(buf))
 			{			
 		    		printf("%s",buf);
+				
 				struct point *position = parser(buf);
 
-				curr.name = 0;
-				curr.lat = in_degree(position->lat);
-				curr.lon = in_degree(position->lon);
+//				curr.name = 0;
+
+				currentOutdoorPosition.latitude = in_degree(position->lat);
+				currentOutdoorPosition.longitude = in_degree(position->lon);
+
 				free(position);
 		
-
-				if(curr.lat != 0)
+				if(currentOutdoorPosition.latitude != 0)
 				{
 					good_data = 1;
+				}else{
+					good_data = 0;
 				}
 	
-				printf("lat: %f ",curr.lat);
-				printf("lon: %f\n",curr.lon);
+				printf("lat: %f ",currentOutdoorPosition.latitude);
+				printf("lon: %f\n",currentOutdoorPosition.longitude);
 			}	
 		}
 	}
@@ -199,8 +207,8 @@ struct trac* update_path(struct point currp,struct point dest,struct point *pts,
 void get_startp(struct point *pt)
 {
 	pt->name = -1;
-	pt->lat = curr.lat;
-	pt->lon = curr.lon;
+	pt->lat = currentOutdoorPosition.latitude;
+	pt->lon = currentOutdoorPosition.longitude;
 }
 
 
