@@ -63,7 +63,6 @@ void check_height(void)
     if(height_current > height_desire+BUFF_DISTSNCE){	
 		hover();	
 		decrease_all();
-
 		/* simulated */
 		sensorCommand.height = readSensorTest(sensorCommand.height, 'd');
     }
@@ -75,6 +74,7 @@ void check_height(void)
 		sensorCommand.height = readSensorTest(sensorCommand.height, 'i');
     }
     else{
+		hover();
 		heightArrived = 1;
     }
 	printOrientation();
@@ -97,6 +97,7 @@ void check_heading(void)
     sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'i');
     }
     else{
+		hover();
 		yawArrived = 1;
     }
 	printOrientation();
