@@ -53,7 +53,16 @@ void command_logic(void) {
 		check_height();
 		check_heading();
     } else {
-			land();  	
+	distanceToTravel = 0;
+	check_pitch_roll(0);
+	check_heading();
+	if (sensorCommand.height <= 0)
+	    heightArrived = 1;
+	else	    {
+	    land();  
+	    /* simulated */
+	    sensorCommand.height = readSensorTest(sensorCommand.height, 'd');
+	} 
     }
 }
 
@@ -109,7 +118,7 @@ void check_pitch_roll(int isHovering) {
 	int pitch_desire;
 	int roll_desire;
 
-	if(isHovering==1){
+	if(isHovering==0){
 		pitch_desire=0;
 		roll_desire=0;
 	}
@@ -169,9 +178,9 @@ int readSensorTest(int currentSensor, char command){
 
 void printOrientation(void)
 {
-    printf("\n {pitch: %d roll: %d, yaw: %d height %d }\n", 
+    printf("\n {pitch: %d roll: %d, yaw: %d height: %d distance left: %d}\n", 
 		   sensorCommand.pitch, sensorCommand.roll,sensorCommand.yaw,
-		   sensorCommand.height);
+	   sensorCommand.height, distanceToTravel );
 }
 
 
