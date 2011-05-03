@@ -42,18 +42,18 @@ void command_logic(void) {
 	printOrientation();
     char order = navCommand.order;  
 	//lift off
-    if (order == 0) {
+    if (order == '0') {
 		distanceToTravel = 0;
 		check_pitch_roll(0);
 		check_height();
 		check_heading();
-    } else if (order == 1) {
+    } else if (order == '1') {
 		updateDistanceToTravel();
 		check_pitch_roll(1);
 		check_height();
 		check_heading();
     } else {
-		land();  	
+	land();  	
     }
 }
 
@@ -108,6 +108,7 @@ void check_pitch_roll(int isHovering) {
 	int roll_current=sensorCommand.roll;
 	int pitch_desire;
 	int roll_desire;
+
 	if(isHovering==1){
 		pitch_desire=0;
 		roll_desire=0;
@@ -138,7 +139,7 @@ void check_pitch_roll(int isHovering) {
 		sensorCommand.roll = readSensorTest(sensorCommand.roll, 'd');
 	}
 	else if(roll_current<roll_desire-BUFF_PR){
-		increase_rear_decrease_front();
+		increase_rear_decrease_front();		
 		/* simulated */
 		sensorCommand.roll = readSensorTest(sensorCommand.roll, 'i');
 	}
@@ -147,19 +148,17 @@ void check_pitch_roll(int isHovering) {
 	}
 }
 
-
+//(rand() % (max - min + 1) + min);
 int readSensorTest(int currentSensor, char command){
-
     srand(time(NULL));
-    int i = (rand() % (5 + 5 + 1) - 5);  // between 5 and -5 degree variation
-    printf("!!!!!!!!!!!!!!!RAND RAND RAND RAND: %d",i);
+    int i = (rand() % (5 - 0 + 1) + 0);  // between 5 and -5 degree variation
     int new;
     switch (command) {
     case 'i':
-		new = currentSensor + 1 + i;
+		new = currentSensor + i;
 		break;
     case 'd':
-		new = currentSensor - 1 + i;
+		new = currentSensor - i;
 		break;
     }
 	

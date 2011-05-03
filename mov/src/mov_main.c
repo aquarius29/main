@@ -79,7 +79,7 @@ void assignValue(int index, char *temp){
 		break;
     case 2:
 		p->order = temp[0];
-			/* printf("Order is %c\n", navCommand.order); */
+		/* printf("Order is %c\n", navCommand.order); */
 		break;
     case 3:
 		p->height = atoi(temp);
