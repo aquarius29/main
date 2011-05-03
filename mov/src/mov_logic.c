@@ -40,7 +40,7 @@ void printNavCommand(void) {
 void command_logic(void) {
 	printNavCommand();
 	printOrientation();
-   char order = navCommand.order;  
+	char order = navCommand.order;  
 	//lift off
     if (order == '0') {
 		distanceToTravel = 0;
@@ -53,13 +53,14 @@ void command_logic(void) {
 		check_height();
 		check_heading();
     } else {
-			land();  	
+		land();  	
     }
 }
 
 //check the drone height
 void check_height(void)
 {
+	printf("!!!!!!!!!!!!!check height: \n");
     int height_desire =navCommand.height;
     int height_current =sensorCommand.height;
 
@@ -80,10 +81,12 @@ void check_height(void)
     else{
 		heightArrived = 1;
     }
+	printOrientation();
 }
 
 void check_heading(void)
 {
+	printf("!!!!!!!!!!!!!check heading: \n");
     int heading_desire=navCommand.yaw;
     int heading_current=sensorCommand.yaw;
 
@@ -100,10 +103,11 @@ void check_heading(void)
     else{
 		yawArrived = 1;
     }
+	printOrientation();
 }
 
 void check_pitch_roll(int isHovering) {
-
+	printf("!!!!!!!!!!!!!check pitch and roll: \n");
 	int pitch_current=sensorCommand.pitch;
 	int roll_current=sensorCommand.roll;
 	int pitch_desire;
@@ -145,6 +149,7 @@ void check_pitch_roll(int isHovering) {
 	else{
 		//great
 	}
+	printOrientation();
 }
 
 

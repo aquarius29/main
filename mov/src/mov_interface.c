@@ -81,7 +81,7 @@ int mov_init()
  *
  */
 int mov_run(){
-	printf("\n *********************LOOOOOOOP***************************\n");
+	printf("\n \n*********************LOOOOOOOP***************************\n");
 
 	/*If the distanceToTravel is less than or equal to 0, we have probably arrived**/
 
