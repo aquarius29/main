@@ -134,6 +134,8 @@ void *startgpswatchdog(void *ptr)
 			printf("Attempting to create GPS Navigation thread\n");
 			gpsNavigationThreadResult = 
 			pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
+
+			break;
 		}
         usleep(20000);
 	}
