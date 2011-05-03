@@ -34,7 +34,7 @@ typedef struct
 }
 outdoorRouteRequest;
 
-GPSLocation *currentOutdoorPosition;
+GPSLocation currentOutdoorPosition;
 
 void nav_run_gps_system();
 //void nav_run_gps_system(GPSLocation *destination); // setup gps system

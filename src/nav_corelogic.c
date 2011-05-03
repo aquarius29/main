@@ -123,7 +123,9 @@ void *startgpswatchdog(void *ptr)
 //	pthread_cond_wait(&watchdogCond, &watchdogMutex); /* Set watchdog to wait for mutex unlock */
 
 	int data = 0;
-	while(data != 1)
+    int loopCount = 0;
+    
+	while(loopCount < 1000)
 	{
 		data = get_goodData();
 		
@@ -133,6 +135,7 @@ void *startgpswatchdog(void *ptr)
 			gpsNavigationThreadResult = 
 			pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
 		}
+        usleep(20000);
 	}
 	
 	while (gpsRunning == 1)
