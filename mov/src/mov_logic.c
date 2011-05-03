@@ -46,7 +46,6 @@ void command_logic(void) {
 		check_height();
 		check_heading();
     } else if (order == 1) {
-		distanceToTravel = navCommand.distance;
 		updateDistanceToTravel();
 		check_pitch_roll(1);
 		check_height();
@@ -65,12 +64,14 @@ void check_height(void)
     if(height_desire > height_current+BUFF_DISTSNCE){	
 		hover();	
 		increase_all();
+
 		/* simulated */
 		sensorCommand.height = readSensorTest(sensorCommand.height, 'i');
     }
     else if(height_desire<height_current-BUFF_DISTSNCE){
 		hover();
 		decrease_all();
+
 		/* simulated */
 		sensorCommand.height = readSensorTest(sensorCommand.height, 'd');
     }
@@ -133,13 +134,11 @@ void check_pitch_roll(int isHovering) {
 }
 
 
-
-
 int readSensorTest(int currentSensor, char command){
 
     srand(time(NULL));
     int i = (rand() % (5 + 5 + 1) - 5);  // between 5 and -5 degree variation
-
+    printf("RAND RAND RAND RAND: %d",i);
     int new;
     switch (command) {
     case 'i':
@@ -154,7 +153,7 @@ int readSensorTest(int currentSensor, char command){
 }
 
 void printOrientation(void){
-    printf("\n {pitch: %d roll: %d, yaw: %d height %d }", 
+    printf("\n {pitch: %d roll: %d, yaw: %d height %d } \n", 
 		   sensorCommand.pitch, sensorCommand.roll,sensorCommand.yaw,
 		   sensorCommand.height);
 }
