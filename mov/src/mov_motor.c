@@ -1,13 +1,13 @@
-/*****************************************************************************
- * Product: movement.c
- * Version: 0.1
- * Created: April 4 2011
- * History:
- *          
+/*
+ * file:         mov_interface.c
+ * brief:
+ * author:       Yanling Jin, Amber Olsson
+ * date:         2011-05-03
+ * version:      0.1
+ * history      
  *
- *
- * Movement/CA Group
- *****************************************************************************/
+ * detail:
+ */
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -131,8 +131,6 @@ void decrease_right_motor(void){
  *  11 10 00 11
  */
 void increase_rear_decrease_front(void){
-    /* simulated */
-    sensorCommand.roll = readSensorTest(sensorCommand.roll, 'i');
    
     char msg = to_MotorMessage(1,1,1,0,0,0,1,1);
     printf ("increase rear decrease front");
@@ -144,8 +142,6 @@ void increase_rear_decrease_front(void){
  *  11 00 00 11
  */
 void increase_front_decrease_rear(void){
-    /* simulated */
-    sensorCommand.roll = readSensorTest(sensorCommand.roll, 'd');
    
     char msg = to_MotorMessage(1,1,0,0,0,0,1,1);
     printf ("increase front decrease rear");
@@ -157,8 +153,6 @@ void increase_front_decrease_rear(void){
  *  11 10 11 00
  */
 void increase_left_decrease_right(void){
-    /* simulated */
-    sensorCommand.pitch = readSensorTest(sensorCommand.pitch, 'd');
    
     char msg = to_MotorMessage(1,1,1,0,1,1,0,0);
     printf ("increase left decrease right");
@@ -169,8 +163,6 @@ void increase_left_decrease_right(void){
  *  11 00 11 00
  */
 void increase_right_decrease_left(void){
-    /* simulated */
-    sensorCommand.pitch = readSensorTest(sensorCommand.pitch, 'i');
 
     char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
     printf ("increase right decrease left");
@@ -268,7 +260,6 @@ void turn_right(void)
 /*
  *  11 11 11 11
  */
-
 void hover(void)
 {
 	char msg =to_MotorMessage(1,1,1,1,1,1,1,1);
@@ -276,10 +267,13 @@ void hover(void)
 	pWrite(msg);
 }
 
-
+/*
+ *  
+ */
 void land(void){
 	hover();
 	decrease_all();
+	printf("land");
 }
 
 /*
@@ -323,13 +317,20 @@ char to_MotorMessage(char ID0, char ID1, char increasing, char panicMode,
 	return motors;
 }
 
-//******TEST METHODS ***/
+
+/*
+ *  
+ */
 void pWrite(char msg)
 {
 	//	printf("\nProtocol has this written to it: ");
 	//	print_char_to_Binary(msg);
 }
 
+
+/*
+ *  
+ */
 void print_char_to_Binary(char bin)
 {
 	char counter,temp,bit;
@@ -348,8 +349,3 @@ void print_char_to_Binary(char bin)
 
 	printf("\n");
 }
-
-
-
-
-//************End of Testing methods

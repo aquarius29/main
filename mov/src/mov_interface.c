@@ -58,11 +58,13 @@ int mov_run()
 
 
 
+
+
+
 #ifdef PC
-//************************************************************
-// PC
-//  All movement preperation goes here.
-//************************************************************
+/*
+ *
+ */
 int mov_init()
 {
     distanceToTravel = 0;
@@ -73,30 +75,16 @@ int mov_init()
 
 }
 
-//************************************************************
-// PC
-// Movement is started here
-//************************************************************
+
+/*
+ *
+ */
 int mov_run()
 {
-
-    /* //duration since last time we ran */
-    /* 	if(start_time != 0){ */
-    /* 	    duration =  clock() / (CLOCKS_PER_SEC / 1000) - start_time; */
-    /* 	    updateDistanceToTravel(); */
-    /* 	    printf("duration: %d", duration); */
-    /* 	    printf("\n \n \n distance to travel  %d", distanceToTravel); */
-    /* 	} */
-    /* 	else */
-    /* 	    { */
-    /* 		duration = 0; */
-    /* 	    } */
-
 	/*If the distanceToTravel is less than or equal to 0, we have probably arrived**/
 	if(distanceToTravel <= 0 && heightArrived == 1 && yawArrived == 1)
 	    {
-			int x = read_command();
-			if (x == 0) {  /***check if there is a valid command***/
+			if (read_command()== 0) {  /***check if there is a valid command***/
 				printf("**end of the file**\n");
 				return 1;
     		}
@@ -119,27 +107,15 @@ int mov_run()
 
 
 
-void write_to_motor(float f1, float f2, float f3, float f4) {
+void write_to_motor(void){
 
-	printf("write to motor here");
-	unsigned char message = 0;
-    
-    message = 0xFF;
-    /* send message to motor here */
-	// write_motor(message);
+
 }
-
-
-void write_to_nav() {
+void write_to_nav(void ) {
 	//write to navigation
 }
 
 
-void read_navCommand() {
+void read_navCommand(void) {
 	//read navigation command
-}
-
-
-void write_to_collision() {
-	//write to collision
 }

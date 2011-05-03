@@ -1,13 +1,13 @@
-/*****************************************************************************
- * Product: movementInterface.c
- * Version: 0.1
- * Created: April 7, 2011
- * History:
+/*
+ * file:         mov_interface.c
+ * brief:
+ * author:       Yanling Jin, Amber Olsson
+ * date:         2011-05-03
+ * version:      0.1
+ * history      
  *
- *
- *
- * Movement/CA Group
- *****************************************************************************/
+ * detail:
+ */
 
 #include "mov_interface.h"
 #include <stdlib.h>
@@ -23,10 +23,8 @@ FILE *file;
  */
 int main(int argc, char *argv[]){
 
-
     /* start anything that needs to be started ahead of time */
     mov_init(); 
-
     
     file = fopen("input.txt", "r");
 
@@ -99,15 +97,12 @@ void assignValue(int index, char *temp){
 		printf("Don't give me invalid value\n");
 		break;
     }
-
 }
 
 
 /*
- * 
+ * TYPE: 0 ORDER: 2 HEIGHT: 5 DISTANCE: 0 YAW: 0
  */
-//TYPE: 0 ORDER: 2 HEIGHT: 5 DISTANCE: 0 YAW: 0
-//0123456789012345678901234
 int get_loc(char line[], char c, int indexOfChar){
     int i = 0;
     int count = 0;
