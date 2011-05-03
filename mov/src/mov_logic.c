@@ -40,7 +40,7 @@ void printNavCommand(void) {
 void command_logic(void) {
 	printNavCommand();
 	printOrientation();
-    char order = navCommand.order;  
+   char order = navCommand.order;  
 	//lift off
     if (order == '0') {
 		distanceToTravel = 0;
@@ -53,7 +53,7 @@ void command_logic(void) {
 		check_height();
 		check_heading();
     } else {
-	land();  	
+			land();  	
     }
 }
 

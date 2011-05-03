@@ -11,6 +11,13 @@
 
 #include <stdio.h>
 
+/* global variables*/
+int distanceToTravel;
+int distanceTraveled;
+
+int yawArrived;
+int heightArrived;
+
 
 /*mov_logic.c*/
 void printNavCommand(void);
@@ -21,14 +28,7 @@ void check_pitch_roll(int isHovering);
 void updateDistanceToTravel(void);
 void printOrientation(void);
 
-int distanceToTravel;
-int distanceTraveled;
-
-int yawArrived;
-int heightArrived;
-
-
-/*mov_motor,c*/
+/*mov_motor.c*/
 void start_motors(void);
 void stop_motors(void);
 void increase_rear_motor(void);

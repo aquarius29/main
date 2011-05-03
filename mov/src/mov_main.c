@@ -46,7 +46,7 @@ int read_command(){
 
     char line[60];
     if (fgets(line, sizeof(line) + 1, file) != NULL) {
-		printf("line is %s\n", line);
+		printf("$$$$$$$$$$$$$$LINE: %s\n", line);
 		int i;
 		for (i = 1; i < 6; i++) {
 			int start = get_loc(line, ':', i);

@@ -81,9 +81,8 @@ int mov_init()
  *
  */
 int mov_run(){
+	printf("\n *********************LOOOOOOOP***************************\n");
 
-    printf("dis %d Height %d Yaw %d", distanceToTravel, heightArrived, yawArrived);
- 
 	/*If the distanceToTravel is less than or equal to 0, we have probably arrived**/
 
 	if(distanceToTravel <= 0 && heightArrived == 1 && yawArrived == 1){
@@ -99,12 +98,12 @@ int mov_run(){
 		}
 	}
 	
-	printOrientation();
 
 	command_logic();
 
 	/* stabilize based on last movement  */
 	//stabL();
+	sleep(1);
 
 	duration = 10;
 
