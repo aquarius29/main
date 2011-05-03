@@ -27,7 +27,7 @@ void test_init_list(void)
     a.y = 1;
     b.x = 9;
     b.y = 5;
-    // init_path(a, b);
+    init_path(a, b);
     CU_ASSERT(a.x == 1);
     CU_ASSERT(a.y == 1);
 }

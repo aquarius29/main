@@ -14,10 +14,10 @@ unit: testsuite
 	./testsuite
 
 testsuite.o: $(TESTSRCS)
-	gcc -c unitmain.c -o testsuite.o $(EXTRAGCCFLAGS)
+	gcc -I/usr/include/libxml2 -lxml2 -c unitmain.c -o testsuite.o $(EXTRAGCCFLAGS)
 
 testsuite: $(SRCOBJS) testsuite.o
-	gcc $(SRCOBJS) testsuite.o -o testsuite $(EXTRAGCCFLAGS) -lcunit 
+	gcc -I/usr/include/libxml2 -lxml2 $(SRCOBJS) testsuite.o -o testsuite $(EXTRAGCCFLAGS) -lcunit 
 
 clean:
 	rm -f testsuite testsuite.exe testsuite.o *.gcov *.gcda *.gcno

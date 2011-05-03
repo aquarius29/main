@@ -17,7 +17,8 @@ static int count, running;
 static position_list route;
 
 static struct timeval timer;
-static progressive_node *first, *checkpoint, *current;
+static progressive_node *first, *current;
+// static progressive_node *first, *checkpoint, *current;
 // checkpoint = path->path[path->num-1]
 
 void insert_progressive_node() {
@@ -32,10 +33,6 @@ void insert_progressive_node() {
     else {
         count++;
 
-        if (current != first->next) {
-            checkpoint = current->next;
-        }
-
         progressive_node *temp;
         temp = calloc(1, sizeof(progressive_node));
         current->next = temp;
@@ -45,10 +42,6 @@ void insert_progressive_node() {
         current->next = calloc(1, sizeof(progressive_node));
         current->next->p = route.list[count];
         current->next->next = 0;
-
-        if (current == first->next) {
-            checkpoint = current->next;
-        }
     }
 }
 
@@ -65,16 +58,16 @@ void free_progressive_list() {
 
 void set_direction() {
     current->next->p.angle =
-        atan2((current->next->p.lat - checkpoint->p.lat),
-        (current->next->p.lon - checkpoint->p.lon));
+        atan2((current->next->p.lat - current->prev->p.lat),
+        (current->next->p.lon - current->prev->p.lon));
 }
 void set_distance() {
 
     current->next->p.distance = (sqrt((current->next->p.lon -
-        checkpoint->p.lon) * (current->next->p.lon -
-        checkpoint->p.lon) + (current->next->p.lat -
-        checkpoint->p.lat) * (current->next->p.lat -
-        checkpoint->p.lat)));
+        current->prev->p.lon) * (current->next->p.lon -
+        current->prev->p.lon) + (current->next->p.lat -
+        current->prev->p.lat) * (current->next->p.lat -
+        current->prev->p.lat)));
 }
 void update_position() {
     struct timeval current_time;
@@ -89,8 +82,8 @@ void update_position() {
         sin(current->next->p.angle);
     change_x = (time * CENTIMETRES_PER_SECOND) *
         cos(current->next->p.angle);
-    current->p.lon = checkpoint->p.lon + change_x;
-    current->p.lat = checkpoint->p.lat + change_y;
+    current->p.lon = current->prev->p.lon + change_x;
+    current->p.lat = current->prev->p.lat + change_y;
 }
 
 
@@ -162,17 +155,17 @@ void reset_timer() {
 }
 void compare_tile(){
     if((current->p.lon - TILE_CENTER)/CENTIMETRES_PER_TILE
-        != (checkpoint->p.lon - TILE_CENTER)/CENTIMETRES_PER_TILE
+        != (current->prev->p.lon - TILE_CENTER)/CENTIMETRES_PER_TILE
         || (current->p.lat - TILE_CENTER)/CENTIMETRES_PER_TILE
-        != (checkpoint->p.lat - TILE_CENTER)/CENTIMETRES_PER_TILE)
+        != (current->prev->p.lat - TILE_CENTER)/CENTIMETRES_PER_TILE)
     {
-        checkpoint = current;
+        current->prev = current;
     }
 }
 void recalc(){
     position a, b;
-    a.x = (checkpoint->p.lon - TILE_CENTER) / CENTIMETRES_PER_TILE;
-    a.y = (checkpoint->p.lat - TILE_CENTER) / CENTIMETRES_PER_TILE;
+    a.x = (current->prev->p.lon - TILE_CENTER) / CENTIMETRES_PER_TILE;
+    a.y = (current->prev->p.lat - TILE_CENTER) / CENTIMETRES_PER_TILE;
     b.x = (route.list[route.num-1].lon - TILE_CENTER) / CENTIMETRES_PER_TILE;
     b.y = (route.list[route.num-1].lat - TILE_CENTER) / CENTIMETRES_PER_TILE;
     route = indoor_dijkstra(&a, &b);
@@ -220,7 +213,7 @@ void navigate_path(){
 
         if(check(current->p, current->next->p) == 1){
             if(check(current->p, route.list[route.num-1]) == 1){
-                checkpoint->p = current->next->p;
+                current->prev->p = current->next->p;
                 count++;
                 free_progressive_list();
                 send_stop();
@@ -247,5 +240,6 @@ int main(){
     b.x = 9;
     b.y = 5;
     init_path(a, b);
-    return 1;
+    // return 1;
+    return 0;
 }

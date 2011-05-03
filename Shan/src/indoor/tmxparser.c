@@ -218,6 +218,6 @@ void parseDoc(char *docname, ThreeDWorld *world)
 }
 
 void fill_map(ThreeDWorld * world) {
-	char *doc = "/Users/E0/Desktop/linkthis/src/indoor/secondYearSquare.xml";
+	char *doc = "/Users/E0/Dropbox/Code/Embedded/nav/Shan/src/indoor/secondYearSquare.xml";
 	parseDoc(doc, world);
 }

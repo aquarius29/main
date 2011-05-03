@@ -6,7 +6,6 @@
 */
 
 #include "CUnit/Basic.h"
-
 #include "unit_tests.c"
 
 int main() {
