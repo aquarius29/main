@@ -23,13 +23,13 @@
 ## Local functions used in the script, scroll down for actual script
 ## -------------------------------------------------------------------------------
 
-# Writes all passed arguments to a log file
+## Writes all passed arguments to a log file
 log()
 {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"  >> "${LOG_FILE}" #quotes because of the whitespaces in file path  
 }
 
-# First prints out, then writes all passed arguments to a log file
+## First prints out, then writes all passed arguments to a log file
 echolog()
 {
     echo "$*"
@@ -48,12 +48,11 @@ check_return_value()
    fi
 }
 
+
+## 
+## Author: Eugene Groshev
 git_pull()
 {
-
-# cd to build dir
-cd ..
-cd ..
 
 PROJECT_CHANGED=0 # variable to store the change state of the project
 
@@ -74,7 +73,6 @@ done
 
 #echo $PROJECT_CHANGED
 
-  
 }
 
 
@@ -313,6 +311,10 @@ log "=========================================================="
 log " Pulling code "
 log "=========================================================="
 
+# cd to build dir
+cd ..
+cd ..
+
 git_pull
 
 # Eventual exit, if no code has been changed
@@ -323,6 +325,12 @@ then
     log "=========================================================="
     exit $PROJECT_CHANGED
 fi
+
+
+#
+# Copy code from group's folders to main project directory
+#
+copy_code
 
 # Create the configure script
 prep_src
