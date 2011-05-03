@@ -24,7 +24,7 @@
  * Print out the data from the navigation
  * For testing purpose only
  */
-void testNavCommand(void) {
+void printNavCommand(void) {
     printf("==============================\n");
     printf("Type = %c\n", navCommand.type);
     printf("Order = %c\n", navCommand.order);
@@ -38,6 +38,8 @@ void testNavCommand(void) {
  * 
  */
 void command_logic(void) {
+	printNavCommand();
+	printOrientation();
     char order = navCommand.order;  
 	//lift off
     if (order == 0) {
@@ -87,9 +89,13 @@ void check_heading(void)
 
     if(heading_desire>heading_current+BUFF_YAW){
 		turn_right();
+     /* simulated */
+    sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'i');
     }
     else if(heading_desire<heading_current-BUFF_YAW){
 		turn_left();
+      /* simulated */
+    sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'd');
     }
     else{
 		yawArrived = 1;
@@ -113,9 +119,13 @@ void check_pitch_roll(int isHovering) {
 	//pitch clac
 	if(pitch_current>pitch_desire+BUFF_PR){
 		increase_left_decrease_right();
+		/* simulated */
+		sensorCommand.pitch = readSensorTest(sensorCommand.pitch, 'd');
 	}
 	else if(pitch_current<pitch_desire-BUFF_PR){
 	    increase_right_decrease_left();
+		/* simulated */
+		sensorCommand.pitch = readSensorTest(sensorCommand.pitch, 'i');
 	}
 	else{
 		//great
@@ -124,9 +134,13 @@ void check_pitch_roll(int isHovering) {
 	//roll calc
 	if(roll_current>roll_desire+BUFF_PR){
 		increase_front_decrease_rear();
+		/* simulated */
+		sensorCommand.roll = readSensorTest(sensorCommand.roll, 'd');
 	}
 	else if(roll_current<roll_desire-BUFF_PR){
 		increase_rear_decrease_front();
+		/* simulated */
+		sensorCommand.roll = readSensorTest(sensorCommand.roll, 'i');
 	}
 	else{
 		//great
@@ -152,8 +166,10 @@ int readSensorTest(int currentSensor, char command){
 	return new;
 }
 
-void printOrientation(void){
-    printf("\n {pitch: %d roll: %d, yaw: %d height %d } \n", 
+
+void printOrientation(void)
+{
+    printf("\n {pitch: %d roll: %d, yaw: %d height %d }\n", 
 		   sensorCommand.pitch, sensorCommand.roll,sensorCommand.yaw,
 		   sensorCommand.height);
 }
@@ -162,7 +178,7 @@ void printOrientation(void){
 void get_distance_travelled(void){ 
 
 	distanceTraveled = SPEED * duration;
-	printf("\n \n \n TRAVELED %d", distanceTraveled);
+	printf("\n TRAVELED %d", distanceTraveled);
 }
 
 void updateDistanceToTravel(void){

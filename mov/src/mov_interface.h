@@ -13,12 +13,13 @@
 
 
 /*mov_logic.c*/
-void testNavCommand(void);
+void printNavCommand(void);
 void command_logic(void);
 void check_height(void);
 void check_heading(void);
 void check_pitch_roll(int isHovering);
 void updateDistanceToTravel(void);
+void printOrientation(void);
 
 int distanceToTravel;
 int distanceTraveled;

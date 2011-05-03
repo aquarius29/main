@@ -26,7 +26,7 @@
 void start_motors(void)
 {
 	char msg = to_MotorMessage(0,1,0,0,0,0,0,0);
-	printf ("start motors");
+	printf ("start motors\n");
 	pWrite(msg);
 }
 
@@ -37,7 +37,7 @@ void stop_motors(void)
 {
 
 	char msg = to_MotorMessage(0,0,0,0,0,0,0,0);
-	printf ("stop motors");
+	printf ("stop motors\n");
 	pWrite(msg);
 }
 
@@ -48,7 +48,7 @@ void increase_rear_motor(void){
 
  
 	char msg = to_MotorMessage(1,0,1,0,0,0,0,1);
-	printf ("increase rear motor");
+	printf ("increase rear motor\n");
 	pWrite(msg);
 
 }
@@ -59,7 +59,7 @@ void increase_rear_motor(void){
 void decrease_rear_motor(void){
 
 	char msg = to_MotorMessage(1,0,0,0,0,0,0,1);
-	printf ("decrease rear motors");
+	printf ("decrease rear motors\n");
 	pWrite(msg);
 }
 
@@ -69,7 +69,7 @@ void decrease_rear_motor(void){
 void increase_front_motor(void){
 
 	char msg = to_MotorMessage(1,0,1,0,0,0,1,0);
-	printf ("increase front motor");
+	printf ("increase front motor\n");
 	pWrite(msg);
 }
 
@@ -79,7 +79,7 @@ void increase_front_motor(void){
 void decrease_front_motor(void){
 
 	char msg = to_MotorMessage(1,0,0,0,0,0,1,0);
-	printf ("decrease front motor");
+	printf ("decrease front motor\n");
 	pWrite(msg);
 }
 
@@ -88,7 +88,7 @@ void decrease_front_motor(void){
  */
 void increase_left_motor(void){
 	char msg = to_MotorMessage(1,0,1,0,0,1,0,0);
-	printf ("increase left motor");
+	printf ("increase left motor\n");
 	pWrite(msg);
 
 }
@@ -100,7 +100,7 @@ void increase_left_motor(void){
 void decrease_left_motor(void){
 
 	char msg = to_MotorMessage(1,0,0,0,0,1,0,0);
-	printf ("decrease left motor");
+	printf ("decrease left motor\n");
 	pWrite(msg);
 }
 
@@ -111,7 +111,7 @@ void decrease_left_motor(void){
 void increase_right_motor(void){
 
 	char msg = to_MotorMessage(1,0,1,0,1,0,0,0);
-	printf ("increase right motor");
+	printf ("increase right motor\n");
 	pWrite(msg);
 }
 
@@ -121,7 +121,7 @@ void increase_right_motor(void){
  */
 void decrease_right_motor(void){
 	char msg = to_MotorMessage(1,0,0,0,1,0,0,0);
-	printf ("decrease right motor");
+	printf ("decrease right motor\n");
 	pWrite(msg);
 
 }
@@ -133,7 +133,7 @@ void decrease_right_motor(void){
 void increase_rear_decrease_front(void){
    
     char msg = to_MotorMessage(1,1,1,0,0,0,1,1);
-    printf ("increase rear decrease front");
+    printf ("increase rear decrease front\n");
     pWrite(msg);
 }
 
@@ -144,7 +144,7 @@ void increase_rear_decrease_front(void){
 void increase_front_decrease_rear(void){
    
     char msg = to_MotorMessage(1,1,0,0,0,0,1,1);
-    printf ("increase front decrease rear");
+    printf ("increase front decrease rear\n");
     pWrite(msg);
 
 }
@@ -155,7 +155,7 @@ void increase_front_decrease_rear(void){
 void increase_left_decrease_right(void){
    
     char msg = to_MotorMessage(1,1,1,0,1,1,0,0);
-    printf ("increase left decrease right");
+    printf ("increase left decrease right\n");
     pWrite(msg);
 }
 
@@ -165,7 +165,7 @@ void increase_left_decrease_right(void){
 void increase_right_decrease_left(void){
 
     char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
-    printf ("increase right decrease left");
+    printf ("increase right decrease left\n");
     pWrite(msg);
 }
 
@@ -174,7 +174,7 @@ void increase_right_decrease_left(void){
  */
 void increase_all(void){
 	char msg = to_MotorMessage(1,0,1,0,1,1,1,1);
-	printf ("increase all motors");
+	printf ("increase all motors\n");
 	pWrite(msg);
 
 }
@@ -184,7 +184,7 @@ void increase_all(void){
  */
 void decrease_all(void){
     char msg = to_MotorMessage(1,0,0,0,1,1,1,1);
-    printf ("decrease all motors");
+    printf ("decrease all motors\n");
     pWrite(msg);
 }
 
@@ -195,7 +195,7 @@ void decrease_all(void){
 void go_forwards(void)
 {
 	char msg = to_MotorMessage(1,1,0,0,0,0,1,0);
-	printf ("go forward");
+	printf ("go forward\n");
 	pWrite(msg);
 }
 
@@ -206,7 +206,7 @@ void go_backwards(void)
 {
 
 	char msg = to_MotorMessage(1,1,0,0,0,0,0,1);
-	printf ("go backward");
+	printf ("go backward\n");
 	pWrite(msg);
 }
 
@@ -216,7 +216,7 @@ void go_backwards(void)
 void strafe_left(void)
 {
 	char msg = to_MotorMessage(1,1,1,0,0,1,0,0);
-	printf ("scrafe left");
+	printf ("scrafe left\n");
 	pWrite(msg);
 }
 
@@ -227,7 +227,7 @@ void strafe_left(void)
 void strafe_right(void)
 {
 	char msg = to_MotorMessage(1,1,0,0,1,0,0,0);
-	printf ("scrafe right");
+	printf ("scrafe right\n");
 	pWrite(msg);
 }
 
@@ -235,12 +235,9 @@ void strafe_right(void)
  *  11 10 11 00
  */
 void turn_left(void){
-    
-      /* simulated */
-    sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'd');
-
+  
     char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
-    printf ("turn left");
+    printf ("turn left\n");
     pWrite(msg);
 }
 
@@ -249,11 +246,8 @@ void turn_left(void){
  */
 void turn_right(void)
 {
-     /* simulated */
-    sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'i');
-
     char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
-    printf ("turn right");
+    printf ("turn right\n");
     pWrite(msg);
 }
 
@@ -263,7 +257,7 @@ void turn_right(void)
 void hover(void)
 {
 	char msg =to_MotorMessage(1,1,1,1,1,1,1,1);
-	printf ("hover");
+	printf ("hover\n");
 	pWrite(msg);
 }
 
@@ -273,7 +267,7 @@ void hover(void)
 void land(void){
 	hover();
 	decrease_all();
-	printf("land");
+	printf("land\n");
 }
 
 /*
