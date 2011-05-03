@@ -10,7 +10,7 @@
 
 /* Create a movement command */
 void sendmovementcommand
-(char type, char order , int height, int distance, int yaw, int pitch , int roll, int speed)
+(char type, char order , int height, int distance, int yaw)
 {
 	movementCommand *move = malloc(sizeof(movementCommand));
 	if (move == NULL)
@@ -24,11 +24,8 @@ void sendmovementcommand
 		move->height = height;
 		move->distance = distance;
 		move->yaw = yaw;
-		move->pitch = pitch;
-		move->roll = roll;
-		move->speed = speed;
-		
-		/* Function from interface to send order goes here */
+        
+        /* Function from interface to send order goes here */
 		/* e.g. InterfaceSendOrder(order); */
 		free(move);
 	}

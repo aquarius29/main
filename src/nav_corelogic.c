@@ -22,6 +22,7 @@
 #include "nav_corelogic.h"
 #include "tmxparser.c"
 #include "gps_nav.h"
+#include "tilemap.h"
 //#include "path_structure.h"
 
 /* Possible thread patterns 
@@ -43,7 +44,7 @@ int waitingForGpsSetupThread = 1;
 static pthread_mutex_t gpsRunningMutex = PTHREAD_MUTEX_INITIALIZER;
 
 int gpsRunning = 0;
-int startGpsThread = 0;
+
 
 /* Add global variables (within mutex scope) that need to be modified outside and inside threads*/
 
@@ -104,17 +105,17 @@ void *startgpswatchdog(void *ptr)
     setupMessage = (char *) ptr;
     printf("%s\n", setupMessage);
 
-	int manualCommandThreadResult; 
+	//int manualCommandThreadResult; 
 	int gpsSetupThreadResult;
 	int gpsNavigationThreadResult;
 	
-	char *message = "manual movement thread command started";
+	//char *message = "manual movement thread command started";
 	char *message2 = "gps setup thread started";
 	char *message3 = "gps navigation thread started";
 
 	/* pthread functions return 0 when successful */
-	printf("Attempting to create manual command handler thread\n");
-    manualCommandThreadResult = pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
+	//printf("Attempting to create manual command handler thread\n");
+    //manualCommandThreadResult = pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
 
 	printf("Attempting to create GPS setup thread\n");
 	gpsSetupThreadResult = pthread_create(&gpsSetupThread, NULL, setupgps, (void*) message2);
@@ -134,28 +135,29 @@ void *startgpswatchdog(void *ptr)
 		}
 	}
 	
-	//while (gpsRunning == 1)
-	//{
-		// if (pthread_kill(manualCommandThread, 0) != 0)
+	while (gpsRunning == 1)
+	{
+        //if (pthread_kill(manualCommandThread, 0) != 0)
 		// 	{
 		// 		printf("Manual Command Thread was murdered\nRessurecting....\n");
 		// 		manualCommandThreadResult = pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
 		// 	}
-		// if (pthread_kill(gpsSetupThread, 0) != 0)
-		// 		{
-		// 			int cancelResult;
-		// 			
-		// 			cancelResult = pthread_cancel( gpsNavigationThread );
-		// 			printf("cancel result is %d\n", cancelResult);
-		// 			while(cancelResult != 0)
-		// 			{
-		// 				//printf(".....");
-		// 				cancelResult = pthread_cancel( gpsNavigationThread );
-		// 			}
-			// /* Create new thread for gps setup*/
-			// 		printf("GPS Setup Thread died a horrible death\nRessurecting....\n");
-			// 		gpsSetupThreadResult = pthread_create(&gpsSetupThread, NULL, setupgps, (void*) message2);
-	//	}
+        if (pthread_kill(gpsSetupThread, 0) != 0)
+        {
+            int cancelResult;
+
+            cancelResult = pthread_cancel( gpsNavigationThread );
+            printf("cancel result is %d\n", cancelResult);
+            while(cancelResult != 0)
+            {
+                printf(".....");
+                cancelResult = pthread_cancel( gpsNavigationThread );
+            }
+                /* Create new thread for gps setup*/
+                printf("GPS Setup Thread died a horrible death\nRessurecting....\n");
+                gpsSetupThreadResult = pthread_create(&gpsSetupThread, NULL, setupgps, (void*) message2);
+        }
+    }
 		// if (pthread_kill(gpsNavigationThread, 0) == 0)
 		// 		{
 		// 			printf("GPS Navigation Thread was digitally destroyed\nReconstructing....\n");
@@ -175,6 +177,8 @@ void *setupgps(void *ptr)
     message = (char *) ptr;
     printf("%s\n", message);
 
+    /*
+     
 	int result;
 
 	result = pthread_mutex_lock( &watchdogMutex);
@@ -186,22 +190,14 @@ void *setupgps(void *ptr)
 	result = pthread_mutex_unlock( &watchdogMutex );
 	if (result != 0)
 	printf("error unlocking pthread mutex\n");
+     
+     */
 	
 	// result = pthread_cond_signal(&watchdogCond); /* Wake watchdog */
 	// 	if (result != 0)
 	// 	printf("error with conditional signal\n");
 	
 	 setup_gps(UNO,57600);
-	
-	// result = pthread_mutex_lock( &gpsRunningMutex );
-	// if (result != 0)
-	// 	printf("error locking pthread mutex\n");
-	// 		
-	// gpsRunning = 0;
-	// 		
-	// 	result = pthread_mutex_unlock(&gpsRunningMutex );
-	// if (result != 0)
-	// 	printf("error unlocking pthread mutex\n");
 }
 
 void *setupgpsnavigation(void *ptr)
@@ -220,14 +216,18 @@ void nav_run_indoor_system(position startTile, position destinationTile)
 {
 	printf("Creating manual command handler thread\n");
 	
-	int threadResult; /* pthread functions return 0 when successful */
-	char *message = "manual movement command thread started";
+    
+	//int threadResult; /* pthread functions return 0 when successful */
+	/*
+    char *message = "manual movement command thread started";
 	pthread_t manualCommandThread;
     
     threadResult = 
     pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
 
+    */
     /* check if thread was created */
+    /*
     if (threadResult == 0)
 		printf("Thread created\n");
     else
@@ -240,6 +240,8 @@ void nav_run_indoor_system(position startTile, position destinationTile)
  		if (threadResult == 0)
 			printf("Thread created\n");
     }
+    
+    */
    // init_path(startTile, destinationTile);
 	printf("indoor navigation system started\n");
 }
@@ -267,20 +269,24 @@ void killIndoorNavigationSystem()
 	
 }
 
-// function by which external system e.g Connectivity sends a request to move
-// and the request is passes on to the movement for processing.
-// NOTE: Wait for correct protocol implementation/
-void relayManualMovementCommand(movementCommand *_command)
+void sendCurrentIndoorPosition(CGPoint *currentPosition)
 {
-	// if (_command->command == NULL)
-	// 	{
-	// 		printf("Invalid Manual Command, cannot relay to movement\n");
-	// 	}
-	// 	else
-	// 	{
-	// 		// use protocol here to send the data to the movement for handling
-	// 	}
-	
+	/* Put connectivity library function here */ 
+}
+
+void sendCurrentOutdoorPosition(GPSLocation *currentPosition)
+{
+	/* Put Connectivity library function here. */
+}
+
+void sendOutdoorPath(GPSLocation **path)
+{
+	/* Put Connectivity library function here and pass in path */
+}
+
+void sendIndoorPath(CGPoint **path)
+{
+	/* Put Connectivity library function here and pass in path */
 }
 
 // function for the path calculation/navigation to use to 
@@ -291,14 +297,16 @@ void relayManualMovementCommand(movementCommand *_command)
 // or do they want to update it when they receive movementsMande data from movement group?
 void sendMovementCommand(movementCommand *move)
 {
-	// if (move->command == NULL)
-	// {
-	// 	printf("Movement from path calculation invalid\n");
-	// }
-	// else
-	// {
-	// 	// use protocol to send the movement command to the movement group
-	// }
+	if(move->type == 0)
+	{
+		/* Send the movement command to navigation system */
+		/* Send the movement command to movement/write it to protocol static object */ 
+	}
+	else if (move->type == 1)
+	{
+		/* If movement commands are not being written in the nav systems directly. skip this else statement */
+		/* Send the movement command to movement/write it to the protocol static object */
+	}
 }
 
 // function to update the destination at any given time: GPS
@@ -336,14 +344,6 @@ void collisionAvoided()
 	// notify the path calculation to recalculate
 }
 
-// The function to send movement commands to movement system
-// This depends totally on the implementation by the movement group.
-// NOTE: use this when sending an entire list of commands. 
-// e.g. when no collision objects are expected to arise.
-void sendMovementCommandsListToMovement()
-{
-	
-}
 // TODO: Ask UI group how they handle input, a basic command e.g. right or an angle moved
 // functions for handling the manual user input
 // void manualMovementCommand(moveCommand *_command)
@@ -351,19 +351,6 @@ void sendMovementCommandsListToMovement()
 // 	// TODO: notify the path calculation to stop creating movement orders.
 // 	sendMovementCommand(_command);
 // }
-
-// receive data about the movement from movement group
-void receiveMovementData(movementPerformed *movement)
-{
-	if (movement == NULL)
-	{
-		printf("movement data from movement system invalid\n");
-	}
-	else
-	{
-		// send the movement data to the positioning system
-	}
-}
 
 // function to create a collision object for the indoor system.
 void createIndoorCollisionObject(int tileNumber, ThreeDWorld *world)
@@ -388,40 +375,6 @@ void createIndoorCollisionObject(int tileNumber, ThreeDWorld *world)
 		// notify the path calculation to recheck the worldMap and recalculate.
 		printf("Collision object created\n");
 	}
-}
-
-// handles manual drone commands
-void *commandFetcher(void *ptr)
-{
-    char *message;
-    message = (char *) ptr;
-    printf("%s\n", message);
-
-	// check if it is neccesary to malloc command if it is simply being relayed
-	// movementCommand *data = malloc(sizeof movementCommand);
-	// 	if (data == NULL)
-	// 	{
-	// 		printf("Couldnt malloc movement command\n");
-	// 	}
-	
-	movementCommand *data;
-   // data = protocol_read_command;
-    if (data == NULL)
-        {
-            printf("No command input data\n");
-        }
-   // else
-	//	{
-        // send the command to the movement group using protocol_write
-        // e.g. write_movement_command
-        // use core logic funtion to pause path calculation? 
-		// maybe no need for pausing if we want to retake control when 
-		// manual commands are done.
-//		}
-
-//	free(data);
-	
-	//commandfetcher();
 }
 
 void killThread()
