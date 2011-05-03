@@ -158,6 +158,7 @@ int readSensorTest(int currentSensor, char command){
     srand(time(NULL));
     int i = (rand() % (5 - 0 + 1) + 0);  // between 5 and -5 degree variation
     int new;
+
     switch (command) {
     case 'i':
 		new = currentSensor + i;
@@ -179,14 +180,7 @@ void printOrientation(void)
 }
 
 
-void get_distance_travelled(void){ 
-
-	distanceTraveled = SPEED * duration;
-	printf("\n TRAVELED %d", distanceTraveled);
-}
-
 void updateDistanceToTravel(void){
-    
-    get_distance_travelled();
+    distanceTraveled = SPEED * duration;
     distanceToTravel = distanceToTravel - distanceTraveled ;
 }
