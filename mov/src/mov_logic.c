@@ -63,19 +63,19 @@ void check_height(void)
     int height_desire =navCommand.height;
     int height_current =sensorCommand.height;
 
-    if(height_desire > height_current+BUFF_DISTSNCE){	
+    if(height_current > height_desire+BUFF_DISTSNCE){	
 		hover();	
-		increase_all();
-
-		/* simulated */
-		sensorCommand.height = readSensorTest(sensorCommand.height, 'i');
-    }
-    else if(height_desire<height_current-BUFF_DISTSNCE){
-		hover();
 		decrease_all();
 
 		/* simulated */
 		sensorCommand.height = readSensorTest(sensorCommand.height, 'd');
+    }
+    else if(height_current<height_desire-BUFF_DISTSNCE){
+		hover();
+		increase_all();
+
+		/* simulated */
+		sensorCommand.height = readSensorTest(sensorCommand.height, 'i');
     }
     else{
 		heightArrived = 1;
@@ -87,15 +87,15 @@ void check_heading(void)
     int heading_desire=navCommand.yaw;
     int heading_current=sensorCommand.yaw;
 
-    if(heading_desire>heading_current+BUFF_YAW){
-		turn_right();
+    if(heading_current>heading_desire+BUFF_YAW){
+		turn_left();
      /* simulated */
-    sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'i');
+    sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'd');
     }
-    else if(heading_desire<heading_current-BUFF_YAW){
+    else if(heading_current<heading_desire-BUFF_YAW){
 		turn_left();
       /* simulated */
-    sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'd');
+    sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'i');
     }
     else{
 		yawArrived = 1;
