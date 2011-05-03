@@ -40,20 +40,20 @@ void printNavCommand(void) {
 void command_logic(void) {
 	printNavCommand();
 	printOrientation();
-    char order = navCommand.order;  
+   char order = navCommand.order;  
 	//lift off
-    if (order == 0) {
+    if (order == '0') {
 		distanceToTravel = 0;
 		check_pitch_roll(0);
 		check_height();
 		check_heading();
-    } else if (order == 1) {
+    } else if (order == '1') {
 		updateDistanceToTravel();
 		check_pitch_roll(1);
 		check_height();
 		check_heading();
     } else {
-		land();  	
+			land();  	
     }
 }
 
