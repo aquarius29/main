@@ -138,7 +138,7 @@ int readSensorTest(int currentSensor, char command){
 
     srand(time(NULL));
     int i = (rand() % (5 + 5 + 1) - 5);  // between 5 and -5 degree variation
-    printf("RAND RAND RAND RAND: %d",i);
+    printf("!!!!!!!!!!!!!!!RAND RAND RAND RAND: %d",i);
     int new;
     switch (command) {
     case 'i':
