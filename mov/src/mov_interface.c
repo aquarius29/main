@@ -66,27 +66,41 @@ int mov_run()
  */
 int mov_init()
 {
+    heightArrived = 1;
+    yawArrived = 1;
     distanceToTravel = 0;
+
 	duration=0;
 
 	return 0;
+
 }
 
 
 /*
  *
  */
-int mov_run()
-{
+int mov_run(){
+
+    printf("dis %d Height %d Yaw %d", distanceToTravel, heightArrived, yawArrived);
+ 
 	/*If the distanceToTravel is less than or equal to 0, we have probably arrived**/
-	if(distanceToTravel <= 0 && heightArrived == 1 && yawArrived == 1) {
-		int i= read_command();
-		if (i== 0) { 
+
+	if(distanceToTravel <= 0 && heightArrived == 1 && yawArrived == 1){
+		heightArrived = 0;
+		yawArrived = 0;
+		distanceToTravel = 0;
+		if (read_command()== 0) {  
 			printf("**end of the file**\n");
 			return 1;
 		}
+		else{
+			distanceToTravel = navCommand.distance;
+		}
 	}
-		
+	
+	printOrientation();
+
 	command_logic();
 
 	/* stabilize based on last movement  */
