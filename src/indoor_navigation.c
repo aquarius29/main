@@ -233,7 +233,7 @@ void navigate_path(){
     }
 }
 
-int main(){
+/*int main(){
     position a, b;
     a.x = 1;
     a.y = 1;
@@ -242,4 +242,4 @@ int main(){
     init_path(a, b);
     // return 1;
     return 0;
-}
+}*/
