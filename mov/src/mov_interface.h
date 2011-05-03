@@ -18,15 +18,41 @@ int distanceTraveled;
 int yawArrived;
 int heightArrived;
 
+static int start_time;
+int duration;
+
+
+struct nav
+{
+	char type;         // (manual/auto)
+	char order;       //(lift off/ hovering/ moving/ land)
+	int height;
+	int distance;
+	int yaw;
+	int speed;
+};
+
+struct sensor
+{
+	int pitch;
+	int roll;
+	int yaw;
+	int height;
+};
+
+struct nav navCommand;
+struct sensor sensorCommand;
+
+
 
 /*mov_logic.c*/
-void printNavCommand(void);
 void command_logic(void);
 void check_height(void);
 void check_heading(void);
 void check_pitch_roll(int isHovering);
 void updateDistanceToTravel(void);
 void printOrientation(void);
+int readSensorTest(int currentSensor, char command);
 
 /*mov_motor.c*/
 void start_motors(void);
@@ -62,51 +88,13 @@ void print_char_to_Binary(char bin);
 
 
 /*mov_main.c*/
-//simulator variables
-int readSensorTest(int currentSensor, char command);
-
-
-
-struct nav
-{
-	char type;         // (manual/auto)
-	char order;       //(lift off/ hovering/ moving/ land)
-	int height;
-	int distance;
-	int yaw;
-	int speed;
-};
-
-struct sensor
-{
-	int pitch;
-	int roll;
-	int yaw;
-	int height;
-};
-
-
-
-/*main*/
-int old_x_desired;
-int old_y_desired;
-int old_z_desired;
-
-struct nav navCommand;
-struct sensor sensorCommand;
-
 int read_command();
 int get_loc(char line[],char c,int indexOfColumn);
 void assignValue(int index,char *temp);
 
 
-
 /*interface*/
 int mov_init();
 int mov_run();
-
-//global time variables
-static int start_time;
-int duration;
 
 

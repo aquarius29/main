@@ -75,26 +75,26 @@ void assignValue(int index, char *temp){
     switch (index) {
     case 1:
 		p->type = temp[0];
-			/* printf("Type is %c\n", navCommand.type); */
+			printf("Type is %c\n", navCommand.type); 
 		break;
     case 2:
 		p->order = temp[0];
-		/* printf("Order is %c\n", navCommand.order); */
+			printf("Order is %c\n", navCommand.order);
 		break;
     case 3:
 		p->height = atoi(temp);
-		/* printf("Height is %d\n", navCommand.height); */
+		printf("Height is %d\n", navCommand.height);
 		break;
     case 4:
 		p->distance = atoi(temp);
-		/* printf("Distance is %d\n", navCommand.distance); */
+		printf("Distance is %d\n", navCommand.distance);
 		break;
     case 5:
 		p->yaw = atoi(temp);
-		/* printf("Yaw is %d\n", navCommand.yaw); */
+		printf("Yaw is %d\n", navCommand.yaw);
 		break;
     default:
-		/* printf("Don't give me invalid value\n"); */
+		printf("Don't give me invalid value\n");
 		break;
     }
 }

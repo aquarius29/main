@@ -14,10 +14,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#ifdef PC
-#include <time.h>
-#endif
-
 
 #ifdef ARDUINO
 //************************************************************
@@ -26,7 +22,6 @@
 //************************************************************
 int mov_init()
 {
-	//start magnetometer
 	start_time=0;
 	duration=0;
 
@@ -43,8 +38,6 @@ int mov_run()
 	if(start_time != 0){
 		duration = millis() - start_time;
 	}
-  
-	//stabilize based on last movement 
   
 	//move
 
@@ -98,12 +91,7 @@ int mov_run(){
 		}
 	}
 	
-
 	command_logic();
-
-	/* stabilize based on last movement  */
-	//stabL();
-	sleep(1);
 
 	duration = 10;
 

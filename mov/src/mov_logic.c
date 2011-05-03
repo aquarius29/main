@@ -20,38 +20,24 @@
 #define BUFF_PR 1
 #define SPEED 5
 
-/* 
- * Print out the data from the navigation
- * For testing purpose only
- */
-void printNavCommand(void) {
-    printf("==============================\n");
-    printf("Type = %c\n", navCommand.type);
-    printf("Order = %c\n", navCommand.order);
-    printf("Height = %d\n", navCommand.height);
-    printf("Distance = %d\n", navCommand.distance);
-    printf("Yaw = %d\n", navCommand.yaw);
-    printf("==============================\n");
-}
 
 /*
  * 
  */
 void command_logic(void) {
-	printNavCommand();
 	printOrientation();
 	char order = navCommand.order;  
 	//lift off
     if (order == '0') {
 		distanceToTravel = 0;
+		check_heading();
 		check_pitch_roll(0);
 		check_height();
-		check_heading();
     } else if (order == '1') {
 		updateDistanceToTravel();
+		check_heading();
 		check_pitch_roll(1);
 		check_height();
-		check_heading();
     } else {
 		land();  	
     }
@@ -113,7 +99,7 @@ void check_pitch_roll(int isHovering) {
 	int pitch_desire;
 	int roll_desire;
 
-	if(isHovering==1){
+	if(isHovering==0){
 		pitch_desire=0;
 		roll_desire=0;
 	}
