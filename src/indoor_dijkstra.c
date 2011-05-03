@@ -185,9 +185,9 @@ void dijkstra_AddNeighborsToOpen(node * current, nodeList * open, nodeList * clo
  * Creates the final list and returns a pointer to it
  */
 position_list CreateFinalList(nodeList * closed, const position * goal, const position * drone) {
-	point temp;  // used to reverse the final list
+	pixel temp;  // used to reverse the final list
 	int counterUp, counterDown, closedIndex;
-	final.list = calloc(closed->count, sizeof(point));
+	final.list = calloc(closed->count, sizeof(pixel));
 	final.list[0].lon = (double)((goal->x * CENTIMETRES_PER_TILE) + TILE_CENTER);
 	final.list[0].lat = (double)((goal->y * CENTIMETRES_PER_TILE) + TILE_CENTER);
 	final.num++;
@@ -226,7 +226,7 @@ position_list CreateFinalList(nodeList * closed, const position * goal, const po
 	}
 
 	// Free node space that is not needed
-	final.list = realloc(final.list, (final.num) * sizeof(point));
+	final.list = realloc(final.list, (final.num) * sizeof(pixel));
 	//final.num = final.num/2 + 1;
 	return final;
 }
