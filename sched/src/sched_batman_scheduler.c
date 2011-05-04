@@ -179,7 +179,7 @@ int16_t init_process_data(void)
             printf("DONE\n\n");
         #endif
     }
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 int16_t process_setup(ProcessData *pProcessData, sched_Fun_t funArrRun[TOTAL_NO_PROCESSES])
@@ -212,7 +212,7 @@ int16_t process_setup(ProcessData *pProcessData, sched_Fun_t funArrRun[TOTAL_NO_
     enqueue_task(process, task);
     pProcessData->processList[4] = process;*/
 
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 /* Author: Joakim */
@@ -230,7 +230,7 @@ int16_t system_init(sched_Fun_t funArrInit[TOTAL_NO_PROCESSES]){
         #endif /* PC */
     }
     
-    return EXIT_SUCCESS;
+    return 0;
 }
 
 /* Deallocates all dynamic data */
