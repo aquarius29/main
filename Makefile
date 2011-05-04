@@ -76,7 +76,7 @@ BASIC_INCLUDES=-I../../stab/src -I../../moto/src -I../../mov/src -I../../ca/src 
 SCHED_FLAG=-DBATMAN
 
 ##  Free of charge
-EXTRA_FLAGS= -DWINDOWS -DLOG
+EXTRA_FLAGS=
 
 ##  Name of micro controller
 MMCU=atmega2560

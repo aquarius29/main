@@ -17,9 +17,12 @@
 *               2011-04-21 - Made execution time measurement
 */
 
+#ifdef WINDOWS
+#include <malloc.h>
+#endif /* WINDOWS */
+
 #ifdef PC
 #include <stdio.h>
-#include <malloc.h>
 #include <string.h>
 #include <stdlib.h>
 
