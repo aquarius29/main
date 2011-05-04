@@ -19,13 +19,12 @@
 
 #ifdef PC
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 #ifdef WINDOWS
 #include <malloc.h>
 #endif
-
-#include <string.h>
-#include <stdlib.h>
 
 /* stubs represent other modules */
 #include "sched_stubs.h"
