@@ -1,7 +1,7 @@
 //
 //  protocol_filter_motor.h
 //
-//  Created by Nena Stojova on 4/12/11.
+//  Created by Elnaz Shahmehr on 4/12/11.
 
 //
 

@@ -4,9 +4,9 @@
 * Released: April 1 2011
 * Updated: April 28 2011
 *
-* Copyright by (C) 2011 Nena 
+* Copyright by (C) 2011 by Elnaz Shahmehr
 *
-* Updated by Elnaz Shahmehr
+*  
 *
 * <IT University of Goteborg>
 *****************************************************************************/

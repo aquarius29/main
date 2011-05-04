@@ -4,7 +4,7 @@
 * Released: April 7 2011
 * Updated: April 28 2011
 *
-* Copyright (C) 2011 Nena Stojova
+* Copyright (C) 2011 Elnaz Shahmehr
 *
 * Updated by Elnaz Shahmehr 
 *
