@@ -26,12 +26,12 @@
  */
 int ca_init(void)
 {
-	/* to init the print serial */
-	Serial.begin(9600);
 
 	/* to init the arduino lib */
 	init();
 
+	/* to init the print serial */
+	Serial.begin(9600);
 	return 0;
 }
 

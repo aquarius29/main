@@ -51,7 +51,7 @@ void outputIR(unsigned char *result)
 {
 
 #ifdef ARDUINO
-	Serial.print("\n detects an object at ");
+	Serial.print("detects an object at ");
 #elif defined PC
 	printf("\n detects an object at ");
 #endif 

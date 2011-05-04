@@ -48,5 +48,4 @@ unsigned char* moving_closer (int * irDistances);
 /* ca_sensors.c */ 
 #ifdef ARDUINO
 int ir_distance(int irpin);
-float sonar_distance(int sonarPin); 
 #endif
