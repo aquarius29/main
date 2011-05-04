@@ -83,9 +83,9 @@ void setup_gps(char *dev,int baud)
 
 
 
-void gps_navigation(GPSLocation Destination)
+void gps_navigation(GPSLocation* Destination)
 {
-	struct point destination = {-2,Destination.latitude,Destination.longitude};
+	struct point destination = {-2,Destination->latitude,Destination->longitude};
 
 	struct point *pts = init_map(); 			
 
