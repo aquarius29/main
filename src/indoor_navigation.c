@@ -13,16 +13,13 @@
 #define ALGORITHM 0
 #define CENTIMETRES_PER_SECOND 20
 
+static void navigate_path(void);
 static int count, running;
 static position_list route;
-
 static struct timeval timer;
 static progressive_node *first, *current;
-// static progressive_node *first, *checkpoint, *current;
-// checkpoint = path->path[path->num-1]
 
-void insert_progressive_node() {
-    
+static void insert_progressive_node(void) {
     if (first == 0) {
         first = calloc(1, sizeof(progressive_node));
         first->prev = 0;
@@ -32,44 +29,37 @@ void insert_progressive_node() {
     }
     else {
         count++;
-
         progressive_node *temp;
         temp = calloc(1, sizeof(progressive_node));
         current->next = temp;
         temp->prev = current;
         current = temp;
-
         current->next = calloc(1, sizeof(progressive_node));
         current->next->p = route.list[count];
         current->next->next = 0;
     }
 }
-
-void free_progressive_list() {
-
+static void free_progressive_list(void) {
     progressive_node *temp;
-
     while (first != 0) {
         temp = first->next;
         free(first);
         first = temp;
     }
 }
-
-void set_direction() {
+static void set_direction(void) {
     current->next->p.angle =
-        atan2((current->next->p.lat - current->prev->p.lat),
-        (current->next->p.lon - current->prev->p.lon));
+    atan2((current->next->p.lat - current->prev->p.lat),
+    (current->next->p.lon - current->prev->p.lon));
 }
-void set_distance() {
-
+static void set_distance(void) {
     current->next->p.distance = (sqrt((current->next->p.lon -
-        current->prev->p.lon) * (current->next->p.lon -
-        current->prev->p.lon) + (current->next->p.lat -
-        current->prev->p.lat) * (current->next->p.lat -
-        current->prev->p.lat)));
+    current->prev->p.lon) * (current->next->p.lon -
+    current->prev->p.lon) + (current->next->p.lat -
+    current->prev->p.lat) * (current->next->p.lat -
+    current->prev->p.lat)));
 }
-void update_position() {
+static void update_position(void) {
     struct timeval current_time;
     double change_x, change_y, time, microseconds;
     gettimeofday(&current_time, NULL);
@@ -85,9 +75,7 @@ void update_position() {
     current->p.lon = current->prev->p.lon + change_x;
     current->p.lat = current->prev->p.lat + change_y;
 }
-
-
-void send_direction(double *angle) {
+static void send_direction(double *angle) {
     //Give angle to core logic, so it can tell movement
     //which way we need to move.
     //N 90 E 180 S -90 W -180
@@ -98,62 +86,58 @@ void send_direction(double *angle) {
         printf("Move at angle %.5f\n", *angle / (M_PI/180) + 180);
     }
 }
-void send_distance(double *distance) {
+static void send_distance(double *distance) {
     //Send distance between two coords to corelogic
     printf("Go for %.5f cm.\n", *distance);
 }
-void send_position(pixel *pos){
+static void send_position(pixel *pos){
     printf("Longitude = %f\nLatitude = %f\n", pos->lon, pos->lat);
 }
-void send_expected_path(position_list *path) {
+static void send_expected_path(position_list *path) {
     //Give corelogic the calculated path.
     printf("This is the path given by path calc.\nLines should be drawn between each point in list.\n");
 }
 // void send_actual_path(progressive_route *path){
-void send_actual_path(progressive_node *first){
+static void send_actual_path(progressive_node *first){
     //Give corelogic the finalized path after destination reached.
     printf("This is the path actually taken to until destination reached/nav interrupted.\n");
 }
-void send_stop(){
+void stopIndoorNavigation(void){
     //Tell corelogic to tell movement to stop (for when we arrive at destination).
     printf("Destination reached or indoor navigation interrupted.\n");
+    running = 0;
     send_actual_path(first);
-
     free_progressive_list();
 }
 //Send start and end point received from corelogic
 //to path calculation.
-void init_path(position start, position end){
+void init_path(position *start, position *end){
     int counterUp;
     running = 1;
     count = 0;
-
     if(ALGORITHM == 0) {
         printf("Dijkstra\n");
-        route = indoor_dijkstra(&start, &end);
+        route = indoor_dijkstra(start, end);
     }
     else{
         printf("Astar\n");
-        route = indoor_astar(&start, &end);
+        route = indoor_astar(start, end);
     }
     for(counterUp = 0; counterUp < route.num; counterUp++) {
         printf("final.x: %f ", route.list[counterUp].lon);
         printf("final.Y: %f\n", route.list[counterUp].lat);
     }
     printf("num: %d\n", route.num);
-    
-    // insert first node and next node for 
-    // current destination calculation
+    // insert first node and next node for current destination calculation
     insert_progressive_node(); 
-    
     send_expected_path(&route);
     navigate_path();
 
 }
-void reset_timer() {
+static void reset_timer(void) {
     gettimeofday(&timer, NULL);
 }
-void compare_tile(){
+static void compare_tile(void){
     if((current->p.lon - TILE_CENTER)/CENTIMETRES_PER_TILE
         != (current->prev->p.lon - TILE_CENTER)/CENTIMETRES_PER_TILE
         || (current->p.lat - TILE_CENTER)/CENTIMETRES_PER_TILE
@@ -162,7 +146,7 @@ void compare_tile(){
         current->prev = current;
     }
 }
-void recalc(){
+static void recalc(void){
     position a, b;
     a.x = (current->prev->p.lon - TILE_CENTER) / CENTIMETRES_PER_TILE;
     a.y = (current->prev->p.lat - TILE_CENTER) / CENTIMETRES_PER_TILE;
@@ -185,7 +169,7 @@ void collision_avoided(double direction, struct timeval time){
     compare_tile();
     recalc();
 }
-int check(pixel a, pixel b){
+static int check(pixel a, pixel b){
     double diff_x, diff_y;
     diff_x = fabs(a.lon - b.lon);
     diff_y = fabs(a.lat - b.lat);
@@ -196,7 +180,7 @@ int check(pixel a, pixel b){
         return 0;
     }
 }
-void navigate_path(){
+static void navigate_path(void){
     int bool;
     struct timespec wait;
     wait.tv_sec = 0;
@@ -216,7 +200,7 @@ void navigate_path(){
                 current->prev->p = current->next->p;
                 count++;
                 free_progressive_list();
-                send_stop();
+                stopIndoorNavigation();
                 bool = 0;
                 break;
             }
@@ -239,7 +223,6 @@ void navigate_path(){
     a.y = 1;
     b.x = 9;
     b.y = 5;
-    init_path(a, b);
-    // return 1;
+    init_path(&a, &b);
     return 0;
 }*/

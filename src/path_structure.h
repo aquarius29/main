@@ -21,14 +21,11 @@ typedef struct{
     double angle;
     double distance;
 } pixel;
-
 typedef struct progressive_node {
     pixel p;
 	struct progressive_node *prev;
 	struct progressive_node *next;
 } progressive_node;
-
-
 typedef struct{
 	int y;
 	int x;
@@ -51,14 +48,10 @@ typedef struct {
 	int num;
 }position_list;
 
-position_list indoor_dijkstra(const position * start, const position * end);
-position_list indoor_astar(const position * start, const position * end);
-void set_direction();
-void set_distance();
-void update_position();
-void init_path(position start, position end);
-void navigate_path();
-void free_progressive_list();
-void insert_progressive_node();
+position_list indoor_dijkstra(const position *start, const position *end);
+position_list indoor_astar(const position *start, const position *end);
+void init_path(position *start, position *end);
+void stopIndoorNavigation(void);
+void collision_avoided(double direction, struct timeval time);
 
 #endif /* PATH_STRUCTURE_H */
