@@ -65,8 +65,9 @@ int direction_filter(void)
     irBooleans = distance_filter(dangerzone, ir1, ir2, ir3, ir4);
     if (PRINTABLE) {
 		Serial.println("================================");
-		Serial.println("Result for which ir is triggered: \n");
+		Serial.println("Result for which ir is triggered:");
 		outputIR(irBooleans);
+		Serial.println();
     }
 
     /* BOOLEANS -> DIRECTION RESULTS */
@@ -85,9 +86,10 @@ int direction_filter(void)
 		Serial.println("================================");
 		Serial.println("Quadrocopter heading towards ");
 		outputdirection(dir);
+		Serial.println();
 
 		Serial.println("================================");
-		Serial.println("after filter according to the heading directions\n\n");
+		Serial.println("after filter according to the heading directions");
 		print_result(result);
     }
 
@@ -102,8 +104,9 @@ int direction_filter(void)
     free(distance_diff);
     if (PRINTABLE) {
 		Serial.println("================================");
-		Serial.println("Result for which direction is moving closer \n");
+		Serial.println("Result for which direction is moving closer");
 		outputIR(moving_close);
+		Serial.println();
     }
 
     /* TOWARDS WHICH IR -> DIRECTION RESULT */
@@ -114,8 +117,7 @@ int direction_filter(void)
 		Serial.println("after filter according to the moving object\n");
 		print_result(result);
 
-		Serial.println("================================");
-		Serial.println("\nFINAL\n\n");
+		Serial.println("=============FINAL=============");
 		print_result(result);
     }
 
@@ -124,9 +126,8 @@ int direction_filter(void)
     free(result);
     if (PRINTABLE) {
 		Serial.println("================================");
-		Serial.println("IF I HAVE TO PICK A DIRECTION\nI CHOOSE ");
+		Serial.println("IF I HAVE TO PICK A DIRECTION, I CHOOSE: ");
 		outputdirection(finalDir);
-		Serial.println("================================");
     }
 	
 	/* if the final direction is same as the current direction, return an invalid value */

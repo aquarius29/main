@@ -86,6 +86,11 @@ void pWrite(char msg);
 void print_char_to_Binary(char bin);
 
 
+/* mov_sensors.c */ 
+#ifdef ARDUINO
+float sonar_distance(int sonarPin);
+#endif
+
 
 /*mov_main.c*/
 int read_command();

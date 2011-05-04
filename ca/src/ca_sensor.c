@@ -1,6 +1,6 @@
 /*
  * file:         ca_sensor.c
- * brief:        Read IR sensor and Sonar sensor data
+ * brief:        Read IR sensor data
  * author:       Yanling Jin
  * date:         2011-04-26
  * version:      0.1
@@ -25,30 +25,5 @@ int ir_distance(int irpin)
 	int value=analogRead(irpin);
 	int distance = 65*pow(value*0.0048828125, -1.10);
 	return distance; 
-}
-
-
-/*
- * 
- *
- */
-float sonar_distance(int sonarPin) 
-{
-	/* long duration; */
-
-	/* pinMode(sonarPin, OUTPUT); */
-	/* digitalWrite(sonarPin, LOW); */
-	/* _delay_ms(2); */
-	/* digitalWrite(sonarPin, HIGH); */
-	/* _delay_ms(5); */
-	/* digitalWrite(sonarPin, LOW); */
-
-	/* pinMode(sonarPin, INPUT); */
-	/* duration = pulseIn(sonarPin, HIGH); */
-
-	/* float distance= duration/29/2; */
-
-	/* return distance; */
-	return 1;
 }
 #endif
