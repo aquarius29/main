@@ -12,16 +12,19 @@
  *              2011-04-20 - Updated stubs to fake execution(Anders)
  */
 
-#include <stdio.h>
 #include <stdint.h>
 
 #include "sched_stubs.h"
+
+#ifdef PC
+#include <stdio.h>
 
 #ifdef WINDOWS
 #include <Windows.h> /* for windows timing functions */
 #else
 #include <unistd.h>
-#endif
+#endif /* WIN */
+#endif /* PC */
 
 int16_t caRun(void) {
 	#ifdef PC

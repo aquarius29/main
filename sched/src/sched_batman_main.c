@@ -15,6 +15,7 @@
 #include <assert.h>
 #include <time.h>
 #include <stdio.h>
+#include <stdint.h>
 
 #ifdef WINDOWS
 #include <Windows.h> /* for windows timing functions */
@@ -37,6 +38,7 @@ void sched_batman_run(void) {
     double time;
     ProcessData *processData;
     Process ** processQueue;
+    int16_t timeFrame;
 #ifdef PC
     clock_t start;
     clock_t stop;
@@ -50,7 +52,7 @@ void sched_batman_run(void) {
     time = 0.0;
 #endif
 
-    int16_t timeFrame = TIMEFRAME_MS;
+    timeFrame = TIMEFRAME_MS;
 
     processData = get_process_data();
     processQueue = processData->processQueue;

@@ -12,8 +12,8 @@
  *                           standard - Joakim
  */
 
-#ifndef SCHED_NAIVE_SCHED_H
-#define SCHED_NAIVE_SCHED_H
+#ifndef _SCHED_NAIVE_SCHED_H
+#define _SCHED_NAIVE_SCHED_H
 
 #include <stdint.h>
 

@@ -15,8 +15,8 @@
 *               2011-04-26 changed name of typedef global function pointer
 */
 
-#ifndef __sched_scheduler_h_
-#define __sched_scheduler_h_
+#ifndef __SCHED_BATMAN_SCHEDULER_H_
+#define __SCHED_BATMAN_SCHEDULER_H_
 
 #include <stdint.h>
 #define TOTAL_NO_PROCESSES 4 /* Total number of processes */
