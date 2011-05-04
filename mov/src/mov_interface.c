@@ -62,8 +62,8 @@ int mov_init()
     heightArrived = 1;
     yawArrived = 1;
     distanceToTravel = 0;
-
-	duration=0;
+    srand(time(NULL));
+    duration=0;
 
 	return 0;
 
@@ -94,7 +94,8 @@ int mov_run(){
 	command_logic();
 
 	duration = 10;
-
+	
+	oldSensorCommand = sensorCommand;
 	return 0;
 }
 #endif

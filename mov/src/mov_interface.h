@@ -18,6 +18,9 @@ int distanceTraveled;
 int yawArrived;
 int heightArrived;
 
+int changingAltitude;
+int changingHeading;
+
 static int start_time;
 int duration;
 
@@ -29,7 +32,6 @@ struct nav
 	int height;
 	int distance;
 	int yaw;
-	int speed;
 };
 
 struct sensor
@@ -40,9 +42,10 @@ struct sensor
 	int height;
 };
 
+
 struct nav navCommand;
 struct sensor sensorCommand;
-
+struct sensor oldSensorCommand;
 
 
 /*mov_logic.c*/
@@ -53,6 +56,7 @@ void check_pitch_roll(int isHovering);
 void updateDistanceToTravel(void);
 void printOrientation(void);
 int readSensorTest(int currentSensor, char command);
+void check_changingAltitude(void);
 
 /*mov_motor.c*/
 void start_motors(void);
@@ -85,11 +89,6 @@ char to_MotorMessage(char ID0, char ID1, char increasing, char panicMode,
 void pWrite(char msg);
 void print_char_to_Binary(char bin);
 
-
-/* mov_sensors.c */ 
-#ifdef ARDUINO
-float sonar_distance(int sonarPin);
-#endif
 
 
 /*mov_main.c*/
