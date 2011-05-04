@@ -29,7 +29,6 @@ struct nav
 	int height;
 	int distance;
 	int yaw;
-	int speed;
 };
 
 struct sensor
