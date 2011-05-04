@@ -1,0 +1,10 @@
+---------------------------------
+mq - POSIX Message Queue Library 
+---------------------------------
+
+Description:
+"mq" is a wrapper for a the POSIX Message Queue system, used to pass messages between processes running on the kernel.
+
+Installation: 
+> make clean && make && make lib
+
