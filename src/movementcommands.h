@@ -17,6 +17,6 @@ typedef struct
 movementCommand;
 
 /* Create a movement command . 0 for manual(From UI), 1 for automatic(abstract navigation). */
-void sendmovementcommand(char type, char order , int height, int distance, int yaw);
+void sendautomovementcommand(char type, char order , int height, int distance, int yaw);
 
 #endif /* MOVEMENTCOMMANDS_H */

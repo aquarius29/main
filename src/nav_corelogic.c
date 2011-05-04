@@ -11,8 +11,6 @@
 *
 *				Core Logic is used to setup the correct system e.g. 
 *				GPS navigation / Indoor Navigation
-* 
-* TODO: Import the path calculation classes and send them the navigation data
 */
 
 #include <stdio.h>
@@ -25,16 +23,9 @@
 #include "tilemap.h"
 //#include "path_structure.h"
 
-/* Possible thread patterns 
-*	1: GPS I/O Thread + GPS Navigation Thread > GPS I/O Thread dies, kill GPS Nav Thread OR Restart GPS I/O Thread
-*	2:
-*
-*
-*/
-
-pthread_t manualCommandThread;
 pthread_t gpsSetupThread;
 pthread_t gpsNavigationThread;
+pthread_t indoorNavigationThread;
 
 static pthread_mutex_t watchdogMutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t watchdogCond = PTHREAD_COND_INITIALIZER;
@@ -45,78 +36,51 @@ static pthread_mutex_t gpsRunningMutex = PTHREAD_MUTEX_INITIALIZER;
 
 int gpsRunning = 0;
 
-
 /* Add global variables (within mutex scope) that need to be modified outside and inside threads*/
 
+/* GPS System Functions start here */
 
-//void nav_run_gps_system(GPSLocation *destination)
-void nav_run_gps_system()
+void nav_run_gps_system(GPSLocation *dest)
 {
 	printf("Initiating GPS System\n");
 	
 	gpsRunning = 1;
 	ON_OFF = 1;
+	
+	GPSLocation *destination = malloc(sizeof(GPSLocation));
+	destination = dest;
+	
+	printf("destination lat : %lf", destination->latitude);
     
 	/* Create watchdog thread to monitor multithreading*/
 	int gpsWatchdogThreadResult;
-	char *watchDogMessage = "Forcing watchdog into slave labour\n";
 	pthread_t gpsWatchdogThread;
 	
 	printf("Attempting to create gps watchdog thread\n");
-    gpsWatchdogThreadResult = pthread_create(&gpsWatchdogThread, NULL, startgpswatchdog, (void *) watchDogMessage);
+    gpsWatchdogThreadResult = pthread_create(&gpsWatchdogThread, NULL, startgpswatchdog, (void *) destination);
     
 	/* wait for the watchdog thread to finish */
 	pthread_join(gpsWatchdogThread, NULL);
 	
-	// /* check if thread was created */
-	//     if (manualThreadResult == 0)
-	// 	printf("Manual Command Thread created\n");
-	//     else
-	//     {
-	// 	printf("Couldnt create manual command thread\nRetrying.....\n");
-	//         manualThreadResult = pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
-	//        
-	//  		if (manualThreadResult == 0)
-	// 		printf("Thread created\n");
-	//     }
-	// 
-	//     printf("Starting GPS System\n");
-	// 
-	// gpsThreadResult = pthread_create(&gpsThread, NULL, setupgps, (void*) message2);
-	// 
-	// /* check if thread was created */
-	//     if (gpsThreadResult == 0)
-	// 	printf("Manual Command Thread created\n");
-	//     else
-	//     {
-	// 	printf("Couldnt create manual command thread\nRetrying.....\n");
-	//         gpsThreadResult = pthread_create(&manualCommandThread, NULL, setupgps, (void *) message);
-	// 
-	//  		if (gpsThreadResult == 0)
-	// 		printf("Thread created\n");
-	//     }
+	free(destination); /* clean the filth */
+	
 	printf("Switching off gps system\n");
 }
 
-/* watchdog function to handle multithreading */
+/* watchdog function to handle gps multithreading */
 void *startgpswatchdog(void *ptr)
 {
-	char *setupMessage;
-    setupMessage = (char *) ptr;
-    printf("%s\n", setupMessage);
-
-	//int manualCommandThreadResult; 
+	GPSLocation *destination;
+	destination = (GPSLocation *) ptr;
+	printf("destination after watchdog receive lat : %lf", destination->latitude);
+	printf("destination after watchdog receive lon : %lf", destination->longitude);
+ 
 	int gpsSetupThreadResult;
 	int gpsNavigationThreadResult;
 	
-	//char *message = "manual movement thread command started";
 	char *message2 = "gps setup thread started";
-	char *message3 = "gps navigation thread started";
 
 	/* pthread functions return 0 when successful */
-	//printf("Attempting to create manual command handler thread\n");
-    //manualCommandThreadResult = pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
-
 	printf("Attempting to create GPS setup thread\n");
 	gpsSetupThreadResult = pthread_create(&gpsSetupThread, NULL, setupgps, (void*) message2);
 	
@@ -133,20 +97,15 @@ void *startgpswatchdog(void *ptr)
 		{
 			printf("Attempting to create GPS Navigation thread\n");
 			gpsNavigationThreadResult = 
-			pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
-
+			pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) destination);
 			break;
 		}
-        usleep(20000);
+		else
+        	usleep(20000);
 	}
 	
 	while (gpsRunning == 1)
 	{
-        //if (pthread_kill(manualCommandThread, 0) != 0)
-		// 	{
-		// 		printf("Manual Command Thread was murdered\nRessurecting....\n");
-		// 		manualCommandThreadResult = pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
-		// 	}
         if (pthread_kill(gpsSetupThread, 0) != 0)
         {
             int cancelResult;
@@ -171,7 +130,6 @@ void *startgpswatchdog(void *ptr)
 //	}
 	
 	/* wait for the threads to finish */
-	pthread_join(manualCommandThread, NULL); 
 	pthread_join(gpsSetupThread, NULL);
 	pthread_join(gpsNavigationThread, NULL);	
 }
@@ -181,56 +139,47 @@ void *setupgps(void *ptr)
 	char *message;
     message = (char *) ptr;
     printf("%s\n", message);
-
-    /*
-     
-	int result;
-
-	result = pthread_mutex_lock( &watchdogMutex);
-	if (result != 0)
-		printf("error locking pthread mutex\n");
-	
-	waitingForGpsSetupThread = 0;
-	
-	result = pthread_mutex_unlock( &watchdogMutex );
-	if (result != 0)
-	printf("error unlocking pthread mutex\n");
-     
-     */
-	
-	// result = pthread_cond_signal(&watchdogCond); /* Wake watchdog */
-	// 	if (result != 0)
-	// 	printf("error with conditional signal\n");
-	
-	 setup_gps(UNO,57600);
+    	
+	setup_gps(UNO,57600);
 }
 
 void *setupgpsnavigation(void *ptr)
 {
-	char *message;
-    message = (char *) ptr;
-    printf("%s\n", message);
-
-	 struct point Destination = {-2,57.7053,11.9340};
-	 gps_navigation(Destination);
-}
-
-
-
-void nav_run_indoor_system(position startTile, position destinationTile)
-{
-	printf("Creating manual command handler thread\n");
+	printf("GPS Navigation Thread Started\n");
 	
-    
-	//int threadResult; /* pthread functions return 0 when successful */
-	/*
-    char *message = "manual movement command thread started";
-	pthread_t manualCommandThread;
-    
-    threadResult = 
-    pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
+	GPSLocation *destination;
+	destination = (GPSLocation *) ptr;
+	printf("destination after gps nav receive lat : %lf", destination->latitude);
+	printf("destination after gps nav receive lon : %lf", destination->longitude);
 
-    */
+	 // struct point Destination = {-2,57.7053,11.9340};
+	 // 	 gps_navigation(Destination);
+	gps_navigation(destination);
+}
+/* GPS System Functions end here */
+
+/* Indoor System Functions start here */
+void nav_runIndoorSystem(position startTile, position destinationTile)
+{  
+	struct thread_data
+	{
+		position starttile;
+		position destinationtile;
+		char *message;
+	};
+	
+  	struct thread_data *data = malloc(sizeof(struct thread_data));
+		data->starttile = startTile;
+		data->destinationtile = destinationTile;
+		data->message = "Indoor system started";
+			
+	int threadResult;
+		
+	// char *message = "indoor thread started";
+	// 
+	//     threadResult = 
+	//     pthread_create(&indoorNavigationThread, NULL, commandFetcher, (void *) message);
+
     /* check if thread was created */
     /*
     if (threadResult == 0)
@@ -389,18 +338,35 @@ void killThread()
 	printf("KILLED\n");
 }
 
-double getLat()
+/* Begin interface:out functions for connectivity group */
+void nav_sendCurrentIndoorPositionToGui(pixel *currentPosition)
 {
-	return curr.lat;
+	/* Put connectivity library function here*/
 }
 
-double getLon()
+void nav_sendCurrentOutdoorPositionToGui(GPSLocation *currentPosition)
 {
-	return curr.lon;
+	/* Put connectivity library function here */
+	/* Pass in currentOutdoorPosition */
 }
+
+void nav_sendOutdoorPathToGui(GPSLocation **path)
+{
+	/* Put connectivity library function here*/
+}
+
+void nav_sendIndoorPathToGui(pixel **path)
+{
+	/* Put connectivity library function here*/
+}
+/* End interface:out functions for connectivity group */
 
 int main(int argc, char **argv) 
 {
-	nav_run_gps_system();
+	GPSLocation *Destination = malloc(sizeof(GPSLocation));
+	Destination->latitude = -2,57.7053;
+	Destination->longitude = 11.9340;
+	
+	nav_runGpsSystem(Destination);
 	return 0;
 }

@@ -36,25 +36,28 @@ outdoorRouteRequest;
 
 GPSLocation currentOutdoorPosition;
 
-void nav_run_gps_system();
-//void nav_run_gps_system(GPSLocation *destination); // setup gps system
-void killGPSSystem(); /* kill GPS system - e.g only manual input wanted. */
-void nav_run_indoor_system(position startTile, position destinationTile); /* setup the indoor navigation system */
-void killIndoorNavigationSystem(); /* kill the navigation system e.g. user wants only manual input. */
-void relayManualMovementCommand(movementCommand *_command); /* relay movementCommand /Connectivity > core > movement */
-void sendMovementCommand(movementCommand *move); /* send the movement to the movement for handling. */
-void updateGPSDestination(GPSLocation *destination); /* update the destination at any given time: GPS */
-void updateIndoorDestination(int tileNumber, ThreeDWorld *world); /* update an indoor destination */
-void receiveMovementData(movementCommand *movement); /* receive data about the movement from movement group */
-void createIndoorCollisionObject(int tileNumber, ThreeDWorld *world); /* create a collision object for the indoor system. */
-void sendMovementCommandsListToMovement(); /* send a list of movement commands to movement group. */
+void nav_sendCurrentIndoorPositionToGui(pixel *currentPosition);
+void nav_sendCurrentOutdoorPositionToGui(GPSLocation *currentPosition);
+void nav_sendOutdoorPathToGui(GPSLocation **path);
+void nav_sendIndoorPathToGui(pixel **path);
+//void nav_runGpsSystem();
+void nav_runGpsSystem(GPSLocation *dest); // setup gps system
+void nav_runIndoorSystem(position startTile, position destinationTile); /* setup the indoor navigation system */
+void nav_sendManualMovementCommand(movementCommand *move); /* send the movement to the movement for handling. */
+void nav_updateGPSDestination(GPSLocation *destination); /* update the destination at any given time: GPS */
+void nav_updateIndoorDestination(int tileNumber, ThreeDWorld *world); /* update an indoor destination */
+void nav_receiveMovementData(movementCommand *movement); /* receive data about the movement from movement group */
+void nav_createIndoorCollisionObject(int tileNumber, ThreeDWorld *world); /* create a collision object for the indoor system. */
+void nav_killGPSSystem(); /* kill GPS system - e.g only manual input wanted. */
+void nav_killIndoorNavigationSystem(); /* kill the navigation system e.g. user wants only manual input. */
+
 void *commandFetcher(void *ptr);
 void killThread();
 void dealloc();
-double getLat(); // called by UI via connectivity
-double getLong(); // called by UI via connectivity
+
 void *setupgps(void *ptr);
 void *setupgpsnavigation(void *ptr);
 void *startgpswatchdog(void *ptr);
+
 
 #endif /* CORELOGIC_H */

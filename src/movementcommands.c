@@ -9,7 +9,7 @@
 #include "movementcommands.h"
 
 /* Create a movement command */
-void sendmovementcommand
+void sendautomovementcommand
 (char type, char order , int height, int distance, int yaw)
 {
 	movementCommand *move = malloc(sizeof(movementCommand));
