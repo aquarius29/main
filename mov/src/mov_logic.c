@@ -103,15 +103,26 @@ void check_heading(void)
     int heading_desire=navCommand.yaw;
     int heading_current=sensorCommand.yaw;
 
-    if(heading_current>heading_desire+BUFF_YAW){
-	turn_left();
-	/* simulated */
-	sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'd');
+    int difference = heading_current-heading_desire;
+    if(heading_current>heading_desire+BUFF_YAW && difference>180){
+		turn_right();
+     /* simulated */
+    sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'i');
     }
-    else if(heading_current<heading_desire-BUFF_YAW){
-	turn_left();
-	/* simulated */
-	sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'i');
+	else if(heading_current>heading_desire+BUFF_YAW && difference<180){
+		turn_left();
+     /* simulated */
+    sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'd');
+    }
+    else if(heading_current<heading_desire-BUFF_YAW && (abs(difference))>180){
+		turn_right();
+      /* simulated */
+    sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'i');
+    }
+    else if(heading_current<heading_desire-BUFF_YAW && (abs(difference))<180){
+		turn_left();
+      /* simulated */
+    sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'd');
     }
     else{
 	hover();
