@@ -72,8 +72,8 @@ void *startgpswatchdog(void *ptr)
 {
 	GPSLocation *destination;
 	destination = (GPSLocation *) ptr;
-	printf("destination after watchdog receive lat : %lf", destination->latitude);
-	printf("destination after watchdog receive lon : %lf", destination->longitude);
+	printf("destination after watchdog receive lat : %lf\n", destination->latitude);
+	printf("destination after watchdog receive lon : %lf\n", destination->longitude);
  
 	int gpsSetupThreadResult;
 	int gpsNavigationThreadResult;
@@ -149,8 +149,8 @@ void *setupgpsnavigation(void *ptr)
 	
 	GPSLocation *destination;
 	destination = (GPSLocation *) ptr;
-	printf("destination after gps nav receive lat : %lf", destination->latitude);
-	printf("destination after gps nav receive lon : %lf", destination->longitude);
+	printf("destination after gps nav receive lat : %lf\n", destination->latitude);
+	printf("destination after gps nav receive lon : %lf\n", destination->longitude);
 
 	 // struct point Destination = {-2,57.7053,11.9340};
 	 // 	 gps_navigation(Destination);
@@ -161,18 +161,12 @@ void *setupgpsnavigation(void *ptr)
 /* Indoor System Functions start here */
 void nav_runIndoorSystem(position startTile, position destinationTile)
 {  
-	struct thread_data
-	{
-		position starttile;
-		position destinationtile;
-		char *message;
-	};
-	
   	struct thread_data *data = malloc(sizeof(struct thread_data));
 		data->starttile = startTile;
 		data->destinationtile = destinationTile;
 		data->message = "Indoor system started";
 			
+	
 	int threadResult;
 		
 	// char *message = "indoor thread started";
@@ -198,6 +192,15 @@ void nav_runIndoorSystem(position startTile, position destinationTile)
     */
    // init_path(startTile, destinationTile);
 	printf("indoor navigation system started\n");
+}
+
+/* Function to be run in a pthread for indoor navigation */
+void *startIndoorNavigationSystem(void *ptr)
+{
+	struct thread_data *data = (struct thread_data*) ptr;
+	/* Call the indoor nav system here and pass in the ptr */
+	
+	
 }
 
 // set the gps destination
@@ -279,11 +282,6 @@ void updateIndoorDestination(int tileNumber, ThreeDWorld *world)
 	// 2 marks the tile as the destination.
 	world->representation[firstDimension][secondDimension] = 2;
 	// notify the path calculation to recheck the worldMap and recalculate.
-}
-
-sendNavigationDataToPathCalculation()
-{
-	
 }
 
 // notify the path calculation a collision was found/ stop calculation

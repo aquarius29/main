@@ -9,8 +9,6 @@
 #ifndef CORELOGIC_H
 #define CORELOGIC_H
 
-
-
 int ON_OFF;
 
 typedef struct
@@ -34,14 +32,20 @@ typedef struct
 }
 outdoorRouteRequest;
 
+struct thread_data
+{
+	position starttile;
+	position destinationtile;
+	char *message;
+};
+
 GPSLocation currentOutdoorPosition;
 
 void nav_sendCurrentIndoorPositionToGui(pixel *currentPosition);
 void nav_sendCurrentOutdoorPositionToGui(GPSLocation *currentPosition);
 void nav_sendOutdoorPathToGui(GPSLocation **path);
 void nav_sendIndoorPathToGui(pixel **path);
-//void nav_runGpsSystem();
-void nav_runGpsSystem(GPSLocation *dest); // setup gps system
+void nav_runGpsSystem(GPSLocation *dest); /* setup gps system */
 void nav_runIndoorSystem(position startTile, position destinationTile); /* setup the indoor navigation system */
 void nav_sendManualMovementCommand(movementCommand *move); /* send the movement to the movement for handling. */
 void nav_updateGPSDestination(GPSLocation *destination); /* update the destination at any given time: GPS */
@@ -51,13 +55,14 @@ void nav_createIndoorCollisionObject(int tileNumber, ThreeDWorld *world); /* cre
 void nav_killGPSSystem(); /* kill GPS system - e.g only manual input wanted. */
 void nav_killIndoorNavigationSystem(); /* kill the navigation system e.g. user wants only manual input. */
 
-void *commandFetcher(void *ptr);
 void killThread();
 void dealloc();
 
+/* Threaded Functions*/
 void *setupgps(void *ptr);
 void *setupgpsnavigation(void *ptr);
 void *startgpswatchdog(void *ptr);
+void *startIndoorNavigationSystem(void *ptr);
 
 
 #endif /* CORELOGIC_H */
