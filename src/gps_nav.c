@@ -7,8 +7,7 @@
 	Date: May 1st, 2011
 
 	to do:
-		1. handle bad data in parser.c .
-		3. fix init functions in serial.c 
+		1. handle bad data in parser.c . 
 		2. send movement command.
 */
 #include "gps_nav.h"
@@ -22,7 +21,7 @@ int main(void)
 
 	setup_gps(UNO1,57600);			
 
-//	gps_navigation(Destination);
+	gps_navigation(Destination);
 
 return 0;
 }
@@ -31,23 +30,10 @@ return 0;
 
 void setup_gps(char *dev,int baud)
 {
-//	setup the GPS receiver, build Serial communication, keep updating the current position.
-
 	good_data = 0;
-
-//	curr.name = 0;
-//	curr.lat = 57.7071;
-//	curr.lon = 11.9377;
-//	curr.lat = 5742.386;	
-//	curr.lon = 1156.063;	
-
-//	curr.lat = 0;
-//	curr.lon = 0;
 
 	currentOutdoorPosition.latitude = 0;
 	currentOutdoorPosition.longitude = 0;
-
-
 
 	int fd = 0;
 	char buf [256];
@@ -75,8 +61,6 @@ void setup_gps(char *dev,int baud)
 				
 				struct point *position = parser(buf);
 
-//				curr.name = 0;
-
 				currentOutdoorPosition.latitude = in_degree(position->lat);
 				currentOutdoorPosition.longitude = in_degree(position->lon);
 
@@ -99,27 +83,25 @@ void setup_gps(char *dev,int baud)
 
 
 
-void gps_navigation(struct point Destination)
+void gps_navigation(GPSLocation Destination)
 {
+	struct point destination = {-2,Destination.latitude,Destination.longitude};
+
 	struct point *pts = init_map(); 			
 
-	struct trac *path = outdoor_nav(pts,Destination); 	
+	struct trac *path = outdoor_nav(pts,destination); 	
 
 	struct trac *next_Node = path;
 
 	int angle = 0; 
 
-	while(ON_OFF){
+	while(ON_OFF)
+	{
+	next_Node = update_path(curr,destination,pts,next_Node);
 
-	next_Node = update_path(curr,Destination,pts,next_Node);
-/*	
-	printf("new path: %d\n",next_Node->p);
-	printf("new curr lat: %f, lon: %f\n",curr.lat,curr.lon);	
-*/
-	angle = give_angle(curr,Destination,pts,next_Node);
+	angle = give_angle(curr,destination,pts,next_Node);
 
 	printf("angle : %d\n",angle);
-
 /*
 	send movement command here.
 */
@@ -128,7 +110,6 @@ void gps_navigation(struct point Destination)
 	free(pts);
 	deallocate_trac(path);
 }
-
 
 
 /*
@@ -174,8 +155,6 @@ struct trac* update_path(struct point currp,struct point dest,struct point *pts,
 	}
 	else if( next_Node->p == -2 )
 	{
-//		move_a_step(&currp,dest);
-
 		return next_Node;
 	}
 	else
@@ -193,7 +172,6 @@ struct trac* update_path(struct point currp,struct point dest,struct point *pts,
 		}
 		else
 		{
-//			move_a_step(&curr,next_Point);
 			return next_Node;
 		}
 
@@ -253,7 +231,7 @@ struct link* connect_nodes(struct dist *st1,struct dist *st2,struct dist *end1,s
 struct trac *outdoor_nav(struct point *pts,struct point destination)
 {
 	struct link *lk = NULL;
-	struct dist *st_1, *st_2, *end_1, *end_2;	/* extra link	*/
+	struct dist *st_1, *st_2, *end_1, *end_2;	/* options of */
 
 	struct trac *path;
 
@@ -277,7 +255,7 @@ struct trac *outdoor_nav(struct point *pts,struct point destination)
 
 	lk = connect_nodes(st_1,st_2,end_1,end_2,pts,lk);
 
-	if(lk->last == NULL)	/*you can go there straight, no necessary to run dijkstra*/
+	if(lk->last == NULL)				/*you can go there straight, no necessary to run dijkstra*/
 	{
 		struct trac *head;
 	

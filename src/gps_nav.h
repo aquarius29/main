@@ -21,7 +21,7 @@ void setup_gps(char *dev,int baud);
 
 struct trac* outdoor_nav(struct point *pts,struct point destination);
 
-void gps_navigation(struct point Destination);
+void gps_navigation(GPSLocation Destination);
 
 void get_startp(struct point *pt);
 
