@@ -166,13 +166,10 @@ void nav_runIndoorSystem(position startTile, position destinationTile)
 		data->destinationtile = destinationTile;
 		data->message = "Indoor system started";
 			
-	
 	int threadResult;
-		
-	// char *message = "indoor thread started";
-	// 
-	//     threadResult = 
-	//     pthread_create(&indoorNavigationThread, NULL, commandFetcher, (void *) message);
+	
+	threadResult = 
+		pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void *) data);
 
     /* check if thread was created */
     /*
@@ -191,12 +188,14 @@ void nav_runIndoorSystem(position startTile, position destinationTile)
     
     */
    // init_path(startTile, destinationTile);
-	printf("indoor navigation system started\n");
+	pthread_join(indoorNavigationThread, NULL);
+	printf("indoor navigation system shut down\n");
 }
 
 /* Function to be run in a pthread for indoor navigation */
 void *startIndoorNavigationSystem(void *ptr)
 {
+	printf("Started the indoor navigation tread\n");
 	struct thread_data *data = (struct thread_data*) ptr;
 	/* Call the indoor nav system here and pass in the ptr */
 	
