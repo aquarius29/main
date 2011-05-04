@@ -17,10 +17,6 @@
  */
 
 #ifdef PC
-/* 
-#define _PROFILE_
-#include "sched_profiler.h" 
-*/
 #elif ARDUINO
 #include "WProgram.h"
 #endif /*PC ARDUINO */
@@ -43,19 +39,8 @@ int sched_main(void)
     return 0;
 }
 
-#ifdef _PROFILE_
-int profiler(void)
-{
-    profile_main();
-}
-#endif
-
 int main(void)
 {
-#ifdef _PROFILE_
-    profile_main();
-#else
     sched_main();
-#endif
     return 0;
 }
