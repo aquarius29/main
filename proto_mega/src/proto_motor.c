@@ -13,7 +13,7 @@
 
 #ifdef PC
    #include <stdio.h>
-   #include "proto_tint.h"
+   #include "proto_lib.h"
 #endif
 
 char motor_ctrl = 0; // from Filter to Motor Control; DEFAULT is 0

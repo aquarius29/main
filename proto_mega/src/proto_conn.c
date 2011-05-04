@@ -14,8 +14,7 @@
 #ifdef PC
 	#include<stdio.h> 
 	#include<stdlib.h>  
-	#include"proto_conn.h"
-	#include "proto_tint.h"
+	#include"proto_lib.h"
 #endif
  
  

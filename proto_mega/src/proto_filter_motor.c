@@ -14,8 +14,7 @@
 
 #ifdef PC
    #include <stdio.h>
-   #include"proto_filter_motor.h"
-   #include "proto_tint.h"
+   #include"proto_lib.h"
 #endif
 
 
@@ -68,9 +67,6 @@ unsigned char proto_read_motor(void){
 	return temp;
 }
 
-void test_send_to_filter(unsigned char);
-void test_receive_filter();
-void test_send_to_motor(unsigned char);
-void test_receive_motor();
+
 
 

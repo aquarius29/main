@@ -4,7 +4,7 @@
 * Released: April 20 2011
 * Updated: 
 *
-* Copyright (C) 2011 Nena Stojova
+* Copyright (C) 2011 Elnaz Shahmehr
 *
 * 
 *
@@ -13,7 +13,7 @@
 
 #ifdef PC
    #include <stdio.h>
-   #include "proto_tint.h"
+   #include "proto_lib.h"
 #endif
 
 unsigned int camera_message;

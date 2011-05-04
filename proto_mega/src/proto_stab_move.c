@@ -14,8 +14,7 @@
  
  #ifdef PC
    #include <stdio.h>
-   #include "proto_stab_move.h"
-#include "proto_tint.h"
+   #include "proto_lib.h"
 #endif
 /***************************************************************************** 
     Definitions 
@@ -34,7 +33,8 @@ struct stab stab_move;
 *****************************************************************************/ 
  
 void proto_stabWriteAttitude(struct stab sb){ 
-    stab_move = sb;
+//float roll, float pitch, float yaw
+  //  stab_move->roll = roll;
 #ifdef PC
  storeForTint(WRITE, STAB, UNKNOWN, sb.roll);
  storeForTint(WRITE, STAB, UNKNOWN, sb.pitch);

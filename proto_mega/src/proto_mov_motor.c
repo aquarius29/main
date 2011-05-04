@@ -13,7 +13,7 @@
 
 
 #include <stdio.h>
-#include "proto_tint.h"
+#include "proto_lib.h"
 
 
 unsigned char motor_message;

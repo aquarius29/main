@@ -11,15 +11,11 @@
 * <IT University of Goteborg>
 *****************************************************************************/
 #include <stdio.h>
-#include "proto_tint.h"
+#include "proto_lib.h"
 
 /*test code for message interpretation. as code is recieved as a binary, it tranforms the message
 and decodes it based on the pre-defined inputs expected.*/
-#define GO_FORWARD  1
-#define GO_BACKWARD  0
-#define GO_RIGHT  2
-#define GO_LEFT  3
-#define SET_TO_GPS 4
+
 
 
 //current position
