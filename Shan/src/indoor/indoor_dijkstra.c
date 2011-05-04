@@ -11,6 +11,7 @@
 #include "tilemap.h"
 
 static position_list final;
+static ThreeDWorld map;
 /*
  * Takes the drone position, goal position, and a tile map
  * If the goal is found a dynamic list of the nodes making up the
@@ -18,55 +19,78 @@ static position_list final;
  * If the goal is not reachable or if there is a problem to allocate
  * memory NULL is returned
  */
+ 
+ int selected_tiles_are_valid_for_dijkstra(const position * start, const position * end) {
+      fill_map(&map);
+      if ((map.representation[start->x][start->y] == 1) 
+          || (map.representation[end->x][end->y] == 1)
+          || (start->x > map.mapWidth) || (start->y > map.mapHeight)
+          || (end->x > map.mapWidth) || (end->y > map.mapHeight)) {
+          free(map.representation);
+          return 0;
+      } else {
+          // tiles are valid
+          return 1;
+      }         
+  }
+ 
 position_list indoor_dijkstra(const position * start, const position * end)
 {
-	nodeList * open, * closed;	// open and closed list
-	node startNode;				// the starting node
+    if (selected_tiles_are_valid_for_dijkstra(start, end)) {
+        nodeList * open, * closed;	// open and closed list
+    	node startNode;				// the starting node
 
-	// Allocate space for both the open and the closed list
-	if(!ListMemoryAllocation(&open, &closed)) {
-		return final;
-	}
-	// Create the first node (start) to go into the open list
-	startNode.pos.y = start->y;
-	startNode.pos.x = start->x;
-	startNode.totalCost = 0;
-	AddNodeToOpen(&startNode, open);
-	while(open->count > 0)
-	{
-		// Check if we have reach the goal
-		if(open->list[0].pos.x == end->x
-				&& open->list[0].pos.y == end->y)
-		{
-			// If so, add the goal node to the closed list and stop looping
-			closed->list = AddNodeToClosed(&open->list[0], closed);
-			break;
-		}
+    	// Allocate space for both the open and the closed list
+    	if(!ListMemoryAllocation(&open, &closed)) {
+    		return final;
+    	}
+    	// Create the first node (start) to go into the open list
 
-		// Check the neighbors of the first node in the open list
-		dijkstra_AddNeighborsToOpen(&open->list[0], open, closed);
+    	startNode.pos.y = start->y;
+    	startNode.pos.x = start->x;
+    	startNode.totalCost = 0;
+    	AddNodeToOpen(&startNode, open);
+    	while(open->count > 0)
+    	{
+    		// Check if we have reach the goal
+    		if(open->list[0].pos.x == end->x
+    				&& open->list[0].pos.y == end->y)
+    		{
+    			// If so, add the goal node to the closed list and stop looping
+    			closed->list = AddNodeToClosed(&open->list[0], closed);
+    			break;
+    		}
 
-		// Add the check node to the closed list and remove it
-		// from the open list
-		closed->list = AddNodeToClosed(&open->list[0], closed);
-		RemoveNodeFromOpen(&open->list[0], open);
-	}
-	// If we found the goal, a list with the shortest path will be created
-	if(closed->list[closed->count - 1].pos.x == end->x
-			&& closed->list[closed->count - 1].pos.y == end->y) 	{
-		// Create final list and return it to the caller
-		final = CreateFinalList(closed, end, start);
-		FreeAllocatedList(open);
-		FreeAllocatedList(closed);
-		return final;
-	}
-	// If we could not get to the goal, there is no solution
-	else {
-		printf("Could not find goal!\n");
-		FreeAllocatedList(open);
-		FreeAllocatedList(closed);
-		return final;
-	}
+    		// Check the neighbors of the first node in the open list
+    		dijkstra_AddNeighborsToOpen(&open->list[0], open, closed);
+            
+    		// Add the check node to the closed list and remove it
+    		// from the open list
+    		closed->list = AddNodeToClosed(&open->list[0], closed);
+    		RemoveNodeFromOpen(&open->list[0], open);
+    	}
+    	// If we found the goal, a list with the shortest path will be created
+    	if(closed->list[closed->count - 1].pos.x == end->x
+    			&& closed->list[closed->count - 1].pos.y == end->y) 	{
+    		// Create final list and return it to the caller
+    		final = CreateFinalList(closed, end, start);
+    		FreeAllocatedList(open);
+    		FreeAllocatedList(closed);
+    		return final;
+    	}
+    	// If we could not get to the goal, there is no solution
+    	else {
+    		printf("Could not find goal!\n");
+    		FreeAllocatedList(open);
+    		FreeAllocatedList(closed);
+    		return final;
+    	}
+    	free(map.representation);
+    } else {
+        // printf("Invalid tile.\n");
+        // exit(1); //or do something else
+    }
+    
 }
 
 /*
@@ -77,8 +101,7 @@ void dijkstra_AddNeighborsToOpen(node * current, nodeList * open, nodeList * clo
 	int y, x, mapCost, counter;
 	int openListIndex, endNodeCost, neighborY, neighborX;
 	node adjacentNode, * p_adjacentNode;
-	ThreeDWorld map;
-	fill_map(&map);
+	
 	counter = 0;  // used for checking if a neighbor node is diagonally placed
 	enum diagonal {
 		north_west = 0,
@@ -178,7 +201,7 @@ void dijkstra_AddNeighborsToOpen(node * current, nodeList * open, nodeList * clo
 			}
 		}
 	}
-	free(map.representation);
+    // free(map.representation);
 }
 
 /*

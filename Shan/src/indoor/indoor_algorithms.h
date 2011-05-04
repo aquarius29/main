@@ -21,4 +21,7 @@ int NodeInOpen(const int * nodeY, const int * nodeX, nodeList * open);
 node * AddNodeToClosed(node * current, nodeList * closed);
 int GetHeuristicCost(const position * currentNode, const position * goalNode);
 
+int selected_tiles_are_valid_for_dijkstra(const position * start, const position * end);
+int selected_tiles_are_valid_for_astar(const position * start, const position * end);
+
 #endif	// INDOOR_ALGORITHMS_H

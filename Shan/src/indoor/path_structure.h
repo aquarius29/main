@@ -63,4 +63,6 @@ void navigate_path();
 void free_progressive_list();
 void insert_progressive_node();
 
+void collision_avoided(double direction, struct timeval time);
+
 #endif /* PATH_STRUCTURE_H */
