@@ -1,26 +1,19 @@
-##########################################################
-#							 #
-# Extended scheduler Makefile. Im blue badadi dabadai... #
-#							 #
-##########################################################
-
-PROG= sched_ext_mngr
-SRC_F= src
-BIN_DIR=bin
-CC= gcc 
-CCFLAGS= -Wall -c  
-OBJ = $(SRC_F)/$(PROG).o
-SRC= $(SRC_F)/$(PROG).c
-PROG_EXEC= $(BIN_DIR)/$(PROG)
-
-all: $(OBJ)
+PROG = sched_ext_mngr
+CC=gcc
+FLAGS= -Wall -g -I./include -I./sm/include -L./sm/lib -c #-I./mq/include -c -L./mq/lib -lm
+SRC= src/$(PROG).c include/$(PROG).h
+OBJ= $(PROG).o
+LIB_OUT=lib/libextsched.a 
 
 $(OBJ): $(SRC)
-	$(CC) $(CCFLAGS) $(SRC) -o $(OBJ)
+	$(CC) $(FLAGS) $(SRC)
 
-install: $(OBJ) 
-	$(CC) $(OBJ) -o $(PROG_EXEC)
+sm: 
+	cd sm && make && make lib
+
+lib: $(OBJ)
+	ar rcs $(LIB_OUT) $(OBJ)
 
 clean: 
-	-rm -fr $(SRC_F)/*.o $(BIN_DIR)/$(PROG) src/*~
+	-rm $(LIB_OUT) *~ *.out $(OBJ) 
 
