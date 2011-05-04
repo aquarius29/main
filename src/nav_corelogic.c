@@ -40,7 +40,7 @@ int gpsRunning = 0;
 
 /* GPS System Functions start here */
 
-void nav_run_gps_system(GPSLocation *dest)
+void nav_runGpsSystem(GPSLocation *dest)
 {
 	printf("Initiating GPS System\n");
 	
@@ -364,7 +364,7 @@ void nav_sendIndoorPathToGui(pixel **path)
 int main(int argc, char **argv) 
 {
 	GPSLocation *Destination = malloc(sizeof(GPSLocation));
-	Destination->latitude = -2,57.7053;
+	Destination->latitude = 57.7053;
 	Destination->longitude = 11.9340;
 	
 	nav_runGpsSystem(Destination);
