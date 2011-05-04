@@ -16,11 +16,11 @@
 *                            naive implementation
 *               2011-04-21 - Made execution time measurement
 */
+#include <string.h>
+#include <stdlib.h>
 
 #ifdef PC
 #include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 
 #ifdef WINDOWS
 #include <malloc.h>
@@ -139,7 +139,7 @@ int16_t init_process_data(void)
     #ifdef PC
         printf("Initializing system...\n");
     #endif
-    if (system_init(funArrInit) != EXIT_SUCCESS) {
+    if (system_init(funArrInit) != 0) {
         /* something went wrong during system initialization */
         #ifdef PC
             printf("Error in system initialization sequence!\n");
@@ -162,13 +162,13 @@ int16_t init_process_data(void)
         
         pProcessData = get_process_data();
 
-        if(process_setup(pProcessData, funArrRun) != EXIT_SUCCESS)
+        if(process_setup(pProcessData, funArrRun) != 0)
         {
 #ifdef PC
             printf("FAILED\n\n");
             exit(1);
 #elif ARDUINO
-            exit(1);
+            
 #endif /* PC ARDUINO */
         }
 
