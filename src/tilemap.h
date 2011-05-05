@@ -1,5 +1,6 @@
-/*
-* @Author: Jarryd Hall
+/*!
+* @author Jarryd Hall
+* @brief Header file for the tilemap representation
 */
 
 #ifndef TILEMAP_H
@@ -23,7 +24,6 @@ typedef struct
 {
 	int xPosition;
 	int yPosition;
-	
 } 
 CGPoint;
 

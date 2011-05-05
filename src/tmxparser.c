@@ -1,7 +1,10 @@
 /*
-* @author: Jarryd Hall
-* Purpose: An XML Parser to parse a tilemap
-* Note: The TMX file has been converted to an xml file before hand
+* @author Jarryd Hall.
+* @brief An XML Parser to parse a tilemap.
+* @details This module has been used to parse a tmx file.
+* It uses a combination of xpath and DOM tree traversal.
+* xpath is using regex to extract certain data.
+* DOM is used to traverse the document tree model and extract the data needed.
 * CommandLine usage: gcc source.c -I/usr/include/libxml2 -lxml2 -o output
 */
 
@@ -13,6 +16,14 @@
 #include <libxml/xpath.h>
 #include "tilemap.h"
 
+//! Retrieve the xml node set.
+/*!
+* Function that is used to read the xml doc and 
+* retrieve the document's xml node set.
+*
+* @param doc A pointer to the document to be read.
+* @param xpath An xml character defined in the libxml library.
+*/
 xmlXPathObjectPtr retrieveXmlnodeset (xmlDocPtr doc, xmlChar *xpath)
 {
 	xmlXPathContextPtr context;
@@ -41,6 +52,16 @@ xmlXPathObjectPtr retrieveXmlnodeset (xmlDocPtr doc, xmlChar *xpath)
 	return object;
 }
 
+//! Get the map info from the tmx file.
+/*!
+* Get the info from the tmx file such as the map's width and height in tile amount
+* the size of a single tile in pixel value.
+*
+* @param doc A pointer to the document to be read.
+* @param cur A pointer to the current node in the tree
+* @param world A pointer to a world object that is the representation of the map.
+*
+*/
 void getMapDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 {
 	xmlChar *mapWidth;
@@ -77,6 +98,15 @@ void getMapDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 	}
 }
 
+//! Create the 2d array from the extracted data array.
+/*!
+* Fill a ThreeDWorld with the data extracted from the tmx file.
+*
+*@param world Pointer to the ThreeDWorld to fill.
+*@param w Width of the map.
+*@param h Height of the map. 
+@param array The array holding all the tiles.
+*/
 void createTwoDArray(ThreeDWorld *world, int w, int h, int array[])
 {
 	int one;
@@ -87,21 +117,25 @@ void createTwoDArray(ThreeDWorld *world, int w, int h, int array[])
 	{
 		for(two = 0; two < w; two++)
 		{
-			//printf("Value in tile array is %d\n", array[one + two]);
 			world->representation[one][two] = array[arrayCounter];
             printf("  %d", world->representation[one][two]);
+		
 			if(two == 9)
-				printf("\n");	
+				printf("\n");
+					
 			arrayCounter++;
 		}
 	}
 }
 
-/* A function to return all the tiles and their type. 
-* e.g. background tiles and collision tiles
-* purpose: Outputs the list of tiles and their types which will be used 
-* to create a 2dimensional array representation
-* TODO: add code to create the 2d array representation on the fly
+//! Extract the data for each tile.
+
+/*! A function to return all the tiles and their type. 
+* This function creates the tilemap array on the fly
+*
+* @param doc A pointer to the document to be read.
+* @param cur A pointer to the current node in the tree
+* @param world A pointer to a world object that is the representation of the map.
 */
 void getTileDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 {
@@ -161,6 +195,14 @@ void getTileDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 }
 
 /* Helper function to retrieve a the value for the specfied attribute at a specified node */
+//!
+/*!
+*
+*
+*
+*
+*
+*/
 char* getAttributeValueForNode (xmlDocPtr doc, xmlNodePtr cur, char *node, char *attribute)
 {
 	xmlChar *attributeValue;
@@ -179,10 +221,15 @@ char* getAttributeValueForNode (xmlDocPtr doc, xmlNodePtr cur, char *node, char 
 	return (char *)attributeValue;
 }
 
-
-
-
 /* TODO: Add functions to return all the data in a struct. */
+//!
+/*!
+*
+*
+*
+*
+*
+*/
 void parseDoc(char *docname, ThreeDWorld *world) 
 {
 	xmlDocPtr doc;
@@ -217,6 +264,14 @@ void parseDoc(char *docname, ThreeDWorld *world)
 	return;
 }
 
+//!
+/*!
+*
+*
+*
+*
+*
+*/
 void fill_map(ThreeDWorld * world) {
 	char *doc = "secondYearSquare.xml";
 	parseDoc(doc, world);

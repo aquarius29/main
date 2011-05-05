@@ -12,7 +12,7 @@ typedef struct
 	char order; /* (lift off/ hovering/ moving/ land) */
 	int height;
 	int distance;
-	int yaw; /* vertical */
+	int yaw;
 }
 movementCommand;
 
