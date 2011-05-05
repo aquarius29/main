@@ -243,34 +243,9 @@ void printOrientation(void)
 
 
 void updateDistanceToTravel(void){
-        int speed = 3;
 
-
-        if (speed < SPEED){
-                distanceTraveled = get_acceleration() * duration * duration / 2;
-                distanceToTravel = distanceToTravel - distanceTraveled;
-
-
-}
-
-        else if (speed == SPEED){
-                distanceTraveled = get_acceleration() * (SPEED / get_acceleration()) * (SPEED / get_acceleration()) / 2
-        + SPEED * (duration - SPEED / get_acceleration());
-                distanceToTravel = distanceToTravel - distanceTraveled;
-}
-
-        else {
-
-}
-
+    distanceTraveled = SPEED * duration;
+    distanceToTravel = distanceToTravel - distanceTraveled ;
 }
 
 
-double get_acceleration(){
-       double acceleration;
-        double speed = SPEED;
-
-        acceleration = speed / duration;
-
-        return speed/duration;
-}

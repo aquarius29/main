@@ -133,16 +133,18 @@ int mov_run(void){
 }
 
 	else{
-
-		//do ca here
-		yaw=-1;
+	    	//do ca here
+	    yawArrived = 0;
+	    distanceToTravel = 0;
+	    navCommand.yaw = yaw;
+	    navCommand.order = 1;
+	    distanceToTravel = 10;
+	    yaw=-1;
 
 }
 	return 0;
 }
 #endif
-
-
 
 /*
  * send message to motor
@@ -175,6 +177,8 @@ struct nav *p = &navCommand;
 void read_caCommand(void){
 #ifndef SIMULATOR
 	//read collision avoidance command
-	yaw=90;
+	yaw = 90 + sensorCommand.yaw;
+	if(yaw >= 360)
+	    yaw = yaw - 360;
 #endif
 }
