@@ -93,7 +93,7 @@ static void sendCommand(void) {
         printf("Move at angle %.5f\n", current->next->p.angle / (M_PI / 180) +
         180);
     }
-    sendautomovementcommand(3, SAFE_HEIGHT, current->next->p.distance, angle);
+    // sendautomovementcommand(3, SAFE_HEIGHT, current->next->p.distance, angle);
 }
 static void sendPosition(pixel *pos) {
     printf("Longitude = %d\nLatitude = %d\n", pos->lon, pos->lat);
@@ -121,7 +121,7 @@ void initPath(position *start, position *end) {
     int32_t counterUp;
     running = 1;
     count = 0;
-    sendautomovementcommand(1, SAFE_HEIGHT, 0, 0);
+    // sendautomovementcommand(1, SAFE_HEIGHT, 0, 0);
     if (ALGORITHM == 0) {
         printf("Dijkstra\n");
         route = indoorDijkstra(start, end);
@@ -215,7 +215,6 @@ static void navigatePath(void){
 
         if (check(current->p, current->next->p) == 1) {
             if (check(current->p, route.list[route.num-1]) == 1) {
-                current->prev->p = current->next->p;
                 count++;
                 stopIndoorNavigation();
                 bool = 0;
@@ -234,12 +233,12 @@ static void navigatePath(void){
     }
 }
 
-/*int main(){
-    position a, b;
-    a.x = 1;
-    a.y = 1;
-    b.x = 9;
-    b.y = 5;
-    initPath(&a, &b);
-    return 0;
-}*
+// int main(){
+//     position a, b;
+//     a.x = 1;
+//     a.y = 1;
+//     b.x = 2;
+//     b.y = 2;
+//     initPath(&a, &b);
+//     return 0;
+// }

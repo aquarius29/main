@@ -5,8 +5,8 @@
 #      Author: Shan Huang
 # 
 
-SRCPATH = ../../src/indoor
-SRCOBJS = $(wildcard $(SRCPATH)/*.o)
+BINPATH = ../../bin
+SRCOBJS = $(wildcard $(BINPATH)/*.o)
 TESTSRCS = $(wildcard *.c)
 
 unit: testsuite

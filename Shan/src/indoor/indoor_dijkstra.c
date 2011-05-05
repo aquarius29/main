@@ -357,3 +357,33 @@ void FreeAllocatedList(nodeList * list) {
 	free(list->list);
 	free(list);
 }
+
+// int main(){
+//     position a, b;
+//     a.x = 1;
+//     a.y = 1;
+//     b.x = 9;
+//     b.y = 5;
+//     position_list route = indoor_astar(&a, &b);
+//     int counterUp;
+//     
+//     for(counterUp = 0; counterUp < route.num; counterUp++) {
+//         printf("final.x: %f ", route.list[counterUp].lon);
+//         printf("final.Y: %f\n", route.list[counterUp].lat);
+//     }
+//     printf("%d\n", route.num);
+//     free(route.list);
+//     route.num = 0;
+//     printf("%d\n", route.num);
+//     route = indoor_astar(&a, &b);
+//     printf("%d\n", route.num);
+//     
+//     for(counterUp = 0; counterUp < route.num; counterUp++) {
+//         printf("final.x: %f ", route.list[counterUp].lon);
+//         printf("final.Y: %f\n", route.list[counterUp].lat);
+//     }
+//     free(route.list);
+//     route.num = 0;
+//     // return 1;
+//     return 0;
+// }

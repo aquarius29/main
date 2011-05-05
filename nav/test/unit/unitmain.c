@@ -6,10 +6,10 @@
 */
 
 #include "CUnit/Basic.h"
-#include "xml_tests.c"
-#include "dijkstra_tests.c"
-#include "astar_tests.c"
-#include "indoor_navigation_tests.c"
+#include "nav_itparser.c"
+#include "nav_itdijkstra.c"
+#include "nav_itastar.c"
+#include "nav_itsimulation.c"
 
 /* Set up and clean up test suite */
 
@@ -43,21 +43,21 @@ int main() {
     }
 
   /* Add tests to suite */
-    if(	NULL == CU_add_test(xmlSuite, "Parse map", test_parse_xml)
-    ) {
-        CU_cleanup_registry();
-        return CU_get_error();
-    }
-    
-    if(  NULL == CU_add_test(xmlSuite, "Dijkstra", test_dijkstra_1)
-        || NULL == CU_add_test(xmlSuite, "Dijkstra invalid tile", test_dijkstra_2)
-    ) {
-        CU_cleanup_registry();
-        return CU_get_error();
-    }
+    // if(  NULL == CU_add_test(xmlSuite, "Parse map", test_parse_xml)
+    // ) {
+    //     CU_cleanup_registry();
+    //     return CU_get_error();
+    // }
+    // 
+    // if(  NULL == CU_add_test(xmlSuite, "Dijkstra", test_dijkstra_1)
+    //     // || NULL == CU_add_test(xmlSuite, "Dijkstra invalid tile", test_dijkstra_2)
+    // ) {
+    //     CU_cleanup_registry();
+    //     return CU_get_error();
+    // }
     
     // if(  NULL == CU_add_test(xmlSuite, "AStar", test_astar_1)
-    //     || NULL == CU_add_test(xmlSuite, "Astar invalid tile", test_astar_2)
+    //     // || NULL == CU_add_test(xmlSuite, "Astar invalid tile", test_astar_2)
     // ) {
     //     CU_cleanup_registry();
     //     return CU_get_error();
