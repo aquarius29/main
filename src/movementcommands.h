@@ -9,6 +9,7 @@
 /* MovementCommand struct */
 typedef struct 
  {
+	char type;
 	char order; /* (lift off/ hovering/ moving/ land) */
 	int height;
 	int distance;

@@ -1,16 +1,15 @@
 /*
-* 	@author 	Jarryd Hall
+* 	@author 	Jarryd Hall.
 * 
 * 	@details 	Core Logic will be used as an entry point for external sub-systems e.g Connectivity
 *   	       	and will be used to write data using the protocol for e.g. Movement and UI data.
 *          
 *       	   	Core Logic will create a watchdog thread which in turn multithreads the following:
-*          		Manual movement command fetcher for handling manual movement commands and relaying them
-*          		GPS Setup thread which connects to GPS device and reads data from the device
-*          		GPS Navigation thread which calculates gps flight path
+*          		GPS Setup thread which connects to GPS device and reads data from the device.
+*          		GPS Navigation thread which calculates gps flight path.
 *
 *				Core Logic is used to setup the correct system e.g. 
-*				GPS navigation / Indoor Navigation
+*				GPS navigation / Indoor Navigation.
 */
 
 #include <stdio.h>
