@@ -16,7 +16,7 @@
 
 
 #define BUFF_YAW 5
-#define BUFF_DISTSNCE 0.2
+#define BUFF_DISTSNCE 5
 #define BUFF_PR 1
 #define SPEED 5
 

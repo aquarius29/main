@@ -81,7 +81,9 @@ int mov_run()
  */
 int mov_init(void)
 {
+#ifdef SIMULATOR
     file = fopen("input.txt", "r");
+#endif
 
     heightArrived = 1;
     yawArrived = 1;
@@ -164,7 +166,7 @@ struct nav *p = &navCommand;
 	//read navigation command
 	p->type =0;
 	p->order=0;
-	p->height =5;
+	p->height =10;
 	p->distance=0;
 	p->yaw=0;
 #endif
