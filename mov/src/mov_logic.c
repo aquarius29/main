@@ -49,7 +49,8 @@ void command_logic(void) {
 			heightArrived = 1;
 		}
 		else {
-			land();  
+			land(); 
+ 
 #ifdef SIMULATOR
 			/* simulated */
 			sensorCommand.height = readSensorTest(sensorCommand.height, 'd');
@@ -217,8 +218,9 @@ void check_pitch_roll(int isHovering) {
 
 //(rand() % (max - min + 1) + min);
 int readSensorTest(int currentSensor, char command){
-    
+   
     int i = (rand() % (6 - 0 + 1) + 0);  // between 5 and -5 degree variation
+
     int new;
 
     switch (command) {

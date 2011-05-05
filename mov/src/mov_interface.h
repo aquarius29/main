@@ -106,5 +106,7 @@ int mov_run(void);
 void read_navCommand(void);
 void read_caCommand(void);
 void doCa(void);
+void write_to_motor(unsigned char msg);
 
-
+/*mov_sensor.c*/
+float sonar_distance(int sonarPin);

@@ -16,6 +16,7 @@
 int main(int argc, char *argv[])
 {
 	ca_init();
-	ca_run();
+   	ca_run();
+
 	return 0;
 }

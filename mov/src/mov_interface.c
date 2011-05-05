@@ -14,6 +14,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+
+
+#ifdef ARDUINO
+#include "WProgram.h"
+#endif
+
+
+
 #ifndef SIMULATOR
 //#include "proto_mov_motor.h"
 #endif
@@ -30,7 +38,7 @@ int caDir=-1;
 //************************************************************
 int mov_init()
 {
-	Serial.init(9600);
+	Serial.begin(9600);
 
     heightArrived = 1;
     yawArrived = 1;
@@ -196,6 +204,6 @@ void read_caCommand(void){
 #ifndef SIMULATOR
 	//read collision avoidance command
     //PROTOCOL READ FROM CA
-    yaw = 0;
+    caDir = 0;
 #endif
 }
