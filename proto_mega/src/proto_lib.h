@@ -10,15 +10,15 @@
 *
 * <IT University of Goteborg>
 *****************************************************************************/
-//Ca Header
+//Collision to Movement Header
 
 
-//get direction from movement to collision avodance  
-void proto_write_direction_ca(int value);// proto API 
+//write yaw from movement to collision avodance  
+void proto_write_yaw(int value);// proto API 
  
  
-//read direction from movement to collision avodance  
-unsigned int proto_read_direction_ca(void);// proto API 
+//read yaw from movement to collision avodance 
+unsigned int proto_read_yaw(void);// proto API 
 
 
 /****************************************************************************/
@@ -69,18 +69,12 @@ char proto_read_motor_ctrl(void);
 
 //movement to collision
 
-struct move {
-        int speed;
-        int direction_move;
-};
-
-
-//write from movement to collision avodance  
-void proto_write(struct move mv);// proto API 
+//write from movement to collision avodance 
+void proto_write_direction(int value);
  
  
 //read from movement to collision avodance 
-struct move proto_read();// proto API 
+unsigned int proto_read_direction(void);
 
 
 
@@ -125,6 +119,26 @@ unsigned char proto_read_destination_msg_(void);// proto API
 // pass msg of destination to navigation
 
 void proto_send_destination_msg(unsigned char msg);
+
+/****************************************************************************/
+//Navigation to Movement
+
+
+struct navigation {
+      
+char type_msg;
+char order_msg;
+int distance_msg;
+int yaw_msg;
+int height_msg;
+
+        }navigation;
+
+       
+struct proto read();//API
+
+
+void write(struct proto msg);//API
 
 
 /****************************************************************************/

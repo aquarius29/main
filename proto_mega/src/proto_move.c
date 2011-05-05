@@ -16,46 +16,30 @@
    #include <stdio.h>
    #include "proto_lib.h"
 #endif
-/***************************************************************************** 
-    Definitions 
-*****************************************************************************/ 
 
-#include <stdio.h>
-#include <string.h>
+/*****************************************************************************/
+int dir = 0;
 
-
-struct move move_ca;
-
- 
- 
-/***************************************************************************** 
-    Implementations 
-*****************************************************************************/ 
- 
-void proto_write(struct move mv){ 
-    move_ca = mv;
+void proto_write_direction(int value){ 
+    dir = value;
 #ifdef PC
- storeForTint(WRITE, MOVEMENT, UNKNOWN, mv.speed);
- storeForTint(WRITE, MOVEMENT, UNKNOWN, mv.direction_move);
+	storeForTint(WRITE, MOVEMENT, UNKNOWN, dir);
 	#ifdef DEBUG
-	printf("Movement value set to: %d , %d\n", mv.speed , mv.direction_move);
-  #endif
+	printf("Movement value set to: %c\n", dir);
 #endif
+ #endif
 } 
  
  
-struct move proto_read(){ 
+unsigned int proto_read_direction(void){ 
 #ifdef PC
-  storeForTint(READ, COLLISION, UNKNOWN, move_ca.speed);
-  storeForTint(READ, COLLISION, UNKNOWN, move_ca.direction_move);
+       storeForTint(READ, MOVEMENT, UNKNOWN, dir);
 	#ifdef DEBUG
-	printf("Movement value set to: %d , %d\n", move_ca.speed , move_ca.direction_move);
-  #endif
+	printf("Movement value is: %c\n", dir);
 #endif
-
-    return move_ca; 
-} 
-
+#endif
+    return dir; 
+}
 
 
 
