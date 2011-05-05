@@ -14,7 +14,7 @@
 #define SLEEP_DURATION (0.3 * 1000000000)
 #define ALGORITHM 0
 #define CENTIMETRES_PER_SECOND 20
-#define SAFE_HEIGHT 200
+#define SAFE_HEIGHT 200 //200 cm
 
 static void navigatePath(void);
 static int32_t count;
@@ -93,7 +93,7 @@ static void sendCommand(void) {
         printf("Move at angle %.5f\n", current->next->p.angle / (M_PI / 180) +
         180);
     }
-    //sendautomovementcommand(3, SAFE_HEIGHT, current->next->p.distance, angle);
+    sendautomovementcommand(3, SAFE_HEIGHT, current->next->p.distance, angle);
 }
 static void sendPosition(pixel *pos) {
     printf("Longitude = %d\nLatitude = %d\n", pos->lon, pos->lat);
@@ -121,6 +121,7 @@ void initPath(position *start, position *end) {
     int32_t counterUp;
     running = 1;
     count = 0;
+    sendautomovementcommand(1, SAFE_HEIGHT, 0, 0);
     if (ALGORITHM == 0) {
         printf("Dijkstra\n");
         route = indoorDijkstra(start, end);
