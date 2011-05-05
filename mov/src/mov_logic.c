@@ -53,6 +53,7 @@ void command_logic(void) {
 			/* simulated */
 			sensorCommand.height = readSensorTest(sensorCommand.height, 'd');
 		} 
+
     }
 }
 
@@ -61,6 +62,7 @@ void check_changingAltitude(void){
 		changingAltitude = 1;
     else
 		changingAltitude = 0;
+
 }
 
 //check the drone height
@@ -83,7 +85,8 @@ void check_height(void)
 		if(changingAltitude == 1)
 			{	hover();
 				printf("&&&&&&&&&&&&&&INCREASED&&&&&&&&&&&&&&&");
-				increase_all();}
+				increase_all();
+			}
 
 		/* simulated */
 		sensorCommand.height = readSensorTest(sensorCommand.height, 'i');
