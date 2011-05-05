@@ -51,6 +51,7 @@
 ##
 ##  2011-04-27 - re-structured and merged scheduler implementations and added
 ##				 SCHED_FLAG to define implementation. - Anders
+##  2011-05-05 - Fixed some things related to the mega - Anders
 ##
 ##  Notes:
 ##  Missing instructions in targets not related to basic system. 
@@ -72,11 +73,11 @@ BASIC_LIBS=-Lstab/lib -Lsched/lib -Lmoto/lib -Lmov/lib -Lca/lib -Lproto/lib -Lli
 ##  Set paths to headers used by code on the basic system
 BASIC_INCLUDES=-I../../stab/src -I../../moto/src -I../../mov/src -I../../ca/src -I../../proto/src -I../../include
 
-##  Set scheduler implementation (-DBATMAN|-DNAIVE)
+##  Set scheduler implementation (-DBATMAN |-DNAIVE)
 SCHED_FLAG=-DBATMAN
 
 ##  Free of charge
-EXTRA_FLAGS= -DLOG
+EXTRA_FLAGS=
 
 ##  Name of micro controller
 MMCU=atmega2560
