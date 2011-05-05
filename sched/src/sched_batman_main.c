@@ -50,8 +50,8 @@ void sched_batman_run(void) {
 #endif /* LOG */
 
 #elif ARDUINO
-    unsigned int32_t start;
-    unsigned int32_t stop;
+    int32_t start;
+    int32_t stop;
 
 #endif /* PC ARDUINO */
 
