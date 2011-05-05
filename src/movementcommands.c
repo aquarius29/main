@@ -1,16 +1,26 @@
-/*
-* Author: Jarryd Hall
-* Purpose: Drone Movement Commands
-* TODO: Include protocol source and use it to send data to movement
+/*!
+* @author Jarryd Hall
+* @brief Drone Movement Commands
+* @details A module for creating and sending auto movement commands
+*          This is used by the navigation systems to generate movement commands
+*		   from their path calculations
 */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include "movementcommands.h"
 
-/* Create a movement command */
+//! Create a movement command .
+/*!
+* Function to be used by the navigation systems to create auto movement commands.
+* @param order 0 = hover, 1 = moving, 2 = landing.
+* @param height The height to move the drone.
+* @param distance The distance to move the drone.
+* @param yaw The direction to move the drone in.
+* @see nav_sendAutoMovementCommand()
+*/
 void sendautomovementcommand
-(char type, char order , int height, int distance, int yaw)
+(char order , int height, int distance, int yaw)
 {
 	movementCommand *move = malloc(sizeof(movementCommand));
 	if (move == NULL)
@@ -19,14 +29,15 @@ void sendautomovementcommand
 	}
 	else 
 	{
-		move->type = type;
+		move->type = type; /* set this to the auto value before building */
 		move->order = order;
 		move->height = height;
 		move->distance = distance;
 		move->yaw = yaw;
         
-        /* Function from interface to send order goes here */
-		/* e.g. InterfaceSendOrder(order); */
+		printf("Sending Auto Movement Command");
+		nav_sendAutoMovementCommand(move);
+		
 		free(move);
 	}
 }
