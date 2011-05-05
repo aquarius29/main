@@ -1,6 +1,0 @@
-This folder should contain all test cases created by the motor group.
-Make one test file for each c-module that is to be tested.
-Name it like this:
-"cunit_fileToTest.c"
-
-Good luck!
