@@ -105,5 +105,6 @@ int mov_init(void);
 int mov_run(void);
 void read_navCommand(void);
 void read_caCommand(void);
+void doCa(void);
 
 
