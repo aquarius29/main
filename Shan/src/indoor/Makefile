@@ -14,6 +14,9 @@ testobjs: indoor_algorithms.h indoor_astar.c indoor_dijkstra.c indoor_navigation
 	gcc -o indoor_dijkstra.o -c indoor_dijkstra.c $(EXTRAGCCFLAGS)
 	gcc -o tilemap.o -c tilemap.c $(EXTRAGCCFLAGS)
 	gcc -o tmxparser.o -I/usr/include/libxml2 -lxml2 -c tmxparser.c  $(EXTRAGCCFLAGS)
-	
+
+testobjsv: EXTRAGCCFLAGS+= -g
+testobjsv: testobjs
+
 clean:
 	rm -f indoor indoor.exe indoor.o *.gcov *.gcda *.gcno

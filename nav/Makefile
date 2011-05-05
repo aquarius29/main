@@ -1,21 +1,27 @@
-# 
-#  Makefile for Abstract Navigation's src directory
-# 
+#  
+#  Makefile for Abstract Navigation's base directory
+#  
 #  Created on: 10 apr 2011
 #      Author: Shan Huang
-# 
+#  
 
-nav: indoor_navigation.c path_data.c path_structure.h main.c
-	gcc -o nav indoor_navigation.c path_data.c main.c $(EXTRAGCCFLAGS)
+default:
+	@echo "make indoor      produces binary in bin/"
+	@echo "make clean       recursively clean up subdirs"
+	@echo "make unit        run unit tests"
+	@echo "make valg        run unit tests with valgrind"
 
-testobjsu: indoor_navigation.c path_data.c path_structure.h 
-	gcc -o nav.o -c indoor_navigation.c path_data.c $(EXTRAGCCFLAGS)
-
-testobjsg: EXTRAGCCFLAGS+= -fprofile-arcs -ftest-coverage
-testobjsg: testobjsv
-
-testobjsv: EXTRAGCCFLAGS+= -g
-testobjsv: testobjsv
+indoor:
+	cd bin && $(MAKE) indoor
 
 clean:
-	rm -f nav nav.exe nav.o *.gcov *.gcda *.gcno
+	cd bin && $(MAKE) clean
+	cd test/unit && $(MAKE) clean
+
+unit:
+	cd bin && $(MAKE) testobjs
+	cd test/unit && $(MAKE) unit
+
+valg: clean
+	cd bin && $(MAKE) testobjsv
+	cd test/unit && $(MAKE) valg

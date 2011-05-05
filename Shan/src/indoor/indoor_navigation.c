@@ -10,7 +10,7 @@
 #include <time.h>
 #define PRECISION 5
 #define SLEEP_DURATION (0.3 * 1000000000)
-#define ALGORITHM 1
+#define ALGORITHM 0
 #define CENTIMETRES_PER_SECOND 20
 
 static int count, running;
@@ -28,6 +28,9 @@ void insert_progressive_node() {
         first->prev = 0;
         first->p = route.list[0];
         current = first;
+        
+         printf("%f \n", current->p.lat);
+            printf("%f \n\n", current->p.lon);
         insert_progressive_node();
     }
     else {
@@ -38,19 +41,30 @@ void insert_progressive_node() {
         current->next = temp;
         temp->prev = current;
         current = temp;
+        
+        printf("%f \n", current->p.lat);
+        printf("%f \n\n", current->p.lon);
 
         current->next = calloc(1, sizeof(progressive_node));
         current->next->p = route.list[count];
         current->next->next = 0;
+        
+        printf("%f \n", current->next->p.lat);
+        printf("%f \n\n", current->next->p.lon);
     }
 }
 
 void free_progressive_list() {
 
     progressive_node *temp;
+    
+    int i = 0;
 
     while (first != 0) {
         temp = first->next;
+        printf("%d \n", ++i);
+        printf("%f \n", first->p.lat);
+        printf("%f \n\n", first->p.lon);
         free(first);
         first = temp;
     }
@@ -103,7 +117,7 @@ void send_distance(double *distance) {
     printf("Go for %.5f cm.\n", *distance);
 }
 void send_position(point *pos){
-    printf("Longitude = %f\nLatitude = %f\n", pos->lon, pos->lat);
+    // printf("Longitude = %f\nLatitude = %f\n", pos->lon, pos->lat);
 }
 void send_expected_path(position_list *path) {
     //Give corelogic the calculated path.
@@ -214,7 +228,6 @@ void navigate_path(){
 
         if(check(current->p, current->next->p) == 1){
             if(check(current->p, route.list[route.num-1]) == 1){
-                current->prev->p = current->next->p;
                 count++;
                 free_progressive_list();
                 send_stop();
@@ -238,8 +251,8 @@ void navigate_path(){
 //     position a, b;
 //     a.x = 1;
 //     a.y = 1;
-//     b.x = 9;
-//     b.y = 5;
+//     b.x = 3;
+//     b.y = 3;
 //     init_path(a, b);
 //     // return 1;
 //     return 0;
