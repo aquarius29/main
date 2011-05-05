@@ -25,8 +25,8 @@
 #include <pthread.h>
 #include <unistd.h>
 //#include <time.h>
-//#include "cv.h"
-#include "highgui.h"
+//#include "../include/cv.h"
+#include "../include/highgui.h"
 
 /*	define a default port number of ther server */
 #define PORT_NUMBER 5457

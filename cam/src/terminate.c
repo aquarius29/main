@@ -17,8 +17,8 @@
 #include <pthread.h>
 #include <unistd.h>
 
-#include "cv.h"
-#include "highgui.h"
+#include "../include/cv.h"
+#include "../include/highgui.h"
 
 int serversock;
 	int clientsock;

@@ -19,8 +19,8 @@
 #include <stdlib.h>
 #include <pthread.h>
 
-#include "cv.h"
-#include "highgui.h"
+#include "../include/cv.h"
+#include "../include/highgui.h"
 
 
 /*	opencv video capture structure and video image */

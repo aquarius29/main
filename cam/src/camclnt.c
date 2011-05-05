@@ -8,8 +8,8 @@
 #include <stdlib.h>     
 #include <string.h>     
 #include <unistd.h>    
-#include "cv.h"
-#include "highgui.h"
+#include "../include/cv.h"
+#include "../include/highgui.h"
 #define DEFPORT       3434            /* default port number */
 
   IplImage* image_bytes;
