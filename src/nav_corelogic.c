@@ -21,7 +21,7 @@
 #include "tmxparser.c"
 #include "gps_nav.h"
 #include "tilemap.h"
-//#include "path_structure.h"
+#include "nav_indoorstructure.h"
 
 pthread_t gpsSetupThread;
 pthread_t gpsNavigationThread;
@@ -223,7 +223,7 @@ void nav_runIndoorSystem(position startTile, position destinationTile)
     }
     
     */
-   // init_path(startTile, destinationTile);
+   initPath(&startTile, &destinationTile);
 	pthread_join(indoorNavigationThread, NULL);
 	printf("indoor navigation system shut down\n");
 }
