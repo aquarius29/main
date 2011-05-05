@@ -10,7 +10,7 @@
 #include <time.h>
 #define PRECISION 5
 #define SLEEP_DURATION (0.3 * 1000000000)
-#define ALGORITHM 0
+#define ALGORITHM 1
 #define CENTIMETRES_PER_SECOND 20
 
 static int count, running;
@@ -185,6 +185,7 @@ void collision_avoided(double direction, struct timeval time){
     compare_tile();
     recalc();
 }
+
 int check(point a, point b){
     double diff_x, diff_y;
     diff_x = fabs(a.lon - b.lon);
@@ -233,13 +234,13 @@ void navigate_path(){
     }
 }
 
-int main(){
-    position a, b;
-    a.x = 1;
-    a.y = 1;
-    b.x = 9;
-    b.y = 5;
-    init_path(a, b);
-    // return 1;
-    return 0;
-}
+// int main(){
+//     position a, b;
+//     a.x = 1;
+//     a.y = 1;
+//     b.x = 9;
+//     b.y = 5;
+//     init_path(a, b);
+//     // return 1;
+//     return 0;
+// }

@@ -89,9 +89,9 @@ void createTwoDArray(ThreeDWorld *world, int w, int h, int array[])
 		{
 			//printf("Value in tile array is %d\n", array[one + two]);
 			world->representation[one][two] = array[arrayCounter];
-            printf("  %d", world->representation[one][two]);
-			if(two == 9)
-				printf("\n");	
+            // printf("  %d", world->representation[one][two]);
+            // if(two == 9)
+            //  printf("\n");  
 			arrayCounter++;
 		}
 	}
@@ -151,9 +151,9 @@ void getTileDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 	
 	totalTiles = numMovableTiles + numCollisionTiles;
 	
-	printf("number of collision tiles : %d\n", numCollisionTiles);
-	printf("number of movable tiles : %d\n", numMovableTiles);
-	printf("Total tiles : %d\n", totalTiles);
+    // printf("number of collision tiles : %d\n", numCollisionTiles);
+    // printf("number of movable tiles : %d\n", numMovableTiles);
+    // printf("Total tiles : %d\n", totalTiles);
 	world->numberOfTilesInMap = totalTiles;
 	
 	createTwoDArray(world, width, height, tileValuesArray);

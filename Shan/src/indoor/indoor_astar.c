@@ -8,6 +8,23 @@
 #include "indoor_algorithms.h"
 #include "path_structure.h"
 #include "tilemap.h"
+
+static ThreeDWorld map;
+
+int selected_tiles_are_valid_for_astar(const position * start, const position * end) {
+     fill_map(&map);
+     if ((map.representation[start->x][start->y] == 1) 
+         || (map.representation[end->x][end->y] == 1)
+         || (start->x > map.mapWidth) || (start->y > map.mapHeight)
+         || (end->x > map.mapWidth) || (end->y > map.mapHeight)) {
+         free(map.representation);
+         return 0;
+     } else {
+         // tiles are valid
+         return 1;
+     }         
+ }
+ 
 /*
  * Takes the drone position, goal position, and a tile map
  * If the goal is found a dynamic list of the nodes making up the
@@ -17,65 +34,72 @@
  */
 position_list indoor_astar(const position * start, const position * end)
 {
-	nodeList * open;            /* open list */
-	nodeList * closed;          /* closed list */
-	node currentNode;           /* the starting node */
-	position_list final;       /* the shortest path */
+    if (selected_tiles_are_valid_for_astar(start, end)) {
+        nodeList * open;            /* open list */
+    	nodeList * closed;          /* closed list */
+    	node currentNode;           /* the starting node */
+    	position_list final;       /* the shortest path */
 
-	/* Allocate space for both the open and the closed list */
-	if(!ListMemoryAllocation(&open, &closed)) {
-		return final;
-	}
+    	/* Allocate space for both the open and the closed list */
+    	if(!ListMemoryAllocation(&open, &closed)) {
+    		return final;
+    	}
 
-	/* Add values for the first node in the open list */
-	open->count++;
-	open->list[0].pos = *start;
-	open->list[0].previous.y = -1;
-	open->list[0].previous.x = -1;
-	open->list[0].totalCost = 0;
-	open->list[0].heuristic = GetHeuristicCost(&open->list[0].pos, end);
+    	/* Add values for the first node in the open list */
+    	open->count++;
+    	open->list[0].pos = *start;
+    	open->list[0].previous.y = -1;
+    	open->list[0].previous.x = -1;
+    	open->list[0].totalCost = 0;
+    	open->list[0].heuristic = GetHeuristicCost(&open->list[0].pos, end);
 
-	while(open->count > 0) {
-		/* Check if we have reach the goal */
-		if(open->list[0].pos.x == end->x
-				&& open->list[0].pos.y == end->y)
-		{
-			/* If so, add the goal node to the closed list and stop looping */
-			closed->list = AddNodeToClosed(&open->list[0], closed);
-			break;
-		}
+    	while(open->count > 0) {
+    		/* Check if we have reach the goal */
+    		if(open->list[0].pos.x == end->x
+    				&& open->list[0].pos.y == end->y)
+    		{
+    			/* If so, add the goal node to the closed list and stop looping */
+    			closed->list = AddNodeToClosed(&open->list[0], closed);
+    			break;
+    		}
 
-		/* Copy the values from the first node in the open list */
-		currentNode = open->list[0];
+    		/* Copy the values from the first node in the open list */
+    		currentNode = open->list[0];
 
-		/*
-		 * Add the check node to the closed list and remove it
-		 * from the open list
-		 */
-		closed->list = AddNodeToClosed(&currentNode, closed);
-		RemoveNodeFromOpen(&currentNode, open);
+    		/*
+    		 * Add the check node to the closed list and remove it
+    		 * from the open list
+    		 */
+    		closed->list = AddNodeToClosed(&currentNode, closed);
+    		RemoveNodeFromOpen(&currentNode, open);
 
-		/* Check the neighbors of the first node in the open list */
-		astar_AddNeighborsToOpen(&currentNode, open, closed, end);
-	}
+    		/* Check the neighbors of the first node in the open list */
+    		astar_AddNeighborsToOpen(&currentNode, open, closed, end);
+    	}
 
-	/* If we found the goal, a list with the shortest path will be created */
-	if(closed->list[closed->count - 1].pos.x == end->x
-			&& closed->list[closed->count - 1].pos.y == end->y)
-	{
-		/* Create final list and return it to the caller */
-		final = CreateFinalList(closed, end, start);
-		FreeAllocatedList(open);
-		FreeAllocatedList(closed);
-		return final;
-	}
-	/* If we could not get to the goal, there is no solution */
-	else {
-		printf("Could not find goal!\n");
-		FreeAllocatedList(open);
-		FreeAllocatedList(closed);
-		return final;
-	}
+    	/* If we found the goal, a list with the shortest path will be created */
+    	if(closed->list[closed->count - 1].pos.x == end->x
+    			&& closed->list[closed->count - 1].pos.y == end->y)
+    	{
+    		/* Create final list and return it to the caller */
+    		final = CreateFinalList(closed, end, start);
+    		FreeAllocatedList(open);
+    		FreeAllocatedList(closed);
+    		return final;
+    	}
+    	/* If we could not get to the goal, there is no solution */
+    	else {
+    		printf("Could not find goal!\n");
+    		FreeAllocatedList(open);
+    		FreeAllocatedList(closed);
+    		return final;
+    	}
+        free(map.representation);
+    } else {
+        // printf("Invalid tile.\n");
+        // exit(1); //or do something else
+    }
+	
 }
 
 /*
@@ -83,8 +107,7 @@ position_list indoor_astar(const position * start, const position * end)
  * adds reachable nodes to the open list
  */
 void astar_AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed, const position * end) {
-	ThreeDWorld map;
-	fill_map(&map);
+	
 	int sortCounter = 0;
 	int y = 0;
 	int x = 0;
@@ -236,7 +259,7 @@ void astar_AddNeighborsToOpen(node * current, nodeList * open, nodeList * closed
 			}
 		}
 	}
-	free(map.representation);
+    // free(map.representation);
 }
 /* Get the heuristic cost from a node to the goal node */
 int GetHeuristicCost(const position * currentNode, const position * goalNode)
