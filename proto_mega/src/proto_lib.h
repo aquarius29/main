@@ -126,11 +126,11 @@ void proto_send_destination_msg(unsigned char msg);
 
 struct navigation {
       
-char type_msg;
-char order_msg;
-int distance_msg;
-int yaw_msg;
-int height_msg;
+char type;
+char order;
+int distance;
+int yaw;
+int height;
 
         }navigation;
 

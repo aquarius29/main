@@ -22,11 +22,11 @@
 
 struct navigation {
       
-char type_msg;
-char order_msg;
-int distance_msg;
-int yaw_msg;
-int height_msg;
+char type;
+char order;
+int distance;
+int yaw;
+int height;
 
         }navigation;
        
@@ -40,7 +40,7 @@ void write(struct navigation msg);
 *****************************************************************************/
 struct navigation read(){
 #ifdef PC
-    printf("Navigation value set to: %d , %d , %d , %d , %d\n", navigation.type_msg, navigation.order_msg, navigation.distance_msg, navigation.yaw_msg, navigation.height_msg);
+    printf("Navigation value set to: %d , %d , %d , %d , %d\n", navigation.type, navigation.order, navigation.distance, navigation.yaw, navigation.height);
 #endif
        return navigation;
 
@@ -51,7 +51,7 @@ void write(struct navigation msg){
      
      navigation = msg;
 #ifdef PC
-    printf("Navigation value set to: %d , %d , %d , %d , %d\n", navigation.type_msg, navigation.order_msg, navigation.distance_msg, navigation.yaw_msg, navigation.height_msg);
+    printf("Navigation value set to: %d , %d , %d , %d , %d\n", navigation.type, navigation.order, navigation.distance, navigation.yaw, navigation.height);
 #endif
      }
 

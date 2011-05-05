@@ -18,7 +18,7 @@
 #endif
 
 /*****************************************************************************/
-int dir = 0;
+int dir = 0;//Deafult value 
 
 void proto_write_direction(int value){ 
     dir = value;
