@@ -22,9 +22,12 @@
 #include "tilemap.h"
 #include "nav_indoorstructure.h"
 
+pthread_t protocolReadThread;
 pthread_t gpsSetupThread;
 pthread_t gpsNavigationThread;
 pthread_t indoorNavigationThread;
+
+int protocolReading = 0;
 
 static pthread_mutex_t watchdogMutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t watchdogCond = PTHREAD_COND_INITIALIZER;
@@ -72,12 +75,18 @@ void *startgpswatchdog(void *ptr)
 	printf("destination after watchdog receive lat : %lf\n", destination->latitude);
 	printf("destination after watchdog receive lon : %lf\n", destination->longitude);
  
+	int protocolReadThreadResult;
 	int gpsSetupThreadResult;
 	int gpsNavigationThreadResult;
 	
+	char *message = "protocol read thread started";
 	char *message2 = "gps setup thread started";
 
 	/* pthread functions return 0 when successful */
+	
+	printf("Attempting to create protocol reader thread\n");
+	protocolReadThreadResult = pthread_create(&protocolReadThread, NULL, readProtocol, (void*) message);
+	
 	printf("Attempting to create GPS setup thread\n");
 	gpsSetupThreadResult = pthread_create(&gpsSetupThread, NULL, setupgps, (void*) message2);
 	
@@ -106,6 +115,14 @@ void *startgpswatchdog(void *ptr)
 		/* pthread_kill(someThread, 0) */
 		/* sending a zero to the thread will not kill the thread */
 		/* using the return value it can check of the thread is dead */
+		
+		if(pthread_kill(protocolReadThread, 0) != 0)
+		{
+			printf("Protocol reader thread died\nRecreating......\n");
+			
+			protocolReadThreadResult = 
+			pthread_create(&protocolReadThread, NULL, readProtocol, (void*) message);
+		}
 		
         if (pthread_kill(gpsSetupThread, 0) != 0)/* GPS Setup Thread is dead */
         {
@@ -142,11 +159,13 @@ void *startgpswatchdog(void *ptr)
 		if (pthread_kill(gpsNavigationThread, 0) == 0)
 		{
 			printf("GPS Navigation Thread was digitally destroyed\nReconstructing....\n");
-			gpsNavigationThreadResult = pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
+			gpsNavigationThreadResult = 
+			pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) destination);
 		}
 	}
 	
 	/* wait for the threads to finish */
+	pthread_join(protocolReadThread, NULL);
 	pthread_join(gpsSetupThread, NULL);
 	pthread_join(gpsNavigationThread, NULL);	
 }
@@ -183,8 +202,15 @@ void nav_runIndoorSystem(position startTile, position destinationTile)
 		data->destinationtile = destinationTile;
 		data->message = "Indoor system started";
 			
+	char *message = "protocol read thread started";
+			
+	int protocolReadThreadResult;		
 	int indoorThreadResult;
 	
+	printf("Attempting to create protocol reader thread\n");
+	protocolReadThreadResult = pthread_create(&protocolReadThread, NULL, readProtocol, (void*) message);
+	
+	printf("Attempting to create indoor nav thread\n");
 	indoorThreadResult = 
 		pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void *) data);
 	
@@ -192,37 +218,30 @@ void nav_runIndoorSystem(position startTile, position destinationTile)
 	
 	while(indoorSystemRunning == 1)
 	{
+		if(pthread_kill(protocolReadThread, 0) != 0)
+		{
+			printf("Protocol reader thread died\nRecreating......\n");
+			
+			protocolReadThreadResult = 
+			pthread_create(&protocolReadThread, NULL, readProtocol, (void*) message);
+		}
+		
 		if (pthread_kill(indoorNavigationThread, 0) == 0)
 		{
 			free(data);
 			printf("Indoor System quite unexpectedly\nRestarting...\n");
 			
 			struct thread_data *newData = malloc(sizeof(struct thread_data));
-			newData->
-			newData->
-			newData->
+			// newData->
+			// 		newData->
+			// 		newData->
 			
 			indoorThreadResult = 
 				pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void *) newData);
 		}
 	}
-    /* check if thread was created */
-    /*
-    if (threadResult == 0)
-		printf("Thread created\n");
-    else
-    {
-		printf("Couldnt create thread\nRetrying.....\n");
-		
-        threadResult = 
-	    pthread_create(&manualCommandThread, NULL, commandFetcher, (void *) message);
-       
- 		if (threadResult == 0)
-			printf("Thread created\n");
-    }
-    
-    */
-   initPath(&startTile, &destinationTile);
+   
+   //initPath(&startTile, &destinationTile);
 	pthread_join(indoorNavigationThread, NULL);
 	printf("indoor navigation system shut down\n");
 }
@@ -305,6 +324,26 @@ void nav_createIndoorCollisionObject(int tileNumber, ThreeDWorld *world)
 
 		/* notify the path calculation to recheck the worldMap and recalculate. */
 		printf("Collision object created\n");
+	}
+}
+
+//!
+/*!
+*
+*
+*
+*/
+void *readProtocol(void *ptr)
+{
+	char *message;
+    message = (char *) ptr;
+    printf("%s\n", message);
+
+	protocolReading = 1;
+	
+	while(protocolReading == 1)
+	{
+		/* Add functions to read different bullshit from the protocol*/
 	}
 }
 
