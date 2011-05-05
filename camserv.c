@@ -7,8 +7,8 @@
 #include <string.h>    
 #include <unistd.h>   
 
-#define MAXPENDING 5    /* Maximum  connection requests to handle */
-#define RCVBUFSIZE 1000
+#define QUE 5    /* Maximum  connection requests to handle */
+
 void Exit_Error_func(char *errorMessage);  /* Error handling function */
 void client_handler(int client_socket);   /* TCP client handling function */
 
@@ -20,8 +20,8 @@ int main(int argc, char *argv[])
     struct sockaddr_in Client_adress; /* Client address */
     unsigned short server_port;     /* Server port */
     unsigned int clntLen;            /* Length of client address data structure */
-    char    msg_buf[RCVBUFSIZE];       /* buffer for string the server sends  */
-    int     n;               /* number of characters received       */ 
+    
+    
 void Exit_Error_func(char *errorMessage)
 {
     perror(errorMessage);
@@ -62,7 +62,7 @@ void Exit_Error_func(char *errorMessage)
  printf("binding successful\n");
 printf("socket successful \n");
     /* Mark the socket to listen for incoming connections */
-    if (listen(servSock, MAXPENDING) < 0)
+    if (listen(servSock, QUE) < 0)
         Exit_Error_func("listening failed");
 
     
