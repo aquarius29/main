@@ -86,6 +86,7 @@ int mov_run(void){
 		yawArrived = 0;
 		distanceToTravel = 0;
 		if (read_command()== 0) {  
+			fclose(file);
 			printf("**end of the file**\n");
 			return 1;
 		}

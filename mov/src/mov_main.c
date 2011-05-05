@@ -26,6 +26,5 @@ int main(int argc, char *argv[]){
 	while(loop == 0)  {
 		loop = mov_run();
 	}
-    fclose(file);
     return 1;
 }
