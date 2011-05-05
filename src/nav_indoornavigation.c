@@ -99,15 +99,17 @@ static void sendPosition(pixel *pos) {
 }
 static void sendExpectedPath(positionList *path) {
     //Give corelogic the calculated path.
-    printf("This is the path given by path calc.\nLines should be drawn between each point in list.\n");
+    printf("This is the path given by path calc.\n");
+    printf("Lines should be drawn between each point in list.\n");
 }
 // void send_actual_path(progressive_route *path){
 static void sendActualPath(progressiveNode *first) {
     //Give corelogic the finalized path after destination reached.
-    printf("This is the path actually taken to until destination reached/nav interrupted.\n");
+    printf("This is the path actually taken to until ");
+    printf("destination reached/nav interrupted.\n");
 }
 void stopIndoorNavigation(void) {
-    //Tell corelogic to tell movement to stop (for when we arrive at destination).
+    //Tell corelogic to tell movement to stop
     printf("Destination reached or indoor navigation interrupted.\n");
     running = 0;
     sendActualPath(first);
