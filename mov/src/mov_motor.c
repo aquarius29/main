@@ -28,6 +28,7 @@ void start_motors(void)
 	char msg = to_MotorMessage(0,1,0,0,0,0,0,0);
 	printf ("start motors\n");
 	pWrite(msg);
+	write_to_motor(msg);
 }
 
 /*
@@ -39,6 +40,7 @@ void stop_motors(void)
 	char msg = to_MotorMessage(0,0,0,0,0,0,0,0);
 	printf ("stop motors\n");
 	pWrite(msg);
+	write_to_motor(msg);
 }
 
 /*
@@ -50,6 +52,7 @@ void increase_rear_motor(void){
 	char msg = to_MotorMessage(1,0,1,0,0,0,0,1);
 	printf ("increase rear motor\n");
 	pWrite(msg);
+	write_to_motor(msg);
 
 }
 
@@ -61,6 +64,7 @@ void decrease_rear_motor(void){
 	char msg = to_MotorMessage(1,0,0,0,0,0,0,1);
 	printf ("decrease rear motors\n");
 	pWrite(msg);
+	write_to_motor(msg);
 }
 
 /*
@@ -71,6 +75,7 @@ void increase_front_motor(void){
 	char msg = to_MotorMessage(1,0,1,0,0,0,1,0);
 	printf ("increase front motor\n");
 	pWrite(msg);
+	write_to_motor(msg);
 }
 
 /*
@@ -81,6 +86,7 @@ void decrease_front_motor(void){
 	char msg = to_MotorMessage(1,0,0,0,0,0,1,0);
 	printf ("decrease front motor\n");
 	pWrite(msg);
+	write_to_motor(msg);
 }
 
 /*
@@ -90,6 +96,7 @@ void increase_left_motor(void){
 	char msg = to_MotorMessage(1,0,1,0,0,1,0,0);
 	printf ("increase left motor\n");
 	pWrite(msg);
+	write_to_motor(msg);
 
 }
 
@@ -102,6 +109,7 @@ void decrease_left_motor(void){
 	char msg = to_MotorMessage(1,0,0,0,0,1,0,0);
 	printf ("decrease left motor\n");
 	pWrite(msg);
+	write_to_motor(msg);
 }
 
 
@@ -113,6 +121,7 @@ void increase_right_motor(void){
 	char msg = to_MotorMessage(1,0,1,0,1,0,0,0);
 	printf ("increase right motor\n");
 	pWrite(msg);
+	write_to_motor(msg);
 }
 
 
@@ -123,6 +132,7 @@ void decrease_right_motor(void){
 	char msg = to_MotorMessage(1,0,0,0,1,0,0,0);
 	printf ("decrease right motor\n");
 	pWrite(msg);
+	write_to_motor(msg);
 
 }
 
@@ -135,6 +145,7 @@ void increase_rear_decrease_front(void){
     char msg = to_MotorMessage(1,1,1,0,0,0,1,1);
     printf ("increase rear decrease front\n");
     pWrite(msg);
+	write_to_motor(msg);
 }
 
 
@@ -146,6 +157,7 @@ void increase_front_decrease_rear(void){
     char msg = to_MotorMessage(1,1,0,0,0,0,1,1);
     printf ("increase front decrease rear\n");
     pWrite(msg);
+	write_to_motor(msg);
 
 }
 
@@ -157,6 +169,7 @@ void increase_left_decrease_right(void){
     char msg = to_MotorMessage(1,1,1,0,1,1,0,0);
     printf ("increase left decrease right\n");
     pWrite(msg);
+	write_to_motor(msg);
 }
 
 /*
@@ -167,6 +180,7 @@ void increase_right_decrease_left(void){
     char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
     printf ("increase right decrease left\n");
     pWrite(msg);
+	write_to_motor(msg);
 }
 
 /*
@@ -176,6 +190,7 @@ void increase_all(void){
 	char msg = to_MotorMessage(1,0,1,0,1,1,1,1);
 	printf ("increase all motors\n");
 	pWrite(msg);
+	write_to_motor(msg);
 
 }
 
@@ -186,6 +201,7 @@ void decrease_all(void){
     char msg = to_MotorMessage(1,0,0,0,1,1,1,1);
     printf ("decrease all motors\n");
     pWrite(msg);
+	write_to_motor(msg);
 }
 
 
@@ -197,6 +213,7 @@ void go_forwards(void)
 	char msg = to_MotorMessage(1,1,0,0,0,0,1,0);
 	printf ("go forward\n");
 	pWrite(msg);
+	write_to_motor(msg);
 }
 
 /*
@@ -208,6 +225,7 @@ void go_backwards(void)
 	char msg = to_MotorMessage(1,1,0,0,0,0,0,1);
 	printf ("go backward\n");
 	pWrite(msg);
+	write_to_motor(msg);
 }
 
 /*
@@ -218,6 +236,7 @@ void strafe_left(void)
 	char msg = to_MotorMessage(1,1,1,0,0,1,0,0);
 	printf ("scrafe left\n");
 	pWrite(msg);
+	write_to_motor(msg);
 }
 
 
@@ -229,6 +248,7 @@ void strafe_right(void)
 	char msg = to_MotorMessage(1,1,0,0,1,0,0,0);
 	printf ("scrafe right\n");
 	pWrite(msg);
+	write_to_motor(msg);
 }
 
 /*
@@ -239,6 +259,7 @@ void turn_left(void){
     char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
     printf ("turn left\n");
     pWrite(msg);
+	write_to_motor(msg);
 }
 
 /*
@@ -249,6 +270,7 @@ void turn_right(void)
     char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
     printf ("turn right\n");
     pWrite(msg);
+	write_to_motor(msg);
 }
 
 /*
@@ -259,6 +281,7 @@ void hover(void)
 	char msg =to_MotorMessage(1,1,1,1,1,1,1,1);
 	printf ("hover\n");
 	pWrite(msg);
+	write_to_motor(msg);
 }
 
 /*
