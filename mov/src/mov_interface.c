@@ -196,6 +196,6 @@ void read_caCommand(void){
 #ifndef SIMULATOR
 	//read collision avoidance command
     //PROTOCOL READ FROM CA
-    yaw = 0;
+    caDir = 0;
 #endif
 }
