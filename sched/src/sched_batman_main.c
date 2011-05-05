@@ -29,6 +29,9 @@
 #include "sched_batman_scheduler.h"
 
 void sched_batman_init(void) {
+#ifdef ARDUINO
+    
+#endif
     init_process_data();
 }
 
@@ -65,19 +68,28 @@ void sched_batman_run(void) {
     printf("starting scheduler: running processes\n");
 #endif /* PC */
 
-    for(k = 0; k < 500; k++) //TODO: iterations?
+    //for(k = 0; k < 500; k++) //TODO: iterations?
+    while(1)
     {
         int16_t i;
         int16_t syncTime;
 #ifdef PC
         start = clock();
 #elif ARDUINO
+
+        analogWrite(13, 255);
+        delay(1000);
+        analogWrite(13, 0);
+        delay(1000);
+
         start = millis();
+
 #endif /* PC ARDUINO */
 
         create_process_queue(timeFrame);
 
-        for(i = 0; i < processData->currentQueueSize; i++){
+        for(i = 0; i < processData->currentQueueSize; i++)
+        {
             run_process(i);
         }
 #ifdef PC
@@ -117,6 +129,7 @@ void sched_batman_run(void) {
             usleep(syncTime);
 #endif /* WINDOWS */
 #elif ARDUINO
+            
             delay(syncTime);
 #endif /* PC */
             timeFrame = TIMEFRAME_MS;
@@ -125,7 +138,7 @@ void sched_batman_run(void) {
         {
             /* DEADLINE has been exceeded
             /* System faulure: THIS IS DANGEROUS */
-            break;
+            //break;
         }
         else 
         {
