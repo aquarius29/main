@@ -10,14 +10,14 @@
 #include <stdio.h>
 #include "movementcommands.h"
 
-//! Create a movement command .
+//! Create a movement command.
 /*!
 * Function to be used by the navigation systems to create auto movement commands.
 * @param order 0 = hover, 1 = moving, 2 = landing.
-* @param height The height to move the drone.
+* @param height The height the drone should be at.
 * @param distance The distance to move the drone.
 * @param yaw The direction to move the drone in.
-* @see nav_sendAutoMovementCommand()
+* @see nav_sendAutoMovementCommand().
 */
 void sendautomovementcommand
 (char order , int height, int distance, int yaw)
@@ -29,7 +29,7 @@ void sendautomovementcommand
 	}
 	else 
 	{
-		move->type = type; /* set this to the auto value before building */
+		move->type = 1; /* 1 for auto */
 		move->order = order;
 		move->height = height;
 		move->distance = distance;
