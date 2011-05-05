@@ -1,11 +1,11 @@
 /*
- * file:         mov_sensor.c
- * brief:        Read SONAR sensor data
- * author:       
- * date:         2011-04-26
- * version:      0.1
- * history       
- * detail:       
+ * File:         mov_sensor.c
+ * Brief:        Read SONAR sensor data
+ * Author:       Alina Butko
+ * Date:         2011-05-05
+ * Version:      0.1
+ * History       
+ * Detail:       
  */
  
 
@@ -21,7 +21,19 @@
  */
 float sonar_distance(int sonarPin)
 {
-	long duration;
+
+#ifdef ARDUINO // Arduino code
+	double duration, cm;
+	duration = pulseIn(sonarPin, HIGH);
+	cm = duration/57.874;
+	Serial.print(cm);
+	Serial.print("cm");
+	Serial.println();
+	delay(500);
+#elif defined PC // PC code
+   printf("%s\n", "We get distance every 500 ms");
+#endif
+/*	long duration;
 
 	pinMode(sonarPin, OUTPUT);
 	digitalWrite(sonarPin, LOW);
@@ -34,6 +46,6 @@ float sonar_distance(int sonarPin)
 	duration = pulseIn(sonarPin, HIGH);
 	float distance= duration/29/2;
 
-	return distance;
+	return distance;*/
 }
 #endif
