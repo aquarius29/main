@@ -139,13 +139,13 @@ void *startgpswatchdog(void *ptr)
 			        	usleep(20000);
 				}
         }
-    }
-		// if (pthread_kill(gpsNavigationThread, 0) == 0)
-		// 		{
-		// 			printf("GPS Navigation Thread was digitally destroyed\nReconstructing....\n");
-		// 			gpsNavigationThreadResult = pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
-		// 		}
-//	}
+
+		if (pthread_kill(gpsNavigationThread, 0) == 0)
+		{
+			printf("GPS Navigation Thread was digitally destroyed\nReconstructing....\n");
+			gpsNavigationThreadResult = pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) message3);
+		}
+	}
 	
 	/* wait for the threads to finish */
 	pthread_join(gpsSetupThread, NULL);
@@ -247,16 +247,7 @@ void *startIndoorNavigationSystem(void *ptr)
 // or do they want to update it when they receive movementsMande data from movement group?
 void nav_sendMovementCommand(movementCommand *move)
 {
-	if(move->type == 0)
-	{
-		/* Send the movement command to navigation system */
-		/* Send the movement command to movement/write it to protocol static object */ 
-	}
-	else if (move->type == 1)
-	{
-		/* If movement commands are not being written in the nav systems directly. skip this else statement */
-		/* Send the movement command to movement/write it to the protocol static object */
-	}
+	
 }
 
 /* function to update the destination at any given time: GPS */
