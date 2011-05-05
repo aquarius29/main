@@ -19,6 +19,10 @@
 #endif
 
 
+
+
+int yaw=-1;
+
 #ifdef ARDUINO
 //************************************************************
 // ARDUINO
@@ -26,12 +30,14 @@
 //************************************************************
 int mov_init()
 {
+	Serial.init(9600);
+
     heightArrived = 1;
     yawArrived = 1;
     distanceToTravel = 0;
 	duration=0;
 
-	return 1;
+	return 0;
 }
 
 
@@ -41,14 +47,25 @@ int mov_init()
 //************************************************************
 int mov_run()
 {
-	printf("\n \n*********************LOOOOOOOP***************************\n");
+	Serial.println("\n*********************LOOOOOOOP***************************\n");
 
 	if(start_time != 0){
 		duration = millis() - start_time;
 	}
   
-	//move
+	/*If the distanceToTravel is less than or equal to 0, we have probably arrived*/
+	if(distanceToTravel <= 0 && heightArrived == 1 && yawArrived == 1){
+		heightArrived = 0;
+		yawArrived = 0;
+		distanceToTravel = 0;
 
+		read_navCommand();
+		distanceToTravel=navCommand.distance;
+	}
+	
+	command_logic();
+
+	oldSensorCommand = sensorCommand;
 	start_time = millis();
   
 	return 1;
@@ -85,6 +102,8 @@ int mov_run(void){
 
 	/*If the distanceToTravel is less than or equal to 0, we have probably arrived**/
 
+	if(read_caCommand<0){
+
 	if(distanceToTravel <= 0 && heightArrived == 1 && yawArrived == 1){
 		heightArrived = 0;
 		yawArrived = 0;
@@ -108,6 +127,14 @@ int mov_run(void){
 	command_logic();
 	duration = 10;
 	oldSensorCommand = sensorCommand;
+}
+
+	else{
+
+		//do ca here
+		yaw=-1;
+
+}
 	return 0;
 }
 #endif
@@ -140,4 +167,13 @@ struct nav *p = &navCommand;
 	p->distance=0;
 	p->yaw=0;
 #endif
+}
+
+int read_caCommand(void){
+#ifndef SIMULATOR
+	//read collision avoidance command
+	yaw=90;;
+#endif
+
+	return yaw;
 }

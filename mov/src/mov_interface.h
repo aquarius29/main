@@ -44,10 +44,10 @@ struct sensor
 	int height;
 };
 
-
 struct nav navCommand;
 struct sensor sensorCommand;
 struct sensor oldSensorCommand;
+
 
 
 /*mov_logic.c*/
@@ -103,5 +103,6 @@ void assignValue(int index,char *temp);
 int mov_init(void);
 int mov_run(void);
 void read_navCommand(void);
+int read_caCommand(void);
 
 
