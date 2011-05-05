@@ -29,7 +29,7 @@ int mov_init()
     heightArrived = 1;
     yawArrived = 1;
     distanceToTravel = 0;
-	duration=0;
+    duration=0;
 
 	return 1;
 }
@@ -140,4 +140,12 @@ struct nav *p = &navCommand;
 	p->distance=0;
 	p->yaw=0;
 #endif
+}
+
+void read_sensors(void){
+    /*read sensors */
+    sensorCommand.roll = 0;
+    sensorCommand.pitch = 0;
+    sensorCommand.yaw = 0;
+    sensorCommand.height = 0;
 }
