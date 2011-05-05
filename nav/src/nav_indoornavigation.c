@@ -34,21 +34,24 @@ static void insertProgressiveNode(void) {
     }
     else {
         count++;
-        progressiveNode *temp;
-        temp = calloc(1, sizeof(progressiveNode));
-        current->next = temp;
-        temp->prev = current;
-        current = temp;
-        current->next = calloc(1, sizeof(progressiveNode));
-        current->next->p = route.list[count];
-        current->next->next = 0;
+        progressiveNode *temp1, *temp2;
+        temp1 = calloc(1, sizeof(progressiveNode));
+        current->next = temp1;
+        temp1->prev = current;
+        current = temp1;
+        current->p = route.list[count];
+        count++;
+        temp2 = calloc(1, sizeof(progressiveNode));
+        current->next = temp2;
+        temp2->prev = current->next;
+        temp2->p = route.list[count];
+        temp2->next = 0;
     }
 }
 static void freeProgressiveList(void) {
     progressiveNode *temp;
     while (first != 0) {
         temp = first->next;
-        //printf("%d   %d\n",first->p.lon, first->p.lat);
         free(first);
         first = temp;
     }
@@ -205,6 +208,7 @@ static void navigatePath(void){
     setDirection();
     setDistance();
     sendCommand();
+    
     /*
      *  Infinite loop until it either reaches point,collision avoidance occurs
      *  or indoor navigation is stopped externally.
@@ -215,7 +219,7 @@ static void navigatePath(void){
 
         if (check(current->p, current->next->p) == 1) {
             if (check(current->p, route.list[route.num-1]) == 1) {
-                count++;
+                // count++;
                 stopIndoorNavigation();
                 bool = 0;
                 break;
