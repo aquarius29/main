@@ -4,15 +4,17 @@
 *  Created on: 2 apr 2011
 *      Author: Eric Britsman
 */
-#include "nav_indoorstructure.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include "nav_indoorstructure.h"
+#include "movementcommands.h"
 
 #define PRECISION 5
 #define SLEEP_DURATION (0.3 * 1000000000)
 #define ALGORITHM 0
 #define CENTIMETRES_PER_SECOND 20
+#define SAFE_HEIGHT 200
 
 static void navigatePath(void);
 static int32_t count;
@@ -79,20 +81,19 @@ static void updatePosition(void) {
     current->p.lon = current->prev->p.lon + changeX;
     current->p.lat = current->prev->p.lat + changeY;
 }
-static void sendDirection(double *angle) {
-    //Give angle to core logic, so it can tell movement
-    //which way we need to move.
+static void sendCommand(void) {
+	double angle;
     //N 90 E 180 S -90 W -180
-    if (*angle > 0) {
-        printf("Move at angle %.5f\n", -(*angle/ (M_PI/180)));
+    if (current->next->p.angle > 0) {
+    	angle = -(current->next->p.angle / (M_PI / 180));
+        printf("Move at angle %.5f\n", angle);
     }
     else {
-        printf("Move at angle %.5f\n", *angle / (M_PI/180) + 180);
+    	angle = current->next->p.angle / (M_PI/180) + 180;
+        printf("Move at angle %.5f\n", current->next->p.angle / (M_PI / 180) +
+        180);
     }
-}
-static void sendDistance(double *distance) {
-    //Send distance between two coords to corelogic
-    printf("Go for %.5f cm.\n", *distance);
+    //sendautomovementcommand(3, SAFE_HEIGHT, current->next->p.distance, angle);
 }
 static void sendPosition(pixel *pos) {
     printf("Longitude = %d\nLatitude = %d\n", pos->lon, pos->lat);
@@ -102,7 +103,6 @@ static void sendExpectedPath(positionList *path) {
     printf("This is the path given by path calc.\n");
     printf("Lines should be drawn between each point in list.\n");
 }
-// void send_actual_path(progressive_route *path){
 static void sendActualPath(progressiveNode *first) {
     //Give corelogic the finalized path after destination reached.
     printf("This is the path actually taken to until ");
@@ -203,8 +203,7 @@ static void navigatePath(void){
     resetTimer();
     setDirection();
     setDistance();
-    sendDirection(&current->next->p.angle);
-    sendDistance(&current->next->p.distance);
+    sendCommand();
     /*
      *  Infinite loop until it either reaches point,collision avoidance occurs
      *  or indoor navigation is stopped externally.
@@ -242,4 +241,4 @@ static void navigatePath(void){
     b.y = 5;
     initPath(&a, &b);
     return 0;
-}*/
+}*
