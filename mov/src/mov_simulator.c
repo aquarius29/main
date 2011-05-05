@@ -20,7 +20,7 @@ struct nav *p = &navCommand;
 /*
  * 
  */
-int read_command(){
+int read_command(void){
 
     char line[60];
     if (fgets(line, sizeof(line) + 1, file) != NULL) {

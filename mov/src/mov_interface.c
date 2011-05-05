@@ -58,7 +58,7 @@ int mov_run()
 /*
  *
  */
-int mov_init()
+int mov_init(void)
 {
     file = fopen("input.txt", "r");
 
@@ -76,7 +76,7 @@ int mov_init()
 /*
  *
  */
-int mov_run(){
+int mov_run(void){
 	printf("\n \n*********************LOOOOOOOP***************************\n");
 
 	/*If the distanceToTravel is less than or equal to 0, we have probably arrived**/
@@ -99,6 +99,7 @@ int mov_run(){
 	duration = 10;
 	
 	oldSensorCommand = sensorCommand;
+
 	return 0;
 }
 #endif
@@ -112,7 +113,7 @@ void write_to_motor(unsigned char msg){
 	//	write_motor(msg);
 
 }
-void write_to_nav(void ) {
+void write_to_nav(void) {
 	//write to navigation
 }
 
