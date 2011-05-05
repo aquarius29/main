@@ -1,0 +1,9 @@
+***Follow instructions below to run******'
+****server***
+gcc drone_server.c run.c
+
+*****client***
+gcc drone_client.c run.c
+
+
+
