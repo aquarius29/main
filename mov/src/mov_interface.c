@@ -21,7 +21,7 @@
 
 
 
-int yaw=-1;
+int caDir=-1;
 
 #ifdef ARDUINO
 //************************************************************
@@ -105,7 +105,7 @@ int mov_run(void){
 
 	/*If the distanceToTravel is less than or equal to 0, we have probably arrived**/
 
-	if(yaw<0){
+	if(caDir<0){
 
 	if(distanceToTravel <= 0 && heightArrived == 1 && yawArrived == 1){
 		heightArrived = 0;
@@ -133,18 +133,36 @@ int mov_run(void){
 }
 
 	else{
-	    	//do ca here
-	    yawArrived = 0;
-	    distanceToTravel = 0;
-	    navCommand.yaw = yaw;
-	    navCommand.order = 1;
-	    distanceToTravel = 10;
-	    yaw=-1;
-
-}
+	    doCa();	    /*do ca here */
+	}
 	return 0;
 }
 #endif
+
+void doCa(void){
+    yawArrived = 0;
+    distanceToTravel = 0;
+    if(caDir == 0){ /*HOVER.. no yaw*/	  
+	    navCommand.yaw = sensorCommand.yaw;
+    }
+    else if(caDir == 1){ /*FORWARDS ..add no sensor data */
+	navCommand.yaw = sensorCommand.yaw;
+    }
+    else if(caDir == 2){ /* BACKWARDS .. add 180 degrees to sensor data */
+	navCommand.yaw = sensorCommand.yaw + 180;
+    }
+    else if(caDir == 3){ /*GO LEFT... add -90 degrees to sensor data  */
+	navCommand.yaw = sensorCommand.yaw - 90;
+    }
+    else if(caDir == 4){ /*GO RIGHT ... add 90 degrees to sensor data */
+	navCommand.yaw = sensorCommand.yaw + 90;
+    }
+
+    caDir = -1;
+    navCommand.order = 1;
+    distanceToTravel = 10;
+}
+
 
 /*
  * send message to motor
@@ -177,8 +195,7 @@ struct nav *p = &navCommand;
 void read_caCommand(void){
 #ifndef SIMULATOR
 	//read collision avoidance command
-	yaw = 90 + sensorCommand.yaw;
-	if(yaw >= 360)
-	    yaw = yaw - 360;
+    //PROTOCOL READ FROM CA
+    yaw = 0;
 #endif
 }
