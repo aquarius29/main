@@ -42,13 +42,13 @@ void proto_send_navi_to_connectivity(unsigned char msg); //API
 /****************************************************************************/
 //Filter To Motor
 
-void proto_write_filter(unsigned char message);
+//void proto_write_filter(unsigned char message);
 
-unsigned char proto_read_filter(void);
+//unsigned char proto_read_filter(void);
 
-void proto_write_motor(unsigned char message);
+//void proto_write_motor(unsigned char message);
 
-unsigned char proto_read_motor(void);
+//unsigned char proto_read_motor(void);
 
 /****************************************************************************/
 //proto interface
@@ -60,9 +60,9 @@ int proto_run(void);
 
 //filter to Motor Control
 
-void proto_write_motor_ctrl(char);
-	
-char proto_read_motor_ctrl(void);
+//void proto_write_motor_ctrl(char);
+//	
+//char proto_read_motor_ctrl(void);
 
 
 /****************************************************************************/
