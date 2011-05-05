@@ -59,6 +59,7 @@ void updateDistanceToTravel(void);
 void printOrientation(void);
 int readSensorTest(int currentSensor, char command);
 void check_changingAltitude(void);
+double get_acceleration();
 
 /*mov_motor.c*/
 void start_motors(void);
