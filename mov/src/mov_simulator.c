@@ -55,7 +55,7 @@ void assignValue(int index, char *temp){
 		printf("Type is %c\n", navCommand.type); 
 		break;
     case 2:
-		p->order = temp[1];
+		p->order = temp[0];
 		printf("Order is %c\n", navCommand.order);
 		break;
     case 3:

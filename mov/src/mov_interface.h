@@ -44,10 +44,10 @@ struct sensor
 	int height;
 };
 
-
 struct nav navCommand;
 struct sensor sensorCommand;
 struct sensor oldSensorCommand;
+
 
 
 /*mov_logic.c*/
@@ -59,6 +59,7 @@ void updateDistanceToTravel(void);
 void printOrientation(void);
 int readSensorTest(int currentSensor, char command);
 void check_changingAltitude(void);
+double get_acceleration();
 
 /*mov_motor.c*/
 void start_motors(void);
@@ -103,5 +104,6 @@ void assignValue(int index,char *temp);
 int mov_init(void);
 int mov_run(void);
 void read_navCommand(void);
+void read_caCommand(void);
 
 

@@ -2,7 +2,6 @@
  * Product: movement.c
  * Version: 0.1
  * Created: April 4 2011
- * Authors: Yanling Jin, Amber Olsson, Alina Butko
  * History:
  *          
  *
@@ -17,7 +16,7 @@
 
 
 #define BUFF_YAW 5
-#define BUFF_DISTSNCE 0.2
+#define BUFF_DISTSNCE 5
 #define BUFF_PR 1
 #define SPEED 5
 
@@ -41,7 +40,7 @@ void command_logic(void) {
 		check_pitch_roll(1);
 		check_changingAltitude();
 		check_height();
-    } else {
+    } else if(order == '2') {
 		distanceToTravel = 0;
 		check_pitch_roll(0);
 		check_heading();
@@ -58,6 +57,9 @@ void command_logic(void) {
 		} 
 
     }
+	else {
+		stop_motors();
+	}
 }
 
 void check_changingAltitude(void){
@@ -81,22 +83,22 @@ void check_height(void)
 		    decrease_all();
 		}
 
-               #ifdef SIMULATOR
+#ifdef SIMULATOR
 		/* simulated */
 		sensorCommand.height = readSensorTest(sensorCommand.height, 'd');
-               #endif
+#endif
     }
     else if(height_current<height_desire-BUFF_DISTSNCE){
-		if(changingAltitude == 1)
-			{	hover();
-			    //printf("&&&&&&&&&&&&&&INCREASED&&&&&&&&&&&&&&&");
-				increase_all();
-			}
+		if(changingAltitude == 1) {	
+			hover();
+			//printf("&&&&&&&&&&&&&&INCREASED&&&&&&&&&&&&&&&");
+			increase_all();
+		}
 		
-               #ifdef SIMULATOR
+#ifdef SIMULATOR
 		/* simulated */		
 		sensorCommand.height = readSensorTest(sensorCommand.height, 'i');
-               #endif
+#endif
 
     }
     else{
@@ -113,39 +115,39 @@ void check_heading(void)
     printf("!!!!!!!!!!!!!check heading: \n");
     int heading_desire=navCommand.yaw;
     int heading_current=sensorCommand.yaw;
-	int difference = abs(heading_current-heading_desire);
 
+    int difference = heading_current-heading_desire;
     if(heading_current>heading_desire+BUFF_YAW && difference>180){
 		turn_right();
 
-		#ifdef SIMULATOR
+#ifdef SIMULATOR
 		/* simulated */
 		sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'i');
-		#endif
+#endif
     }
 	else if(heading_current>heading_desire+BUFF_YAW && difference<180){
 		turn_left();
 
-		#ifdef SIMULATOR
+#ifdef SIMULATOR
 		/* simulated */
 		sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'd');
-		#endif
+#endif
     }
     else if(heading_current<heading_desire-BUFF_YAW && difference>180){
 		turn_left();
 
-		#ifdef SIMULATOR
+#ifdef SIMULATOR
 		/* simulated */
 		sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'd');
-		#endif
+#endif
     }
     else if(heading_current<heading_desire-BUFF_YAW && difference<180){
 		turn_right();
 
-               #ifdef SIMULATOR
+#ifdef SIMULATOR
 		/* simulated */
 		sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'i');
-                #endif
+#endif
     }
     else{
 		hover();
@@ -173,18 +175,18 @@ void check_pitch_roll(int isHovering) {
     if(pitch_current>pitch_desire+BUFF_PR){
 		increase_left_decrease_right();
 
-		 #ifdef SIMULATOR
+#ifdef SIMULATOR
 		/* simulated */
 		sensorCommand.pitch = readSensorTest(sensorCommand.pitch, 'd');
-		#endif
+#endif
     }
     else if(pitch_current<pitch_desire-BUFF_PR){
 		increase_right_decrease_left();
 
-		 #ifdef SIMULATOR
+#ifdef SIMULATOR
 		/* simulated */
 		sensorCommand.pitch = readSensorTest(sensorCommand.pitch, 'i');
-		#endif
+#endif
     }
     else{
 		//great
@@ -194,18 +196,18 @@ void check_pitch_roll(int isHovering) {
     if(roll_current>roll_desire+BUFF_PR){
 		increase_front_decrease_rear();
 
-		 #ifdef SIMULATOR
+#ifdef SIMULATOR
 		/* simulated */
 		sensorCommand.roll = readSensorTest(sensorCommand.roll, 'd');
-		#endif
+#endif
     }
     else if(roll_current<roll_desire-BUFF_PR){
 		increase_rear_decrease_front();
 
-		 #ifdef SIMULATOR
+#ifdef SIMULATOR
 		/* simulated */
 		sensorCommand.roll = readSensorTest(sensorCommand.roll, 'i');
-		#endif
+#endif
     }
     else{
 		//great
@@ -241,6 +243,9 @@ void printOrientation(void)
 
 
 void updateDistanceToTravel(void){
+
     distanceTraveled = SPEED * duration;
     distanceToTravel = distanceToTravel - distanceTraveled ;
 }
+
+
