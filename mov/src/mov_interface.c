@@ -99,6 +99,7 @@ int mov_init(void)
  */
 int mov_run(void){
 	printf("\n \n*********************LOOOOOOOP***************************\n");
+	read_caCommand();
 
 	/*If the distanceToTravel is less than or equal to 0, we have probably arrived**/
 
@@ -169,11 +170,9 @@ struct nav *p = &navCommand;
 #endif
 }
 
-int read_caCommand(void){
+void read_caCommand(void){
 #ifndef SIMULATOR
 	//read collision avoidance command
 	yaw=90;;
 #endif
-
-	return yaw;
 }

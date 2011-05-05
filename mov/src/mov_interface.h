@@ -103,6 +103,6 @@ void assignValue(int index,char *temp);
 int mov_init(void);
 int mov_run(void);
 void read_navCommand(void);
-int read_caCommand(void);
+void read_caCommand(void);
 
 
