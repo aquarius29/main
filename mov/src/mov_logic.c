@@ -2,6 +2,7 @@
  * Product: movement.c
  * Version: 0.1
  * Created: April 4 2011
+ * Authors: Yanling Jin, Amber Olsson, Alina Butko
  * History:
  *          
  *
