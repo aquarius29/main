@@ -90,11 +90,11 @@ void getMapDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 	
 	int mapH = atoi(mapHeight);
 	int mapW = atoi(mapWidth);
-	world->representation = malloc(sizeof(int *) * mapH);
+    world->representation = malloc(sizeof(int *) * mapH);
 	int i;
 	for (i = 0; i < mapH; i++ )
 	{
-		world->representation[i] = malloc(sizeof(int) * mapW);
+        world->representation[i] = malloc(sizeof(int) * mapW);
 	}
 }
 
@@ -191,7 +191,7 @@ void getTileDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 	world->numberOfTilesInMap = totalTiles;
 	
 	createTwoDArray(world, width, height, tileValuesArray);
-	//world->height = 
+	//world->height = 	
 }
 
 /* Helper function to retrieve a the value for the specfied attribute at a specified node */
@@ -259,7 +259,7 @@ void parseDoc(char *docname, ThreeDWorld *world)
 	
 	getMapDetails(doc, cur, world);
 	getTileDetails(doc, cur, world);
-
+	
 	xmlFreeDoc(doc);
 	return;
 }

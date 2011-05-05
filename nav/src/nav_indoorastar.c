@@ -235,6 +235,11 @@ const position *end)
 			}
 		}
 	}
+	int i;
+	for (i = 0; i < map.mapHeight; i++ )
+	{
+        free(map.representation[i]);
+	}
 	free(map.representation);
 }
 /* Get the heuristic cost from a node to the goal node */

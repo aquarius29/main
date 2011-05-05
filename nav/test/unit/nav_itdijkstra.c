@@ -34,15 +34,15 @@ void test_dijkstra_1() {
     CU_ASSERT(projectedPath.list[9].lat == 594);   
 }
 
-// void test_dijkstra_2() {
-//     position a, b;
-//     position_list projectedPath;
-//         
-//     a.x = 1;
-//     a.y = 1;
-//     b.x = 10;
-//     b.y = 5;    
-//     projectedPath = indoor_dijkstra(&a, &b);
-//     
-//     CU_ASSERT(selected_tiles_are_valid_for_dijkstra(&a, &b) == 0);
-// }
+void test_dijkstra_2() {
+    position a, b;
+    positionList projectedPath;
+        
+    a.x = 1;
+    a.y = 1;
+    b.x = 10;
+    b.y = 5;    
+    projectedPath = indoorDijkstra(&a, &b);
+    
+    // CU_ASSERT(selected_tiles_are_valid_for_dijkstra(&a, &b) == 0);
+}

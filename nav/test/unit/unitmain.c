@@ -43,12 +43,12 @@ int main() {
     }
 
   /* Add tests to suite */
-    if(	NULL == CU_add_test(xmlSuite, "Parse map", test_parse_xml)
-    ) {
-        CU_cleanup_registry();
-        return CU_get_error();
-    }
-    
+    // if(  NULL == CU_add_test(xmlSuite, "Parse map", test_parse_xml)
+    // ) {
+    //     CU_cleanup_registry();
+    //     return CU_get_error();
+    // }
+    // 
     // if(  NULL == CU_add_test(xmlSuite, "Dijkstra", test_dijkstra_1)
     //     // || NULL == CU_add_test(xmlSuite, "Dijkstra invalid tile", test_dijkstra_2)
     // ) {

@@ -185,6 +185,11 @@ nodeList * closed)
 			}
 		}
 	}
+	int i;
+	for (i = 0; i < map.mapHeight; i++ )
+	{
+        free(map.representation[i]);
+	}
 	free(map.representation);
 }
 /*

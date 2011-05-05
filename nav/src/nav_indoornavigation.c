@@ -215,7 +215,6 @@ static void navigatePath(void){
 
         if (check(current->p, current->next->p) == 1) {
             if (check(current->p, route.list[route.num-1]) == 1) {
-                current->prev->p = current->next->p;
                 count++;
                 stopIndoorNavigation();
                 bool = 0;
@@ -234,12 +233,12 @@ static void navigatePath(void){
     }
 }
 
-int main(){
-    position a, b;
-    a.x = 1;
-    a.y = 1;
-    b.x = 9;
-    b.y = 5;
-    initPath(&a, &b);
-    return 0;
-}
+// int main(){
+//     position a, b;
+//     a.x = 1;
+//     a.y = 1;
+//     b.x = 2;
+//     b.y = 2;
+//     initPath(&a, &b);
+//     return 0;
+// }
