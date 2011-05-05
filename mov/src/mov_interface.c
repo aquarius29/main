@@ -103,7 +103,7 @@ int mov_run(void){
 
 	/*If the distanceToTravel is less than or equal to 0, we have probably arrived**/
 
-	if(read_caCommand<0){
+	if(yaw<0){
 
 	if(distanceToTravel <= 0 && heightArrived == 1 && yawArrived == 1){
 		heightArrived = 0;
@@ -173,6 +173,6 @@ struct nav *p = &navCommand;
 void read_caCommand(void){
 #ifndef SIMULATOR
 	//read collision avoidance command
-	yaw=90;;
+	yaw=90;
 #endif
 }
