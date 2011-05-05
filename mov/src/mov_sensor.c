@@ -21,18 +21,12 @@
  */
 float sonar_distance(int sonarPin)
 {
-
-#ifdef ARDUINO // Arduino code
 	double duration, cm;
 	duration = pulseIn(sonarPin, HIGH);
 	cm = duration/57.874;
 	Serial.print(cm);
 	Serial.print("cm");
 	Serial.println();
-	delay(500);
-#elif defined PC // PC code
-   printf("%s\n", "We get distance every 500 ms");
-#endif
 /*	long duration;
 
 	pinMode(sonarPin, OUTPUT);
