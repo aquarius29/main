@@ -13,6 +13,7 @@
 #include "mov_interface.h"
 #include <stdlib.h>
 #include <stdio.h>
+//#include "proto_mov_motor.h"
 
 
 #ifdef ARDUINO
@@ -57,13 +58,15 @@ int mov_run()
 /*
  *
  */
-int mov_init()
+int mov_init(void)
 {
+    file = fopen("input.txt", "r");
+
     heightArrived = 1;
     yawArrived = 1;
     distanceToTravel = 0;
-
-	duration=0;
+    srand(time(NULL));
+    duration=0;
 
 	return 0;
 
@@ -73,7 +76,7 @@ int mov_init()
 /*
  *
  */
-int mov_run(){
+int mov_run(void){
 	printf("\n \n*********************LOOOOOOOP***************************\n");
 
 	/*If the distanceToTravel is less than or equal to 0, we have probably arrived**/
@@ -83,6 +86,7 @@ int mov_run(){
 		yawArrived = 0;
 		distanceToTravel = 0;
 		if (read_command()== 0) {  
+			fclose(file);
 			printf("**end of the file**\n");
 			return 1;
 		}
@@ -94,6 +98,8 @@ int mov_run(){
 	command_logic();
 
 	duration = 10;
+	
+	oldSensorCommand = sensorCommand;
 
 	return 0;
 }
@@ -101,12 +107,14 @@ int mov_run(){
 
 
 
-
-void write_to_motor(void){
-
+/*
+ * send message to motor
+ */
+void write_to_motor(unsigned char msg){
+	//	write_motor(msg);
 
 }
-void write_to_nav(void ) {
+void write_to_nav(void) {
 	//write to navigation
 }
 
