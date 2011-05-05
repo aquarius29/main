@@ -12,7 +12,6 @@
 */
 
 #ifdef PC
-#include <assert.h>
 #include <time.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -71,7 +70,7 @@ void sched_batman_run(void) {
         int16_t i;
         int16_t syncTime;
 #ifdef PC
-        assert((start = clock()) != -1);
+        start = clock();
 #elif ARDUINO
         start = millis();
 #endif /* PC ARDUINO */
