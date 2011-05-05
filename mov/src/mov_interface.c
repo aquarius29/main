@@ -13,7 +13,10 @@
 #include "mov_interface.h"
 #include <stdlib.h>
 #include <stdio.h>
+
+#ifndef SIMULATOR
 //#include "proto_mov_motor.h"
+#endif
 
 
 #ifdef ARDUINO
@@ -23,7 +26,9 @@
 //************************************************************
 int mov_init()
 {
-	start_time=0;
+    heightArrived = 1;
+    yawArrived = 1;
+    distanceToTravel = 0;
 	duration=0;
 
 	return 1;
@@ -36,6 +41,8 @@ int mov_init()
 //************************************************************
 int mov_run()
 {
+	printf("\n \n*********************LOOOOOOOP***************************\n");
+
 	if(start_time != 0){
 		duration = millis() - start_time;
 	}
@@ -48,9 +55,6 @@ int mov_run()
 
 }
 #endif
-
-
-
 
 
 
@@ -85,6 +89,7 @@ int mov_run(void){
 		heightArrived = 0;
 		yawArrived = 0;
 		distanceToTravel = 0;
+#ifdef SIMULATOR
 		if (read_command()== 0) {  
 			fclose(file);
 			printf("**end of the file**\n");
@@ -93,14 +98,16 @@ int mov_run(void){
 		else{
 			distanceToTravel = navCommand.distance;
 		}
+#else
+		read_navCommand();
+		distanceToTravel=navCommand.distance;
+#endif
+
 	}
 	
 	command_logic();
-
 	duration = 10;
-	
 	oldSensorCommand = sensorCommand;
-
 	return 0;
 }
 #endif
@@ -111,14 +118,26 @@ int mov_run(void){
  * send message to motor
  */
 void write_to_motor(unsigned char msg){
+#ifndef SIMULATOR
 	//	write_motor(msg);
+#endif
 
 }
 void write_to_nav(void) {
+#ifndef SIMULATOR
 	//write to navigation
+#endif
 }
 
 
 void read_navCommand(void) {
+#ifndef SIMULATOR
+struct nav *p = &navCommand;
 	//read navigation command
+	p->type =0;
+	p->order=0;
+	p->height =5;
+	p->distance=0;
+	p->yaw=0;
+#endif
 }

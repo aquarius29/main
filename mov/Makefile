@@ -78,11 +78,12 @@ mega: clean install
 
 uno: clean install
 
+pc-simulator: clean
+	gcc -DPC -DSIMULATOR $(SRC) -lm -o bin/$(PROG).x
+
 pc: clean
 	gcc -DPC $(SRC) -lm -o bin/$(PROG).x
 
-pl: clean
-	gcc -DPC $(SRC) -lm -o bin/$(PROG).x
 
 clean:
 	@ cd bin && rm -f *.o *.rom *.elf *.map *~ *.lst *.x

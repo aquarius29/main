@@ -26,6 +26,7 @@ static int start_time;
 int duration;
 
 
+
 struct nav
 {
 	char type;         // (manual/auto)
@@ -99,7 +100,8 @@ void assignValue(int index,char *temp);
 
 
 /*interface*/
-int mov_init();
-int mov_run();
+int mov_init(void);
+int mov_run(void);
+void read_navCommand(void);
 
 

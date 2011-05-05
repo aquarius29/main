@@ -8,12 +8,12 @@
  *
  * detail:
  */
+#ifdef SIMULATOR
 
 #include "mov_interface.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-
 
 struct nav *p = &navCommand;
 
@@ -52,11 +52,11 @@ void assignValue(int index, char *temp){
     switch (index) {
     case 1:
 		p->type = temp[0];
-			printf("Type is %c\n", navCommand.type); 
+		printf("Type is %c\n", navCommand.type); 
 		break;
     case 2:
-		p->order = temp[0];
-			printf("Order is %c\n", navCommand.order);
+		p->order = temp[1];
+		printf("Order is %c\n", navCommand.order);
 		break;
     case 3:
 		p->height = atoi(temp);
@@ -94,4 +94,4 @@ int get_loc(char line[], char c, int indexOfChar){
 }
 
 
-  
+#endif  
