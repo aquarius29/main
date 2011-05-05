@@ -136,7 +136,7 @@ pc-dbg:
 	cd mov/src && $(MAKE) lib-pc
 	cd ca/src && $(MAKE) lib-pc
 	cd proto/src && $(MAKE) lib-pc
-	$(GLOBAL_CC) -c main.c -Isched/src
+	$(GLOBAL_CC) -c main.c $(SCHED_FLAG) -Isched/src
 	$(GLOBAL_CC) -o $(PROG) main.o $(BASIC_LIBS)
 
 
@@ -163,7 +163,7 @@ mega:
 	cd proto/src && $(MAKE) lib-mega
 	avr-ranlib proto/lib/libproto.a	
 
-	$(GLOBAL_CC) -c main.c -Isched/src
+	$(GLOBAL_CC) -c main.c $(SCHED_FLAG) -Isched/src
 	$(GLOBAL_CC) main.o $(BASIC_LIBS) $(LDFLAGS_ARDUINO) -o $(PROG).elf
 	avr-objcopy -O srec $(PROG).elf $(PROG).rom
 
@@ -190,8 +190,8 @@ mega-dbg:
 	cd proto/src && $(MAKE) lib-mega
 	avr-ranlib proto/lib/libproto.a	
 
-	$(GLOBAL_CC) -c main.c -Isched/src
-	$(GLOBAL_CC) main.o $(BASIC_LIBS) $(LDFLAGS_ARDUINO) -o $(PROG).elf
+	$(GLOBAL_CC) -c main.c $(SCHED_FLAG) -Isched/src
+	$(GLOBAL_CC) main.o  $(BASIC_LIBS) $(LDFLAGS_ARDUINO) -o $(PROG).elf
 	avr-objcopy -O srec $(PROG).elf $(PROG).rom
 	
 	

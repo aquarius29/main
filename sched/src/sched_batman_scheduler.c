@@ -29,7 +29,7 @@
 /* stubs represent other modules */
 #include "sched_stubs.h"
 #elif ARDUINO
-/* ARDUINO stuff here */
+#include "WProgram.h"
 #endif /* PC ARDUINO*/
 
 #include "moto_interface.h"

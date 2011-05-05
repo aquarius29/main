@@ -24,7 +24,7 @@
 #endif /* WINDOWS */
 
 #elif ARDUINO
-/* ARDUINO stuff here */
+#include "WProgram.h"
 #endif /* PC ARDUINO */
 
 #include "sched_batman_scheduler.h"
@@ -49,8 +49,13 @@ void sched_batman_run(void) {
         fprintf(file, "SCHEDULER LOG\n****************************\n");
 #endif /* LOG */
 
+#elif ARDUINO
+    unsigned int32_t start;
+    unsigned int32_t stop;
+
+#endif /* PC ARDUINO */
+
     time = 0.0;
-#endif
 
     timeFrame = TIMEFRAME_MS;
 
@@ -60,13 +65,16 @@ void sched_batman_run(void) {
 #ifdef PC
     printf("starting scheduler: running processes\n");
 #endif /* PC */
-    for(k = 0; k < 10; k++) //TODO: iterations?
+
+    for(k = 0; k < 500; k++) //TODO: iterations?
     {
         int16_t i;
         int16_t syncTime;
 #ifdef PC
         assert((start = clock()) != -1);
-#endif /* PC */
+#elif ARDUINO
+        start = millis();
+#endif /* PC ARDUINO */
 
         create_process_queue(timeFrame);
 
@@ -75,9 +83,13 @@ void sched_batman_run(void) {
         }
 #ifdef PC
         stop = clock();
+#elif ARDUINO
+        stop = millis();
+#endif
         time = (double)(stop-start);
 
         syncTime = (int)(timeFrame - time);
+#ifdef PC
         #ifdef LOG
             fprintf(file, "Ran: %d processes\n", 
                 processData->currentQueueSize);
@@ -95,14 +107,19 @@ void sched_batman_run(void) {
                 fprintf(file, "Timeframe was exceded by: %d ms\n", (syncTime * -1));
             }
         #endif /* LOG */
+#endif
 
         if(syncTime >= 0)
         {
+#ifdef PC
 #ifdef WINDOWS
             Sleep(syncTime);
 #else
             usleep(syncTime);
 #endif /* WINDOWS */
+#elif ARDUINO
+            delay(syncTime);
+#endif /* PC */
             timeFrame = TIMEFRAME_MS;
         }
         else if((syncTime * -1) > 1000)
@@ -118,10 +135,6 @@ void sched_batman_run(void) {
             * timeframes will equal to 0 there is no point in running them */
             timeFrame = (syncTime * -1) % TIMEFRAME_MS; /* Setting the (last) timeframe  */
         }
-#elif ARDUINO
-        /* TODO: Put arduino timing logic here OR 
-        * change time functions in PC version with #ifdef's */
-#endif /* ARDUINO */
 
 #ifdef PC
         printf(".");
