@@ -2,7 +2,6 @@
  * Product: movement.c
  * Version: 0.1
  * Created: April 4 2011
- * Authors: Yanling Jin, Amber Olsson, Alina Butko
  * History:
  *          
  *
@@ -41,7 +40,7 @@ void command_logic(void) {
 		check_pitch_roll(1);
 		check_changingAltitude();
 		check_height();
-    } else {
+    } else if(order == '2') {
 		distanceToTravel = 0;
 		check_pitch_roll(0);
 		check_heading();
@@ -56,6 +55,9 @@ void command_logic(void) {
 		} 
 
     }
+	else {
+		stop_motors();
+}
 }
 
 void check_changingAltitude(void){
@@ -106,8 +108,8 @@ void check_heading(void)
     printf("!!!!!!!!!!!!!check heading: \n");
     int heading_desire=navCommand.yaw;
     int heading_current=sensorCommand.yaw;
-	int difference = abs(heading_current-heading_desire);
 
+    int difference = heading_current-heading_desire;
     if(heading_current>heading_desire+BUFF_YAW && difference>180){
 		turn_right();
 		/* simulated */
@@ -118,15 +120,15 @@ void check_heading(void)
 		/* simulated */
 		sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'd');
     }
-    else if(heading_current<heading_desire-BUFF_YAW && difference>180){
+    else if(heading_current<heading_desire-BUFF_YAW && (abs(difference))<180){
+		turn_right();
+		/* simulated */
+		sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'i');
+    }
+    else if(heading_current<heading_desire-BUFF_YAW && (abs(difference))>180){
 		turn_left();
 		/* simulated */
 		sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'd');
-    }
-    else if(heading_current<heading_desire-BUFF_YAW && difference<180){
-		turn_right();
-      /* simulated */
-    sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'i');
     }
     else{
 		hover();
