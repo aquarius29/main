@@ -35,11 +35,9 @@ int waitingForGpsSetupThread = 1;
 static pthread_mutex_t gpsRunningMutex = PTHREAD_MUTEX_INITIALIZER;
 
 int gpsRunning = 0;
-
-/* Add global variables (within mutex scope) that need to be modified outside and inside threads*/
+int indoorSystemRunning = 0;
 
 /* GPS System Functions start here */
-
 void nav_runGpsSystem(GPSLocation *dest)
 {
 	printf("Initiating GPS System\n");
@@ -52,7 +50,7 @@ void nav_runGpsSystem(GPSLocation *dest)
 	
 	printf("destination lat : %lf", destination->latitude);
     
-	/* Create watchdog thread to monitor multithreading*/
+	/* Create watchdog thread to monitor multithreading */
 	int gpsWatchdogThreadResult;
 	pthread_t gpsWatchdogThread;
 	
@@ -84,7 +82,7 @@ void *startgpswatchdog(void *ptr)
 	printf("Attempting to create GPS setup thread\n");
 	gpsSetupThreadResult = pthread_create(&gpsSetupThread, NULL, setupgps, (void*) message2);
 	
-//	pthread_cond_wait(&watchdogCond, &watchdogMutex); /* Set watchdog to wait for mutex unlock */
+	/* pthread_cond_wait(&watchdogCond, &watchdogMutex); /* Set watchdog to wait for mutex unlock */
 
 	int data = 0;
     int loopCount = 0;
@@ -106,20 +104,40 @@ void *startgpswatchdog(void *ptr)
 	
 	while (gpsRunning == 1)
 	{
-        if (pthread_kill(gpsSetupThread, 0) != 0)
+		/* pthread_kill(someThread, 0) */
+		/* sending a zero to the thread will not kill the thread */
+		/* using the return value it can check of the thread is dead */
+		
+        if (pthread_kill(gpsSetupThread, 0) != 0)/* GPS Setup Thread is dead */
         {
-            int cancelResult;
+			printf("GPS Setup Thread died a horrible death\nRessurecting....\n");
+            
+			int cancelResult;
 
-            cancelResult = pthread_cancel( gpsNavigationThread );
+            cancelResult = pthread_cancel( gpsNavigationThread ); /* cancel the nav thread */
             printf("cancel result is %d\n", cancelResult);
             while(cancelResult != 0)
             {
                 printf(".....");
                 cancelResult = pthread_cancel( gpsNavigationThread );
             }
-                /* Create new thread for gps setup*/
-                printf("GPS Setup Thread died a horrible death\nRessurecting....\n");
+                /* Create new thread for gps setup */
                 gpsSetupThreadResult = pthread_create(&gpsSetupThread, NULL, setupgps, (void*) message2);
+
+				while(loopCount < 1000)
+				{
+					data = get_goodData();
+
+					if (data == 1)
+					{
+						printf("Attempting to create GPS Navigation thread\n");
+						gpsNavigationThreadResult = 
+						pthread_create(&gpsNavigationThread, NULL, setupgpsnavigation, (void*) destination);
+						break;
+					}
+					else
+			        	usleep(20000);
+				}
         }
     }
 		// if (pthread_kill(gpsNavigationThread, 0) == 0)
@@ -166,11 +184,29 @@ void nav_runIndoorSystem(position startTile, position destinationTile)
 		data->destinationtile = destinationTile;
 		data->message = "Indoor system started";
 			
-	int threadResult;
+	int indoorThreadResult;
 	
-	threadResult = 
+	indoorThreadResult = 
 		pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void *) data);
-
+	
+	indoorSystemRunning = 1;
+	
+	while(indoorSystemRunning == 1)
+	{
+		if (pthread_kill(indoorNavigationThread, 0) == 0)
+		{
+			free(data);
+			printf("Indoor System quite unexpectedly\nRestarting...\n");
+			
+			struct thread_data *newData = malloc(sizeof(struct thread_data));
+			newData->
+			newData->
+			newData->
+			
+			indoorThreadResult = 
+				pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void *) newData);
+		}
+	}
     /* check if thread was created */
     /*
     if (threadResult == 0)
@@ -197,16 +233,92 @@ void *startIndoorNavigationSystem(void *ptr)
 {
 	printf("Started the indoor navigation tread\n");
 	struct thread_data *data = (struct thread_data*) ptr;
-	/* Call the indoor nav system here and pass in the ptr */
+	
+	/* Call the indoor nav system here and pass in the data ptr */
 	
 	
 }
 
-// set the gps destination
-void setGPSDestination(GPSLocation *destination)
+// function for the path calculation/navigation to use to 
+// send the movement to the movement for handling. 
+// Movement commands will be processed one at a time
+// NOTE: Wait for correct protocol implementation/
+// Does the path calculation want manual commands sent to them as well so they can update the navigation
+// or do they want to update it when they receive movementsMande data from movement group?
+void nav_sendMovementCommand(movementCommand *move)
 {
-	
+	if(move->type == 0)
+	{
+		/* Send the movement command to navigation system */
+		/* Send the movement command to movement/write it to protocol static object */ 
+	}
+	else if (move->type == 1)
+	{
+		/* If movement commands are not being written in the nav systems directly. skip this else statement */
+		/* Send the movement command to movement/write it to the protocol static object */
+	}
 }
+
+/* function to update the destination at any given time: GPS */
+void nav_updateGPSDestination(GPSLocation *destination)
+{
+	/* send the new data to the path calculation system */
+}
+
+/* function to update an indoor destination */
+void nav_updateIndoorDestination(int tileNumber, ThreeDWorld *world)
+{
+	/* send the new data to the path calculation system */
+	int firstDimension = tileNumber / world->mapWidth;
+	int secondDimension = tileNumber % world->mapWidth;
+	
+	/* 2 marks the tile as the destination. */
+	world->representation[firstDimension][secondDimension] = 2;
+	/* notify the path calculation to recheck the worldMap and recalculate. */
+}
+
+/* notify the path calculation a collision was found/ stop calculation */
+void nav_collisionFound()
+{
+	/* notify the path calculation group */
+}
+
+/* notify the path calculation to recalculate */
+void nav_collisionAvoided()
+{
+	/* notify the path calculation to recalculate */
+}
+
+// TODO: Ask UI group how they handle input, a basic command e.g. right or an angle moved
+// functions for handling the manual user input
+// void manualMovementCommand(moveCommand *_command)
+// {
+// 	// TODO: notify the path calculation to stop creating movement orders.
+// 	sendMovementCommand(_command);
+// }
+
+/* function to create a collision object for the indoor system. */
+void nav_createIndoorCollisionObject(int tileNumber, ThreeDWorld *world)
+{
+	if (world == NULL)
+	{
+		printf("Trying to modify an invalid world\n");
+	}
+	else /* update the tilemap represenation */
+	{
+		/* calculate the tile to add the collision object. */
+		int firstDimension = tileNumber / world->mapWidth;
+		int secondDimension = tileNumber % world->mapWidth;
+
+		/* 1 marks the tile as having an object. */
+		world->representation[firstDimension][secondDimension] = 1;
+
+		/* notify the path calculation to recheck the worldMap and recalculate. */
+		printf("Collision object created\n");
+	}
+}
+
+/* Begin Kill functions */
 
 /* Kill the gps system */
 void killGPSSystem()
@@ -225,115 +337,28 @@ void killIndoorNavigationSystem()
 	
 }
 
-void sendCurrentIndoorPosition(CGPoint *currentPosition)
-{
-	/* Put connectivity library function here */ 
-}
-
-void sendCurrentOutdoorPosition(GPSLocation *currentPosition)
-{
-	/* Put Connectivity library function here. */
-}
-
-void sendOutdoorPath(GPSLocation **path)
-{
-	/* Put Connectivity library function here and pass in path */
-}
-
-void sendIndoorPath(CGPoint **path)
-{
-	/* Put Connectivity library function here and pass in path */
-}
-
-// function for the path calculation/navigation to use to 
-// send the movement to the movement for handling. 
-// Movement commands will be processed one at a time
-// NOTE: Wait for correct protocol implementation/
-// Does the path calculation want manual commands sent to them as well so they can update the navigation
-// or do they want to update it when they receive movementsMande data from movement group?
-void sendMovementCommand(movementCommand *move)
-{
-	if(move->type == 0)
-	{
-		/* Send the movement command to navigation system */
-		/* Send the movement command to movement/write it to protocol static object */ 
-	}
-	else if (move->type == 1)
-	{
-		/* If movement commands are not being written in the nav systems directly. skip this else statement */
-		/* Send the movement command to movement/write it to the protocol static object */
-	}
-}
-
-// function to update the destination at any given time: GPS
-void updateGPSDestination(GPSLocation *destination)
-{
-	// send the new data to the path calculation system
-}
-
-// function to update an indoor destination
-void updateIndoorDestination(int tileNumber, ThreeDWorld *world)
-{
-	// send the new data to the path calculation system
-	int firstDimension = tileNumber / world->mapWidth;
-	int secondDimension = tileNumber % world->mapWidth;
-	
-	// 2 marks the tile as the destination.
-	world->representation[firstDimension][secondDimension] = 2;
-	// notify the path calculation to recheck the worldMap and recalculate.
-}
-
-// notify the path calculation a collision was found/ stop calculation
-void collisionFound()
-{
-	// notify the path calculation group
-}
-
-// notify the path calculation to recalculate
-void collisionAvoided()
-{
-	// notify the path calculation to recalculate
-}
-
-// TODO: Ask UI group how they handle input, a basic command e.g. right or an angle moved
-// functions for handling the manual user input
-// void manualMovementCommand(moveCommand *_command)
-// {
-// 	// TODO: notify the path calculation to stop creating movement orders.
-// 	sendMovementCommand(_command);
-// }
-
-// function to create a collision object for the indoor system.
-void createIndoorCollisionObject(int tileNumber, ThreeDWorld *world)
-{
-	if (world == NULL)
-	{
-		printf("Trying to modify an invalid world\n");
-	}
-	else
-	{
-		// update the tilemap represenation and then send the new one to the 
-		// path calculation module or just send the tile and the path calculation updates their 
-		// representation graph/ If these objects arent permananet then it makes more sense.
-
-		// calculate the tile to add the collision object.
-		int firstDimension = tileNumber / world->mapWidth;
-		int secondDimension = tileNumber % world->mapWidth;
-
-		// 1 marks the tile as having an object.
-		world->representation[firstDimension][secondDimension] = 1;
-
-		// notify the path calculation to recheck the worldMap and recalculate.
-		printf("Collision object created\n");
-	}
-}
-
 void killThread()
 {
 	printf("KILL ME\n");
 	pthread_exit(NULL);
 	printf("KILLED\n");
 }
+/* End kill functions */
+
+/* Begin functions that are using the protocol */
+void nav_sendAutoMovementCommand(movementCommand *move)
+{
+	/* Add protocol functions to send to movement */
+}
+
+void nav_sendManualMovementCommand(movementCommand *move)
+{
+	/* 1: 	Pause Auto movement command generation */
+	/* 		Extract or send movement command to nav system */
+	/* 2:	Add protocol functions to send to movement */
+	/* 3:	Unpause auto movement command generation */
+}
+/* End functions that are using the protocol */
 
 /* Begin interface:out functions for connectivity group */
 void nav_sendCurrentIndoorPositionToGui(pixel *currentPosition)
