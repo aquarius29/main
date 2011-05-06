@@ -100,4 +100,27 @@ int get_loc(char line[], char c, int indexOfChar){
 }
 
 
-#endif  
+/*
+ * (rand() % (max - min + 1) + min)
+ *
+ */
+int readSensorTest(int currentSensor, char command){
+   
+    int i = (rand() % (6 - 0 + 1) + 0);  // between 5 and -5 degree variation
+
+    int new;
+
+    switch (command) {
+    case 'i':
+		new = currentSensor + i;
+		break;
+    case 'd':
+		new = currentSensor - i;
+		break;
+    }
+
+    return new;
+}
+
+#endif 
+

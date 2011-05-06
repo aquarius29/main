@@ -1,5 +1,5 @@
 /*
- * file:         mov_interface.c
+ * file:         mov_interface.h
  * brief:
  * author:       Yanling Jin, Amber Olsson
  * date:         2011-05-03
@@ -8,6 +8,7 @@
  *
  * detail:
  */
+
 
 #include <stdio.h>
 
@@ -36,10 +37,9 @@ void check_height(void);
 void check_heading(void);
 void check_pitch_roll(int isHovering);
 void updateDistanceToTravel(void);
-void printOrientation(void);
-int readSensorTest(int currentSensor, char command);
 void check_changingAltitude(void);
 double get_acceleration();
+void printOrientation(void);
 
 /*mov_motor.c*/
 void start_motors(void);
@@ -74,10 +74,11 @@ void print_char_to_Binary(char bin);
 
 
 
-/*mov_main.c*/
-int read_command();
+/*mov_simulator.c*/
+int read_command(void);
 int get_loc(char line[],char c,int indexOfColumn);
 void assignValue(int index,char *temp);
+int readSensorTest(int currentSensor, char command);
 
 
 /*interface*/
