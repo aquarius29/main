@@ -10,24 +10,20 @@
  */
 #ifdef SIMULATOR
 
-#include "mov_interface.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include "mov_interface.h"
 
 
-
-/* global variables*/
-
-#ifdef SIMULATOR
 extern FILE *file;
-#endif
-
 extern struct nav navCommand;
 struct nav *p = &navCommand;
 
 /*
- * 
+ * read commend of simulation line and parse it
+ * return 1 as normal, 
+ * return 0 as error, which shall indicate it's the end of the file
  */
 int read_command(void){
 
@@ -54,7 +50,7 @@ int read_command(void){
 
 
 /*
- * 
+ * assign value to the navigation command
  */
 void assignValue(int index, char *temp){
 
@@ -88,6 +84,7 @@ void assignValue(int index, char *temp){
 
 /*
  * TYPE: 0 ORDER: 2 HEIGHT: 5 DISTANCE: 0 YAW: 0
+ * get the location of ":" and " "
  */
 int get_loc(char line[], char c, int indexOfChar){
     int i = 0;
