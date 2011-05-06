@@ -14,71 +14,96 @@
  
  #ifdef PC
    #include <stdio.h>
+	#include <stdlib.h>
    #include "proto_lib.h"
+	#include <stdio.h>
+	#include <string.h>
 #endif
-/***************************************************************************** 
-    Definitions 
-*****************************************************************************/ 
 
-#include <stdio.h>
-#include <string.h>
-
-
-struct stab stab_move;
-
- 
  
 /***************************************************************************** 
     Implementations 
 *****************************************************************************/ 
- 
-void proto_stabWriteAttitude(struct stab sb){ 
-//float roll, float pitch, float yaw
-  //  stab_move->roll = roll;
+
+void proto_stabWriteAttitude(float roll,float pitch,float yaw){ 
+       if (gyroPtr == NULL)
+	gyroPtr = malloc(sizeof(struct stab_gyroscope));
+ 	gyroPtr->roll = roll; 
+ 	gyroPtr->pitch = pitch; 
+ 	gyroPtr->yaw = yaw; 
+       
+	
+
 #ifdef PC
- storeForTint(WRITE, STAB, UNKNOWN, sb.roll);
- storeForTint(WRITE, STAB, UNKNOWN, sb.pitch);
- storeForTint(WRITE, STAB, UNKNOWN, sb.yaw);
+ storeForTint(WRITE, STAB, UNKNOWN, gyroPtr->roll);
+ storeForTint(WRITE, STAB, UNKNOWN, gyroPtr->pitch);
+ storeForTint(WRITE, STAB, UNKNOWN, gyroPtr->yaw);
 	#ifdef DEBUG
-	printf("Stab value set to: %d , %d\n", sb.roll , sb.pitch,sb.yaw);
+	printf("Stab value set to: %d , %d\n", gyroPtr.roll , gyroPtr.pitch,gyroPtr.yaw);
   #endif
 #endif
 } 
  
  
-void proto_stabWriteAcc(struct stab sb){ 
-    stab_move = sb;
+void proto_stabWriteAcc(float acc_x,float acc_y,float acc_z){ 
+	if (accPtr == NULL)
+	accPtr = malloc(sizeof(struct stab_accelerometer));
+        accPtr->acc_x = acc_x;
+        accPtr->acc_y = acc_y;
+        accPtr->acc_z = acc_z;
+       
+	
 #ifdef PC
- storeForTint(WRITE, STAB, UNKNOWN, sb.acc_x);
- storeForTint(WRITE, STAB, UNKNOWN, sb.acc_y);
- storeForTint(WRITE, STAB, UNKNOWN, sb.acc_z);
+ storeForTint(WRITE, STAB, UNKNOWN, accPtr->acc_x);
+ storeForTint(WRITE, STAB, UNKNOWN, accPtr->acc_y);
+ storeForTint(WRITE, STAB, UNKNOWN, accPtr->acc_z);
 	#ifdef DEBUG
-	printf("Stab value set to: %d , %d\n", sb.acc_x , sb.acc_y,sb.acc_z);
+	printf("Stab value set to: %d , %d\n", accPtr.acc_x , accPtr.acc_y,accPtr.acc_z);
+  #endif
+#endif
+} 
+struct stab_magnetometer * magnetometerPtr;
+
+void proto_stabWriteHeading(int heading){ 
+	
+	if (magPtr == NULL)
+		magPtr = malloc(sizeof(struct stab_magnetometer));
+	magPtr->heading = heading;
+   
+#ifdef PC
+ storeForTint(WRITE, STAB, UNKNOWN, magPtr->heading);
+
+	#ifdef DEBUG
+	printf("Stab value set to: %d , %d\n", magPtr.heading);
   #endif
 #endif
 } 
 
-
-void proto_stabWriteHeading(struct stab sb){ 
-    stab_move = sb;
+void proto_stabWriteHeight(float height){
+	if (magPtr == NULL)
+		magPtr = malloc(sizeof(struct stab_magnetometer));
+	magPtr->height = height;
 #ifdef PC
- storeForTint(WRITE, STAB, UNKNOWN, sb.heading);
+ storeForTint(WRITE, STAB, UNKNOWN, magPtr->height);
 
 	#ifdef DEBUG
-	printf("Stab value set to: %d , %d\n", sb.heading);
+	printf("Stab value set to: %d , %d\n",magPtr.height);
   #endif
 #endif
 } 
 
+struct stab_accelerometer * retrieve_acc(void)
+{
+	return accPtr;
+}
 
-void proto_stabWritePressure(struct stab sb){ 
-    stab_move = sb;
-#ifdef PC
- storeForTint(WRITE, STAB, UNKNOWN, sb.pressure);
+struct stab_gyroscope * retrieve_gyro(void)
+{
+	return gyroPtr;
+}
 
-	#ifdef DEBUG
-	printf("Stab value set to: %d , %d\n", sb.pressure);
-  #endif
-#endif
+struct stab_magscope * retrieve_mag(void)
+{
+	return magPtr;
 }
 

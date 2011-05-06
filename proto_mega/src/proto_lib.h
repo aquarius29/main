@@ -144,25 +144,38 @@ void write(struct proto msg);//API
 /****************************************************************************/
 
 /// stab to movement
-struct stab {
+struct stab_gyroscope{
         float roll;
         float pitch;
 	float yaw;
+
+}* gyroPtr;
+
+
+struct stab_accelerometer{
 	float acc_x;
 	float acc_y;
 	float acc_z;
+}* accPtr;
+
+
+struct stab_magnetometer{
 	int heading;
-	float pressure;
-};
+	float height;
+}* magPtr;
 
 
-void proto_stabWriteAttitude(struct stab);
+void proto_stabWriteAttitude(float roll,float pitch,float yaw);
 
-void proto_stabWriteAcc(struct stab);
+void proto_stabWriteAcc(float acc_x,float acc_y,float acc_z);
 
-void proto_stabWriteHeading(struct stab);
+void proto_stabWriteHeading(int heading);
 
-void proto_stabWritePressure(struct stab);
+void proto_stabWriteHeight(float height);
+
+struct stab_magscope * retrieve_mag(void);
+struct stab_gyroscope * retrieve_gyro(void);
+struct stab_accelerometer * retrieve_acc(void);
 
 /****************************************************************************/
 
@@ -215,6 +228,3 @@ proto_sendMsg();
 
 
 /****************************************************************************/
-
-
-
