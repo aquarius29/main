@@ -13,6 +13,7 @@
 static void dijkstraAddNeighborsToOpen(node * current, nodeList * open,
 nodeList * closed);
 static positionList final;
+static ThreeDWorld map;
 /*
  * Takes the drone position, goal position, and a tile map
  * If the goal is found a dynamic list of the nodes making up the
@@ -22,6 +23,7 @@ static positionList final;
  */
 positionList indoorDijkstra(const position *start, const position *end)
 {
+	fill_map(&map);
 	nodeList *open, *closed;	// open and closed list
 	node startNode;				// the starting node
 
@@ -76,8 +78,7 @@ nodeList * closed)
 	int32_t y, x, mapCost, counter;
 	int32_t openListIndex, endNodeCost, neighborY, neighborX;
 	node adjacentNode, * p_adjacentNode;
-	ThreeDWorld map;
-	fill_map(&map);
+	
 	counter = 0;  // used for checking if a neighbor node is diagonally placed
 	enum diagonal {
 		north_west = 0,

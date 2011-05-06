@@ -64,39 +64,46 @@ xmlXPathObjectPtr retrieveXmlnodeset (xmlDocPtr doc, xmlChar *xpath)
 */
 void getMapDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 {
-	xmlChar *mapWidth;
-	xmlChar *mapHeight;
-	xmlChar *tileWidth;
-	xmlChar *tileHeight;
-	
-	if((!xmlStrcmp(cur->name, (const xmlChar *)"map")))
-	{
-		mapWidth = xmlGetProp(cur, "width");
-		int mw = atoi(mapWidth);
-		world->mapWidth = mw;
-		
-		mapHeight = xmlGetProp(cur, "height");
-		int mh = atoi(mapHeight);
-		world->mapHeight = mh;
-		
-		tileWidth = xmlGetProp(cur, "tilewidth");
-		int tw = atoi(tileWidth);
-		world->tileWidth = tw;
-		
-		tileHeight = xmlGetProp(cur, "tileheight");
-		int th = atoi(tileHeight);
-		world->tileHeight = th;
-	}
-	
-	int mapH = atoi(mapHeight);
-	int mapW = atoi(mapWidth);
-	world->representation = malloc(sizeof(int *) * mapH);
-	int i;
-	for (i = 0; i < mapH; i++ )
-	{
-		world->representation[i] = malloc(sizeof(int) * mapW);
-	}
+    xmlChar *mapWidth;
+    xmlChar *mapHeight;
+    xmlChar *tileWidth;
+    xmlChar *tileHeight;
+
+    if((!xmlStrcmp(cur->name, (const xmlChar *)"map")))
+    {
+        mapWidth = xmlGetProp(cur, "width");
+        int mw = atoi(mapWidth);
+        world->mapWidth = mw;
+
+        mapHeight = xmlGetProp(cur, "height");
+        int mh = atoi(mapHeight);
+        world->mapHeight = mh;
+
+        tileWidth = xmlGetProp(cur, "tilewidth");
+        int tw = atoi(tileWidth);
+        world->tileWidth = tw;
+
+        tileHeight = xmlGetProp(cur, "tileheight");
+        int th = atoi(tileHeight);
+        world->tileHeight = th;
+    }
+
+    int mapH = atoi(mapHeight);
+    int mapW = atoi(mapWidth);
+    world->representation = malloc(sizeof(int *) * mapH);
+    int i;
+    for (i = 0; i < mapH; i++ )
+    {
+        world->representation[i] = malloc(sizeof(int) * mapW);
+    }
+    free(mapWidth);
+    free(mapHeight);
+    free(tileWidth);
+    free(tileHeight);
+    
 }
+
+
 
 //! Create the 2d array from the extracted data array.
 /*!
@@ -270,6 +277,6 @@ void parseDoc(char *docname, ThreeDWorld *world)
 * @param world The ThreeDWorld that is being filled.
 */
 void fill_map(ThreeDWorld * world) {
-	char *doc = "secondYearSquare.xml";
+	char *doc = "/Users/E0/Dropbox/Code/Embedded/nav/nav/lib/secondYearSquare.xml";
 	parseDoc(doc, world);
 }
