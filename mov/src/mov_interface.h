@@ -14,8 +14,8 @@
 /* global variables*/
 struct nav
 {
-	char type;         // (manual/auto)
-	char order;       //(lift off/ hovering/ moving/ land)
+	char type;
+	char order; 
 	int height;
 	int distance;
 	int yaw;
