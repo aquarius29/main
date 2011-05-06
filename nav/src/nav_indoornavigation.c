@@ -32,14 +32,6 @@ static void insertCurrentDestinationNode(void) {
     current->next->next = 0;
 }
 
-static void insertCurrentDestinationNode(void) {
-    count++;
-    current->next = calloc(1, sizeof(progressiveNode));
-    current->next->p = route.list[count];
-    current->next->prev = current;
-    current->next->next = 0;
-}
-
 static void insertProgressiveNode(void) {
     if (first == 0) {
         first = calloc(1, sizeof(progressiveNode));
