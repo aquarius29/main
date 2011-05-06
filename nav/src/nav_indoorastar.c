@@ -29,6 +29,7 @@ positionList indoorAstar(const position *start, const position *end)
     nodeList *closed = NULL;          /* closed list */
     node currentNode;           /* the starting node */
     fill_map(&map);
+    final.num = 0;
     /* Allocate space for both the open and the closed list */
     if (!ListMemoryAllocation(&open, &closed)) {
         return final;
@@ -65,15 +66,15 @@ positionList indoorAstar(const position *start, const position *end)
     {
         /* Create final list and return it to the caller */
         final = CreateFinalList(closed, end, start);
-        FreeAllocatedList(open);
-        FreeAllocatedList(closed);
+        FreeAllocatedList(&open);
+        FreeAllocatedList(&closed);
         return final;
     }
     /* If we could not get to the goal, there is no solution */
     else {
         printf("Could not find goal!\n");
-        FreeAllocatedList(open);
-        FreeAllocatedList(closed);
+        FreeAllocatedList(&open);
+        FreeAllocatedList(&closed);
         return final;
     }
     for (i = 0; i < map.mapHeight; i++ )

@@ -118,6 +118,7 @@ void stopIndoorNavigation(void) {
     running = 0;
     sendActualPath(first);
     freeProgressiveList();
+    free(route.list);
 }
 //Send start and end point received from corelogic
 //to path calculation.
@@ -242,7 +243,7 @@ static void navigatePath(void){
     a.x = 1;
     a.y = 1;
     b.x = 9;
-    b.y = 3;
+    b.y = 5;
     initPath(&a, &b);
     return 0;
 }*/

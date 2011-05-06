@@ -17,7 +17,6 @@
 #include <pthread.h>
 #include <signal.h>
 #include "nav_corelogic.h"
-#include "tmxparser.c"
 #include "gps_nav.h"
 #include "tilemap.h"
 #include "nav_indoorstructure.h"
@@ -251,7 +250,9 @@ void *startIndoorNavigationSystem(void *ptr)
 {
 	printf("Started the indoor navigation tread\n");
 	struct thread_data *data = (struct thread_data*) ptr;
-	
+
+	initPath(&data->starttile, &data->destinationtile);
+
 	/* Call the indoor nav system here and pass in the data ptr */
 	
 	
@@ -412,12 +413,20 @@ void nav_sendIndoorPathToGui(pixel **path)
 }
 /* End interface:out functions for connectivity group */
 
-int main(int argc, char **argv) 
-{
-	GPSLocation *Destination = malloc(sizeof(GPSLocation));
-	Destination->latitude = 57.7053;
-	Destination->longitude = 11.9340;
-	
-	nav_runGpsSystem(Destination);
-	return 0;
+int main(int argc, char **argv) {
+ /*
+         GPSLocation *Destination = malloc(sizeof(GPSLocation));
+ Destination->latitude = 57.7053;
+ Destination->longitude = 11.9340;
+
+nav_runGpsSystem(Destination);
+*/
+    position a, b;
+    a.x = 1;
+    a.y = 1;
+    b.x = 9;
+    b.y = 5;
+    nav_runIndoorSystem(a, b);
+ return 0;
+
 }

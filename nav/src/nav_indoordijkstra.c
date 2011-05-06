@@ -23,11 +23,12 @@ static ThreeDWorld map;
  */
 positionList indoorDijkstra(const position *start, const position *end)
 {
-	int32_t i;
+	int32_t i = 0;
     nodeList *open = NULL;
     nodeList *closed = NULL;
     node startNode;
     fill_map(&map);
+    final.num = 0;
     // Allocate space for both the open and the closed list
     if (!ListMemoryAllocation(&open, &closed)) {
         return final;
@@ -57,15 +58,15 @@ positionList indoorDijkstra(const position *start, const position *end)
     {
         // Create final list and return it to the caller
         final = CreateFinalList(closed, end, start);
-        FreeAllocatedList(open);
-        FreeAllocatedList(closed);
+        FreeAllocatedList(&open);
+        FreeAllocatedList(&closed);
         return final;
     }
     // If we could not get to the goal, there is no solution
     else {
         printf("Could not find goal!\n");
-        FreeAllocatedList(open);
-        FreeAllocatedList(closed);
+        FreeAllocatedList(&open);
+        FreeAllocatedList(&closed);
         return final;
     }
     for (i = 0; i < map.mapHeight; i++ )
@@ -346,7 +347,7 @@ nodeList *open)
 /*
  * Help function to free all memory for a node list
  */
-void FreeAllocatedList(nodeList * list) {
-    free(list->list);
-    free(list);
+void FreeAllocatedList(nodeList **list) {
+    free((*list)->list);
+    free(*list);
 }
