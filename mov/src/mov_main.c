@@ -20,7 +20,7 @@
 int main(int argc, char *argv[]){
 
     /* start anything that needs to be started ahead of time */
-	  mov_init();
+	mov_init();
 	/*Movement Loop*/
 	int loop = 0;
 	while(loop == 0)  {

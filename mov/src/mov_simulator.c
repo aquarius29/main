@@ -15,6 +15,31 @@
 #include <stdio.h>
 #include <string.h>
 
+
+
+/* global variables*/
+
+#ifdef SIMULATOR
+extern FILE *file;
+#endif
+
+
+
+extern int distanceToTravel;
+extern int distanceTraveled;
+
+extern int yawArrived;
+extern int heightArrived;
+
+extern int changingAltitude;
+extern int changingHeading;
+
+extern int duration;
+
+extern struct nav navCommand;
+extern struct sensor sensorCommand;
+extern struct sensor oldSensorCommand;
+
 struct nav *p = &navCommand;
 
 /*
