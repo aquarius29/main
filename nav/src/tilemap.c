@@ -1,17 +1,19 @@
 /*!
 * @author Jarryd Hall
-* @brief Tilemap representation which holds the map of the indoor flight area
+* @brief Tilemap representation which holds the map of the indoor flight area.
 */
 
 #include <stdlib.h>
 #include "tilemap.h"
 
 //! function to take coordinates and determine the tile index
-/*!
+/*! Return the tile for the passed in coordinates.
 *
+* @param position The (x, y) position of the tile.
+* @param width The tile width.
+* @param height The tile height.
 *
-*
-*
+* @return CGPoint tileCoordinate.
 */
 CGPoint* tileForCoordinates (CGPoint position, short width, short height)
 {	
@@ -22,10 +24,12 @@ CGPoint* tileForCoordinates (CGPoint position, short width, short height)
 	return tileCoordinate;
 }
 
-//! modify world represnetation set the index to value e.g. 1 or 0
-/*!
+//! modify world represnetation set the index to value e.g. 1 or 0.
+/*! Function to set a tile to a specific value.
+* e.g mark a tile as free or collidable.
 *
-*
+* @param world The ThreeDWorld to search.
+* @param index the index of the tile.
 *
 */
 void setIndexValue(ThreeDWorld *world, int index, int value)
@@ -35,13 +39,11 @@ void setIndexValue(ThreeDWorld *world, int index, int value)
 	world->representation[first][second] = value; 
 }
 
-//! check a tile for its contents
-/*!
+//! check a tile for its contents.
+/*! Used to get the value of the requesed tile.
 *
-*
-*
-*
-*
+* @param world The ThreeDWorld to search.
+* @param index the index of the tile.
 */
 int checkTileValue(ThreeDWorld *world, int index)
 {
@@ -53,13 +55,6 @@ int checkTileValue(ThreeDWorld *world, int index)
 	
 	return value;
 }
-/* TODO: Create this function to be reusable for adding items to an array */
-/*
-int AddItemToArray ()
-{
-	
-}
-*/
 
 /*
 // check diagram on git: filename = tileImage2.png
