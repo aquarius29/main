@@ -93,6 +93,7 @@ struct dist* pnode(struct point start, struct point dest, struct point* node, ch
     int i=0;
     double dist,k,c;
     p->distance = MAX_DIST;
+    p->name = 0;
 	
     switch (request) {
         case 0 : 
