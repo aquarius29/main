@@ -15,10 +15,26 @@
 #include "mov_interface.h"
 
 
-#define BUFF_YAW 5
-#define BUFF_DISTSNCE 5
+#define BUFF_YAW 1
+#define BUFF_DISTSNCE 1
 #define BUFF_PR 1
 #define SPEED 5
+
+
+extern int distanceToTravel;
+extern int distanceTraveled;
+
+extern int yawArrived;
+extern int heightArrived;
+
+extern int changingAltitude;
+extern int changingHeading;
+
+extern int duration;
+
+extern struct nav navCommand;
+extern struct sensor sensorCommand;
+extern struct sensor oldSensorCommand;
 
 
 /*
@@ -215,7 +231,7 @@ void check_pitch_roll(int isHovering) {
     }
     printOrientation();
 }
-
+#ifdef SIMULATOR
 //(rand() % (max - min + 1) + min);
 int readSensorTest(int currentSensor, char command){
    
@@ -234,7 +250,7 @@ int readSensorTest(int currentSensor, char command){
 	
     return new;
 }
-
+#endif
 
 void printOrientation(void)
 {

@@ -12,21 +12,6 @@
 #include <stdio.h>
 
 /* global variables*/
-FILE *file;
-int distanceToTravel;
-int distanceTraveled;
-
-int yawArrived;
-int heightArrived;
-
-int changingAltitude;
-int changingHeading;
-
-static int start_time;
-int duration;
-
-
-
 struct nav
 {
 	char type;         // (manual/auto)
@@ -43,11 +28,6 @@ struct sensor
 	int yaw;
 	int height;
 };
-
-struct nav navCommand;
-struct sensor sensorCommand;
-struct sensor oldSensorCommand;
-
 
 
 /*mov_logic.c*/
