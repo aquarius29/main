@@ -16,33 +16,38 @@
 #include "WProgram.h"
 #include "mov_interface.h"
 
-/*
- * reference: 
- * http://arduino.cc/en/Tutorial/Ping?from=Tutorial.UltrasoundSensor
- */
+
 float sonar_distance(int sonarPin)
 {
-	Serial.begin(9600);
 	double duration, cm;
 	duration = pulseIn(sonarPin, HIGH);
 	cm = duration/57.874;
 	Serial.print(cm);
 	Serial.print("cm");
 	Serial.println();
-	delay(500);
-/*	long duration;
-
-	pinMode(sonarPin, OUTPUT);
-	digitalWrite(sonarPin, LOW);
-	delay(2);
-	digitalWrite(sonarPin, HIGH);
-	delay(5);
-	digitalWrite(sonarPin, LOW);
-
-	pinMode(sonarPin, INPUT);
-	duration = pulseIn(sonarPin, HIGH);
-	float distance= duration/29/2;
-
-	return distance;*/
 }
+
+
+/*
+ * reference: 
+ * http://arduino.cc/en/Tutorial/Ping?from=Tutorial.UltrasoundSensor
+ */
+/*float sonar_distance(int sonarPin){
+
+  long duration;
+
+  pinMode(sonarPin, OUTPUT);
+  digitalWrite(sonarPin, LOW);
+  delay(2);
+  digitalWrite(sonarPin, HIGH);
+  delay(5);
+  digitalWrite(sonarPin, LOW);
+
+  pinMode(sonarPin, INPUT);
+  duration = pulseIn(sonarPin, HIGH);
+  float distance= duration/29/2;
+
+  return distance;
+
+  }*/
 #endif
