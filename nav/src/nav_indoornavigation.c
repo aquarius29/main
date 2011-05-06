@@ -11,9 +11,9 @@
 #include "movementcommands.h"
 
 #define PRECISION 5
-#define SLEEP_DURATION (0.3 * 1000000000)
+#define SLEEP_DURATION (0.05 * 1000000000)
 #define ALGORITHM 0
-#define CENTIMETRES_PER_SECOND 20
+#define CENTIMETRES_PER_SECOND 100
 #define SAFE_HEIGHT 200 //200 cm
 
 static void navigatePath(void);
@@ -24,30 +24,31 @@ static struct timeval timer;
 static progressiveNode *first;
 static progressiveNode *current;
 
+static void insertCurrentDestinationNode(void) {
+    count++;
+    current->next = calloc(1, sizeof(progressiveNode));
+    current->next->p = route.list[count];
+    current->next->prev = current;
+    current->next->next = 0;
+}
+
 static void insertProgressiveNode(void) {
     if (first == 0) {
         first = calloc(1, sizeof(progressiveNode));
+        first->p = route.list[count];
         first->prev = 0;
-        first->p = route.list[0];
         current = first;
+        insertCurrentDestinationNode();
         insertProgressiveNode();
     }
     else {
-        count++;
-        progressiveNode *temp1, *temp2;
-        temp1 = calloc(1, sizeof(progressiveNode));
-        current->next = temp1;
-        temp1->prev = current;
-        current = temp1;
-        current->p = route.list[count];
-        count++;
-        temp2 = calloc(1, sizeof(progressiveNode));
-        current->next = temp2;
-        temp2->prev = current->next;
-        temp2->p = route.list[count];
-        temp2->next = 0;
+        current->next->p = route.list[count];
+        current->next->prev = current;
+        current = current->next;
+        insertCurrentDestinationNode();
     }
 }
+
 static void freeProgressiveList(void) {
     progressiveNode *temp;
     while (first != 0) {
@@ -99,7 +100,7 @@ static void sendCommand(void) {
     // sendautomovementcommand(3, SAFE_HEIGHT, current->next->p.distance, angle);
 }
 static void sendPosition(pixel *pos) {
-    printf("Longitude = %d\nLatitude = %d\n", pos->lon, pos->lat);
+    printf("Longitude = %d\tLatitude = %d\n", pos->lon, pos->lat);
 }
 static void sendExpectedPath(positionList *path) {
     //Give corelogic the calculated path.
@@ -219,7 +220,7 @@ static void navigatePath(void){
 
         if (check(current->p, current->next->p) == 1) {
             if (check(current->p, route.list[route.num-1]) == 1) {
-                // count++;
+                count++;
                 stopIndoorNavigation();
                 bool = 0;
                 break;
@@ -236,13 +237,13 @@ static void navigatePath(void){
         navigatePath();
     }
 }
-
+// 
 // int main(){
 //     position a, b;
 //     a.x = 1;
 //     a.y = 1;
-//     b.x = 2;
-//     b.y = 2;
+//     b.x = 9;
+//     b.y = 3;
 //     initPath(&a, &b);
 //     return 0;
 // }
