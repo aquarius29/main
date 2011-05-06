@@ -1,8 +1,8 @@
 
-#include "port.h"
+#include "port_test.h"
 
 int main(void){
-    port_run();
+    port_test();
     
     return 0;
 }

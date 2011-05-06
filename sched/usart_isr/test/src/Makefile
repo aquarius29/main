@@ -2,7 +2,8 @@
 
 LIB_SRC_MEGA=usart_isr_mega.c
 LIB_SRC_UNO=usart_isr_uno.c
-LIB_SRC_PC=port.c
+#LIB_SRC_PC=port.c
+LIB_SRC_PC=port_test.c proto_serial_port.c proto_serial_comm.c
 
 LIB_OBJ_MEGA = $(LIB_SRC_MEGA:.c=.o)
 LIB_OBJ_UNO = $(LIB_SRC_UNO:.c=.o)

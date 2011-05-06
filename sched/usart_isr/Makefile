@@ -200,10 +200,11 @@ flash-uno:
 ## clean-target #############################################################
 clean:
 	cd test/src && $(MAKE) clean
-	cd test/lib && rm *.a
+	cd test/lib && rm -f *.a
 
 	rm -f $(PROG).elf $(PROG).rom *.o *.map
 
-	
+cleanall: clean
+	rm -f $(PROG)
 
-.PHONY: pc pc-dbg mega mega-dbg panda panda-dbg n900 n900-dbg ui ui-dbg flash clean
+.PHONY: pc pc-dbg mega mega-dbg panda panda-dbg n900 n900-dbg ui ui-dbg flash clean cleanall

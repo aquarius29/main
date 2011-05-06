@@ -16,6 +16,8 @@
 #define TRUE 1
 #define FALSE 0
 
+void serialSend(uint8_t *data, FILE *fd);
+
 int port_run(){
     int done = FALSE;
 
@@ -25,8 +27,8 @@ int port_run(){
   int wr;
   int flag;
 
-  uint8_t data[] = {3, 1, 2, 3};
-  uint8_t data1[] = {3, 2, 1};
+  uint8_t data[] = {3, 1, 2, 3, '\0'};
+  uint8_t data1[] = {3, 1, 2, 3};
 
   fd = open ("/dev/tty.usbmodemfa141",O_RDWR |O_NOCTTY | O_NDELAY);
   if (fd < 0){
@@ -58,12 +60,10 @@ int port_run(){
     while(!done){
         uint8_t i;
         if (first != 1) {     
-            // for (i = 0; i < 3; i++) {
+            // for (i = 0; i < 4; i++) {
             //     write(fd, &data1[i], 1);
             // }
-            for (i = 0; i < 4; i++) {
-                write(fd, &data[i], 1);
-            }
+            serialSend(data, fd);
             first = 1;
         }
         done = TRUE;
@@ -74,3 +74,12 @@ int port_run(){
  //  close(fd);
   return 0;
 }
+
+void serialSend(uint8_t *data, FILE *fd){
+    while (*data != '\0') {
+        printf("*data is: %d\n", *data);
+        write(fd, data, 1);
+        data++;
+    }    
+}
+
