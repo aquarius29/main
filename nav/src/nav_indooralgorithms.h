@@ -1,5 +1,5 @@
 /*
- * indoor_algorithms.h
+ * nav_indooralgorithms.h
  *
  *  Created on: Apr 10, 2011
  *      Author: Jon Fridehn
