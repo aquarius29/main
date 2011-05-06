@@ -11,9 +11,9 @@
 #include "movementcommands.h"
 
 #define PRECISION 5
-#define SLEEP_DURATION (0.3 * 1000000000)
+#define SLEEP_DURATION (0.05 * 1000000000)
 #define ALGORITHM 0
-#define CENTIMETRES_PER_SECOND 20
+#define CENTIMETRES_PER_SECOND 100
 #define SAFE_HEIGHT 200 //200 cm
 
 static void navigatePath(void);
