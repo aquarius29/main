@@ -108,8 +108,8 @@ void check_height(void){
 
     /*If we need to DECREASE the height */
     if(height_current > height_desire+BUFF_DISTSNCE){
-	/*If we are a level where our altitude is changing */
-		if(changingAltitude == 1) {
+	/*If we are a level where our altitude is NOT changing */
+		if(changingAltitude == 0) {
 		    hover();	
 		    decrease_all();
 		}
@@ -121,8 +121,8 @@ void check_height(void){
     }
     /*If we need to INCREASE height */
     else if(height_current<height_desire-BUFF_DISTSNCE){
-	/*if we are a level where our altitude is changing */
-		if(changingAltitude == 1) {	
+	/*if we are a level where our altitude is NOT changing */
+		if(changingAltitude == 0) {	
 			hover();
 			increase_all();
 		}
