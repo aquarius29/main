@@ -4,7 +4,7 @@
 
 #include "tilemap.h"
 #include "movementcommands.h"
-#include "path_structure.h"
+#include "nav_indoorstructure.h"
 
 #ifndef CORELOGIC_H
 #define CORELOGIC_H
@@ -65,5 +65,6 @@ void *setupgps(void *ptr);
 void *setupgpsnavigation(void *ptr);
 void *startgpswatchdog(void *ptr);
 void *startIndoorNavigationSystem(void *ptr);
+void *readProtocol(void *ptr);
 
 #endif /* CORELOGIC_H */

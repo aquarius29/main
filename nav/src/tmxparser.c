@@ -90,11 +90,11 @@ void getMapDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 	
 	int mapH = atoi(mapHeight);
 	int mapW = atoi(mapWidth);
-    world->representation = malloc(sizeof(int *) * mapH);
+	world->representation = malloc(sizeof(int *) * mapH);
 	int i;
 	for (i = 0; i < mapH; i++ )
 	{
-        world->representation[i] = malloc(sizeof(int) * mapW);
+		world->representation[i] = malloc(sizeof(int) * mapW);
 	}
 }
 
@@ -118,10 +118,10 @@ void createTwoDArray(ThreeDWorld *world, int w, int h, int array[])
 		for(two = 0; two < w; two++)
 		{
 			world->representation[one][two] = array[arrayCounter];
-            //             printf("  %d", world->representation[one][two]);
-            //      
-            // if(two == 9)
-            //  printf("\n");
+            printf("  %d", world->representation[one][two]);
+		
+			if(two == 9)
+				printf("\n");
 					
 			arrayCounter++;
 		}
@@ -131,10 +131,10 @@ void createTwoDArray(ThreeDWorld *world, int w, int h, int array[])
 //! Extract the data for each tile.
 
 /*! A function to return all the tiles and their type. 
-* This function creates the tilemap array on the fly
+* This function creates the tilemap array on the fly.
 *
 * @param doc A pointer to the document to be read.
-* @param cur A pointer to the current node in the tree
+* @param cur A pointer to the current node in the tree.
 * @param world A pointer to a world object that is the representation of the map.
 */
 void getTileDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
@@ -185,23 +185,24 @@ void getTileDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 	
 	totalTiles = numMovableTiles + numCollisionTiles;
 	
-    // printf("number of collision tiles : %d\n", numCollisionTiles);
-    // printf("number of movable tiles : %d\n", numMovableTiles);
-    // printf("Total tiles : %d\n", totalTiles);
+	printf("number of collision tiles : %d\n", numCollisionTiles);
+	printf("number of movable tiles : %d\n", numMovableTiles);
+	printf("Total tiles : %d\n", totalTiles);
 	world->numberOfTilesInMap = totalTiles;
 	
 	createTwoDArray(world, width, height, tileValuesArray);
-	//world->height = 	
+	//world->height = 
 }
 
-/* Helper function to retrieve a the value for the specfied attribute at a specified node */
-//!
+//! Helper function to retrieve a the value for the specfied attribute at a specified node.
 /*!
+* This function is used to retrieve the specific data requested.
+* Currently a helper function.
 *
-*
-*
-*
-*
+* @param doc A pointer to the document to be read.
+* @param cur A pointer to the current node in the tree.
+* @param node The node that is requested.
+* @param attribute The attribute value that is requested.
 */
 char* getAttributeValueForNode (xmlDocPtr doc, xmlNodePtr cur, char *node, char *attribute)
 {
@@ -221,14 +222,13 @@ char* getAttributeValueForNode (xmlDocPtr doc, xmlNodePtr cur, char *node, char 
 	return (char *)attributeValue;
 }
 
-/* TODO: Add functions to return all the data in a struct. */
-//!
+//! Parse the xml doc.
 /*!
+* The main function for parsing the document. 
+* It calls all the other functions to get the job done.
 *
-*
-*
-*
-*
+* @param docname A pointer to the document name to parse.
+* @param world A pointer to the ThreeDWorld that needs to be created.
 */
 void parseDoc(char *docname, ThreeDWorld *world) 
 {
@@ -259,20 +259,17 @@ void parseDoc(char *docname, ThreeDWorld *world)
 	
 	getMapDetails(doc, cur, world);
 	getTileDetails(doc, cur, world);
-	
+
 	xmlFreeDoc(doc);
 	return;
 }
 
-//!
+//! Fill a ThreeDWorld with valued.
 /*!
-*
-*
-*
-*
-*
+* The replacement main for this module.
+* @param world The ThreeDWorld that is being filled.
 */
 void fill_map(ThreeDWorld * world) {
-	char *doc = "/Users/E0/Dropbox/Code/Embedded/nav/nav/lib/secondYearSquare.xml";
+	char *doc = "secondYearSquare.xml";
 	parseDoc(doc, world);
 }
