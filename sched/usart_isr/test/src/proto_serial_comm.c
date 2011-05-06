@@ -12,18 +12,19 @@
  *  @details
  */
  
-#include "proto_serial_port.h"
+#include <stdio.h> 
+
 #include "proto_serial_comm.h"
 
 /*
  *  Function for sending serial data on serial port
  *  
- *  Takes a file descriptor to write to (serial port) and a byte array
+ *  Takes a port handle to write to (serial port) and a byte array
  *  to send. This array has to be NULL-terminated
  *
  *  Author: Joakim
  */
-uint8_t proto_serialSend(int portHandle, uint8_t *data){
+uint8_t proto_serialSend(int32_t portHandle, uint8_t *data){
     while (*data != '\0') {
         printf("*data is: %d\n", *data);
         write(portHandle, data, 1);

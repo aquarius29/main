@@ -1,5 +1,5 @@
 
-#include "usart_isr_mega.h"
+#include "proto_usart_isr_mega.h"
 
 int main(void){
     usartInitMega();

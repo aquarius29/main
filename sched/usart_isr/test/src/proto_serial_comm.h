@@ -16,6 +16,8 @@
 #ifndef PROTO_SERIAL_COMM_H
 #define PROTO_SERIAL_COMM_H
 
+#include <stdint.h>
+
 uint8_t proto_serialSend(int32_t, uint8_t *);
 
 #endif /* PROTO_SERIAL_COMM_H */
