@@ -11,9 +11,9 @@
 #include "movementcommands.h"
 
 #define PRECISION 5
-#define SLEEP_DURATION (0.3 * 1000000000)
+#define SLEEP_DURATION (0.05 * 1000000000)
 #define ALGORITHM 0
-#define CENTIMETRES_PER_SECOND 20
+#define CENTIMETRES_PER_SECOND 100
 #define SAFE_HEIGHT 200 //200 cm
 
 static void navigatePath(void);
@@ -34,21 +34,21 @@ static void insertProgressiveNode(void) {
     }
     else {
         count++;
-        progressiveNode *temp;
-        temp = calloc(1, sizeof(progressiveNode));
-        current->next = temp;
-        temp->prev = current;
-        current = temp;
         current->next = calloc(1, sizeof(progressiveNode));
-        current->next->p = route.list[count];
-        current->next->next = 0;
+        current->next->prev = current;
+        current = current->next;
+        current->p = route.list[count];
+        count++;
+        current->next = calloc(1, sizeof(progressiveNode));
+        current->next->prev = current->next;
+        current->p = route.list[count];
+        current->next = 0;
     }
 }
 static void freeProgressiveList(void) {
     progressiveNode *temp;
     while (first != 0) {
         temp = first->next;
-        //printf("%d   %d\n",first->p.lon, first->p.lat);
         free(first);
         first = temp;
     }
@@ -205,6 +205,7 @@ static void navigatePath(void){
     setDirection();
     setDistance();
     sendCommand();
+    
     /*
      *  Infinite loop until it either reaches point,collision avoidance occurs
      *  or indoor navigation is stopped externally.
@@ -215,7 +216,7 @@ static void navigatePath(void){
 
         if (check(current->p, current->next->p) == 1) {
             if (check(current->p, route.list[route.num-1]) == 1) {
-                count++;
+                // count++;
                 stopIndoorNavigation();
                 bool = 0;
                 break;
