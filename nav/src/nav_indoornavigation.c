@@ -237,7 +237,7 @@ static void navigatePath(void){
     }
 }
 
-int main(){
+/*int main(){
     position a, b;
     a.x = 1;
     a.y = 1;
@@ -245,4 +245,4 @@ int main(){
     b.y = 3;
     initPath(&a, &b);
     return 0;
-}
+}*/
