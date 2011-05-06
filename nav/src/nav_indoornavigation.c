@@ -34,18 +34,15 @@ static void insertProgressiveNode(void) {
     }
     else {
         count++;
-        progressiveNode *temp1, *temp2;
-        temp1 = calloc(1, sizeof(progressiveNode));
-        current->next = temp1;
-        temp1->prev = current;
-        current = temp1;
+        current->next = calloc(1, sizeof(progressiveNode));
+        current->next->prev = current;
+        current = current->next;
         current->p = route.list[count];
         count++;
-        temp2 = calloc(1, sizeof(progressiveNode));
-        current->next = temp2;
-        temp2->prev = current->next;
-        temp2->p = route.list[count];
-        temp2->next = 0;
+        current->next = calloc(1, sizeof(progressiveNode));
+        current->next->prev = current->next;
+        current->p = route.list[count];
+        current->next = 0;
     }
 }
 static void freeProgressiveList(void) {
