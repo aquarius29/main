@@ -14,8 +14,6 @@
 
 #define IGNORINGLITTLECHANGE 10
 
-
-
 /*
  * Receives array of differences where values are [Value2 - Value1, Value2 - Value1, Value2 - Value1]
  * where value1 is the first measurement and value2 is the second measurement. 

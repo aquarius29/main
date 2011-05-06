@@ -26,7 +26,6 @@
  */
 int ca_init(void)
 {
-
 	/* to init the arduino lib */
 	init();
 
@@ -68,26 +67,17 @@ int ca_init(void)
 int ca_run(void)
 {
 	/* fake data here*/
-	write_to_move(direction_filter(100,100,100,100));
+	write_to_move(direction_filter(120,120,50,120, 120,200, 40, 120 ));
 	return 0;
 }
 
 #endif
 
 
-/*
- * return the flying speed.
- */
-int get_speed(void)
-{
-	//	int speed = read_speed();
-	int speed=1;
-	return  speed;
-}
-
 
 /*
- * return the flying direction.
+ * return the current flying direction
+ * read from movement
  */
 int get_dir(void)
 {
@@ -98,11 +88,12 @@ int get_dir(void)
 
 
 /*
+ * write the direction intructions
  * send to the movement
  */
 void write_to_move(int direction){
 
-	/* 0 hover 1 front 2 back 3 left 4 right REST free to go */
+	/* 0 hover 1 front 2 back 3 left 4 right  REST free to go */
 
 	//	write(direction)
 }

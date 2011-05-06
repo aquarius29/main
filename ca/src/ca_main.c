@@ -9,8 +9,6 @@
  * detail:       for test only 
  */
 
-#include <stdlib.h>
-#include <stdio.h>
 #include "ca_interface.h"
 
 int main(int argc, char *argv[])

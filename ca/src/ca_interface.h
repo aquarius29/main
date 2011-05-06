@@ -17,7 +17,6 @@ int ca_init(void);
 int ca_run(void);
 #endif 
 
-int get_speed(void);
 int get_dir(void);
 void write_to_move(int direction);
 
@@ -25,7 +24,8 @@ void write_to_move(int direction);
 #ifdef ARDUINO
 int direction_filter(void);
 #elif defined PC
-int direction_filter(int ir1, int ir2, int ir3, int ir4);
+int direction_filter(int ir1, int ir2, int ir3, int ir4,
+					 int ir11, int ir22, int ir33, int ir44);
 #endif 
 
  /* ca_filters.c */ 

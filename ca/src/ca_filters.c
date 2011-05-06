@@ -30,17 +30,17 @@
 #include "ca_interface.h"
 
 /* the speed control variables */
-#define HOVERSPEED 25
+#define HOVERSPEED 5
 #define SLOWSPEED 50
 #define MEDIUMSPEED 100
 #define FASTSPEED 150
 
 /* the dangerzone varibales according to the speed */
-#define HOVERZONE 100
-#define SLOWZONE 150
-#define MEDIUMZONE 200
+#define HOVERZONE 25
+#define SLOWZONE 50
+#define MEDIUMZONE 75
 #define FASTZONE 100
-#define MADZONE 150
+#define MADZONE 130
 
 /* the current flying directions */
 #define FRONT 1

@@ -27,7 +27,7 @@
 
 #endif
 
-int const speed=100 /*cm*/
+int const speed=100;  /*cm*/
 
 
 #ifdef ARDUINO
@@ -59,7 +59,7 @@ int direction_filter(void)
 		Serial.println();
 #endif
 
-    /* DANGERZONE+IR DISTANCE-> BOOLEANS */
+    /* DANGERZONE + IR DISTANCE-> BOOLEANS */
     unsigned char *irBooleans;
     irBooleans = distance_filter(dangerzone, ir1, ir2, ir3, ir4);
 #ifdef DEBUG
@@ -144,8 +144,10 @@ int direction_filter(void)
  * filter the direction according to the collision logic
  * return the direction to go
  */
-int direction_filter(int ir1, int ir2, int ir3, int ir4)
-{
+
+int direction_filter(int ir1, int ir2, int ir3, int ir4,
+					 int ir11, int ir22, int ir33, int ir44) {
+
     int dir = get_dir();
 
     /* SPEED -> DANGERZONE */
@@ -191,10 +193,10 @@ int direction_filter(int ir1, int ir2, int ir3, int ir4)
 
     /* DISTANCE DIFFERENCE-> TOWARDS WHICH IR  */
     int *distance_diff = calloc(4, sizeof(int));
-    *distance_diff = 100 - ir1;
-    *(distance_diff + 1) = 100 - ir2;
-    *(distance_diff + 2) = 100 - ir3;
-    *(distance_diff + 3) = 100 - ir4;
+    *distance_diff =ir11 - ir1;
+    *(distance_diff + 1) = ir22 - ir2;
+    *(distance_diff + 2) = ir33 - ir3;
+    *(distance_diff + 3) = ir44 - ir4;
 
     unsigned char *moving_close = moving_closer(distance_diff);
     free(distance_diff);
