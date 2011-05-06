@@ -13,6 +13,7 @@ static void astarAddNeighborsToOpen(node *current, nodeList *open, nodeList *clo
 const position *end);
 static int32_t GetHeuristicCost(const position *currentNode,
 const position *goalNode);
+static ThreeDWorld map;
 
 /*
  * Takes the drone position, goal position, and a tile map
@@ -23,6 +24,7 @@ const position *goalNode);
  */
 positionList indoorAstar(const position *start, const position *end)
 {
+    fill_map(&map);
 	nodeList *open;            /* open list */
 	nodeList *closed;          /* closed list */
 	node currentNode;           /* the starting node */
@@ -82,8 +84,6 @@ positionList indoorAstar(const position *start, const position *end)
 static void astarAddNeighborsToOpen(node *current, nodeList *open, nodeList *closed,
 const position *end)
 {
-	ThreeDWorld map;
-	fill_map(&map);
 	int32_t sortCounter = 0;
 	int32_t y = 0;
 	int32_t x = 0;

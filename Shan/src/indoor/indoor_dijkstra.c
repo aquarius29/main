@@ -26,7 +26,11 @@ static ThreeDWorld map;
           || (map.representation[end->x][end->y] == 1)
           || (start->x > map.mapWidth) || (start->y > map.mapHeight)
           || (end->x > map.mapWidth) || (end->y > map.mapHeight)) {
-          free(map.representation);
+        int i;
+        for (i = 0; i < map.mapHeight; i++ )
+      	{
+              free(map.representation[i]);
+      	}
           return 0;
       } else {
           // tiles are valid
@@ -85,7 +89,11 @@ position_list indoor_dijkstra(const position * start, const position * end)
     		FreeAllocatedList(closed);
     		return final;
     	}
-    	free(map.representation);
+    	int i;
+        for (i = 0; i < map.mapHeight; i++ )
+      	{
+              free(map.representation[i]);
+      	}
     } else {
         // printf("Invalid tile.\n");
         // exit(1); //or do something else

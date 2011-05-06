@@ -5,8 +5,8 @@ void test_indoor_navigation_1() {
     
     a.x = 1;
     a.y = 1;
-    b.x = 9;
-    b.y = 5;
+    b.x = 2;
+    b.y = 2;
     
     initPath(&a, &b);
 }
