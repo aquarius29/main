@@ -43,19 +43,21 @@ extern struct sensor oldSensorCommand;
 void command_logic(void) {
     printOrientation();
     char order = navCommand.order;  
-    //lift off
-    if (order == '0') {
+    /*If Order is Hover, we will not attempt to move a distance. Our pitch and roll is set to hover mode */
+    if (order == '0') { 
 		distanceToTravel = 0;
 		check_heading();
 		check_pitch_roll(0);
 		check_changingAltitude();
 		check_height();
+		/*If order is set to move, we will attempt to control height, heading, and movement */
     } else if (order == '1') {
 		updateDistanceToTravel();
 		check_heading();
 		check_pitch_roll(1);
 		check_changingAltitude();
 		check_height();
+		/*If order is set land, we attempt to go into hover mode and then land */
     } else if(order == '2') {
 		distanceToTravel = 0;
 		check_pitch_roll(0);
@@ -64,11 +66,12 @@ void command_logic(void) {
 		if (sensorCommand.height <= 0){
 			heightArrived = 1;
 		}
-		else {
+		/*Order is invalid. Land! */
+		else { 
 			land(); 
  
 #ifdef SIMULATOR
-			/* simulated */
+			/* simulated - decrease the sensed height */
 			sensorCommand.height = readSensorTest(sensorCommand.height, 'd');
 #endif
 		} 
@@ -87,7 +90,10 @@ void check_changingAltitude(void){
 
 }
 
-//check the drone height
+
+/*
+ * Check the drone height
+ */
 void check_height(void)
 {
     printf("!!!!!!!!!!!!!check height: \n");
@@ -127,6 +133,9 @@ void check_height(void)
 
 
 
+/*
+ * 
+ */
 void check_heading(void)
 {
     printf("!!!!!!!!!!!!!check heading: \n");
@@ -173,6 +182,9 @@ void check_heading(void)
     printOrientation();
 }
 
+/*
+ * 
+ */
 void check_pitch_roll(int isHovering) {
     printf("!!!!!!!!!!!!!check pitch and roll: \n");
     int pitch_current=sensorCommand.pitch;
@@ -233,7 +245,10 @@ void check_pitch_roll(int isHovering) {
 }
 
 #ifdef SIMULATOR
-//(rand() % (max - min + 1) + min);
+/*
+ * (rand() % (max - min + 1) + min)
+ *
+ */
 int readSensorTest(int currentSensor, char command){
    
     int i = (rand() % (6 - 0 + 1) + 0);  // between 5 and -5 degree variation
@@ -253,6 +268,10 @@ int readSensorTest(int currentSensor, char command){
 }
 #endif
 
+
+/*
+ * 
+ */
 void printOrientation(void)
 {
     printf("\n {pitch: %d roll: %d, yaw: %d height: %d distance left: %d}\n", 
@@ -261,6 +280,9 @@ void printOrientation(void)
 }
 
 
+/*
+ * 
+ */
 void updateDistanceToTravel(void){
 
     distanceTraveled = SPEED * duration;
