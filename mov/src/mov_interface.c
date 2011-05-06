@@ -38,9 +38,9 @@ int mov_init()
 	Serial.begin(9600);
 
 	/*init the movement control varaibles*/
-    heightArrived = 1;
-    yawArrived = 1;
-    distanceToTravel = 0;
+	heightArrived = 1;
+	yawArrived = 1;
+	distanceToTravel = 0;
 	duration=0;
 
 	return 0;
@@ -102,12 +102,13 @@ int mov_init(void)
 {
 #ifdef SIMULATOR
     file = fopen("input.txt", "r");
+    srand(time(NULL));
 #endif
 
     heightArrived = 1;
     yawArrived = 1;
     distanceToTravel = 0;
-    srand(time(NULL));
+  
     duration=0;
 
 	return 0;

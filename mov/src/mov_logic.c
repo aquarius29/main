@@ -216,6 +216,7 @@ void check_pitch_roll(int isHovering) {
     printOrientation();
 }
 
+#ifdef SIMULATOR
 //(rand() % (max - min + 1) + min);
 int readSensorTest(int currentSensor, char command){
    
@@ -231,10 +232,10 @@ int readSensorTest(int currentSensor, char command){
 		new = currentSensor - i;
 		break;
     }
-	
+
     return new;
 }
-
+#endif
 
 void printOrientation(void)
 {

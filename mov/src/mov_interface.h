@@ -1,5 +1,5 @@
 /*
- * file:         mov_interface.c
+ * file:         mov_interface.h
  * brief:
  * author:       Yanling Jin, Amber Olsson
  * date:         2011-05-03
@@ -8,6 +8,7 @@
  *
  * detail:
  */
+
 
 #include <stdio.h>
 
@@ -110,3 +111,4 @@ void write_to_motor(unsigned char msg);
 
 /*mov_sensor.c*/
 float sonar_distance(int sonarPin);
+
