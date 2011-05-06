@@ -116,7 +116,6 @@ void check_height(void)
     else if(height_current<height_desire-BUFF_DISTSNCE){
 		if(changingAltitude == 1) {	
 			hover();
-			//printf("&&&&&&&&&&&&&&INCREASED&&&&&&&&&&&&&&&");
 			increase_all();
 		}
 		
@@ -246,41 +245,6 @@ void check_pitch_roll(int isHovering) {
     printOrientation();
 }
 
-#ifdef SIMULATOR
-/*
- * (rand() % (max - min + 1) + min)
- *
- */
-int readSensorTest(int currentSensor, char command){
-   
-    int i = (rand() % (6 - 0 + 1) + 0);  // between 5 and -5 degree variation
-
-    int new;
-
-    switch (command) {
-    case 'i':
-		new = currentSensor + i;
-		break;
-    case 'd':
-		new = currentSensor - i;
-		break;
-    }
-
-    return new;
-}
-#endif
-
-
-/*
- * 
- */
-void printOrientation(void)
-{
-    printf("\n {pitch: %d roll: %d, yaw: %d height: %d distance left: %d}\n", 
-		   sensorCommand.pitch, sensorCommand.roll,sensorCommand.yaw,
-		   sensorCommand.height, distanceToTravel );
-}
-
 
 /*
  * 
@@ -292,3 +256,12 @@ void updateDistanceToTravel(void){
 }
 
 
+/*
+ * 
+ */
+void printOrientation(void)
+{
+    printf("\n {pitch: %d roll: %d, yaw: %d height: %d distance left: %d}\n", 
+		   sensorCommand.pitch, sensorCommand.roll,sensorCommand.yaw,
+		   sensorCommand.height, distanceToTravel );
+}

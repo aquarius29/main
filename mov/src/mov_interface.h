@@ -37,10 +37,9 @@ void check_height(void);
 void check_heading(void);
 void check_pitch_roll(int isHovering);
 void updateDistanceToTravel(void);
-void printOrientation(void);
-int readSensorTest(int currentSensor, char command);
 void check_changingAltitude(void);
 double get_acceleration();
+void printOrientation(void);
 
 /*mov_motor.c*/
 void start_motors(void);
@@ -75,10 +74,11 @@ void print_char_to_Binary(char bin);
 
 
 
-/*mov_main.c*/
-int read_command();
+/*mov_simulator.c*/
+int read_command(void);
 int get_loc(char line[],char c,int indexOfColumn);
 void assignValue(int index,char *temp);
+int readSensorTest(int currentSensor, char command);
 
 
 /*interface*/
@@ -91,4 +91,3 @@ void write_to_motor(unsigned char msg);
 
 /*mov_sensor.c*/
 float sonar_distance(int sonarPin);
-
