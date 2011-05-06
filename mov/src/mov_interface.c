@@ -23,8 +23,8 @@
 //#include "proto_mov_motor.h"
 #endif
 
-/* global variables*/
 
+/* global variables*/
 #ifdef SIMULATOR
 FILE *file;
 #endif
@@ -35,10 +35,7 @@ int distanceTraveled;
 int yawArrived;
 int heightArrived;
 
-int changingAltitude;
-int changingHeading;
-
-static int start_time;
+int start_time;
 int duration;
 
 struct nav navCommand;
@@ -83,26 +80,34 @@ int mov_run()
 	if(start_time != 0){
 		duration = millis() - start_time;
 	}
-  
-	/*
-	 * If the distanceToTravel is less than or equal to 0, we have probably arrived
-	 * A new command would be read 
-	 */
-	if(distanceToTravel <= 0 && heightArrived == 1 && yawArrived == 1){
-		/*reset control variables*/
-		heightArrived = 0;
-		yawArrived = 0;
-		distanceToTravel = 0;
-		/*read new command*/
-		read_navCommand();
-		distanceToTravel=navCommand.distance;
+  	if(caDir<0){
+		/*
+		 * If the distanceToTravel is less than or equal to 0, we have probably arrived
+		 * A new command would be read 
+		 */
+		if(distanceToTravel <= 0 && heightArrived == 1 && yawArrived == 1){
+			/*reset control variables*/
+			heightArrived = 0;
+			yawArrived = 0;
+			distanceToTravel = 0;
+			/*read new command*/
+			read_navCommand();
+			distanceToTravel=navCommand.distance;
+		}
+
+		/*flight control*/	
+		command_logic();
+
+		/*get the last sensor command*/
+		oldSensorCommand = sensorCommand;	
 	}
-
-	/*flight control*/	
-	command_logic();
-
-	/*get the last sensor command*/
-	oldSensorCommand = sensorCommand;
+	else {
+		/*do ca here */
+	    doCa();
+		command_logic();
+		/*get the last sensor command*/
+		oldSensorCommand = sensorCommand;
+	}
 
 	/*reset the start time*/
 	start_time = millis();
@@ -183,7 +188,8 @@ int mov_run(void){
 		oldSensorCommand = sensorCommand;
 	}
 	else {
-	    doCa();	    /*do ca here */
+		/*do ca here */
+	    doCa();
 		command_logic();
 		/*get the last sensor command*/
 		oldSensorCommand = sensorCommand;

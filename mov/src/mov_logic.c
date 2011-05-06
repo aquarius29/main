@@ -1,13 +1,15 @@
-/*****************************************************************************
- * Product: movement.c
- * Version: 0.1
- * Created: April 4 2011
- * History:
- *          
+/*
+ * file:         mov_interface.c
+ * brief:
+ * author:       
+ * date:         2011-05-03
+ * version:      0.1
+ * history      
  *
- *
- * Movement/CA Group
- *****************************************************************************/
+ * detail:
+ */
+
+
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -27,8 +29,8 @@ extern int distanceTraveled;
 extern int yawArrived;
 extern int heightArrived;
 
-extern int changingAltitude;
-extern int changingHeading;
+int changingAltitude;
+int changingHeading;
 
 extern int duration;
 
