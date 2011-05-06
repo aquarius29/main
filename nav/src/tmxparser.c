@@ -277,6 +277,6 @@ void parseDoc(char *docname, ThreeDWorld *world)
 * @param world The ThreeDWorld that is being filled.
 */
 void fill_map(ThreeDWorld * world) {
-	char *doc = "/home/eric/nav/nav/lib/secondYearSquare.xml";
+	char *doc = "secondYearSquare.xml";
 	parseDoc(doc, world);
 }
