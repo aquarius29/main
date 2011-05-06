@@ -41,6 +41,7 @@ extern struct sensor oldSensorCommand;
 
 /*
  * 
+ *
  */
 void command_logic(void) {
     printOrientation();
@@ -84,6 +85,9 @@ void command_logic(void) {
 	}
 }
 
+/*
+ * Check if we are the point where we are changing altitude
+ */
 void check_changingAltitude(void){
     if(oldSensorCommand.height != sensorCommand.height + BUFF_DISTSNCE)
 		changingAltitude = 1;
@@ -94,38 +98,43 @@ void check_changingAltitude(void){
 
 
 /*
- * Check the drone height
+ * Check the drone height and make the proper command to motors
  */
-void check_height(void)
-{
-    printf("!!!!!!!!!!!!!check height: \n");
+void check_height(void){
+
+    //printf("!!!!!!!!!!!!!check height: \n");
     int height_desire =navCommand.height;
     int height_current =sensorCommand.height;
 
-    if(height_current > height_desire+BUFF_DISTSNCE){	
-		if(changingAltitude == 1) {
+    /*If we need to DECREASE the height */
+    if(height_current > height_desire+BUFF_DISTSNCE){
+	/*If we are a level where our altitude is NOT changing */
+		if(changingAltitude == 0) {
 		    hover();	
 		    decrease_all();
 		}
 
 #ifdef SIMULATOR
-		/* simulated */
+		/* simulated - decrease the sensed height */
 		sensorCommand.height = readSensorTest(sensorCommand.height, 'd');
 #endif
     }
+    /*If we need to INCREASE height */
     else if(height_current<height_desire-BUFF_DISTSNCE){
-		if(changingAltitude == 1) {	
+	/*if we are a level where our altitude is NOT changing */
+		if(changingAltitude == 0) {	
 			hover();
 			increase_all();
 		}
 		
 #ifdef SIMULATOR
-		/* simulated */		
+		/* simulated - increase the sensed height */		
 		sensorCommand.height = readSensorTest(sensorCommand.height, 'i');
 #endif
 
     }
     else{
+	/*Height desired has been reached */
 		hover();
 		heightArrived = 1;
     }
@@ -135,7 +144,7 @@ void check_height(void)
 
 
 /*
- * 
+ * check the drone heading and make the proper command to motors
  */
 void check_heading(void)
 {
@@ -143,12 +152,14 @@ void check_heading(void)
     int heading_desire=navCommand.yaw;
     int heading_current=sensorCommand.yaw;
 
+ 
     int difference = heading_current-heading_desire;
+    /*The difference between the current and desired explains how to turn efficiently */
     if(heading_current>heading_desire+BUFF_YAW && difference>180){
 		turn_right();
 
 #ifdef SIMULATOR
-		/* simulated */
+		/* simulated - increase the yaw sensor*/
 		sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'i');
 #endif
     }
@@ -156,7 +167,7 @@ void check_heading(void)
 		turn_left();
 
 #ifdef SIMULATOR
-		/* simulated */
+		/* simulated - decrease the yaw sensor*/
 		sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'd');
 #endif
     }
@@ -164,7 +175,7 @@ void check_heading(void)
 		turn_left();
 
 #ifdef SIMULATOR
-		/* simulated */
+		/* simulated - decrease the yaw sensor */
 		sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'd');
 #endif
     }
@@ -172,11 +183,11 @@ void check_heading(void)
 		turn_right();
 
 #ifdef SIMULATOR
-		/* simulated */
+		/* simulated - increase the yaw sensor*/
 		sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'i');
 #endif
     }
-    else{
+    else{ /*In any other case, the heading is ok, so hover to return our motors to all the same speed */
 		hover();
 		yawArrived = 1;
     }
@@ -184,15 +195,16 @@ void check_heading(void)
 }
 
 /*
- * 
+ * check the drone pitch and roll  and make the proper command to motors
  */
 void check_pitch_roll(int isHovering) {
-    printf("!!!!!!!!!!!!!check pitch and roll: \n");
+    //printf("!!!!!!!!!!!!!check pitch and roll: \n");
     int pitch_current=sensorCommand.pitch;
     int roll_current=sensorCommand.roll;
     int pitch_desire;
     int roll_desire;
 
+    /* The desired pitch and roll depends on if we want to hover or move forwards*/
     if(isHovering==0){
 		pitch_desire=0;
 		roll_desire=0;
@@ -201,53 +213,54 @@ void check_pitch_roll(int isHovering) {
 		pitch_desire=20;
 		roll_desire=20;
     }
-    //pitch clac
+    /*If we need to decrease the pitch */
     if(pitch_current>pitch_desire+BUFF_PR){
-		increase_left_decrease_right();
+	increase_left_decrease_right();
 
 #ifdef SIMULATOR
-		/* simulated */
+		/* simulated - decrease the sensed pitch */
 		sensorCommand.pitch = readSensorTest(sensorCommand.pitch, 'd');
 #endif
     }
+    /*If we need to increase the pitch */
     else if(pitch_current<pitch_desire-BUFF_PR){
 		increase_right_decrease_left();
 
 #ifdef SIMULATOR
-		/* simulated */
+		/* simulated - increase the sensed pitch*/
 		sensorCommand.pitch = readSensorTest(sensorCommand.pitch, 'i');
 #endif
     }
     else{
-		//great
+	/*If we are at the desired pitch, nothing special happens. */
     }
-
-    //roll calc
+    /*If we need to decrease the roll */
     if(roll_current>roll_desire+BUFF_PR){
 		increase_front_decrease_rear();
 
 #ifdef SIMULATOR
-		/* simulated */
+		/* simulated -decrease the sensed roll*/
 		sensorCommand.roll = readSensorTest(sensorCommand.roll, 'd');
 #endif
     }
+    /*If we need to increase the roll */
     else if(roll_current<roll_desire-BUFF_PR){
 		increase_rear_decrease_front();
 
 #ifdef SIMULATOR
-		/* simulated */
+		/* simulated - increase the sensed roll*/
 		sensorCommand.roll = readSensorTest(sensorCommand.roll, 'i');
 #endif
     }
     else{
-		//great
+	/*If we are at the desired  roll, nothing special happens. */
     }
     printOrientation();
 }
 
 
 /*
- * 
+ *  Update the distance we need to move
  */
 void updateDistanceToTravel(void){
 
@@ -257,10 +270,10 @@ void updateDistanceToTravel(void){
 
 
 /*
- * 
+ * Do a print out of the current sensor readings 
  */
-void printOrientation(void)
-{
+void printOrientation(void){
+
     printf("\n {pitch: %d roll: %d, yaw: %d height: %d distance left: %d}\n", 
 		   sensorCommand.pitch, sensorCommand.roll,sensorCommand.yaw,
 		   sensorCommand.height, distanceToTravel );
