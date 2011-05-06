@@ -10,36 +10,34 @@
  */
 
 
-#include "mov_interface.h"
-#include <stdlib.h>
-#include <stdio.h>
-
-
-
 #ifdef ARDUINO
 #include "WProgram.h"
+#elif defined PC
+#include <stdlib.h>
+#include <stdio.h>
 #endif
 
-
+#include "mov_interface.h"
 
 #ifndef SIMULATOR
 //#include "proto_mov_motor.h"
 #endif
 
 
-
-
 int caDir=-1;
 
+
 #ifdef ARDUINO
-//************************************************************
-// ARDUINO
-// All movement preperation goes here.
-//************************************************************
+/*
+ * ARDUINO
+ * all the movement preparation
+ */
 int mov_init()
 {
+	/*init the serial print*/
 	Serial.begin(9600);
 
+	/*init the movement control varaibles*/
     heightArrived = 1;
     yawArrived = 1;
     distanceToTravel = 0;
@@ -48,38 +46,51 @@ int mov_init()
 	return 0;
 }
 
-
-//************************************************************
-// ARDUINO
-// Movement is started here
-//************************************************************
+/*
+ * ARDUINO 
+ * running the movement code
+ */
 int mov_run()
 {
-	Serial.println("\n*********************LOOOOOOOP***************************\n");
 
+#ifdef DEBUG
+	Serial.println("\n*********************LOOOOOOOP***************************\n");
+#endif
+
+	/*calculate the duration*/
 	if(start_time != 0){
 		duration = millis() - start_time;
 	}
   
-	/*If the distanceToTravel is less than or equal to 0, we have probably arrived*/
+	/*
+	 * If the distanceToTravel is less than or equal to 0, we have probably arrived
+	 * A new command would be read 
+	 */
 	if(distanceToTravel <= 0 && heightArrived == 1 && yawArrived == 1){
+		/*reset control variables*/
 		heightArrived = 0;
 		yawArrived = 0;
 		distanceToTravel = 0;
-
+		/*read new command*/
 		read_navCommand();
 		distanceToTravel=navCommand.distance;
 	}
-	
+
+	/*flight control*/	
 	command_logic();
 
+	/*get the last sensor command*/
 	oldSensorCommand = sensorCommand;
+
+	/*reset the start time*/
 	start_time = millis();
   
 	return 1;
 
 }
 #endif
+
+
 
 
 
@@ -147,6 +158,10 @@ int mov_run(void){
 }
 #endif
 
+
+/*
+ *
+ */
 void doCa(void){
     yawArrived = 0;
     distanceToTravel = 0;
@@ -181,6 +196,9 @@ void write_to_motor(unsigned char msg){
 #endif
 
 }
+
+
+
 void write_to_nav(void) {
 #ifndef SIMULATOR
 	//write to navigation
@@ -199,6 +217,7 @@ struct nav *p = &navCommand;
 	p->yaw=0;
 #endif
 }
+
 
 void read_caCommand(void){
 #ifndef SIMULATOR

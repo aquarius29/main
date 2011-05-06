@@ -67,7 +67,7 @@ int ca_init(void)
 int ca_run(void)
 {
 	/* fake data here*/
-	write_to_move(direction_filter(120,120,50,120, 120,200, 40, 120 ));
+	write_to_move(direction_filter(120,120,50,120, 120,200, 40, 120));
 	return 0;
 }
 
@@ -82,7 +82,7 @@ int ca_run(void)
 int get_dir(void)
 {
 	//	int dir = read_direction();
-	int dir=1;
+	int dir=2;
 	return  dir;
 }
 
