@@ -1,5 +1,5 @@
 /***************************************************************************
-* @file read_rg.c
+* @file stab_rb.c
 * @brief Takes care of the communication with the barometer
 * @author Siyang Suo
 * @date 14/04/2011
@@ -7,10 +7,12 @@
 * 14/04/2011: Initial version // Siyang
 * 18/04/2011: Code now reflects coding standards and add comment //Siyang
 * 27/04/2011: Renamed some functions and integrated code with the rest //Adam
+* 06/05/2011: Fix bug with temperature and get absolute height via pressure  //Siyang
 ****************************************************************************/
 #ifdef ARDUINO
 #include <inttypes.h>
 #include <Wire.h>
+#include <math.h>
 #include "WProgram.h"
 #include "stab.h"
 
@@ -27,6 +29,7 @@ struct baro_data
 {
   int temp;
   long pressure;
+  float height;
 }barom;
 
 /*sensor registers from the BOSCH BMP085 datasheet*/
@@ -34,9 +37,9 @@ int ac1, ac2, ac3, b1, b2, mb, mc, md;
 unsigned int ac4, ac5, ac6; 
 
 /*oversampling for measurement*/
-uint8_t osrs = 3;
+const uint8_t osrs = 3;
 /*delays for oversampling settings 0, 1, 2 and 3*/
-uint8_t pwait_time[4] = { 5, 8, 14, 26 };
+const uint8_t pwait_time[4] = { 5, 8, 14, 26 };
 
 /*function prototype*/
 long read_press();
@@ -45,15 +48,16 @@ void calculate();
 void write_register(unsigned char r, unsigned char v);
 char read_register(unsigned char r);
 
-/*initialize temp and press*/
+/*initialize temp, press and height*/
 int Temp = 0;
 long Press = 0;
+float Height = 0;
 
   
 /*=========functions=========*/
 
 /*
-*initialize baro
+*initialize baro device
 */
 void init_baro_hardware() {
 
@@ -83,7 +87,7 @@ void init_baro_hardware() {
   mc = (buff[18]<<8) | buff[19];
   md = (buff[20]<<8) | buff[21];
 
-  Serial.println("Reading calibrating data: ");
+  Serial.println("Reading calibration data: ");
   Serial.println(ac1);
   Serial.println(ac2);
   Serial.println(ac3);
@@ -105,12 +109,16 @@ struct baro_data read_baro_data() {
   calculate();
   barom.temp = Temp;
   barom.pressure = Press;
+  barom.height = Height;
+  
+  /*Serial.print("Temp: ");
+  Serial.print(Temp, DEC);
+  Serial.print("  Press: ");
+  Serial.print(Press, DEC);
+  Serial.print("  Height: ");
+  Serial.println(Height);
+  Serial.println("=================");*/
   return barom;
-  //Serial.print("Temp: ");
-  //Serial.print(Temp, DEC);
-  //Serial.print("\tPress: ");
-  //Serial.println(Press, DEC);
-  //Serial.println("=================");
 }
 /*
 *write register
@@ -171,27 +179,43 @@ long read_press() {
   return (((long)P_msb<<16) | ((long)P_lsb<<8) | ((long)P_xlsb))>>(8-osrs);
 }
 /*
-*calculate the both true values of temp and press
+*calculate the both true values of temp and pressure,
+*and get absolute height via pressure
 */
 void calculate() {
   long x1, x2, x3, b3, b5, b6, p;
   unsigned long b4, b7;
 
+  /*Standard atmospher in pascal*/
+  const float p0 = 101325; 
+
   int UT = read_temp();
   long UP = read_press();
   
   /*calculate the true temperature value*/
-  x1 = ((long)UT - ac6) * ac5 >> 15;
+  x1 = ((unsigned long)UT - ac6) * ac5 >> 15;
   x2 = ((long)mc << 11) / (x1 + md);
   b5 = x1 + x2;
-  Temp = (b5 + 8) >> 4;
-
+  Temp = (b5 + 8) >> 4;  /*unit in 0.1 ℃*/
   /*calculate the true pressure value*/
   b6 = b5 - 4000;
   x1 = (b2 * (b6 * b6 >> 12)) >> 11;
   x2 = ac2 * b6 >> 11;
   x3 = x1 + x2;
-  b3 = (((int32_t) ac1 * 4 + x3) << osrs + 2) >> 2;
+
+  if (osrs == 3) {
+	b3 = ((int32_t) ac1 * 4 + x3 + 2) << 1;
+  }
+  if (osrs == 2) {
+	b3 = ((int32_t) ac1 * 4 + x3 + 2);
+  }
+  if (osrs == 1) {
+	b3 = ((int32_t) ac1 * 4 + x3 + 2) >> 1;
+  }
+  if (osrs == 0) {
+	b3 = ((int32_t) ac1 * 4 + x3 + 2) >> 2;
+  }
+
   x1 = ac3 * b6 >> 13;
   x2 = (b1 * (b6 *b6 >> 12)) >> 16;
   x3 = ((x1 + x2) + 2) >> 2;
@@ -206,9 +230,11 @@ void calculate() {
   x1 = (p >> 8) * (p >> 8);
   x1 = (x1 * 3038) >> 16;
   x2 = (-7357 * p) >> 16;
-  Press = p + ((x1 + x2 + 3791) >> 4);
+  Press = p + ((x1 + x2 + 3791) >> 4);  /*unit in Pa*/
+
+  /*Calculate the absolute height by read pressure */
+  Height = -(44330 * (1-pow(Press/p0, 1.0/5.255)));  /*unit in meter*/
 
 }
-#endif
 
-    
+#endif
