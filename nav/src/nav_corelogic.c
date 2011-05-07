@@ -233,24 +233,25 @@ void nav_runIndoorSystem(position startTile, position destinationTile)
 			pthread_create(&protocolReadThread, NULL, readProtocol, (void*) message);
 		}
 		
-		if (pthread_kill(indoorNavigationThread, 0) == 0)
+		if (pthread_kill(indoorNavigationThread, 0) != 0)
 		{
-			free(data);
+			
 			printf("Indoor System quite unexpectedly\nRestarting...\n");
 			
-			struct thread_data *newData = malloc(sizeof(struct thread_data));
+			data = malloc(sizeof(struct thread_data));
 			// newData->
 			// 		newData->
 			// 		newData->
 			
 			indoorThreadResult = 
-				pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void *) newData);
+				pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void *) data);
 		}
 	}
    
    //initPath(&startTile, &destinationTile);
 	pthread_join(indoorNavigationThread, NULL);
 	printf("indoor navigation system shut down\n");
+	free(data); /* clean up */
 }
 
 /* Function to be run in a pthread for indoor navigation */
