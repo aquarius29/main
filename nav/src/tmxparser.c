@@ -264,10 +264,8 @@ void parseDoc(char *docname, ThreeDWorld *world)
 		xmlFreeDoc(doc);
 		return;
 	}
-	
 	getMapDetails(doc, cur, world);
 	getTileDetails(doc, cur, world);
-
 	xmlFreeDoc(doc);
 	return;
 }
@@ -278,7 +276,7 @@ void parseDoc(char *docname, ThreeDWorld *world)
 *
 * @param world The ThreeDWorld that is being filled.
 */
-void fill_map(ThreeDWorld * world) {
+void fill_map(ThreeDWorld *world) {
 	char *doc = "secondYearSquare.xml";
 	parseDoc(doc, world);
 }

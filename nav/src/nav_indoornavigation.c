@@ -25,11 +25,11 @@ static progressiveNode *first;
 static progressiveNode *current;
 
 static void insertCurrentDestinationNode(void) {
-    count++;
     current->next = calloc(1, sizeof(progressiveNode));
     current->next->p = route.list[count];
     current->next->prev = current;
     current->next->next = 0;
+    count++;
 }
 static void insertProgressiveNode(void) {
     if (first == 0) {
@@ -56,6 +56,7 @@ static void freeProgressiveList(void) {
     }
 }
 static void setDirection(void) {
+	printf("%d     %d\n", current->next->p.lon, current->next->p.lat);
     current->next->p.angle = atan2((current->next->p.lat -
     current->prev->p.lat), (current->next->p.lon - current->prev->p.lon));
 }
@@ -84,17 +85,9 @@ static void updatePosition(void) {
     current->p.lat = current->prev->p.lat + changeY;
 }
 static void sendCommand(void) {
-    double angle = 0;
-    //N 90 E 180 S -90 W -180
-    if (current->next->p.angle > 0) {
-        angle = -(current->next->p.angle / (M_PI / 180));
-        printf("Move at angle %.5f\n", angle);
-    }
-    else {
-        angle = current->next->p.angle / (M_PI/180) + 180;
-        printf("Move at angle %.5f\n", current->next->p.angle / (M_PI / 180) +
-        180);
-    }
+	int32_t angle = (current->next->p.angle / (M_PI/180)) + 90;
+    //N 0 E 90 S 180 W 270
+    printf("Move at angle %d\n", angle);
     /*sendautomovementcommand(1, SAFE_HEIGHT, current->next->p.distance,
     angle);*/
 }
@@ -126,7 +119,7 @@ void initPath(position *start, position *end) {
     int32_t counterUp = 0;
     running = 1;
     count = 0;
-    // sendautomovementcommand(2, SAFE_HEIGHT, 0, 0);
+    // sendautomovementcommand(0, SAFE_HEIGHT, 0, 0);
     if (ALGORITHM == 0) {
         printf("Dijkstra\n");
         route = indoorDijkstra(start, end);
@@ -144,7 +137,6 @@ void initPath(position *start, position *end) {
     insertProgressiveNode();
     sendExpectedPath(&route);
     navigatePath();
-
 }
 static void resetTimer(void) {
     gettimeofday(&timer, NULL);
@@ -237,8 +229,8 @@ static void navigatePath(void){
         navigatePath();
     }
 }
-
-/*int main(){
+/*
+int main(){
     position a, b;
     a.x = 1;
     a.y = 1;
