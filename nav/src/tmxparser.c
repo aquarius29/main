@@ -279,4 +279,5 @@ void parseDoc(char *docname, ThreeDWorld *world)
 void fill_map(ThreeDWorld * world) {
 	char *doc = "/Users/E0/Dropbox/Code/Embedded/nav/nav/lib/secondYearSquare.xml";
 	parseDoc(doc, world);
+	xmlCleanupParser();
 }

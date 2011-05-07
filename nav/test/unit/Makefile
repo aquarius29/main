@@ -16,7 +16,7 @@ unit: testsuite
 valg: EXTRAGCCFLAGS+= -g
 valg: testsuite
 	@echo Running tests under valgrind...
-	valgrind --leak-check=full ./testsuite
+	valgrind --leak-check=full --show-reachable=yes ./testsuite
 
 testsuite.o: $(TESTSRCS)
 	gcc -I/usr/include/libxml2 -lxml2 -c unitmain.c -o testsuite.o $(EXTRAGCCFLAGS)
