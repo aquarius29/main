@@ -1,6 +1,6 @@
 /*!
-* @author Jarryd Hall
-* @brief Header file for the tilemap representation
+* @author 	Jarryd Hall.
+* @brief 	Header file for the tilemap representation.
 */
 
 #ifndef TILEMAP_H
@@ -9,7 +9,6 @@
 typedef struct
 {
     /* Height for the room is 3m */
-    
 	short mapWidth; /* number of tiles | note: not number of pixels */
 	short mapHeight; /* number of tiles | note: not number of pixels */
 	short tileWidth; /* size in pixels */

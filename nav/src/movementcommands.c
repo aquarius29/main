@@ -1,9 +1,9 @@
 /*!
-* @author Jarryd Hall
-* @brief Drone Movement Commands
-* @details A module for creating and sending auto movement commands
-*          This is used by the navigation systems to generate movement commands
-*		   from their path calculations
+* @author 	Jarryd Hall.
+* @brief 	Drone Movement Commands.
+* @details  A module for creating and sending auto movement commands.
+*           This is used by the navigation systems to generate movement commands
+*		    from their path calculations.
 */
 
 #include <stdlib.h>

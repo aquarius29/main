@@ -5,6 +5,7 @@
 *   	       	and will be used to write data using the protocol for e.g. Movement and UI data.
 *          
 *       	   	Core Logic will create a watchdog thread which in turn multithreads the following:
+*				Protocol Reader Thread to get data from the protocol.
 *          		GPS Setup thread which connects to GPS device and reads data from the device.
 *          		GPS Navigation thread which calculates gps flight path.
 *
@@ -40,6 +41,13 @@ int gpsRunning = 0;
 int indoorSystemRunning = 0;
 
 /* GPS System Functions start here */
+
+//!
+/*!
+*
+*
+*
+*/ 
 void nav_runGpsSystem(GPSLocation *dest)
 {
 	printf("Initiating GPS System\n");
@@ -48,7 +56,7 @@ void nav_runGpsSystem(GPSLocation *dest)
 	ON_OFF = 1;
 	
 	GPSLocation *destination = malloc(sizeof(GPSLocation));
-	destination = dest;
+	*destination = *dest;
 	
 	printf("destination lat : %lf", destination->latitude);
     
@@ -327,11 +335,13 @@ void nav_createIndoorCollisionObject(int tileNumber, ThreeDWorld *world)
 	}
 }
 
-//!
-/*!
+//! Threaded function to read using protocol.
+/*! This function is used to read data using the protocol
+*	and pass on the data to the relevant functions for 
+*	processing.
 *
-*
-*
+* @param ptr A void pointer that takes any data pointer.
+* 
 */
 void *readProtocol(void *ptr)
 {
@@ -419,5 +429,11 @@ int main(int argc, char **argv)
 	Destination->longitude = 11.9340;
 	
 	nav_runGpsSystem(Destination);
+	
+	/*
+	position start;
+	position end;
+	nav_runIndoorSystem(start, end);
+	*/
 	return 0;
 }
