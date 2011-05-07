@@ -25,11 +25,11 @@ static progressiveNode *first;
 static progressiveNode *current;
 
 static void insertCurrentDestinationNode(void) {
-    count++;
     current->next = calloc(1, sizeof(progressiveNode));
     current->next->p = route.list[count];
     current->next->prev = current;
     current->next->next = 0;
+    count++;
 }
 static void insertProgressiveNode(void) {
     if (first == 0) {
@@ -56,6 +56,7 @@ static void freeProgressiveList(void) {
     }
 }
 static void setDirection(void) {
+	printf("%d     %d\n", current->next->p.lon, current->next->p.lat);
     current->next->p.angle = atan2((current->next->p.lat -
     current->prev->p.lat), (current->next->p.lon - current->prev->p.lon));
 }
@@ -136,7 +137,6 @@ void initPath(position *start, position *end) {
     insertProgressiveNode();
     sendExpectedPath(&route);
     navigatePath();
-
 }
 static void resetTimer(void) {
     gettimeofday(&timer, NULL);
@@ -229,8 +229,8 @@ static void navigatePath(void){
         navigatePath();
     }
 }
-
-/*int main(){
+/*
+int main(){
     position a, b;
     a.x = 1;
     a.y = 1;
