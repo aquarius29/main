@@ -1,6 +1,6 @@
 /*!
-* @author Jarryd Hall
-* @brief Tilemap representation which holds the map of the indoor flight area.
+* @author 	Jarryd Hall.
+* @brief	Tilemap representation which holds the map of the indoor flight area.
 */
 
 #include <stdlib.h>
@@ -30,7 +30,6 @@ CGPoint* tileForCoordinates (CGPoint position, short width, short height)
 *
 * @param world The ThreeDWorld to search.
 * @param index the index of the tile.
-*
 */
 void setIndexValue(ThreeDWorld *world, int index, int value)
 {
@@ -57,7 +56,9 @@ int checkTileValue(ThreeDWorld *world, int index)
 }
 
 /*
-// check diagram on git: filename = tileImage2.png
+/* The actual representation of the indoor square */ 
+/* check diagram on git: filename = tileImage2.png */
+/*
 int representation[12][10] = 
 {
 	{1, 1, 1, 1, 1, 1, 1, 1, 0, 0},

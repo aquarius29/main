@@ -5,6 +5,7 @@
 *   	       	and will be used to write data using the protocol for e.g. Movement and UI data.
 *          
 *       	   	Core Logic will create a watchdog thread which in turn multithreads the following:
+*				Protocol Reader Thread to get data from the protocol.
 *          		GPS Setup thread which connects to GPS device and reads data from the device.
 *          		GPS Navigation thread which calculates gps flight path.
 *
@@ -17,7 +18,6 @@
 #include <pthread.h>
 #include <signal.h>
 #include "nav_corelogic.h"
-#include "tmxparser.c"
 #include "gps_nav.h"
 #include "tilemap.h"
 #include "nav_indoorstructure.h"
@@ -40,6 +40,13 @@ int gpsRunning = 0;
 int indoorSystemRunning = 0;
 
 /* GPS System Functions start here */
+
+//!
+/*!
+*
+*
+*
+*/ 
 void nav_runGpsSystem(GPSLocation *dest)
 {
 	printf("Initiating GPS System\n");
@@ -48,7 +55,7 @@ void nav_runGpsSystem(GPSLocation *dest)
 	ON_OFF = 1;
 	
 	GPSLocation *destination = malloc(sizeof(GPSLocation));
-	destination = dest;
+	*destination = *dest;
 	
 	printf("destination lat : %lf", destination->latitude);
     
@@ -226,24 +233,25 @@ void nav_runIndoorSystem(position startTile, position destinationTile)
 			pthread_create(&protocolReadThread, NULL, readProtocol, (void*) message);
 		}
 		
-		if (pthread_kill(indoorNavigationThread, 0) == 0)
+		if (pthread_kill(indoorNavigationThread, 0) != 0)
 		{
-			free(data);
+			
 			printf("Indoor System quite unexpectedly\nRestarting...\n");
 			
-			struct thread_data *newData = malloc(sizeof(struct thread_data));
+			data = malloc(sizeof(struct thread_data));
 			// newData->
 			// 		newData->
 			// 		newData->
 			
 			indoorThreadResult = 
-				pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void *) newData);
+				pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void *) data);
 		}
 	}
    
    //initPath(&startTile, &destinationTile);
 	pthread_join(indoorNavigationThread, NULL);
 	printf("indoor navigation system shut down\n");
+	free(data); /* clean up */
 }
 
 /* Function to be run in a pthread for indoor navigation */
@@ -251,7 +259,9 @@ void *startIndoorNavigationSystem(void *ptr)
 {
 	printf("Started the indoor navigation tread\n");
 	struct thread_data *data = (struct thread_data*) ptr;
-	
+
+	initPath(&data->starttile, &data->destinationtile);
+
 	/* Call the indoor nav system here and pass in the data ptr */
 	
 	
@@ -327,11 +337,13 @@ void nav_createIndoorCollisionObject(int tileNumber, ThreeDWorld *world)
 	}
 }
 
-//!
-/*!
+//! Threaded function to read using protocol.
+/*! This function is used to read data using the protocol
+*	and pass on the data to the relevant functions for 
+*	processing.
 *
-*
-*
+* @param ptr A void pointer that takes any data pointer.
+* 
 */
 void *readProtocol(void *ptr)
 {
@@ -412,12 +424,20 @@ void nav_sendIndoorPathToGui(pixel **path)
 }
 /* End interface:out functions for connectivity group */
 
-int main(int argc, char **argv) 
-{
-	GPSLocation *Destination = malloc(sizeof(GPSLocation));
-	Destination->latitude = 57.7053;
-	Destination->longitude = 11.9340;
-	
-	nav_runGpsSystem(Destination);
-	return 0;
+int main(int argc, char **argv) {
+ /*
+ GPSLocation *Destination = malloc(sizeof(GPSLocation));
+ Destination->latitude = 57.7053;
+ Destination->longitude = 11.9340;
+
+nav_runGpsSystem(Destination);
+*/
+    position a, b;
+    a.x = 1;
+    a.y = 1;
+    b.x = 9;
+    b.y = 5;
+    nav_runIndoorSystem(a, b);
+ return 0;
+
 }

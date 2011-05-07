@@ -17,32 +17,32 @@
 #define TILE_CENTER (CENTIMETRES_PER_TILE/2)
 
 typedef struct {
-	int32_t lat;
-	int32_t lon;
+    int32_t lat;
+    int32_t lon;
     double angle;
     double distance;
 } pixel;
 typedef struct progressiveNode {
     pixel p;
-	struct progressiveNode *prev;
-	struct progressiveNode *next;
+    struct progressiveNode *prev;
+    struct progressiveNode *next;
 } progressiveNode;
 typedef struct {
-	int32_t y;
-	int32_t x;
+    int32_t y;
+    int32_t x;
 }position;
 typedef struct node {
-	position pos;
-	int32_t totalCost, heuristic;
-	position previous;
+    position pos;
+    int32_t totalCost, heuristic;
+    position previous;
 }node;
 typedef struct {
-	node * list;
-	int32_t count;
+    node * list;
+    int32_t count;
 }nodeList;
 typedef struct {
-	pixel * list;
-	int32_t num;
+    pixel * list;
+    int32_t num;
 }positionList;
 
 positionList indoorDijkstra(const position *start, const position *end);

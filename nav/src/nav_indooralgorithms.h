@@ -1,5 +1,5 @@
 /*
- * indoor_algorithms.h
+ * nav_indooralgorithms.h
  *
  *  Created on: Apr 10, 2011
  *      Author: Jon Fridehn
@@ -10,7 +10,7 @@
 
 void AddNodeToOpen(node *current, nodeList *open);
 void RemoveNodeFromOpen(node *current, nodeList *open);
-void FreeAllocatedList(nodeList *list);
+void FreeAllocatedList(nodeList **list);
 int32_t ListMemoryAllocation(nodeList **open, nodeList **closed);
 positionList CreateFinalList(nodeList *closed, const position *goal,
 const position *drone);

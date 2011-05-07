@@ -1,12 +1,16 @@
 /*!
-* @author Jarryd Hall
-* @brief Header file for access to movementcommands functions
+* @author 	Jarryd Hall.
+* @brief	Header file for access to movementcommands functions.
 */
 
 #ifndef MOVEMENTCOMMANDS_H
 #define MOVEMENTCOMMANDS_H
 
-/* MovementCommand struct */
+//! MovementCommand struct 
+/*!
+* 
+*
+*/
 typedef struct 
  {
 	char type;
