@@ -84,17 +84,9 @@ static void updatePosition(void) {
     current->p.lat = current->prev->p.lat + changeY;
 }
 static void sendCommand(void) {
-    double angle = 0;
-    //N 90 E 180 S -90 W -180
-    if (current->next->p.angle > 0) {
-        angle = -(current->next->p.angle / (M_PI / 180));
-        printf("Move at angle %.5f\n", angle);
-    }
-    else {
-        angle = current->next->p.angle / (M_PI/180) + 180;
-        printf("Move at angle %.5f\n", current->next->p.angle / (M_PI / 180) +
-        180);
-    }
+	int32_t angle = (current->next->p.angle / (M_PI/180)) + 90;
+    //N 0 E 90 S 180 W 270
+    printf("Move at angle %d\n", angle);
     /*sendautomovementcommand(1, SAFE_HEIGHT, current->next->p.distance,
     angle);*/
 }
@@ -126,7 +118,7 @@ void initPath(position *start, position *end) {
     int32_t counterUp = 0;
     running = 1;
     count = 0;
-    // sendautomovementcommand(2, SAFE_HEIGHT, 0, 0);
+    // sendautomovementcommand(0, SAFE_HEIGHT, 0, 0);
     if (ALGORITHM == 0) {
         printf("Dijkstra\n");
         route = indoorDijkstra(start, end);
