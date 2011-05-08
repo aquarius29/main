@@ -15,6 +15,8 @@
 #include "../src/proto_move.c"
 #include "CUnit/Basic.h"
 #include "../src/proto_ca.c"
+#include "../src/proto_cam_conn.c"
+#include "../src/proto_mov_motor.c"
 
 /* Set up and clean up test suite */
 
@@ -37,6 +39,26 @@ void testCase2(void) {
  	int raw;
   	raw = proto_read_raw();
   	CU_ASSERT(raw== -1);
+
+}
+
+void testCase3(void) {
+ 	int camera_message ;
+  	camera_message = proto_read_camera();
+  	CU_ASSERT(camera_message== 0);
+
+}
+
+void testCase4(void) {
+ 	int connect_message ;
+  	connect_message = proto_read_connect();
+  	CU_ASSERT(connect_message == 0);
+
+}
+void testCase5(void) {
+ 	char motor_message;
+  	motor_message = proto_read_motor();
+  	CU_ASSERT(motor_message =0xf1);
 
 }
 
@@ -64,6 +86,24 @@ int main(void) {
     return CU_get_error();
   }
   if(NULL == CU_add_test(pSuite1, "Test case 2", testCase2)
+     // || NULL == CU_add_test(pSuite1, ...[next test case]...)
+     ) {
+    CU_cleanup_registry();
+    return CU_get_error();
+  }
+ if(NULL == CU_add_test(pSuite1, "Test case 3", testCase3)
+     // || NULL == CU_add_test(pSuite1, ...[next test case]...)
+     ) {
+    CU_cleanup_registry();
+    return CU_get_error();
+  }
+ if(NULL == CU_add_test(pSuite1, "Test case 4", testCase4)
+     // || NULL == CU_add_test(pSuite1, ...[next test case]...)
+     ) {
+    CU_cleanup_registry();
+    return CU_get_error();
+  }
+ if(NULL == CU_add_test(pSuite1, "Test case 5", testCase5)
      // || NULL == CU_add_test(pSuite1, ...[next test case]...)
      ) {
     CU_cleanup_registry();
