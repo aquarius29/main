@@ -12,6 +12,7 @@
  *                Updated code to reflect coding standards
  *    26/04/2011: Magn and accel is now read from here / integrated //Adam
  *    27/04/2011: Barometer code included //Adam
+ *    08/05/2011: Removed some stuff and while loop //Adam
  **************************************************************************/
 #ifdef PC 
 #include <stdio.h>
@@ -47,6 +48,7 @@ struct baro_data
 {
   int temp;
   long pressure;
+  float height;
 };
 
 struct vector gyro_vect;
@@ -81,6 +83,9 @@ int16_t stab_init(void)
 
 /*
  *  Runs the code when the scheduler calls it
+ *  The PC version uses a simulator that only includes 
+ *  the gyroscope and accelerometer so the output
+ *  is less accurate than the actual IMU hardware
  */
 int16_t stab_run(void)
 {
@@ -88,36 +93,34 @@ int16_t stab_run(void)
   gyro_vect = init_sim();
   accel_vect = init_sim();
   
-  //filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x); // filtered pitch angle
-  //filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y); // filtered roll angle
-  //filter_est[2] = comp_filter(acc_vector[2], gyro_vect[2], filter_est[2]); // filtered yaw angle
-  //filter_vect.z = gyro_vect.z;
+  filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x); // filtered pitch angle
+  filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y); // filtered roll angle
+  filter_est[2] = comp_filter(acc_vector[2], gyro_vect[2], filter_est[2]); // filtered yaw angle
+  filter_vect.z = gyro_vect.z;
   
-  //printf("ESTIMATED X %f\n", filter_vect.x);
-  //printf("ESTMIATED Y %f\n", filter_vect.y);
-  //printf("ESTMIATED Z %f\n", filter_vect.z);
+  printf("ESTIMATED X %f\n", filter_vect.x);
+  printf("ESTMIATED Y %f\n", filter_vect.y);
+  printf("ESTMIATED Z %f\n", filter_vect.z);
   
 #elif defined ARDUINO
-  while(1)
-    {
-      //gyro_vect =  read_gyro_data();
-      //accel_vect = readAccel();
-      //convert_accel_raw_to_deg();
+      gyro_vect =  read_gyro_data();
+      accel_vect = readAccel();
+      convert_accel_raw_to_deg();
       magn_vect = read_magn_data();
       heading = (atan2(magn_vect.y , magn_vect.x)+M_PI)*180/M_PI;
-      //baro = read_baro_data();
+      baro = read_baro_data();
       
-      /* Serial.println("Gyro data now:"); */
-      /* Serial.println(gyro_vect.x); */
-      /* Serial.println(gyro_vect.y); */
-      /* Serial.println(gyro_vect.z); */
-      /* Serial.println(); */
+      Serial.println("Gyro data now:");
+      Serial.println(gyro_vect.x);
+      Serial.println(gyro_vect.y);
+      Serial.println(gyro_vect.z);
+      Serial.println();
       
-      /* Serial.println("Accel data now:"); */
-      /* Serial.println(accel_vect.x); */
-      /* Serial.println(accel_vect.y); */
-      /* Serial.println(accel_vect.z); */
-      /* Serial.println(); */
+      Serial.println("Accel data now:");
+      Serial.println(accel_vect.x);
+      Serial.println(accel_vect.y);
+      Serial.println(accel_vect.z);
+      Serial.println();
       
       float d = data(magn_vect.x, magn_vect.y, magn_vect.z);
       Serial.println("Magnetometer data now:");
@@ -129,23 +132,26 @@ int16_t stab_run(void)
       Serial.println(d);
       Serial.println();
 
-      /* Serial.println("Barometer data now:"); */
-      /* Serial.println(baro.temp); */
-      /* Serial.println(baro.pressure); */
-      /* Serial.println(); */
+      Serial.println("Barometer data now:");
+      Serial.println(baro.temp);
+      Serial.println(baro.pressure);
+      Serial.println();
 
-      /* filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x); // filtered pitch angle */
-      /* filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y); // filtered roll angle */
-      /* filter_vect.z = comp_filter(heading, gyro_vect.z, filter_vect.z); // filtered yaw angle */
+      filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x); // filtered pitch angle
+      filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y); // filtered roll angle
+      filter_vect.z = comp_filter(heading, gyro_vect.z, filter_vect.z); // filtered yaw angle
       
-      /* Serial.println("Filtered data now:"); */
-      /* Serial.println(filter_vect.x); */
-      /* Serial.println(filter_vect.y); */
-      /* Serial.println(filter_vect.z); */
-      /* Serial.println(); */
+      //proto_stabWriteAttitude(filter_vect.y, filter_vect.x, filter_vect.z);
+      //proto_stabWriteAcc(accel_vect.x, accel_vect.y, accel_vect.z);
+      //proto_stabWriteHeading((int)heading);
+      //proto_stabWriteHeight(baro.height);
+      
+      Serial.println("Filtered data now:");
+      Serial.println(filter_vect.x);
+      Serial.println(filter_vect.y);
+      Serial.println(filter_vect.z);
+      Serial.println();
 
-      delay(500);
-    }
 #endif
   
   return 0;

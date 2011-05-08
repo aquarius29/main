@@ -1,14 +1,15 @@
 /***************************************************************************
-* @file stab_rb.c
-* @brief Takes care of the communication with the barometer
-* @author Siyang Suo
-* @date 14/04/2011
-* @history
-* 14/04/2011: Initial version // Siyang
-* 18/04/2011: Code now reflects coding standards and add comment //Siyang
-* 27/04/2011: Renamed some functions and integrated code with the rest //Adam
-* 06/05/2011: Fix bug with temperature and get absolute height via pressure  //Siyang
-****************************************************************************/
+ * @file stab_rb.c
+ * @brief Takes care of the communication with the barometer
+ * @author Siyang Suo
+ * @date 14/04/2011
+ * @history
+ * 14/04/2011: Initial version // Siyang
+ * 18/04/2011: Code now reflects coding standards and add comment //Siyang
+ * 27/04/2011: Renamed some functions and integrated code with the rest //Adam
+ * 06/05/2011: Fix bug with temperature and get absolute height via pressure  //Siyang
+ * 07/05/2011: Formatting code... //Adam
+ ****************************************************************************/
 #ifdef ARDUINO
 #include <inttypes.h>
 #include <Wire.h>
@@ -53,28 +54,27 @@ int Temp = 0;
 long Press = 0;
 float Height = 0;
 
-  
+
 /*=========functions=========*/
-
 /*
-*initialize baro device
-*/
+ *initialize baro device
+ */
 void init_baro_hardware() {
-
+  
   byte buff[TO_READ];
   int i=0;
   
   Wire.beginTransmission(BARO_ADDRESS);
   Wire.send(0xAA);
   Wire.endTransmission();
-
+  
   Wire.beginTransmission(BARO_ADDRESS);
   Wire.requestFrom(BARO_ADDRESS, TO_READ);
   while(Wire.available()) {
-      buff[i] = Wire.receive();
-      i++;
+    buff[i] = Wire.receive();
+    i++;
   }
-
+  
   ac1 = (buff[0]<<8) | buff[1];
   ac2 = (buff[2]<<8) | buff[3];
   ac3 = (buff[4]<<8) | buff[5];
@@ -86,24 +86,11 @@ void init_baro_hardware() {
   mb = (buff[16]<<8) | buff[17];
   mc = (buff[18]<<8) | buff[19];
   md = (buff[20]<<8) | buff[21];
-
-  Serial.println("Reading calibration data: ");
-  Serial.println(ac1);
-  Serial.println(ac2);
-  Serial.println(ac3);
-  Serial.println(ac4);
-  Serial.println(ac5);
-  Serial.println(ac6);
-  Serial.println(b1);
-  Serial.println(b2);
-  Serial.println(mb);
-  Serial.println(mc);
-  Serial.println(md);
 }
 
 /*
-*
-*/
+ *
+ */
 struct baro_data read_baro_data() {
   
   calculate();
@@ -111,32 +98,27 @@ struct baro_data read_baro_data() {
   barom.pressure = Press;
   barom.height = Height;
   
-  /*Serial.print("Temp: ");
-  Serial.print(Temp, DEC);
-  Serial.print("  Press: ");
-  Serial.print(Press, DEC);
-  Serial.print("  Height: ");
-  Serial.println(Height);
-  Serial.println("=================");*/
   return barom;
 }
+
 /*
-*write register
-*/
+ *write register
+ */
 void write_register(unsigned char r, unsigned char v) {
   Wire.beginTransmission(BARO_ADDRESS);
   Wire.send(r);
   Wire.send(v);
   Wire.endTransmission();
 }
+
 /*
-*read uncompensated temperature value
-*/ 
+ *read uncompensated temperature value
+ */ 
 unsigned int read_temp() {
   
   write_register(0xF4,0x2E);
   delay(5);
-
+  
   unsigned char T_msb, T_lsb;
   Wire.beginTransmission(BARO_ADDRESS);
   /*register to read*/
@@ -151,22 +133,23 @@ unsigned int read_temp() {
   while(!Wire.available());
   T_lsb = Wire.receive();
   return (((int)T_msb<<8) | ((int)T_lsb));
-
+  
 }
+
 /*
-*read uncompensated pressure value
-*/
+ *read uncompensated pressure value
+ */
 long read_press() {
   write_register(0xF4,0x34+(osrs<<6));
   delay(pwait_time[osrs]);
   
   unsigned char P_msb, P_lsb, P_xlsb;
-
+  
   Wire.beginTransmission(BARO_ADDRESS);
   /*register to read*/
   Wire.send(0xF6);
   Wire.endTransmission();
-
+  
   /*request 3 bytes*/
   Wire.requestFrom(BARO_ADDRESS, 3);
   /*wait until data available*/
@@ -178,17 +161,18 @@ long read_press() {
   P_xlsb = Wire.receive();
   return (((long)P_msb<<16) | ((long)P_lsb<<8) | ((long)P_xlsb))>>(8-osrs);
 }
+
 /*
-*calculate the both true values of temp and pressure,
-*and get absolute height via pressure
-*/
+ *calculate the both true values of temp and pressure,
+ *and get absolute height via pressure
+ */
 void calculate() {
   long x1, x2, x3, b3, b5, b6, p;
   unsigned long b4, b7;
-
+  
   /*Standard atmospher in pascal*/
   const float p0 = 101325; 
-
+  
   int UT = read_temp();
   long UP = read_press();
   
@@ -202,20 +186,20 @@ void calculate() {
   x1 = (b2 * (b6 * b6 >> 12)) >> 11;
   x2 = ac2 * b6 >> 11;
   x3 = x1 + x2;
-
+  
   if (osrs == 3) {
-	b3 = ((int32_t) ac1 * 4 + x3 + 2) << 1;
+    b3 = ((int32_t) ac1 * 4 + x3 + 2) << 1;
   }
   if (osrs == 2) {
-	b3 = ((int32_t) ac1 * 4 + x3 + 2);
+    b3 = ((int32_t) ac1 * 4 + x3 + 2);
   }
   if (osrs == 1) {
-	b3 = ((int32_t) ac1 * 4 + x3 + 2) >> 1;
+    b3 = ((int32_t) ac1 * 4 + x3 + 2) >> 1;
   }
   if (osrs == 0) {
-	b3 = ((int32_t) ac1 * 4 + x3 + 2) >> 2;
+    b3 = ((int32_t) ac1 * 4 + x3 + 2) >> 2;
   }
-
+  
   x1 = ac3 * b6 >> 13;
   x2 = (b1 * (b6 *b6 >> 12)) >> 16;
   x3 = ((x1 + x2) + 2) >> 2;
@@ -231,10 +215,9 @@ void calculate() {
   x1 = (x1 * 3038) >> 16;
   x2 = (-7357 * p) >> 16;
   Press = p + ((x1 + x2 + 3791) >> 4);  /*unit in Pa*/
-
+  
   /*Calculate the absolute height by read pressure */
   Height = -(44330 * (1-pow(Press/p0, 1.0/5.255)));  /*unit in meter*/
-
+  
 }
-
 #endif
