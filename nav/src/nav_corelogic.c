@@ -224,9 +224,10 @@ void nav_runIndoorSystem(position startTile, position destinationTile)
 	indoorThreadResult = 
 		pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void *) data);
 	
-	indoorSystemRunning = 1;
+	/* duplicate the mutex variable for lock/unlock in while loop */
+	int duplicateRunning = 1; 
 	
-	while(indoorSystemRunning == 1)
+	while(duplicateRunning == 1)
 	{
 		if(pthread_kill(protocolReadThread, 0) != 0)
 		{
@@ -249,9 +250,15 @@ void nav_runIndoorSystem(position startTile, position destinationTile)
 			indoorThreadResult = 
 				pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void *) data);
 		}
+		
+		int result;
+		result = pthread_mutex_lock(&indoorNavigationRunningMutex);
+		duplicateRunning = indoorSystemRunning;
+		result = pthread_mutex_unlock(&indoorNavigationRunningMutex);
 	}
    
    //initPath(&startTile, &destinationTile);
+//	pthread_join(protocolReadThread, NULL);
 	pthread_join(indoorNavigationThread, NULL);
 	printf("indoor navigation system shut down\n");
 	free(data); /* clean up */
