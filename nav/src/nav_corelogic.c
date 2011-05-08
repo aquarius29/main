@@ -37,6 +37,9 @@ int waitingForGpsSetupThread = 1;
 static pthread_mutex_t gpsRunningMutex = PTHREAD_MUTEX_INITIALIZER;
 
 int gpsRunning = 0;
+
+static pthread_mutex_t indoorNavigationRunningMutex = PTHREAD_MUTEX_INITIALIZER;
+
 int indoorSystemRunning = 0;
 
 /* GPS System Functions start here */
@@ -264,6 +267,10 @@ void *startIndoorNavigationSystem(void *ptr)
 
 	/* Call the indoor nav system here and pass in the data ptr */
 	
+	int result;
+	result = pthread_mutex_lock(&indoorNavigationRunningMutex);
+	indoorSystemRunning = 0;
+	result = pthread_mutex_unlock(&indoorNavigationRunningMutex);
 	
 }
 
