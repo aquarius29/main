@@ -279,4 +279,5 @@ void parseDoc(char *docname, ThreeDWorld *world)
 void fill_map(ThreeDWorld *world) {
 	char *doc = "secondYearSquare.xml";
 	parseDoc(doc, world);
+    xmlCleanupParser();
 }
