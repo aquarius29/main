@@ -1,9 +1,9 @@
 .SILENT:
 
-frame: gui_frame.c gui_frame.h
-	gcc gui_frame.c -o gui_frame `pkg-config --cflags --libs gtk+-2.0` 
+frame: conn_frame.c conn_frame.h
+	gcc conn_frame.c -o conn_frame `pkg-config --cflags --libs gtk+-2.0` 
 
-server: gui_tcpserver_main.c
-	gcc gui_tcpserver_main.c -o tcps
+server: conn_tcpserver_main.c
+	gcc conn_tcpserver_main.c -o tcps
 clean:
-	rm -f gui_frame
+	rm -f conn_frame
