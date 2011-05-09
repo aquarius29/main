@@ -2,10 +2,10 @@
 #define GPS_NAV
 
 #include <stdio.h>
-#include "dijk.h"
+#include "nav_outdoor_dijkstra.h"
 
-#include "serial.h"
-#include "parser.h"
+#include "nav_serial.h"
+#include "nav_gps_parser.h"
 
 #include "nav_corelogic.h"
 
@@ -30,6 +30,8 @@ struct trac* update_path(struct point currp,struct point dest,struct point *pts,
 struct link* connect_nodes(struct dist *st1,struct dist *st2,struct dist *end1,struct dist *end2,struct point *pts,struct link *lk);
 
 int give_angle(struct point currp,struct point dest,struct point *pts,struct trac *next_Node);
+
+int give_distance(struct point currp,struct point dest,struct point *pts,struct trac *next_Node);
 
 void move_a_step(struct point *currp,struct point nextp);
 

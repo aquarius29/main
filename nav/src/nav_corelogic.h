@@ -3,8 +3,8 @@
 * @brief	 Interface module for the core logic of the abstract navigation system.
 */
 
-#include "tilemap.h"
-#include "movementcommands.h"
+#include "nav_tilemap.h"
+#include "nav_movementcommands.h"
 #include "nav_indoorstructure.h"
 
 #ifndef CORELOGIC_H

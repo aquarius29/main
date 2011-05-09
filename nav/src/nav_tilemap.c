@@ -4,7 +4,7 @@
 */
 
 #include <stdlib.h>
-#include "tilemap.h"
+#include "nav_tilemap.h"
 
 //! function to take coordinates and determine the tile index
 /*! Return the tile for the passed in coordinates.
