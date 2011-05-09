@@ -85,11 +85,23 @@ static void updatePosition(void) {
     current->p.lat = current->prev->p.lat + changeY;
 }
 static void sendCommand(void) {
+    setDirection();
+    setDistance();
 	int32_t angle = (current->next->p.angle / (M_PI/180)) + 90;
     //N 0 E 90 S 180 W 270
     printf("Move at angle %d\n", angle);
     /*sendautomovementcommand(1, SAFE_HEIGHT, current->next->p.distance,
     angle);*/
+    for (;;) {
+        int8_t bin = commandHandled();
+        if (bin == 1) {
+            navigatePath();
+            break;
+        }
+    }
+}
+int8_t commandHandled (void) {
+    return 1;
 }
 static void sendPosition(pixel *pos) {
     printf("Longitude = %d\tLatitude = %d\n", pos->lon, pos->lat);
@@ -151,7 +163,7 @@ void initPath(position *start, position *end) {
     // insert first node and next node for current destination calculation
     insertProgressiveNode();
     sendExpectedPath(&route);
-    navigatePath();
+    sendCommand();
 }
 static void resetTimer(void) {
     gettimeofday(&timer, NULL);
@@ -184,7 +196,7 @@ static void recalc(void) {
     current->next->p = route.list[count];
     running = 1;
     sendExpectedPath(&route);
-    navigatePath();
+    sendCommand();
 }
 void collisionAvoided(double direction, struct timeval time) {
     running = 0;
@@ -214,9 +226,6 @@ static void navigatePath(void){
     wait.tv_sec = 0;
     wait.tv_nsec = SLEEP_DURATION;
     resetTimer();
-    setDirection();
-    setDistance();
-    sendCommand();
     /*
      *  Infinite loop until it either reaches point,collision avoidance occurs
      *  or indoor navigation is stopped externally.
@@ -241,7 +250,7 @@ static void navigatePath(void){
         nanosleep(&wait, NULL);
     }
     if (bool == 1 && running == 1) {
-        navigatePath();
+        sendCommand();
     }
 }
 /*
