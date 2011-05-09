@@ -7,7 +7,7 @@
 #include <stdlib.h>
 #include "nav_indooralgorithms.h"
 #include "nav_indoorstructure.h"
-#include "tilemap.h"
+#include "nav_tilemap.h"
 
 static void astarAddNeighborsToOpen(node *current, nodeList *open,
 nodeList *closed, const position *end);

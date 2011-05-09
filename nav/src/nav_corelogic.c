@@ -19,7 +19,7 @@
 #include <signal.h>
 #include "nav_corelogic.h"
 #include "gps_nav.h"
-#include "tilemap.h"
+#include "nav_tilemap.h"
 #include "nav_indoorstructure.h"
 
 pthread_t protocolReadThread;
