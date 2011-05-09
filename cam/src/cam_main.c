@@ -19,7 +19,7 @@
 #include "highgui.h"
 #include <stdint.h>
 #include "cam_interface.h"
-#include "cam.h"
+#include "cam_cam.h"
 
 int16_t cam_init(void)
 {

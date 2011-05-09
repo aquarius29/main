@@ -20,7 +20,7 @@
 #include <unistd.h>
 
 #include "cam_interface.h"
-#include "cam.h"
+#include "cam_cam.h"
 
 /*	define a default port number of ther server */
 #define PORT_NUMBER 5457

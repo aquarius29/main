@@ -35,7 +35,7 @@
 #include "highgui.h"
 
 #include "cam_interface.h"
-#include "cam.h"
+#include "cam_cam.h"
 
 /*
 	video capture structure for opencv and the IplImage structure
@@ -107,7 +107,7 @@ void save_and_convert_video(void)
 /*	create a variable to hold processed frames*/
 	gray_frame = cvCreateImage(cvGetSize(video_frame),IPL_DEPTH_8U, 1);
 
-	//pthread_create(&thread_new, NULL, video_server, NULL);// to the server
+	pthread_create(&thread_new, NULL, video_server, NULL);// to the server
 
 
 /*	video processing loop */	

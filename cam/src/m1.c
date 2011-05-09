@@ -4,7 +4,7 @@
 #include "cv.h"
 #include "highgui.h"
 #include "cam_interface.h"
-#include "cam.h"
+#include "cam_cam.h"
 #include <stdio.h>
 
 
