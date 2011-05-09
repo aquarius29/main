@@ -1,21 +1,15 @@
-/*-------------------------------------------------------------------------------------------------------
-**	video_server.c
-**	Authurs: Henry Ikuh, Abdirashid Jama
+/**
+  * Module: cam_server.c
+  *
+  * Author (s): Ikuh Henry, Abdirashid Jama
+  * Created: 2011-04-24
+  * Version: 0.01
+  * history: 2011-04-24 - created the initial file
+			 2011-04-28 - connect, send video over TCP network to client
+			 2011-05-06 - re structure source code.
 
-* The program captures frames from webcam using opencv computer vision library in c.
-* file name: video_server.c
- 
-**	Prerequisite:
-**	Install: ffmpeg
-**	OpenCV
-**	v4l2 (comes with your linux distribution)
-
-**	References: http://pubs.opengroup.org/onlinepubs/007908799/xsh/pthread_create.html
-				http://www.ffmpeg.org/
-				http://opencv.willowgarage.com/documentation/reading_and_writing_images_and_video.html
-				nashrudding.com
-				http://pubs.opengroup.org/onlinepubs/007908799/xsh/pthread.h.html
-*--------------------------------------------------------------------------------------------------------*/
+  * Description: a testing tcp server for video streaming.
+*/
 
 #include <netinet/in.h>
 #include <sys/socket.h>
@@ -24,26 +18,30 @@
 #include <stdlib.h>
 #include <pthread.h>
 #include <unistd.h>
-//#include <time.h>
-//#include "../include/cv.h"
-#include "../include/highgui.h"
+
+#include "cam_interface.h"
+#include "cam.h"
 
 /*	define a default port number of ther server */
 #define PORT_NUMBER 5457
 
 /*	sockets variables */
-int serversock;
-int clientsock;
-int new_data;
-IplImage* gray_frame;
-int imgsize;
-int bytes;
+	int serversock;
+	int clientsock;
 
-/*	*/
-void video_server(void* arg)
+/*	data variables */
+	int imgsize;
+	int bytes;
+	int new_data;
+	IplImage *gray_frame; // to hold the processed images
+
+	pthread_mutex_t	 m = PTHREAD_MUTEX_INITIALIZER;
+
+/*	the video server function*/
+void video_server(void)
 {
-	pthread_mutex_t	 mutex = PTHREAD_MUTEX_INITIALIZER;
-	pthread_t 	thread_new;
+
+	//pthread_t 	thread_new;
 
 	struct sockaddr_in server;
 	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE,NULL);
@@ -87,14 +85,13 @@ void video_server(void* arg)
 	imgsize = gray_frame -> imageSize;
 
 /*	send frames to client using pthread, we first need to lock then unlock thread*/
-	while(1){
-	pthread_mutex_lock(&mutex);
+	while(new_data != 0){
+	pthread_mutex_lock(&m);
 		if(new_data){
 		bytes = send (clientsock, gray_frame -> imageData, imgsize, 0);
-		//new_data = 0;
+
 		}
-	
-	pthread_mutex_unlock(&mutex);
+	pthread_mutex_unlock(&m);
 	
 	if (bytes != imgsize){	
 	fprintf(stderr, "Connection was closed at the client side.\n");
@@ -110,5 +107,25 @@ void video_server(void* arg)
 	
 	usleep(1000);
 	}
+
+
+}
+
+/*	A function to quit a process safely */
+void terminate(char*msg, int retval)
+{
+	
+	if (retval == 0){
+		if (msg){ fprintf(stdout,"%s\n", msg);}
+	}
+	else{
+		if(msg) {fprintf(stderr, "%s\n", msg);}
+	}
+
 	close(clientsock);
+	close(serversock);
+	pthread_mutex_destroy(&m);
+	exit(retval);
+
 }//End of file
+

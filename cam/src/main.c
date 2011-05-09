@@ -1,14 +1,15 @@
-/*-------------------------------------------------------------------------------------------------------
-**	main.c
-**	Authors: Henry Ikuh, Abdirashid Jama
-*-------------------------------------------------------------------------------------------------------*/
 
-int main(int argc, char** argv){
+#include "cam_interface.h"
+#include "cam.h"
+#include <stdio.h>
 
-void *video_server(void* arg);
-void terminate(char* msg, int retval);
 
-capture();
-//void capt()
-
+int main(void)
+{
+  
+  cam_init();
+  cam_run();  
+ return 0;
+  
+ 
 }
