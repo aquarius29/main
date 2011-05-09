@@ -1,11 +1,12 @@
 /*
-* @author Jarryd Hall.
-* @brief An XML Parser to parse a tilemap.
-* @details This module has been used to parse a tmx file.
-* It uses a combination of xpath and DOM tree traversal.
-* xpath is using regex to extract certain data.
-* DOM is used to traverse the document tree model and extract the data needed.
-* CommandLine usage: gcc source.c -I/usr/include/libxml2 -lxml2 -o output
+* @author	 Jarryd Hall.
+* @brief	 An XML Parser to parse a tilemap.
+* @details	 This module has been used to parse a tmx file.
+* 			 It uses a combination of xpath and DOM tree traversal.
+* 			 xpath is using regex to extract certain data.
+* 			 DOM is used to traverse the document tree model and extract the data needed.
+* 
+* 			 CommandLine usage: gcc source.c -I/usr/include/libxml2 -lxml2 -o output
 */
 
 #include <stdio.h>
@@ -263,10 +264,8 @@ void parseDoc(char *docname, ThreeDWorld *world)
 		xmlFreeDoc(doc);
 		return;
 	}
-	
 	getMapDetails(doc, cur, world);
 	getTileDetails(doc, cur, world);
-
 	xmlFreeDoc(doc);
 	return;
 }
@@ -274,9 +273,11 @@ void parseDoc(char *docname, ThreeDWorld *world)
 //! Fill a ThreeDWorld with valued.
 /*!
 * The replacement main for this module.
+*
 * @param world The ThreeDWorld that is being filled.
 */
-void fill_map(ThreeDWorld * world) {
-	char *doc = "/Users/E0/Dropbox/Code/Embedded/nav/nav/lib/secondYearSquare.xml";
+void fill_map(ThreeDWorld *world) {
+	char *doc = "secondYearSquare.xml";
 	parseDoc(doc, world);
+    xmlCleanupParser();
 }

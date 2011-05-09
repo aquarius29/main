@@ -1,14 +1,14 @@
 /*
-* indoor_navigation.c
-*
-*  Created on: 2 apr 2011
-*      Author: Eric Britsman
-*/
+ * indoor_navigation.c
+ *
+ *  Created on: 2 apr 2011
+ @Author Eric Britsman
+ */
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 #include "nav_indoorstructure.h"
-#include "movementcommands.h"
+//#include "movementcommands.h"
 
 #define PRECISION 5
 #define SLEEP_DURATION (0.05 * 1000000000)
@@ -25,13 +25,12 @@ static progressiveNode *first;
 static progressiveNode *current;
 
 static void insertCurrentDestinationNode(void) {
-    count++;
     current->next = calloc(1, sizeof(progressiveNode));
     current->next->p = route.list[count];
     current->next->prev = current;
     current->next->next = 0;
+    count++;
 }
-
 static void insertProgressiveNode(void) {
     if (first == 0) {
         first = calloc(1, sizeof(progressiveNode));
@@ -48,9 +47,8 @@ static void insertProgressiveNode(void) {
         insertCurrentDestinationNode();
     }
 }
-
 static void freeProgressiveList(void) {
-    progressiveNode *temp;
+    progressiveNode *temp = NULL;
     while (first != 0) {
         temp = first->next;
         free(first);
@@ -58,6 +56,7 @@ static void freeProgressiveList(void) {
     }
 }
 static void setDirection(void) {
+	printf("%d     %d\n", current->next->p.lon, current->next->p.lat);
     current->next->p.angle = atan2((current->next->p.lat -
     current->prev->p.lat), (current->next->p.lon - current->prev->p.lon));
 }
@@ -70,10 +69,10 @@ static void setDistance(void) {
 }
 static void updatePosition(void) {
     struct timeval current_time;
-    double changeX;
-    double changeY;
-    double time;
-    double microseconds;
+    double changeX = 0;
+    double changeY = 0;
+    double time = 0;
+    double microseconds = 0;
     gettimeofday(&current_time, NULL);
     microseconds = (current_time.tv_usec - timer.tv_usec);
     if (microseconds != 0) {
@@ -86,31 +85,40 @@ static void updatePosition(void) {
     current->p.lat = current->prev->p.lat + changeY;
 }
 static void sendCommand(void) {
-	double angle;
-    //N 90 E 180 S -90 W -180
-    if (current->next->p.angle > 0) {
-    	angle = -(current->next->p.angle / (M_PI / 180));
-        printf("Move at angle %.5f\n", angle);
-    }
-    else {
-    	angle = current->next->p.angle / (M_PI/180) + 180;
-        printf("Move at angle %.5f\n", current->next->p.angle / (M_PI / 180) +
-        180);
-    }
-    // sendautomovementcommand(3, SAFE_HEIGHT, current->next->p.distance, angle);
+	int32_t angle = (current->next->p.angle / (M_PI/180)) + 90;
+    //N 0 E 90 S 180 W 270
+    printf("Move at angle %d\n", angle);
+    /*sendautomovementcommand(1, SAFE_HEIGHT, current->next->p.distance,
+    angle);*/
 }
 static void sendPosition(pixel *pos) {
     printf("Longitude = %d\tLatitude = %d\n", pos->lon, pos->lat);
+    //nav_sendCurrentIndoorPositionToGui(pos);
 }
 static void sendExpectedPath(positionList *path) {
     //Give corelogic the calculated path.
     printf("This is the path given by path calc.\n");
     printf("Lines should be drawn between each point in list.\n");
+    //nav_sendIndoorPathToGui(path)
 }
 static void sendActualPath(progressiveNode *first) {
+   /* progressiveNode temp = *first;
+    positionList path;
+    path.num = 1;
+    path.list = malloc(sizeof(pixel) * 2);
+    path.list[0] = temp.p;
+    // creating positionList from linked list, must be freed in UI.
+    while (temp.next != 0) {
+        path.list[path.num] = temp.next->p;
+        path.num++;
+        path.list = realloc(path.list, sizeof(pixel) * path.num + 1);
+        temp = *temp.next;
+    }
+    */
     //Give corelogic the finalized path after destination reached.
-    printf("This is the path actually taken to until ");
+    printf("This is the path actually taken until ");
     printf("destination reached/nav interrupted.\n");
+    //nav_sendIndoorPathToGui(&path);
 }
 void stopIndoorNavigation(void) {
     //Tell corelogic to tell movement to stop
@@ -118,14 +126,15 @@ void stopIndoorNavigation(void) {
     running = 0;
     sendActualPath(first);
     freeProgressiveList();
+    free(route.list);
 }
 //Send start and end point received from corelogic
 //to path calculation.
 void initPath(position *start, position *end) {
-    int32_t counterUp;
+    int32_t counterUp = 0;
     running = 1;
     count = 0;
-    // sendautomovementcommand(1, SAFE_HEIGHT, 0, 0);
+    // sendautomovementcommand(0, SAFE_HEIGHT, 0, 0);
     if (ALGORITHM == 0) {
         printf("Dijkstra\n");
         route = indoorDijkstra(start, end);
@@ -143,7 +152,6 @@ void initPath(position *start, position *end) {
     insertProgressiveNode();
     sendExpectedPath(&route);
     navigatePath();
-
 }
 static void resetTimer(void) {
     gettimeofday(&timer, NULL);
@@ -201,7 +209,7 @@ static int32_t check(pixel a, pixel b){
     }
 }
 static void navigatePath(void){
-    int32_t bool;
+    int32_t bool = 0;
     struct timespec wait;
     wait.tv_sec = 0;
     wait.tv_nsec = SLEEP_DURATION;
@@ -209,7 +217,6 @@ static void navigatePath(void){
     setDirection();
     setDistance();
     sendCommand();
-    
     /*
      *  Infinite loop until it either reaches point,collision avoidance occurs
      *  or indoor navigation is stopped externally.
@@ -237,13 +244,13 @@ static void navigatePath(void){
         navigatePath();
     }
 }
-// 
-// int main(){
-//     position a, b;
-//     a.x = 1;
-//     a.y = 1;
-//     b.x = 9;
-//     b.y = 3;
-//     initPath(&a, &b);
-//     return 0;
-// }
+/*
+int main(){
+    position a, b;
+    a.x = 1;
+    a.y = 1;
+    b.x = 9;
+    b.y = 5;
+    initPath(&a, &b);
+    return 0;
+}*/
