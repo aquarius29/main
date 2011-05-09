@@ -50,5 +50,6 @@ positionList indoorAstar(const position *start, const position *end);
 void initPath(position *start, position *end);
 void stopIndoorNavigation(void);
 void collisionAvoided(double direction, struct timeval time);
+int8_t commandHandled(void);
 
 #endif /* NAV_INDOORSTRUCTURE_H */
