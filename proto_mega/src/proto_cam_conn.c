@@ -24,7 +24,7 @@ void proto_write_camera(unsigned int message){
 #ifdef PC
 	storeForTint(WRITE, CAMERA, UNKNOWN, camera_message);
 	#ifdef DEBUG
-	printf("camera_message: %c\n", direction);
+	printf("camera_message: %c\n", camera_message);
 	#endif
 #endif
 }

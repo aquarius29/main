@@ -11,8 +11,8 @@
 * <IT University of Goteborg>
 *****************************************************************************/
 //Collision to Movement Header
-
-
+#include <stdint.h>
+#ifdef PC
 //write yaw from movement to collision avodance  
 void proto_write_yaw(int value);// proto API 
  
@@ -40,30 +40,11 @@ unsigned char proto_read_navi_to_connectivity(void); //API
 void proto_send_navi_to_connectivity(unsigned char msg); //API
 
 /****************************************************************************/
-//Filter To Motor
 
-//void proto_write_filter(unsigned char message);
-
-//unsigned char proto_read_filter(void);
-
-//void proto_write_motor(unsigned char message);
-
-//unsigned char proto_read_motor(void);
-
-/****************************************************************************/
 //proto interface
 
 int proto_init(void);
 int proto_run(void);
-
-/****************************************************************************/
-
-//filter to Motor Control
-
-//void proto_write_motor_ctrl(char);
-//	
-//char proto_read_motor_ctrl(void);
-
 
 /****************************************************************************/
 
@@ -80,8 +61,8 @@ unsigned int proto_read_direction(void);
 
 /****************************************************************************/
 //movement to Motor
-void proto_write_motor(unsigned char message);
-unsigned char proto_read_motor(void);
+void proto_write_motor(uint8_t message);
+uint8_t proto_read_motor(void);
 
 
 /****************************************************************************/
@@ -181,7 +162,7 @@ struct stab_accelerometer * retrieve_acc(void);
 
 ///Test and Integration group
 
-#ifdef PC
+
 
 #define READ 0
 #define WRITE 1
@@ -211,7 +192,7 @@ struct Message * retrieve(void);
 
 void flush(void);
 
-#endif
+
 
 
 /****************************************************************************/
@@ -228,3 +209,5 @@ proto_sendMsg();
 
 
 /****************************************************************************/
+
+#endif

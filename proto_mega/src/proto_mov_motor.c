@@ -13,13 +13,13 @@
 
 
 #include <stdio.h>
+#include <stdint.h>
 #include "proto_lib.h"
 
 
-unsigned char motor_message;
+uint8_t motor_message;
 
-
-void proto_write_motor(unsigned char message){
+void proto_write_motor(uint8_t message){
 	motor_message=message;
 #ifdef PC
  storeForTint(WRITE, MOTOR, UNKNOWN, motor_message);
@@ -28,8 +28,8 @@ void proto_write_motor(unsigned char message){
   #endif 
 #endif
 }    
-unsigned char proto_read_motor(void){
-	unsigned char temp=motor_message;
+uint8_t proto_read_motor(void){
+	uint8_t temp=motor_message;
 	motor_message=0xf1;
 #ifdef PC
  storeForTint(READ, MOVEMENT, UNKNOWN, temp);
