@@ -455,7 +455,7 @@ void nav_sendOutdoorPathToGui(GPSLocation **path)
 	/* Put connectivity library function here*/
 }
 
-void nav_sendIndoorPathToGui(pixel **path)
+void nav_sendIndoorPathToGui(positionList *path)
 {
 	/* Put connectivity library function here*/
 }

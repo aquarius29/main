@@ -93,17 +93,32 @@ static void sendCommand(void) {
 }
 static void sendPosition(pixel *pos) {
     printf("Longitude = %d\tLatitude = %d\n", pos->lon, pos->lat);
-    //nav_sendCurrentIndoorPositionToGui(&pos);
+    //nav_sendCurrentIndoorPositionToGui(pos);
 }
 static void sendExpectedPath(positionList *path) {
     //Give corelogic the calculated path.
     printf("This is the path given by path calc.\n");
     printf("Lines should be drawn between each point in list.\n");
+    //nav_sendIndoorPathToGui(path)
 }
 static void sendActualPath(progressiveNode *first) {
+   /* progressiveNode temp = *first;
+    positionList path;
+    path.num = 1;
+    path.list = malloc(sizeof(pixel) * 2);
+    path.list[0] = temp.p;
+    // creating positionList from linked list, must be freed in UI.
+    while (temp.next != 0) {
+        path.list[path.num] = temp.next->p;
+        path.num++;
+        path.list = realloc(path.list, sizeof(pixel) * path.num + 1);
+        temp = *temp.next;
+    }
+    */
     //Give corelogic the finalized path after destination reached.
     printf("This is the path actually taken until ");
     printf("destination reached/nav interrupted.\n");
+    //nav_sendIndoorPathToGui(&path);
 }
 void stopIndoorNavigation(void) {
     //Tell corelogic to tell movement to stop
