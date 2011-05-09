@@ -4,9 +4,13 @@
 #include "proto_serializer.h"
 #include "port_test.h"
 
+#include <stdio.h>
+
+
 void port_test(void){
     int32_t portHandle;
-    uint8_t data[] = {3, 1, 2, 3, '\0'};
+    uint8_t data1[] = {4, 1, 2, 3, '\0'};
+    uint8_t data2[] = {3, 1, 2, 3, '\0'};
     
     struct status navInfo;
     struct status *p_navInfo;
@@ -25,8 +29,13 @@ void port_test(void){
     portHandle = proto_serialOpen();
     sleep(1);
     
-    proto_serialSend(portHandle, data);
+    printf("sending data1\n");
+    proto_serialSend(portHandle, data1);
+    sleep(1);
     
+    printf("sending data2\n");
+    proto_serialSend(portHandle, data2);
+
     sleep(2);
     proto_serialClose(portHandle);
 }

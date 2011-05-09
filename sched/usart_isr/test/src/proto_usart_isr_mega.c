@@ -5,6 +5,8 @@
  *
  *  very much a work in progress, will require an overhaul
  *
+ *  TODO: can it receive multiple messages???? doesnt look like it
+ *
  *  author: Joakim
  */
 
@@ -29,8 +31,11 @@
 #define TRUE 1
 #define FALSE 0
 
+static uint8_t copyBuf(volatile uint8_t *source, uint8_t *target);
+
 volatile static uint8_t dataBuffer[MAX_MSG_LEN];
-volatile static uint8_t completeMsg[MAX_MSG_LEN];
+static uint8_t completeMsg[MAX_MSG_LEN];
+
 volatile static uint8_t msgLen = 0;
 volatile static uint8_t bytesReceived = 0;
 volatile static uint8_t isMsgComplete = FALSE;
@@ -39,9 +44,19 @@ void usartLoop(void){
     while (1) {
         if (isMsgComplete == TRUE) {
             digitalWrite(13, HIGH);
-            if (dataBuffer[0] == 3) {
+
+            /* copy buffer to a new array */
+            copyBuf(dataBuffer, completeMsg);
+            if (completeMsg[0] == 4) {
                 digitalWrite(12, HIGH);
             }
+            
+            isMsgComplete = FALSE;
+
+            /*
+             *  complete message is received, enable the RX interrupt again
+             */
+            //UCSR0B &= (1 << RXCIE0);            
         }
         else {
             digitalWrite(13, LOW);
@@ -50,7 +65,7 @@ void usartLoop(void){
 }
 
 /*
- *  Interrupt service routine for Rx Receive Interrupt on USART0
+ *  Interrupt service routine for RX Receive Interrupt on USART0
  *
  *  @author Joakim
  */
@@ -72,10 +87,10 @@ ISR(USART0_RX_vect){
                  *  in case a new message arrives while reading the
                  *  complete message in the non ISR code
                  */
-                 bytesReceived = 0;
-            }
-            else {
-                isMsgComplete = FALSE;
+                bytesReceived = 0;
+                
+                /* disable RX-complete interrupt until message is read */
+                //UCSR0B &= ~(1 << RXCIE0);
             }
         }
     }
@@ -130,5 +145,21 @@ uint8_t usartInitMega(void){
     return 1;
 }
 
+static uint8_t copyBuf(volatile uint8_t *source, uint8_t *target){
+    register uint8_t i;
+    
+    for (i = 0; i < msgLen; i++) {
+        target[i] = source[i]; 
+    }
 
+    return 1;
+}
+
+// static uint8_t copyBuf(volatile uint8_t *source, uint8_t *target){
+//     while (*source != '\0') {
+//         *target++ = *source++;
+//     }
+//     
+//     return 1;
+// }
 
