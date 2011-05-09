@@ -13,10 +13,11 @@
 //#include "cv.h"
 #include "highgui.h"
 #include <pthread.h>
+#include <stdint.h>
 
 /*	program header files */
 
-int cam_init(void);
+int16_t cam_init(void);
 
-int cam_run(void);
+int16_t cam_run(void);
 

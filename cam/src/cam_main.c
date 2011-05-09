@@ -17,23 +17,22 @@
 #include <pthread.h>
 #include "cv.h"
 #include "highgui.h"
-
+#include <stdint.h>
 #include "cam_interface.h"
 #include "cam.h"
 
-int cam_init(void)
+int16_t cam_init(void)
 {
 	initialize(void);// init cam
 	return 0;
 
 }
 
-int cam_run(void)
+int16_t cam_run(void)
 {
-	grab_frame();
+	grab_frame();	
 	save_and_convert_video();
-/**/
-	video_server(void* arg);
+	video_server();
 	
 	return 0;
 }
