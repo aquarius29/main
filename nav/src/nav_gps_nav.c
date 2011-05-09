@@ -91,6 +91,10 @@ void gps_navigation(GPSLocation* Destination)
 
 	struct trac *path = outdoor_nav(pts,destination); 	
 
+//	GPSLocation **path_UI = path_for_UI(path,pts);
+
+	/* send UI the path */
+
 	struct trac *next_Node = path;
 
 	int angle = 0;
@@ -107,9 +111,10 @@ void gps_navigation(GPSLocation* Destination)
 
 		printf("angle : %d  distance : %d\n",angle,distance_to_nextNode);
 
-
 	/*
         send movement command here.
+
+	if(sendMovement == 1){
 
 	if( angle == -2 )
 	{                                 // sendautomovementcommand(char order , int height, int distance, int yaw)	
@@ -123,6 +128,12 @@ void gps_navigation(GPSLocation* Destination)
 	{
 		sendautomovementcommand(1,1,distance_to_nextNode,angle);
 	}
+
+
+	set_MovementCommand_False();
+
+	}//sendMovement=1
+
 	*/
 	
 	sleep(1);
@@ -276,11 +287,9 @@ struct trac *outdoor_nav(struct point *pts,struct point destination)
 {
 	struct link *lk = NULL;
 	struct dist *st_1, *st_2, *end_1, *end_2;	/* options of */
-
 	struct trac *path;
 
 	struct point startp;
-
 	get_startp(&startp);
 
 	struct point endp;
@@ -315,11 +324,11 @@ struct trac *outdoor_nav(struct point *pts,struct point destination)
 	}
 	else
 	{
-	path = calculate(startp.name,endp.name,lk);
+		path = calculate(startp.name,endp.name,lk);
 	}
 
-	struct trac *head;
-	head = path;	
+		struct trac *head;
+		head = path;	
 
 	while(head != NULL){
 		printf("%d + ",head->p);
@@ -376,3 +385,45 @@ int get_goodData()
 	return good_data;
 }
 
+
+
+GPSLocation **path_for_UI(struct trac* path,struct point* pts)
+{
+	struct trac *currp = path;
+
+	GPSLocation **Route = NULL;
+
+	GPSLocation *node = NULL;
+
+	int i = 0;
+
+	while(currp != NULL)
+	{
+		Route = malloc(sizeof(GPSLocation));
+
+		Route[i]->latitude = pts[currp->p - 1].lat;
+		Route[i]->longitude = pts[currp->p - 1].lon;
+		//Route [i] = node;
+		currp = currp->last;
+		i++;		
+	}
+	
+	return Route;
+}
+
+
+
+void set_MovementCommand_True(void)
+{
+	sendMovement = 1;			
+}
+
+void set_MovementCommand_False(void)
+{
+	sendMovement = 0;		
+}
+
+int get_MovementCommand(void)
+{
+	return sendMovement;
+}

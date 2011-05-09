@@ -17,6 +17,8 @@ struct point curr;
 
 int good_data;
 
+int sendMovement;
+
 void setup_gps(char *dev,int baud);
 
 struct trac* outdoor_nav(struct point *pts,struct point destination);
@@ -38,5 +40,14 @@ void move_a_step(struct point *currp,struct point nextp);
 int check_gps_output(char buf []);
 
 int get_goodData();
+
+GPSLocation** path_for_UI(struct trac* path,struct point* pts);
+
+void set_MovementCommand_True(void);
+
+void set_MovementCommand_False(void);
+
+int get_MovementCommand(void);
+
 
 #endif
