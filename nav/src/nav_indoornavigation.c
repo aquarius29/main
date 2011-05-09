@@ -58,8 +58,9 @@ static void freeProgressiveList(void) {
 }
 static void setDirection(void) {
 	printf("%d     %d\n", current->next->p.lon, current->next->p.lat);
-    current->next->p.angle = atan2((current->next->p.lat -
-    current->prev->p.lat), (current->next->p.lon - current->prev->p.lon));
+    current->next->p.angle = ((int)((atan2((current->next->p.lat -
+    current->prev->p.lat), (current->next->p.lon - current->prev->p.lon)) /
+    (M_PI/180)))) * (M_PI/180);
     current->p.angle = current->next->p.angle;
 }
 static void setDistance(void) {
