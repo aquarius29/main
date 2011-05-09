@@ -2,7 +2,7 @@
 * Product: 
 * Version: 
 * Released: April 8 2011
-* Updated: May 3 2011
+* Updated: May 10 2011
 *
 * Copyright (C) 2011 Elnaz Shahmehr
 *
@@ -24,46 +24,79 @@
 /***************************************************************************** 
     Implementations 
 *****************************************************************************/ 
+struct stab_gyroscope * proto_stabReadAttitude(void){ 
+/* if the pointer is null*/
+/*	then should not attempt to read the values because the code will crash*/
+/*	so i should initialize the struct*/
+/* else*/
+/*	everything is okay, just return the struct*/
 
-void proto_stabWriteAttitude(float roll,float pitch,float yaw){ 
-       if (gyroPtr == NULL)
-	gyroPtr = malloc(sizeof(struct stab_gyroscope));
- 	gyroPtr->roll = roll; 
- 	gyroPtr->pitch = pitch; 
- 	gyroPtr->yaw = yaw; 
-       
-	
-
-#ifdef PC
- storeForTint(WRITE, STAB, UNKNOWN, gyroPtr->roll);
- storeForTint(WRITE, STAB, UNKNOWN, gyroPtr->pitch);
- storeForTint(WRITE, STAB, UNKNOWN, gyroPtr->yaw);
-	#ifdef DEBUG
-	printf("Stab value set to: %d , %d\n", gyroPtr.roll , gyroPtr.pitch,gyroPtr.yaw);
-  #endif
-#endif
-} 
- 
- 
-void proto_stabWriteAcc(float acc_x,float acc_y,float acc_z){ 
-	if (accPtr == NULL)
-	accPtr = malloc(sizeof(struct stab_accelerometer));
-        accPtr->acc_x = acc_x;
-        accPtr->acc_y = acc_y;
-        accPtr->acc_z = acc_z;
-       
+  if (gyroPtr == NULL){
+	createDefaultstabgyro();
+}
 	
 #ifdef PC
- storeForTint(WRITE, STAB, UNKNOWN, accPtr->acc_x);
- storeForTint(WRITE, STAB, UNKNOWN, accPtr->acc_y);
- storeForTint(WRITE, STAB, UNKNOWN, accPtr->acc_z);
+ storeForTint(READ, MOVEMENT, UNKNOWN, gyroPtr->roll);
+ storeForTint(READ, MOVEMENT, UNKNOWN, gyroPtr->pitch);
+ storeForTint(READ, MOVEMENT, UNKNOWN, gyroPtr->yaw);
 	#ifdef DEBUG
-	printf("Stab value set to: %d , %d\n", accPtr.acc_x , accPtr.acc_y,accPtr.acc_z);
+	printf("Movement value set to: %d , %d\n", gyroPtr.roll , gyroPtr.pitch,gyroPtr.yaw);
   #endif
 #endif
-} 
+  return gyroPtr;
+}
+
+struct stab_accscope * proto_stabReadAcc(void){ 
+  if (accPtr == NULL){
+	createDefaultstabacc();
+}
+	
+#ifdef PC
+ storeForTint(READ, MOVEMENT, UNKNOWN, accPtr->acc_x);
+ storeForTint(READ, MOVEMENT, UNKNOWN, accPtr->acc_y);
+ storeForTint(READ, MOVEMENT, UNKNOWN, accPtr->acc_z);
+	#ifdef DEBUG
+	printf("Movement value set to: %d , %d\n", accPtr.acc_x , accPtr.acc_y,accPtr.acc_z);
+  #endif
+#endif
+  return accPtr;
+}
+ 
+
+struct stab_magnetometer * proto_stabReadHeading(void){ 
+  if (magPtr == NULL){
+	createDefaultstabmag();
+}
+	
+#ifdef PC
+ storeForTint(READ, MOVEMENT, UNKNOWN, magPtr->heading);
+	#ifdef DEBUG
+	printf("Movement value set to: %d , %d\n", magPtr.heading );
+  #endif
+#endif
+
+  return magPtr;
+}
+
+
+struct stab_magnetometer * proto_stabReadHeight(void){ 
+  if (magPtr == NULL){
+	createDefaultstabmag();
+}
+	
+#ifdef PC
+ storeForTint(READ, MOVEMENT, UNKNOWN, magPtr->height);
+	#ifdef DEBUG
+	printf("Movement value set to: %d , %d\n", magPtr.height );
+  #endif
+#endif
+
+  return magPtr;
+
+}
+
+
 struct stab_magnetometer * magnetometerPtr;
-
 void proto_stabWriteHeading(int heading){ 
 	
 	if (magPtr == NULL)
@@ -79,13 +112,46 @@ void proto_stabWriteHeading(int heading){
 #endif
 } 
 
+void proto_stabWriteAcc(float acc_x,float acc_y,float acc_z){ 
+	if (accPtr == NULL)
+	accPtr = malloc(sizeof(struct stab_accelerometer));
+        accPtr->acc_x = acc_x;
+        accPtr->acc_y = acc_y;
+        accPtr->acc_z = acc_z;	
+#ifdef PC
+ storeForTint(WRITE, STAB, UNKNOWN, accPtr->acc_x);
+ storeForTint(WRITE, STAB, UNKNOWN, accPtr->acc_y);
+ storeForTint(WRITE, STAB, UNKNOWN, accPtr->acc_z);
+	#ifdef DEBUG
+	printf("Stab value set to: %d , %d\n", accPtr.acc_x , accPtr.acc_y,accPtr.acc_z);
+  #endif
+#endif
+} 
+
+void proto_stabWriteAttitude(float roll,float pitch,float yaw){ 
+       if (gyroPtr == NULL)
+	gyroPtr = malloc(sizeof(struct stab_gyroscope));
+	gyroPtr->roll = roll; 
+ 	gyroPtr->pitch = pitch; 
+ 	gyroPtr->yaw = yaw; 
+#ifdef PC
+ storeForTint(WRITE, STAB, UNKNOWN, gyroPtr->roll);
+ storeForTint(WRITE, STAB, UNKNOWN, gyroPtr->pitch);
+ storeForTint(WRITE, STAB, UNKNOWN, gyroPtr->yaw);
+	#ifdef DEBUG
+	printf("Stab value set to: %d , %d\n", gyroPtr.roll , gyroPtr.pitch,gyroPtr.yaw);
+  #endif
+#endif
+} 
+
+
+
 void proto_stabWriteHeight(float height){
 	if (magPtr == NULL)
 		magPtr = malloc(sizeof(struct stab_magnetometer));
 	magPtr->height = height;
 #ifdef PC
  storeForTint(WRITE, STAB, UNKNOWN, magPtr->height);
-
 	#ifdef DEBUG
 	printf("Stab value set to: %d , %d\n",magPtr.height);
   #endif
@@ -107,3 +173,25 @@ struct stab_magscope * retrieve_mag(void)
 	return magPtr;
 }
 
+
+void createDefaultstabacc(){
+accPtr = malloc(sizeof(struct stab_accelerometer));
+
+	 accPtr->acc_x = 3;
+        accPtr->acc_y = 4;
+        accPtr->acc_z = 5;
+}
+
+void createDefaultstabmag(){
+magPtr = malloc(sizeof(struct stab_magnetometer));
+      
+      magPtr->heading = 0;
+	magPtr->height = 0;
+}
+
+void crateDefaultstabgyro(){
+	gyroPtr = malloc(sizeof(struct stab_gyroscope));
+       gyroPtr->roll = 0; 
+ 	gyroPtr->pitch = 0; 
+ 	gyroPtr->yaw = 0; 
+}

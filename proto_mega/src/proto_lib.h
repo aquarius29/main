@@ -158,6 +158,16 @@ struct stab_magscope * retrieve_mag(void);
 struct stab_gyroscope * retrieve_gyro(void);
 struct stab_accelerometer * retrieve_acc(void);
 
+struct stab_gyroscope * proto_stabReadAttitude(void);
+struct stab_accscope * proto_stabReadAcc(void);
+struct stab_magnetometer * proto_stabReadHeading(void);
+struct stab_magnetometer * proto_stabReadHeight(void);
+
+
+void crateDefaultstabgyro();
+void createDefaultstabacc();
+void createDefaultstabmag();
+
 /****************************************************************************/
 
 ///Test and Integration group
@@ -191,9 +201,6 @@ void storeForTint(int operation, int source, int meaning, double value);
 struct Message * retrieve(void);
 
 void flush(void);
-
-
-
 
 /****************************************************************************/
 //UI to Connectivity
