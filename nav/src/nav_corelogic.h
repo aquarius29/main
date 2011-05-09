@@ -1,6 +1,6 @@
 /*
-* @author	 Jarryd Hall.
-* @brief	 Interface module for the core logic of the abstract navigation system.
+* @author    Jarryd Hall.
+* @brief     Interface module for the core logic of the abstract navigation system.
 */
 
 #include "nav_tilemap.h"
@@ -14,30 +14,30 @@ int ON_OFF;
 
 typedef struct
 {
-	double latitude;
-	double longitude;
+    double latitude;
+    double longitude;
 }
 GPSLocation;
 
 typedef struct
 {
-	position startTile;
-	position destinationTile;
+    position startTile;
+    position destinationTile;
 }
 indoorRouteRequest;
 
 typedef struct 
 {
-	GPSLocation *startPoint;
-	GPSLocation *destinationPoint;
+    GPSLocation *startPoint;
+    GPSLocation *destinationPoint;
 }
 outdoorRouteRequest;
 
 struct thread_data
 {
-	position starttile;
-	position destinationtile;
-	char *message;
+    position starttile;
+    position destinationtile;
+    char *message;
 };
 
 GPSLocation currentOutdoorPosition;
