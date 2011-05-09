@@ -179,7 +179,7 @@ void *startgpswatchdog(void *ptr)
                 }
         }
 
-        if (pthread_kill(gpsNavigationThread, 0) == 0)
+        if (pthread_kill(gpsNavigationThread, 0) != 0)
         {
             printf("GPS Navigation Thread was digitally destroyed\nReconstructing....\n");
             gpsNavigationThreadResult = 
