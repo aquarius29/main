@@ -15,7 +15,7 @@
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
 #include <libxml/xpath.h>
-#include "tilemap.h"
+#include "nav_tilemap.h"
 
 //! Retrieve the xml node set.
 /*!
