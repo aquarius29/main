@@ -36,6 +36,7 @@ static void insertProgressiveNode(void) {
         first = calloc(1, sizeof(progressiveNode));
         first->p = route.list[count];
         first->prev = 0;
+        first->p.angle = -1.570796;
         current = first;
         insertCurrentDestinationNode();
         insertProgressiveNode();
@@ -59,6 +60,7 @@ static void setDirection(void) {
 	printf("%d     %d\n", current->next->p.lon, current->next->p.lat);
     current->next->p.angle = atan2((current->next->p.lat -
     current->prev->p.lat), (current->next->p.lon - current->prev->p.lon));
+    current->p.angle = current->next->p.angle;
 }
 static void setDistance(void) {
     current->next->p.distance = (sqrt((current->next->p.lon -
@@ -88,7 +90,14 @@ static void sendCommand(void) {
     setDirection();
     setDistance();
 	int32_t angle = (current->next->p.angle / (M_PI/180)) + 90;
-    //N 0 E 90 S 180 W 270
+	int32_t prevAngle = (current->prev->p.angle / (M_PI/180)) + 90;
+	printf("%d\n", prevAngle);
+	if (prevAngle != 0) {
+        angle -= prevAngle;
+	    if (angle < 0) {
+	        angle+= 360;
+	    }
+	}
     printf("Move at angle %d\n", angle);
     /*sendautomovementcommand(1, SAFE_HEIGHT, current->next->p.distance,
     angle);*/
@@ -253,8 +262,8 @@ static void navigatePath(void){
         sendCommand();
     }
 }
-/*
-int main(){
+
+/*int main(){
     position a, b;
     a.x = 1;
     a.y = 1;
