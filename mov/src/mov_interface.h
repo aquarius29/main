@@ -39,7 +39,9 @@ void check_pitch_roll(int isHovering);
 void updateDistanceToTravel(void);
 void check_changingAltitude(void);
 double get_acceleration();
+#ifdef DEBUG
 void printOrientation(void);
+#endif
 
 /*mov_motor.c*/
 void start_motors(void);
