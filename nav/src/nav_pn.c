@@ -9,7 +9,7 @@
  *this source file should be compiled by command gcc pn.c -o pn -lm
  */
 
-#include "pn.h"
+#include "nav_pn.h"
 
 
 /* calculate the distance between 2 nodes using latitude and longitude

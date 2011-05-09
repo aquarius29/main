@@ -26,7 +26,7 @@
 #define MEGA9 "/dev/ttyUSB9"
 #define MEGA10 "/dev/ttyUSB10"
 
-#define UNO "/dev/tty.usbmodemfa141"
+#define UNO "/dev/ttyACM0"
 #define UNO1 "/dev/ttyACM1"
 #define UNO2 "/dev/ttyACM2"
 #define UNO3 "/dev/ttyACM3"

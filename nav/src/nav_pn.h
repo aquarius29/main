@@ -8,7 +8,7 @@
 #define PI 3.1415926
 
 
-#include "outdoor_structure.h"
+#include "nav_outdoor_structure.h"
 
 double calc_dist(struct point start, struct point node);
 

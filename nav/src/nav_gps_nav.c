@@ -10,7 +10,7 @@
 		1. handle bad data in parser.c . 
 		2. send movement command.
 */
-#include "gps_nav.h"
+#include "nav_gps_nav.h"
 
 /*
 int main(void)
@@ -61,8 +61,8 @@ void setup_gps(char *dev,int baud)
 				
 				struct point *position = parser(buf);
 
-				currentOutdoorPosition.latitude = in_degree(position->lat);
-				currentOutdoorPosition.longitude = in_degree(position->lon);
+				currentOutdoorPosition.latitude = curr.lat = in_degree(position->lat);
+				currentOutdoorPosition.longitude = curr.lon = in_degree(position->lon);
 
 				free(position);
 		
@@ -93,18 +93,38 @@ void gps_navigation(GPSLocation* Destination)
 
 	struct trac *next_Node = path;
 
-	int angle = 0; 
+	int angle = 0;
+
+	int distance_to_nextNode = 0; 
 
 	while(ON_OFF)
 	{
-	next_Node = update_path(curr,destination,pts,next_Node);
+		next_Node = update_path(curr,destination,pts,next_Node);
 
-	angle = give_angle(curr,destination,pts,next_Node);
+		angle = give_angle(curr,destination,pts,next_Node);
 
-	printf("angle : %d\n",angle);
-/*
-	send movement command here.
-*/
+		distance_to_nextNode = give_distance(curr,destination,pts,next_Node);
+
+		printf("angle : %d  distance : %d\n",angle,distance_to_nextNode);
+
+
+	/*
+        send movement command here.
+
+	if( angle == -2 )
+	{                                 // sendautomovementcommand(char order , int height, int distance, int yaw)	
+		sendautomovementcommand(1,2,1,0);  // auto, landing, 1m, 0 degree.	
+	}
+	else if( angle == -1)
+	{
+		sendautomovementcommand(1,0,0,0);  // auto, hovering, 0m, 0 degree.
+	}
+	else
+	{
+		sendautomovementcommand(1,1,distance_to_nextNode,angle);
+	}
+	*/
+	
 	sleep(1);
 }
 	free(pts);
@@ -113,7 +133,7 @@ void gps_navigation(GPSLocation* Destination)
 
 
 /*
-         0: arrive the destination
+        -2: arrive the destination
 	-1: waiting
      0-359: moveing there	
 */
@@ -131,7 +151,7 @@ int give_angle(struct point currp,struct point dest,struct point *pts,struct tra
 
 		if(calc_dist(currp,next_Point)<10)
 		{
-			angle = 0;
+			angle = -2;
 		}
 	}
 	else
@@ -141,6 +161,30 @@ int give_angle(struct point currp,struct point dest,struct point *pts,struct tra
 	}	
 	return angle;		
 }
+
+
+
+
+
+int give_distance(struct point currp,struct point dest,struct point *pts,struct trac *next_Node)
+{
+	struct point next_Point = {0,0,0};
+
+	int distance = 11;
+
+	if(next_Node->p = -2)
+	{
+		next_Point = dest;
+		distance = calc_dist(currp,next_Point);
+	}
+	else
+	{
+		next_Point = pts [next_Node->p - 1];		
+		distance = calc_dist(currp,next_Point);
+	}
+	return distance;
+}
+
 
 
 
@@ -197,12 +241,12 @@ struct link* connect_nodes(struct dist *st1,struct dist *st2,struct dist *end1,s
 	if(st1->name == end1->name && st1->name == 0)
 	{
 		printf("go there straight\n");
-		lk = add_link(-1,-2,0,lk);			
+		lk = add_link(-1,-2,0.0000,lk);			
 	}
 	else if(st2->name == end2->name && st2->name == 0)
 	{
 		printf("go there straight\n");
-		lk = add_link(-1,-2,0,lk);
+		lk = add_link(-1,-2,0.0000,lk);
 	}
 	else
 	{
