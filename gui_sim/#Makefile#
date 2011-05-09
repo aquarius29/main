@@ -1,0 +1,14 @@
+
+
+.SILENT:
+
+frame: gui_frame.c gui_frame.h
+	gcc gui_frame.c -o gui_frame `pkg-config --cflags --libs gtk+-2.0` 
+
+server: gui_tcpserver_main.c
+	gcc gui_tcpserver_main.c -o tcps
+
+gcc nav_corelogic.c pn.c gps_nav.c parser.c serial.c dijk.c -I/usr/include/libxml2 -lxml2 -lm -lpthread -o nav
+
+clean:
+	rm -f gui_frame
