@@ -77,14 +77,23 @@ void nav_runGpsSystem(GPSLocation *dest)
 	printf("Switching off gps system\n");
 }
 
-/* watchdog function to handle gps multithreading */
+//! Watchdog function to handle gps multithreading.
+/*! A threaded function that will monitor the GPS threads
+*	to see if they dont unexpectedly quit or die.
+*	This watchdog thread restarts threads that are needed to keep 
+*	the GPS system running correctly.
+*
+* @param ptr A void pointer to send arguments to the watchdog thread.
+*/
 void *startgpswatchdog(void *ptr)
 {
+	//! Point to the data passed in to the watchdog.
 	GPSLocation *destination;
 	destination = (GPSLocation *) ptr;
 	printf("destination after watchdog receive lat : %lf\n", destination->latitude);
 	printf("destination after watchdog receive lon : %lf\n", destination->longitude);
  
+	//! Thread results for the GPS Threads.
 	int protocolReadThreadResult;
 	int gpsSetupThreadResult;
 	int gpsNavigationThreadResult;
@@ -105,8 +114,10 @@ void *startgpswatchdog(void *ptr)
 	int data = 0;
     int loopCount = 0;
     
+	//! Check for 10 seconds if the GPS IO returns good data.
 	while(loopCount < 1000)
 	{
+		//! Check if the GPS IO thread reports good data and start the GPS nav thread.
 		data = get_goodData();
 		
 		if (data == 1)
@@ -120,12 +131,13 @@ void *startgpswatchdog(void *ptr)
         	usleep(20000);
 	}
 	
+	//! As long as the GPS System is running, monitor the GPS Threads.
 	while (gpsRunning == 1)
 	{
-		/* pthread_kill(someThread, 0) */
-		/* sending a zero to the thread will not kill the thread */
-		/* using the return value it can check of the thread is dead */
-		
+		/*! pthread_kill(someThread, 0)
+		* sending a zero to the thread will not kill the thread
+		* using the return value it can check of the thread is dead 
+		*/
 		if(pthread_kill(protocolReadThread, 0) != 0)
 		{
 			printf("Protocol reader thread died\nRecreating......\n");
@@ -180,6 +192,7 @@ void *startgpswatchdog(void *ptr)
 	pthread_join(gpsNavigationThread, NULL);	
 }
 
+//! Setup the GPS IO Thread.
 void *setupgps(void *ptr)
 {
 	char *message;
@@ -189,22 +202,32 @@ void *setupgps(void *ptr)
 	setup_gps(UNO,57600);
 }
 
+//! Setup the GPS Navigation Thread.
 void *setupgpsnavigation(void *ptr)
 {
 	printf("GPS Navigation Thread Started\n");
 	
+	/* Point to the destination passed in as a void pointer*/
 	GPSLocation *destination;
 	destination = (GPSLocation *) ptr;
 	printf("destination after gps nav receive lat : %lf\n", destination->latitude);
 	printf("destination after gps nav receive lon : %lf\n", destination->longitude);
 
 	 // struct point Destination = {-2,57.7053,11.9340};
-	 // 	 gps_navigation(Destination);
+	 // gps_navigation(Destination);
 	gps_navigation(destination);
 }
 /* GPS System Functions end here */
 
 /* Indoor System Functions start here */
+
+//!
+/*!
+*
+*
+*
+*
+*/
 void nav_runIndoorSystem(position startTile, position destinationTile)
 {  
   	struct thread_data *data = malloc(sizeof(struct thread_data));
@@ -257,8 +280,8 @@ void nav_runIndoorSystem(position startTile, position destinationTile)
 		result = pthread_mutex_unlock(&indoorNavigationRunningMutex);
 	}
    
-   //initPath(&startTile, &destinationTile);
-//	pthread_join(protocolReadThread, NULL);
+   	//initPath(&startTile, &destinationTile);
+	//pthread_join(protocolReadThread, NULL);
 	pthread_join(indoorNavigationThread, NULL);
 	printf("indoor navigation system shut down\n");
 	free(data); /* clean up */
