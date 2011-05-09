@@ -79,7 +79,7 @@ mega: clean install
 uno: clean install
 
 pc-simulator: clean
-	gcc -DPC -DSIMULATOR $(SRC) -lm -o bin/$(PROG).x
+	gcc -DPC -DSIMULATOR -DDEBUG $(SRC) -lm -o bin/$(PROG).x
 
 pc: clean
 	gcc -DPC $(SRC) -lm -o bin/$(PROG).x
