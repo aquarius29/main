@@ -39,7 +39,7 @@ volatile static uint8_t msgLen = 0;
 volatile static uint8_t bytesReceived = 0;
 volatile static uint8_t isMsgComplete = FALSE;
 
-void usartLoop(void){
+uint8_t *proto_getRxMsg(void){
     while (1) {
         if (isMsgComplete == TRUE) {
             digitalWrite(13, HIGH);
@@ -107,7 +107,7 @@ void setupMega(void){
  * 
  *  @author Joakim 
  */
-uint8_t usartInitMega(void){
+uint8_t proto_usartInitMega(void){
     setupMega(); /* should not be called in prduction code */
     
     /* disable global interrupts */
