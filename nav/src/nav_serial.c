@@ -9,7 +9,7 @@
  *	
  *
  */
-#include "serial.h"
+#include "nav_serial.h"
 
 
 /* wirte data to external device

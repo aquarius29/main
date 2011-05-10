@@ -32,20 +32,10 @@ static void insertCurrentDestinationNode(void) {
     count++;
 }
 static void insertProgressiveNode(void) {
-    if (first == 0) {
-        first = calloc(1, sizeof(progressiveNode));
-        first->p = route.list[count];
-        first->prev = 0;
-        current = first;
-        insertCurrentDestinationNode();
-        insertProgressiveNode();
-    }
-    else {
         current->next->p = route.list[count];
         current->next->prev = current;
         current = current->next;
         insertCurrentDestinationNode();
-    }
 }
 static void freeProgressiveList(void) {
     progressiveNode *temp = NULL;
@@ -57,8 +47,10 @@ static void freeProgressiveList(void) {
 }
 static void setDirection(void) {
 	printf("%d     %d\n", current->next->p.lon, current->next->p.lat);
-    current->next->p.angle = atan2((current->next->p.lat -
-    current->prev->p.lat), (current->next->p.lon - current->prev->p.lon));
+    current->next->p.angle = ((int32_t)((atan2((double)(current->next->p.lat -
+    current->prev->p.lat), (double)(current->next->p.lon -
+    current->prev->p.lon)) / (M_PI/180)))) * (M_PI/180);
+    current->p.angle = current->next->p.angle;
 }
 static void setDistance(void) {
     current->next->p.distance = (sqrt((current->next->p.lon -
@@ -85,26 +77,62 @@ static void updatePosition(void) {
     current->p.lat = current->prev->p.lat + changeY;
 }
 static void sendCommand(void) {
-	int32_t angle = (current->next->p.angle / (M_PI/180)) + 90;
-    //N 0 E 90 S 180 W 270
+    setDirection();
+    setDistance();
+    int32_t angle = (current->next->p.angle / (M_PI/180)) + 90;
+	int32_t prevAngle = (current->prev->p.angle / (M_PI/180)) + 90;
+	printf("%d\n", prevAngle);
+	if (prevAngle != 0) {
+        angle -= prevAngle;
+	    if (angle < 0) {
+	        angle+= 360;
+	    }
+	}
     printf("Move at angle %d\n", angle);
     /*sendautomovementcommand(1, SAFE_HEIGHT, current->next->p.distance,
     angle);*/
+    for (;;) {
+        int8_t bin = commandHandled();
+        if (bin == 1) {
+            navigatePath();
+            break;
+        }
+    }
 }
-static void sendPosition(pixel *pos) {
+int8_t commandHandled (void) {
+    return 1;
+}
+static void sendPosition(roomPosition *pos) {
     printf("Longitude = %d\tLatitude = %d\n", pos->lon, pos->lat);
-    //nav_sendCurrentIndoorPositionToGui(&pos);
+    //nav_sendCurrentIndoorPositionToGui(pos);
 }
 static void sendExpectedPath(positionList *path) {
-    //Give corelogic the calculated path.
+    /* Free path & path->list in corelogic */
+    //path = realloc(path, sizeof(positionList));
     printf("This is the path given by path calc.\n");
     printf("Lines should be drawn between each point in list.\n");
+    //nav_sendIndoorPathToGui(path)
 }
 static void sendActualPath(progressiveNode *first) {
+    /* Free path & path->list in corelogic */
+   /* progressiveNode temp = *first;
+    positionList *path = malloc(sizeof(positionList));
+    path->num = 1;
+    path->list = malloc(sizeof(pixel) * 2);
+    path->list[0] = temp.p;
+    // creating positionList from linked list, must be freed in UI.
+    while (temp.next != 0) {
+        path->list[path->num] = temp.next->p;
+        path->num++;
+        path->list = realloc(path->list, sizeof(pixel) * path->num + 1);
+        temp = *temp.next;
+    }
+    */
     //Give corelogic the finalized path after destination reached.
     printf("This is the path actually taken until ");
     printf("destination reached/nav interrupted.\n");
-}
+    //nav_sendIndoorPathToGui(path);
+    }
 void stopIndoorNavigation(void) {
     //Tell corelogic to tell movement to stop
     printf("Destination reached or indoor navigation interrupted.\n");
@@ -115,7 +143,7 @@ void stopIndoorNavigation(void) {
 }
 //Send start and end point received from corelogic
 //to path calculation.
-void initPath(position *start, position *end) {
+void initPath(tile *start, tile *end) {
     int32_t counterUp = 0;
     running = 1;
     count = 0;
@@ -134,9 +162,15 @@ void initPath(position *start, position *end) {
     }
     printf("num: %d\n", route.num);
     // insert first node and next node for current destination calculation
+    first = calloc(1, sizeof(progressiveNode));
+    first->p = route.list[count];
+    first->prev = 0;
+    first->p.angle = -1.570796; /* Radians for 0 degrees in our system */
+    current = first;
+    insertCurrentDestinationNode();
     insertProgressiveNode();
     sendExpectedPath(&route);
-    navigatePath();
+    sendCommand();
 }
 static void resetTimer(void) {
     gettimeofday(&timer, NULL);
@@ -151,8 +185,8 @@ static void compareTile(void) {
     }
 }
 static void recalc(void) {
-    position a;
-    position b;
+    tile a;
+    tile b;
     a.x = (current->prev->p.lon - TILE_CENTER) / CENTIMETRES_PER_TILE;
     a.y = (current->prev->p.lat - TILE_CENTER) / CENTIMETRES_PER_TILE;
     b.x = (route.list[route.num-1].lon - TILE_CENTER) / CENTIMETRES_PER_TILE;
@@ -169,7 +203,7 @@ static void recalc(void) {
     current->next->p = route.list[count];
     running = 1;
     sendExpectedPath(&route);
-    navigatePath();
+    sendCommand();
 }
 void collisionAvoided(double direction, struct timeval time) {
     running = 0;
@@ -181,7 +215,7 @@ void collisionAvoided(double direction, struct timeval time) {
     compareTile();
     recalc();
 }
-static int32_t check(pixel a, pixel b){
+static int32_t check(roomPosition a, roomPosition b){
     double diffX;
     double diffY;
     diffX = fabs(a.lon - b.lon);
@@ -199,9 +233,6 @@ static void navigatePath(void){
     wait.tv_sec = 0;
     wait.tv_nsec = SLEEP_DURATION;
     resetTimer();
-    setDirection();
-    setDistance();
-    sendCommand();
     /*
      *  Infinite loop until it either reaches point,collision avoidance occurs
      *  or indoor navigation is stopped externally.
@@ -209,7 +240,6 @@ static void navigatePath(void){
     while (running == 1) {
         updatePosition();
         sendPosition(&current->p);
-
         if (check(current->p, current->next->p) == 1) {
             if (check(current->p, route.list[route.num-1]) == 1) {
                 count++;
@@ -226,12 +256,12 @@ static void navigatePath(void){
         nanosleep(&wait, NULL);
     }
     if (bool == 1 && running == 1) {
-        navigatePath();
+        sendCommand();
     }
 }
-/*
-int main(){
-    position a, b;
+
+/*int main(){
+    tile a, b;
     a.x = 1;
     a.y = 1;
     b.x = 9;

@@ -10,7 +10,7 @@
  *
  *
  */
-#include "parser.h"
+#include "nav_gps_parser.h"
 
 
 /* This function is to split data stream(RMC), and get different parts of them. we can

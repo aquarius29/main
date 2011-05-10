@@ -8,7 +8,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "movementcommands.h"
+#include "nav_movementcommands.h"
 
 //! Create a movement command.
 /*!

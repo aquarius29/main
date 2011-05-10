@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "outdoor_structure.h"
+#include "nav_outdoor_structure.h"
 
 struct rmc{
 	 char* id;

@@ -1,14 +1,16 @@
-#ifndef DIJK_H
-#define DIJK_H
-
+/*
+    @author: Qiushi Wang
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "pn.h"
 
-struct link* add_link(char from, char to, int distance,struct link* last);
+#ifndef DIJK_H
+#define DIJK_H
 
-struct link* add_link1(struct link* this, struct link* list);
+#include "nav_pn.h"
+
+struct link* add_link(char from, char to, double distance,struct link* last);
 
 struct link* move_to_trash(struct link *lk,struct link *trash);
 
@@ -35,4 +37,3 @@ void deallocate_trac(struct trac *list);
 struct trac* calculate(char startp,char endp,struct link* lk);
 
 #endif
-

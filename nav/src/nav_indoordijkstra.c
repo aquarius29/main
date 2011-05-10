@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include "nav_indooralgorithms.h"
 #include "nav_indoorstructure.h"
-#include "tilemap.h"
+#include "nav_tilemap.h"
 
 static void dijkstraAddNeighborsToOpen(node * current, nodeList * open,
 nodeList * closed);
@@ -21,7 +21,7 @@ static ThreeDWorld map;
  * If the goal is not reachable or if there is a problem to allocate
  * memory NULL is returned
  */
-positionList indoorDijkstra(const position *start, const position *end)
+positionList indoorDijkstra(const tile *start, const tile *end)
 {
 	int32_t i = 0;
     nodeList *open = NULL;
@@ -201,14 +201,14 @@ nodeList * closed)
 /*
  * Creates the final list and returns a pointer to it
  */
-positionList CreateFinalList(nodeList *closed, const position *goal,
-const position *drone)
+positionList CreateFinalList(nodeList *closed, const tile *goal,
+const tile *drone)
 {
-    pixel temp;  // used to reverse the final list
+    roomPosition temp;  // used to reverse the final list
     int32_t counterUp = 0;
     int32_t counterDown = 0;
     int32_t closedIndex = 0;
-    final.list = calloc(closed->count, sizeof(pixel));
+    final.list = calloc(closed->count, sizeof(roomPosition));
     final.list[0].lon = (goal->x * CENTIMETRES_PER_TILE) + TILE_CENTER;
     final.list[0].lat = (goal->y * CENTIMETRES_PER_TILE) + TILE_CENTER;
     final.num++;
@@ -246,7 +246,7 @@ const position *drone)
     }
 
     // Free node space that is not needed
-    final.list = realloc(final.list, (final.num) * sizeof(pixel));
+    final.list = realloc(final.list, (final.num) * sizeof(roomPosition));
     //final.num = final.num/2 + 1;
     return final;
 }

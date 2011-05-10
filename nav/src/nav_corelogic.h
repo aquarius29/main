@@ -1,60 +1,63 @@
 /*
-* @author	 Jarryd Hall.
-* @brief	 Interface module for the core logic of the abstract navigation system.
+* @author    Jarryd Hall.
+* @brief     Interface module for the core logic of the abstract navigation system.
 */
 
-#include "tilemap.h"
-#include "movementcommands.h"
+#include "nav_tilemap.h"
+#include "nav_movementcommands.h"
 #include "nav_indoorstructure.h"
 
 #ifndef CORELOGIC_H
 #define CORELOGIC_H
 
-int ON_OFF;
+int GPSIO_ON_OFF;
+int GPSNAV_ON_OFF;
+int sendMovement;
+
 
 typedef struct
 {
-	double latitude;
-	double longitude;
+    double latitude;
+    double longitude;
 }
 GPSLocation;
 
 typedef struct
 {
-	position startTile;
-	position destinationTile;
+    tile startTile;
+    tile destinationTile;
 }
 indoorRouteRequest;
 
 typedef struct 
 {
-	GPSLocation *startPoint;
-	GPSLocation *destinationPoint;
+    GPSLocation *startPoint;
+    GPSLocation *destinationPoint;
 }
 outdoorRouteRequest;
 
 struct thread_data
 {
-	position starttile;
-	position destinationtile;
-	char *message;
+    tile starttile;
+    tile destinationtile;
+    char *message;
 };
 
 GPSLocation currentOutdoorPosition;
 
-void nav_sendCurrentIndoorPositionToGui(pixel *currentPosition);
+void nav_sendCurrentIndoorPositionToGui(roomPosition *currentPosition);
 
 void nav_sendCurrentOutdoorPositionToGui(GPSLocation *currentPosition);
 
 void nav_sendOutdoorPathToGui(GPSLocation **path);
 
-void nav_sendIndoorPathToGui(pixel **path);
+void nav_sendIndoorPathToGui(positionList *path);
 
 /* setup gps system */
 void nav_runGpsSystem(GPSLocation *dest);
 
 /* setup the indoor navigation system */
-void nav_runIndoorSystem(position startTile, position destinationTile); 
+void nav_runIndoorSystem(tile startTile, tile destinationTile);
 
 /* send the movement to the movement for handling. */
 void nav_sendManualMovementCommand(movementCommand *move); 
@@ -79,6 +82,12 @@ void nav_killGPSSystem();
 
 /* kill the navigation system e.g. user wants only manual input. */
 void nav_killIndoorNavigationSystem(); 
+
+/* kill the gps navigation system only and schedule it for restart */
+void killGPSNavigationSystem();
+
+/* kill the gps io system only and schedule it for restart*/
+void killGPSIO();
 
 /* Set a new destination for the gps */
 void nav_setGPSDestination(GPSLocation *destination); 

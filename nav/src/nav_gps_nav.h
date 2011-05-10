@@ -2,14 +2,21 @@
 #define GPS_NAV
 
 #include <stdio.h>
-#include "dijk.h"
-
-#include "serial.h"
-#include "parser.h"
+#include "nav_outdoor_dijkstra.h"
+#include "nav_serial.h"
+#include "nav_gps_parser.h"
 
 #include "nav_corelogic.h"
 
-extern int ON_OFF; 
+//extern int ON_OFF;
+
+
+extern int GPSIO_ON_OFF;
+
+extern int GPSNAV_ON_OFF; 
+
+extern int sendMovement;
+
 
 extern GPSLocation currentOutdoorPosition;	/* current position, this data will be modified by gps device reader */ 
 
@@ -19,7 +26,7 @@ int good_data;
 
 void setup_gps(char *dev,int baud);
 
-struct trac* outdoor_nav(struct point *pts,struct point destination);
+struct trac* calc_path(struct point *pts,struct point destination);
 
 void gps_navigation(GPSLocation* Destination);
 
@@ -31,10 +38,20 @@ struct link* connect_nodes(struct dist *st1,struct dist *st2,struct dist *end1,s
 
 int give_angle(struct point currp,struct point dest,struct point *pts,struct trac *next_Node);
 
+int give_distance(struct point currp,struct point dest,struct point *pts,struct trac *next_Node);
+
 void move_a_step(struct point *currp,struct point nextp);
 
 int check_gps_output(char buf []);
 
 int get_goodData();
+
+GPSLocation** path_for_UI(struct trac* path,struct point* pts);
+
+void set_MovementCommand_True(void);
+
+void set_MovementCommand_False(void);
+
+int get_MovementCommand(void);
 
 #endif
