@@ -9,13 +9,14 @@ LIB_OBJ = $(LIB_SRC:.c=.o)
 
 lib-pc: $(LIB_OBJ)
 	ar rvs ../lib/libstab.a $(LIB_OBJ)
-	
+
 lib-mega: $(LIB_OBJ)
 	@echo Objects: $(LIB_OBJ)
 	avr-ar rvs ../lib/libstab.a $(LIB_OBJ)
-	
+
 clean:
 	rm -f *.o
+
 ##########################################################################
 
 

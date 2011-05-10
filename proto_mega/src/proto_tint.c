@@ -13,7 +13,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "proto_lib.h"
-
+struct Message *mPtr;
 void storeForTint(int operation, int source, int meaning, double value)
 {	
 	struct Message * curPtr;

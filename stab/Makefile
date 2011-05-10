@@ -54,26 +54,32 @@ test: EXT=x
 # -Wstrict-prototypes
 #-Wa,-ahlms=$(PROG).lst
 $(OBJ): $(SRC)
-	@ cd src && \
-	avr-g++ -c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -mmcu=$(MMCU) -DARDUINO=22 -DF_CPU=$(F_CPU) -DARDUINO=22 -I../../include ../$(SRC)
+
+	@ cd bin && \
+	avr-g++ -c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -mmcu=$(MMCU) -DARDUINO_DBG=22 -DF_CPU=$(F_CPU) -DARDUINO_DBG=22 -I../../include ../$(SRC)
 	@ echo "Object files created"
 
 compile:
-	@ avr-gcc $(OBJ) -Os -Wl,--gc-sections -mmcu=$(MMCU) -o src/$(PROG).$(EXT) -l$(LIB) -Llib -lm
+	@ avr-gcc $(OBJ) -Os -Wl,--gc-sections -mmcu=$(MMCU) -o bin/$(PROG).$(EXT) -l$(LIB) -Llib -lm
 	@ echo "Project compiled"
 
 #-DENABLE_PWM
 # avr-gcc $(OBJ) -Os -Wl,-Map=$(PROG).map,--cref -mmcu=$(MMCU) -DARDUINO=22 -l$(LIB) -Llib -lm \
-#		-fno-exceptions  -ffunction-sections -fdata-sections -o src/$(PROG).x
+#		-fno-exceptions  -ffunction-sections -fdata-sections -o bin/$(PROG).x
 
 test: clean $(OBJ) compile
 	@ echo "Test passed"
 
 install: $(OBJ) compile
-	@ cd src && avr-objcopy -O srec $(PROG).elf $(PROG).rom
+	@ cd bin && avr-objcopy -O srec $(PROG).elf $(PROG).rom
 #	checksize $(PROG).elf
+<<<<<<< HEAD
+	@ avrdude -p $(MMCU) -P $(USB_PORT) -c $(STK) -b $(BAUD) -F -u -U flash:w:bin/$(PROG).rom
+
+=======
 	@ avrdude -p $(MMCU) -P $(USB_PORT) -c $(STK) -b $(BAUD) -F -u -U flash:w:src/$(PROG).rom
 #	@ avrdude -p $(MMCU) -c $(STK) -b $(BAUD) -F -u -U flash:w:src/$(PROG).rom	
+>>>>>>> 96115443298a257b73535602fdc01195b357bd8e
 
 mega: clean install
 
@@ -86,7 +92,7 @@ pc: clean
 clean:
 	@ cd src && rm -f *.o *.rom *.elf *.map *~ *.lst *.x
 	@ echo "Project cleaned"
-
+	
 version:
 	@ echo $(VERS)
 

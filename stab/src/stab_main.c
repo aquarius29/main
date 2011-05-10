@@ -23,7 +23,7 @@
 #include "stab_interface.h"
 #include "stab.h"
 #include "math.h"
-#include "proto_lib.h"
+#include <proto_lib.h>
 #elif defined ARDUINO 
 #include <stdio.h>
 #include <stdlib.h>
@@ -33,7 +33,7 @@
 #include <Wire.h>
 #include <WProgram.h>
 #include "math.h"
-#include "proto_lib.h"
+#include <proto_lib.h>
 #endif 
 /************************************************************
  * Global variables used to save input/output of the algorithm:
@@ -96,23 +96,25 @@ int16_t stab_init(void)
 int16_t stab_run(void)
 {
 #ifdef PC
-    gyro_vect = init_sim();
-    accel_vect = init_sim();
+    /* gyro_vect = init_sim(); */
+    /* accel_vect = init_sim(); */
   
     /* filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x); // filtered pitch angle */
     /* filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y); // filtered roll angle */
     /* filter_est[2] = comp_filter(acc_vector[2], gyro_vect[2], filter_est[2]); // filtered yaw angle */
     /* filter_vect.z = gyro_vect.z; */
   
-	proto_stabWriteAttitude(12, 13, 14);
-    proto_stabWriteAcc(1, 2, 3);
-    proto_stabWriteHeading(4);
-    proto_stabWriteHeight(5);
-
     /* printf("ESTIMATED X %f\n", filter_vect.x); */
     /* printf("ESTMIATED Y %f\n", filter_vect.y); */
     /* printf("ESTMIATED Z %f\n", filter_vect.z); */
   
+	
+    proto_stabWriteAttitude(8, 9,10);
+    proto_stabWriteAcc(1, 1, 0);
+    proto_stabWriteHeading(180);
+    proto_stabWriteHeight(90);
+	
+	
 #elif defined ARDUINO
     gyro_vect =  read_gyro_data();
     accel_vect = readAccel();
@@ -121,32 +123,32 @@ int16_t stab_run(void)
     heading = (atan2(magn_vect.y , magn_vect.x)+M_PI)*180/M_PI;
     baro = read_baro_data();
       
-    /* Serial.println("Gyro data now:"); */
-    /* Serial.println(gyro_vect.x); */
-    /* Serial.println(gyro_vect.y); */
-    /* Serial.println(gyro_vect.z); */
-    /* Serial.println(); */
+    Serial.println("Gyro data now:");
+    Serial.println(gyro_vect.x);
+    Serial.println(gyro_vect.y);
+    Serial.println(gyro_vect.z);
+    Serial.println();
       
-    /* Serial.println("Accel data now:"); */
-    /* Serial.println(accel_vect.x); */
-    /* Serial.println(accel_vect.y); */
-    /* Serial.println(accel_vect.z); */
-    /* Serial.println(); */
+    Serial.println("Accel data now:");
+    Serial.println(accel_vect.x);
+    Serial.println(accel_vect.y);
+    Serial.println(accel_vect.z);
+    Serial.println();
     
     float d = data(magn_vect.x, magn_vect.y, magn_vect.z);
-    /* Serial.println("Magnetometer data now:"); */
-    /* Serial.println(magn_vect.x); */
-    /* Serial.println(magn_vect.y); */
-    /* Serial.println(magn_vect.z); */
-    /* Serial.println(heading); */
-    /* Serial.print("The constant is: "); */
-    /* Serial.println(d); */
-    /* Serial.println(); */
+    Serial.println("Magnetometer data now:");
+    Serial.println(magn_vect.x);
+    Serial.println(magn_vect.y);
+    Serial.println(magn_vect.z);
+    Serial.println(heading);
+    Serial.print("The constant is: ");
+    Serial.println(d);
+    Serial.println();
 
-    /* Serial.println("Barometer data now:"); */
-    /* Serial.println(baro.temp); */
-    /* Serial.println(baro.pressure); */
-    /* Serial.println(); */
+    Serial.println("Barometer data now:");
+    Serial.println(baro.temp);
+    Serial.println(baro.pressure);
+    Serial.println();
     filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x); // filtered pitch angle
     filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y); // filtered roll angle
     filter_vect.z = comp_filter(heading, gyro_vect.z, filter_vect.z); // filtered yaw angle
@@ -156,11 +158,11 @@ int16_t stab_run(void)
     proto_stabWriteHeading((int)heading);
     proto_stabWriteHeight(baro.height);
       
-    /* Serial.println("Filtered data now:"); */
-    /* Serial.println(filter_vect.x); */
-    /* Serial.println(filter_vect.y); */
-    /* Serial.println(filter_vect.z); */
-    /* Serial.println(); */
+    Serial.println("Filtered data now:");
+    Serial.println(filter_vect.x);
+    Serial.println(filter_vect.y);
+    Serial.println(filter_vect.z);
+    Serial.println();
 
 #endif
   

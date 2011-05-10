@@ -80,10 +80,8 @@ int ca_run(void)
  * read from movement
  */
 int get_dir(void)
-{
-	
+{	
 	int dir = proto_read_direction();
-	//	int dir=2;
 	return  dir;
 }
 

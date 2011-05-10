@@ -173,7 +173,7 @@ int mov_run(void) {
 	/*flight control*/
 	command_logic();
 	/*get the last sensor command*/
-		oldSensorCommand = sensorCommand;
+	oldSensorCommand = sensorCommand;
 	/*get the duration*/
 	duration = 10;
 
@@ -189,9 +189,8 @@ int mov_run(void) {
  */
 void write_to_motor(unsigned char msg){
 #ifndef SIMULATOR
-	//	write_motor(msg);
+	proto_write_motor(msg);
 #endif
-
 }
 
 /*

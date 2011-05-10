@@ -106,20 +106,20 @@ struct stab_gyroscope{
         float pitch;
 	float yaw;
 
-}* gyroPtr;
+};
 
 
 struct stab_accelerometer{
 	float acc_x;
 	float acc_y;
 	float acc_z;
-}* accPtr;
+};
 
 
 struct stab_magnetometer{
 	int heading;
 	float height;
-}* magPtr;
+};
 
 
 void proto_stabWriteAttitude(float roll,float pitch,float yaw);
@@ -168,12 +168,14 @@ struct Message {
 	int meaning;
 	double value;
 	struct Message *next;
-} * mPtr;
+};
 
 void storeForTint(int operation, int source, int meaning, double value);
 
 struct Message * retrieve(void);
 
 void flush(void);
+
+/****************************************************************************/
 
 
