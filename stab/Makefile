@@ -16,10 +16,9 @@
 # Hint:
 #    Launch the Arduino program to see what your USB device 
 #    is called (look under the port settings)
-
-#USB_PORT=$(MYUSB)
-#/dev/ttyACM2
+                                                                                  
 USB_PORT=/dev/ttyACM0
+#USB_PORT=/dev/tty.usbmodem411
 
 #########################################################################
 #########################################################################
@@ -73,13 +72,8 @@ test: clean $(OBJ) compile
 install: $(OBJ) compile
 	@ cd bin && avr-objcopy -O srec $(PROG).elf $(PROG).rom
 #	checksize $(PROG).elf
-<<<<<<< HEAD
 	@ avrdude -p $(MMCU) -P $(USB_PORT) -c $(STK) -b $(BAUD) -F -u -U flash:w:bin/$(PROG).rom
 
-=======
-	@ avrdude -p $(MMCU) -P $(USB_PORT) -c $(STK) -b $(BAUD) -F -u -U flash:w:src/$(PROG).rom
-#	@ avrdude -p $(MMCU) -c $(STK) -b $(BAUD) -F -u -U flash:w:src/$(PROG).rom	
->>>>>>> 96115443298a257b73535602fdc01195b357bd8e
 
 mega: clean install
 
