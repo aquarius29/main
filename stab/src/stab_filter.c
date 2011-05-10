@@ -34,8 +34,6 @@
  ************************************************************/
 void init_filter(void);
 float comp_filter(float acc_scal, float gyro_scal, float old_est);
-void convert_acce_raw_to_deg(float acc_x, float acc_y, float acc_z);
-
 
 /************************************************************
  * Global variables used to save input/output of the algorithm:
@@ -79,17 +77,6 @@ void init_filter()
 }
 
 
-/************************************************************
-* Converts the raw data from the accelerometer to the scaled value
-* in degrees
-************************************************************/
-void convert_acce_raw_to_deg(float acc_x, float acc_y, float acc_z)
-{
-  float R = sqrt((acc_x*acc_x)*(acc_y*acc_y)*(acc_z*acc_z));
-  acc_vector[0] = acos(acc_x/R);
-  acc_vector[1] = acos(acc_y/R);
-  acc_vector[2] = acos(acc_z/R);
-}
 
 
 

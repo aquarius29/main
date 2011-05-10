@@ -11,7 +11,6 @@
 
 #ifdef ARDUINO
 
-#include <stdio.h>
 #include <math.h>
 #include "WProgram.h"
 #include "mov_interface.h"

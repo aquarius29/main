@@ -11,6 +11,8 @@
 #ifdef PC
 #include <stdlib.h>
 #include <stdio.h>
+#elif ARDUINO
+#include "WProgram.h"
 #endif
 
 #include "mov_interface.h"
@@ -47,9 +49,7 @@ void command_logic(void) {
 
 	doCa();
 
-#ifdef DEBUG
     printOrientation();
-#endif
 
     char order = navCommand.order;  
 
@@ -342,11 +342,23 @@ void updateDistanceToTravel(void){
  * print the drone's current attitude,
  * DEBUG only
  */
-#ifdef DEBUG
 void printOrientation(void)
 {
+#ifdef PC
     printf("\n {pitch: %d roll: %d, yaw: %d height: %d distance left: %d}\n", 
 		   sensorCommand.pitch, sensorCommand.roll,sensorCommand.yaw,
 		   sensorCommand.height, distanceToTravel );
-}
+#elif defined ARDUINO
+	Serial.println("##############PRINT ORIENTATION##################");
+	Serial.print("pitch: ");
+	Serial.println(sensorCommand.pitch);
+	Serial.print("roll: ");
+	Serial.println(sensorCommand.roll);
+	Serial.print("yaw: ");
+	Serial.println(sensorCommand.yaw);
+	Serial.print("height: ");
+	Serial.println(sensorCommand.height);
+	Serial.print("distanceToTravel: ");
+	Serial.println(distanceToTravel);
 #endif
+}

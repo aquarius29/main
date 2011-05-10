@@ -7,6 +7,7 @@
  *    11/04/2011: Initial version // Adam
  *    14/04/2011: Added comments //Adam
  *    18/04/2011: Code now reflects coding standards
+ *    26/04/2011: Changed buffer type from byte to char //Adam
  ****************************************************************************/
 #ifdef ARDUINO
 #include <Wire.h>
@@ -42,9 +43,9 @@ float convert_gyro_raw_to_deg_s(float a);
 /*
  * Abstcract function that writes the value to the address given
  */
-void write_data(byte addr, byte value)
+void write_data(byte addr, byte value, byte sensor_addr)
 {
-  Wire.beginTransmission(GYRO_ADDRESS);
+  Wire.beginTransmission(sensor_addr);
   Wire.send(addr);
   Wire.send(value);
   Wire.endTransmission();
@@ -57,10 +58,10 @@ void write_data(byte addr, byte value)
  */
 void init_gyro_hardware()
 {
-  write_data(PWR_M, 0x00);
-  write_data(SMPL, 0x07);
-  write_data(DLPF, 0x1E);
-  write_data(INT_C, 0x00);  
+  write_data(PWR_M, 0x00, GYRO_ADDRESS);
+  write_data(SMPL, 0x07, GYRO_ADDRESS);
+  write_data(DLPF, 0x1E, GYRO_ADDRESS);
+  write_data(INT_C, 0x00, GYRO_ADDRESS);  
 }
 
 /*
@@ -87,7 +88,7 @@ struct vector read_gyro_data()
   vect.y = convert_gyro_raw_to_deg_s(y);
   vect.z = convert_gyro_raw_to_deg_s(z);
 
-  //Serial.println(x);
+  //Serial.println("READ DATA");
   //Serial.println(y);
   //Serial.println(z);
 
