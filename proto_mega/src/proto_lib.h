@@ -13,11 +13,11 @@
 //Collision to Movement Header
 #include <stdint.h>
 #ifdef PC
-//write yaw from movement to collision avodance  
+//ca write yaw  
 void proto_write_yaw(int value);// proto API 
  
  
-//read yaw from movement to collision avodance 
+//movement read yaw 
 int proto_read_yaw(void);// proto API 
 
 
@@ -50,11 +50,11 @@ int proto_run(void);
 
 //movement to collision
 
-//write from movement to collision avodance 
+//write movement
 void proto_write_direction(int value);
  
  
-//read from movement to collision avodance 
+//read ca
 unsigned int proto_read_direction(void);
 
 
