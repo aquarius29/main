@@ -16,7 +16,7 @@
 #endif
 
 #include "ca_interface.h"
-//#include "proto_ca.h"
+#include "proto_lib.h"
 
 
 #ifdef ARDUINO
@@ -81,8 +81,9 @@ int ca_run(void)
  */
 int get_dir(void)
 {
-	//	int dir = read_direction();
-	int dir=2;
+	
+	int dir = proto_read_direction();
+	//	int dir=2;
 	return  dir;
 }
 
@@ -94,6 +95,5 @@ int get_dir(void)
 void write_to_move(int direction){
 
 	/* 0 hover 1 front 2 back 3 left 4 right  REST free to go */
-
-	//	write(direction)
+	proto_write_yaw(direction);
 }
