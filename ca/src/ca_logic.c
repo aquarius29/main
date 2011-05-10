@@ -93,11 +93,8 @@ int direction_filter(void)
 #endif
 
     /* DISTANCE DIFFERENCE-> TOWARDS WHICH IR  */
-    int *distance_diff = (int *) calloc(4, sizeof(int));
-    *distance_diff = ir_distance(IRPIN1) - ir1;
-    *(distance_diff + 1) = ir_distance(IRPIN2) - ir2;
-    *(distance_diff + 2) = ir_distance(IRPIN3) - ir3;
-    *(distance_diff + 3) = ir_distance(IRPIN4) - ir4;
+		int *distance_diff = distance_differ(ir1,ir2,ir3,ir4,
+											 ir_distance(IRPIN1), ir_distance(IRPIN2), ir_distance(IRPIN3),ir_distance(IRPIN4));
 
     unsigned char *moving_close = moving_closer(distance_diff);
     free(distance_diff);
@@ -192,11 +189,8 @@ int direction_filter(int ir1, int ir2, int ir3, int ir4,
 #endif
 
     /* DISTANCE DIFFERENCE-> TOWARDS WHICH IR  */
-    int *distance_diff = calloc(4, sizeof(int));
-    *distance_diff =ir11 - ir1;
-    *(distance_diff + 1) = ir22 - ir2;
-    *(distance_diff + 2) = ir33 - ir3;
-    *(distance_diff + 3) = ir44 - ir4;
+		int *distance_diff = distance_differ(ir1,ir2,ir3,ir4,
+											 ir11, ir22, ir33,ir44);
 
     unsigned char *moving_close = moving_closer(distance_diff);
     free(distance_diff);

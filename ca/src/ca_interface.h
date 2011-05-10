@@ -43,6 +43,8 @@ void outputdirection(int direction);
 void print_result(unsigned char *result);
 
 /* ca_object_calculations.c */
+int *distance_differ(int ir1, int ir2, int ir3, int ir4, 
+					 int ir11, int ir22, int ir33, int ir44);
 unsigned char* moving_closer (int * irDistances);
 
 /* ca_sensors.c */ 
