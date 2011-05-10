@@ -18,9 +18,11 @@
 #endif
 
 #ifndef SIMULATOR
-//#include "proto_mov_motor.h"
+#include "proto_lib.h"
 #endif
 #include "mov_interface.h"
+
+#define SONAR_PIN 5
 
 
 /* global variables*/
@@ -69,7 +71,7 @@ int mov_init()
  */
 int mov_run()
 {
-
+	read_sensorCommand();
 #ifdef DEBUG
 	Serial.println("\n*************LOOOOOOOP**************\n");
 #endif
@@ -135,6 +137,7 @@ int mov_init(void) {
  * running the movement code
  */
 int mov_run(void) {
+	read_sensorCommand();
 #ifdef DEBUG
 	printf("\n \n*********************LOOOOOOOP***************************\n");
 #endif
@@ -170,10 +173,11 @@ int mov_run(void) {
 	/*flight control*/
 	command_logic();
 	/*get the last sensor command*/
-	oldSensorCommand = sensorCommand;
+		oldSensorCommand = sensorCommand;
 	/*get the duration*/
 	duration = 10;
 
+	send_dir_to_ca(2);
 	return 0;
 }
 #endif
@@ -222,6 +226,34 @@ void read_caCommand(void){
 #ifndef SIMULATOR
 	//read collision avoidance command
     //PROTOCOL READ FROM CA
-    caDir = 0;
+    caDir = proto_read_yaw();
+	printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",caDir);
 #endif
 }
+
+void send_dir_to_ca(int i){
+	proto_write_direction(i);
+}
+
+
+
+void read_sensorCommand(void){
+
+	struct stab_gyroscope *stabCommand = proto_stabReadAttitude();
+
+	sensorCommand.pitch = stabCommand->pitch;
+	sensorCommand.roll = stabCommand->roll;
+	sensorCommand.yaw = stabCommand->yaw;
+	sensorCommand.height =(int)sonar_distance(6);
+
+	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.pitch); */
+	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.roll); */
+	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.yaw); */
+	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.height); */
+}
+
+
+
+
+
+
