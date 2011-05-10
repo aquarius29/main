@@ -3,9 +3,8 @@
  *  initial code for prototyping a way to receive serial data on the
  *  USART port
  *
- *  very much a work in progress, will require an overhaul
- *
- *  TODO: can it receive multiple messages???? doesnt look like it
+ *  TODO: an rx-intetrrupt can occur before the last message is copied
+ *  completely to a buffer, code is very unsafe in this regard
  *
  *  author: Joakim
  */
@@ -47,16 +46,14 @@ void usartLoop(void){
 
             /* copy buffer to a new array */
             copyBuf(dataBuffer, completeMsg);
-            if (completeMsg[0] == 4) {
+            if (completeMsg[0] == 3) {
                 digitalWrite(12, HIGH);
+            }
+            else {
+                digitalWrite(12, LOW);
             }
             
             isMsgComplete = FALSE;
-
-            /*
-             *  complete message is received, enable the RX interrupt again
-             */
-            //UCSR0B &= (1 << RXCIE0);            
         }
         else {
             digitalWrite(13, LOW);
@@ -82,15 +79,7 @@ ISR(USART0_RX_vect){
 
             if (bytesReceived == msgLen) {
                 isMsgComplete = TRUE;
-                /* 
-                 *  need to save the buffered data to another place
-                 *  in case a new message arrives while reading the
-                 *  complete message in the non ISR code
-                 */
                 bytesReceived = 0;
-                
-                /* disable RX-complete interrupt until message is read */
-                //UCSR0B &= ~(1 << RXCIE0);
             }
         }
     }
