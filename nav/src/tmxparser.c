@@ -277,7 +277,7 @@ void parseDoc(char *docname, ThreeDWorld *world)
 * @param world The ThreeDWorld that is being filled.
 */
 void fill_map(ThreeDWorld *world) {
-	char *doc = "secondYearSquare.xml";
+	char *doc = "/Users/E0/Dropbox/Code/Embedded/nav/nav/lib/secondYearSquare.xml";
 	parseDoc(doc, world);
     xmlCleanupParser();
 }
