@@ -1,6 +1,6 @@
-########################### Added by jogr 110413 #########################
+########################### Added by Adam 09/05/11 #########################
 
-LIB_SRC=stab_main.c stab_filter.c stab_ra.c stab_rg.c stab_sim.c
+LIB_SRC=read_mg.c stab_filter.c stab_main.c stab_ra.c stab_rb.c stab_rg.c stab_sim.c
 
 LIB_OBJ = $(LIB_SRC:.c=.o)
 
@@ -16,9 +16,7 @@ lib-mega: $(LIB_OBJ)
 	
 clean:
 	rm -f *.o
-	
 ##########################################################################
-
 
 
 
@@ -49,7 +47,7 @@ clean:
 # Hint:
 #    Launch the Arduino program to see what your USB device 
 #    is called (look under the port settings)
-                                                                                  
+
 #USB_PORT=/dev/ttyACM0
 USB_PORT=/dev/tty.usbmodem411
 
@@ -109,12 +107,13 @@ USB_PORT=/dev/tty.usbmodem411
 #clean:
 #	@ cd bin && rm -f *.o *.rom *.elf *.map *~ *.lst *.x
 #	@ echo "Project cleaned"
-	
+
 #help:
 #	@ echo "Check your code includes 'WProgram.h' \nCheck you call 'init()'"
 
 ## reprogram the fuses for the right clock source
 ##fuse:
 ##	avrdude -p atmega168 -c stk200 -U lfuse:w:0x62:m
-	
+
 .PHONY : clean uno due mega install help lib
+

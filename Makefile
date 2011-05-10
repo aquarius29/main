@@ -57,7 +57,7 @@
 #############################################################################
 
 ##  Name of usb-port
-USB_PORT=/dev/tty.usbmodemfa131
+USB_PORT=/dev/tty.usbmodemfa141
 
 ##  Name of executable or image
 PROG=prog
