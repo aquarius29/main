@@ -3,13 +3,20 @@
 
 #include <stdio.h>
 #include "nav_outdoor_dijkstra.h"
-
 #include "nav_serial.h"
 #include "nav_gps_parser.h"
 
 #include "nav_corelogic.h"
 
-extern int ON_OFF; 
+//extern int ON_OFF;
+
+
+extern int GPSIO_ON_OFF;
+
+extern int GPSNAV_ON_OFF; 
+
+extern int sendMovement;
+
 
 extern GPSLocation currentOutdoorPosition;	/* current position, this data will be modified by gps device reader */ 
 
@@ -17,11 +24,9 @@ struct point curr;
 
 int good_data;
 
-int sendMovement;
-
 void setup_gps(char *dev,int baud);
 
-struct trac* outdoor_nav(struct point *pts,struct point destination);
+struct trac* calc_path(struct point *pts,struct point destination);
 
 void gps_navigation(GPSLocation* Destination);
 
@@ -48,6 +53,5 @@ void set_MovementCommand_True(void);
 void set_MovementCommand_False(void);
 
 int get_MovementCommand(void);
-
 
 #endif
