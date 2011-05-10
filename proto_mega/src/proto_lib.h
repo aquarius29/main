@@ -154,9 +154,7 @@ void proto_stabWriteHeading(int heading);
 
 void proto_stabWriteHeight(float height);
 
-struct stab_magscope * retrieve_mag(void);
-struct stab_gyroscope * retrieve_gyro(void);
-struct stab_accelerometer * retrieve_acc(void);
+
 
 struct stab_gyroscope * proto_stabReadAttitude(void);
 struct stab_accscope * proto_stabReadAcc(void);

@@ -158,21 +158,6 @@ void proto_stabWriteHeight(float height){
 #endif
 } 
 
-struct stab_accelerometer * retrieve_acc(void)
-{
-	return accPtr;
-}
-
-struct stab_gyroscope * retrieve_gyro(void)
-{
-	return gyroPtr;
-}
-
-struct stab_magscope * retrieve_mag(void)
-{
-	return magPtr;
-}
-
 
 void createDefaultstabacc(){
 accPtr = malloc(sizeof(struct stab_accelerometer));
