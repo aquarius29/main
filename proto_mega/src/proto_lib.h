@@ -162,7 +162,7 @@ struct stab_magnetometer * proto_stabReadHeading(void);
 struct stab_magnetometer * proto_stabReadHeight(void);
 
 
-void crateDefaultstabgyro();
+void createDefaultstabgyro();
 void createDefaultstabacc();
 void createDefaultstabmag();
 

@@ -174,7 +174,7 @@ magPtr = malloc(sizeof(struct stab_magnetometer));
 	magPtr->height = 0;
 }
 
-void crateDefaultstabgyro(){
+void createDefaultstabgyro(){
 	gyroPtr = malloc(sizeof(struct stab_gyroscope));
        gyroPtr->roll = 0; 
  	gyroPtr->pitch = 0; 
