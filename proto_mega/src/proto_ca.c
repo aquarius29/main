@@ -2,7 +2,7 @@
 * Product: 
 * Version: 
 * Released: April 7 2011
-* Updated: May 05 2011
+* Updated: May 10 2011
 *
 * Copyright (C) 2011 Elnaz Shahmehr
 *
@@ -18,11 +18,11 @@
 /***************************************************************************** 
     Implementations 
 *****************************************************************************/ 
-int raw = -1;//int raw = -1; Default Value
+int yaw = -1;//int raw = -1; Default Value
 
 
 void proto_write_raw(int value){ 
-    raw = value;
+    yaw = value;
 #ifdef PC
 	storeForTint(WRITE, COLLISION, UNKNOWN, value);
 	#ifdef DEBUG
@@ -33,14 +33,14 @@ void proto_write_raw(int value){
 } 
  
  
-unsigned int proto_read_raw(void){ 
+int proto_read_yaw(void){ 
 #ifdef PC
-	storeForTint(READ, MOVEMENT, UNKNOWN, raw);
+	storeForTint(READ, MOVEMENT, UNKNOWN, yaw);
 	#ifdef DEBUG
-	printf("collision avodance value is: %c\n", raw);
+	printf("collision avodance value is: %c\n", yaw);
 	#endif
 #endif
-    return raw; 
+    return yaw; 
 }
 
 

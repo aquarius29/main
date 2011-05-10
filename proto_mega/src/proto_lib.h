@@ -2,7 +2,7 @@
 * Product: 
 * Version: 
 * Released: May 4 2011
-* Updated: May 9 2011
+* Updated: May 10 2011
 *
 * Copyright (C) 2011 Elnaz Shahmehr,Mihail Anton,Navid Amiri ,Pooyan Majd
 *
@@ -18,7 +18,7 @@ void proto_write_yaw(int value);// proto API
  
  
 //read yaw from movement to collision avodance 
-unsigned int proto_read_yaw(void);// proto API 
+int proto_read_yaw(void);// proto API 
 
 
 /****************************************************************************/
