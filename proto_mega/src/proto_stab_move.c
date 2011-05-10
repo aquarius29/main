@@ -45,11 +45,10 @@ struct stab_gyroscope * proto_stabReadAttitude(void){
   return (struct stab_gyroscope *) gyroPtr;
 }
 
-struct stab_accscope * proto_stabReadAcc(void){ 
+struct stab_accelerometer * proto_stabReadAcc(void){ 
   if (accPtr == NULL){
 	createDefaultstabacc();
-}
-	
+}	
 #ifdef PC
  storeForTint(READ, MOVEMENT, UNKNOWN, accPtr->acc_x);
  storeForTint(READ, MOVEMENT, UNKNOWN, accPtr->acc_y);
@@ -58,7 +57,7 @@ struct stab_accscope * proto_stabReadAcc(void){
 	printf("Movement value set to: %d , %d\n", accPtr.acc_x , accPtr.acc_y,accPtr.acc_z);
   #endif
 #endif
-  return (struct stab_accscope *) accPtr;
+  return (struct stab_accelerometer *) accPtr;
 }
  
 

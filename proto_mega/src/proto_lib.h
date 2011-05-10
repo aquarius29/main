@@ -153,7 +153,7 @@ void proto_stabWriteHeight(float height);
 
 
 struct stab_gyroscope * proto_stabReadAttitude(void);
-struct stab_accscope * proto_stabReadAcc(void);
+struct stab_accelerometer * proto_stabReadAcc(void);
 struct stab_magnetometer * proto_stabReadHeading(void);
 struct stab_magnetometer * proto_stabReadHeight(void);
 
