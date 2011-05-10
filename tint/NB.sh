@@ -6,6 +6,8 @@
 ## Change history:
 ##     2011-04-10, Eugene:
 ##         - added sections to clean_up() and copy_code() for handling the Panda scheduler (sched/psched)
+##     2011-05-10, Nikita:
+##         - Commented code
 ##     2011-05-04, Eugene:
 ##         - added create_branch() function for creating new test branch in 'main'
 ##         - finalized copy_code() function
@@ -90,26 +92,31 @@ echolog()
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"  >> "${LOG_FILE}" #quotes because of the whitespaces in file path 
 }
 
-#check_return_value()
-#{
-#    RET_VAL=$1
-#    COMMENT=$2
-#    #cd emb-2011
-#   if [ $RET_VAL -ne 0 ]
-#   then
-#   	echo "FAIL:  $COMMENT"
-#  	exit $RET_VAL
-#   fi
-#}
 
+#
+#Author: Nikita Englund
+check_return_value()
+{
+    RET_VAL=$1
+    COMMENT=$2
+    #cd emb-2011
+   if [ $RET_VAL -ne 0 ]
+   then
+   	echo "FAIL:  $COMMENT"
+  	exit $RET_VAL
+   fi
+}
 
 
 
 ## Initial version of the source code pull function
 ## -----------------------------------------------------------------
+#
+#Author: Nikita Englund
 get_src()
 {
  
+ #Checks if the working directory is right
  #----Working dir------
 cd ..
 cd ..
@@ -119,6 +126,7 @@ echo "The present working directory is `pwd`"
 log "-----------------------"
 
 
+#Changes directory and pulls, then leaves that directory
 
 # ----Pull Moto-----  
   log "Pulling moto ..."
