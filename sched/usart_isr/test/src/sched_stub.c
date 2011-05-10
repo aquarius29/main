@@ -21,6 +21,6 @@ void doSomeScheduling(void){
     
     while (1) {
         proto_run();
-        delay(2000);
+        //delay(2000);
     }
 }

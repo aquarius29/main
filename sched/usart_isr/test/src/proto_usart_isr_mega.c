@@ -3,8 +3,11 @@
  *  initial code for prototyping a way to receive serial data on the
  *  USART port
  *
- *  TODO: an rx-intetrrupt can occur before the last message is copied
+ *  TODO: an rx-interrupt can occur before the last message is copied
  *  completely to a buffer, code is very unsafe in this regard
+ *
+ *  if there is a too long message sent the bytes after the real message
+ *  are still read and treated as a new message. Need to flush the buffer?
  *
  *  author: Joakim
  */
@@ -12,47 +15,27 @@
 /* WProgram.h includes all needed AVR headers */
 #include "WProgram.h"
 
-/* CPU clock speed */
-#define FOSC 16000000UL
-
-/* desired baud-rate */
-#define BAUD 9600
-
-/*
- *  Value for baud-rate register calculated using the defined clock speed
- *  and desired baud-rate. Calculation is taken from atmels datasheet
- */
-#define UBRR_SETTING (uint16_t)((FOSC/(BAUD*16UL))-1)
-
-/* maximum length of message and size of buffer that holds the message */
-#define MAX_MSG_LEN 40
+#include "proto_usart_isr_mega.h"
 
 #define TRUE 1
 #define FALSE 0
 
 static uint8_t copyBuf(volatile uint8_t *source, uint8_t *target);
 
-volatile static uint8_t dataBuffer[MAX_MSG_LEN];
-static uint8_t completeMsg[MAX_MSG_LEN];
-
+static uint8_t completeBuffer[PROTO_MAX_MSG_LEN];
+volatile static uint8_t dataBuffer[PROTO_MAX_MSG_LEN];
 volatile static uint8_t msgLen = 0;
 volatile static uint8_t bytesReceived = 0;
 volatile static uint8_t isMsgComplete = FALSE;
 
+
+uint8_t proto_isRxMsgComplete(void){
+    return isMsgComplete;
+}
+
 uint8_t *proto_getRxMsg(void){
     if (isMsgComplete == TRUE) {
-        digitalWrite(13, HIGH);
-
-        /* copy buffer to a new array */
-        copyBuf(dataBuffer, completeMsg);
-        if (completeMsg[0] == 3) {
-            digitalWrite(12, HIGH);
-        }
-        else {
-            digitalWrite(12, LOW);
-        }
-            
-        isMsgComplete = FALSE;
+        return completeBuffer;
     }
     else {
         return NULL;
@@ -69,7 +52,7 @@ ISR(USART0_RX_vect){
 
     data = UDR0;
         
-    if (bytesReceived > 0 && bytesReceived < MAX_MSG_LEN) {
+    if (bytesReceived > 0 && bytesReceived < PROTO_MAX_MSG_LEN) {
         if (bytesReceived <= msgLen) {
             
             dataBuffer[bytesReceived] = data;
@@ -77,6 +60,8 @@ ISR(USART0_RX_vect){
 
             if (bytesReceived == msgLen) {
                 isMsgComplete = TRUE;
+                copyBuf(dataBuffer, completeBuffer);
+                /* flush buffer here? */
                 bytesReceived = 0;
             }
         }
@@ -86,7 +71,7 @@ ISR(USART0_RX_vect){
         dataBuffer[bytesReceived] = msgLen;
         bytesReceived++;
     }
-    else if (bytesReceived >= MAX_MSG_LEN) {
+    else if (bytesReceived >= PROTO_MAX_MSG_LEN) {
         // too long message, light upp error-led
         digitalWrite(12, HIGH);
     }
@@ -120,8 +105,8 @@ uint8_t proto_usartInitMega(void){
     UCSR0C = (1 << UCSZ01) | (1 << UCSZ00);
     
     /* set baud rate registers */
-    UBRR0H = (uint8_t)(UBRR_SETTING >> 8);
-    UBRR0L = (uint8_t)UBRR_SETTING;
+    UBRR0H = (uint8_t)(PROTO_UBRR_SETTING >> 8);
+    UBRR0L = (uint8_t)PROTO_UBRR_SETTING;
 
     /* enable RX-complete interrupt, receiver and transmitter */
     UCSR0B = (1 << RXCIE0) | (1 << RXEN0) | (1 << TXEN0);
@@ -132,21 +117,19 @@ uint8_t proto_usartInitMega(void){
     return 1;
 }
 
+/*
+ *  is this unsafe with regard to getting out of bounds? 
+ */
 static uint8_t copyBuf(volatile uint8_t *source, uint8_t *target){
     register uint8_t i;
     
-    for (i = 0; i < msgLen; i++) {
-        target[i] = source[i]; 
+    if (source != NULL && target != NULL) {
+        for (i = 0; i < msgLen; i++) {
+            target[i] = source[i]; 
+        }
+        return 1;
     }
-
-    return 1;
+    else {
+        return 0;
+    }
 }
-
-// static uint8_t copyBuf(volatile uint8_t *source, uint8_t *target){
-//     while (*source != '\0') {
-//         *target++ = *source++;
-//     }
-//     
-//     return 1;
-// }
-
