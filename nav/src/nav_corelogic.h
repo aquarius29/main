@@ -10,7 +10,10 @@
 #ifndef CORELOGIC_H
 #define CORELOGIC_H
 
-int ON_OFF;
+int GPSIO_ON_OFF;
+int GPSNAV_ON_OFF;
+int sendMovement;
+
 
 typedef struct
 {

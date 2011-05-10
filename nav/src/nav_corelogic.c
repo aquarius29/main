@@ -203,7 +203,7 @@ void *startgpswatchdog(void *ptr)
 //! Setup the GPS IO Thread.
 void *setupgps(void *ptr)
 {
-	GPSIO_ON_OFF = 1;
+    GPSIO_ON_OFF = 1;
 
     char *message;
     message = (char *) ptr;
@@ -217,7 +217,7 @@ void *setupgpsnavigation(void *ptr)
 {
     printf("GPS Navigation Thread Started\n");
     
-	GPSNAV_ON_OFF = 1;
+    GPSNAV_ON_OFF = 1;
 
     /* Point to the destination passed in as a void pointer*/
     GPSLocation *destination;

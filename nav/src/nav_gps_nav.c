@@ -1,36 +1,25 @@
 /*
 
-	gps_nav.c: integrate the gps-outdoor-navigation system. Give interface to CoreLogic of Navigation.
+	@file: nav_gps_nav.c
 
 	@author: Qiushi Wang
 
-	Date: May 1st, 2011
+	@date: May 10th, 2011
+
+	@detail: internal integration of the GPS Navigation System, give interface to Nav-Corelogic. 
 
 	to do:
-		1. handle bad data in parser.c . 
+		1. when could not receive good data in a long period, stop the GPS IO loop. 
 		2. send movement command.
 */
 #include "nav_gps_nav.h"
-
-/*
-int main(void)
-{
-//	struct point Destination = {-2,in_degree(5742.307),in_degree(1156.002)};
-
-	ON_OFF = 1;
-
-	setup_gps(UNO1,57600);			
-
-	gps_navigation(Destination);
-
-return 0;
-}
-*/
 
 
 void setup_gps(char *dev,int baud)
 {
 	good_data = 0;
+
+	GPSLocation *curr_position_UI = NULL;
 
 	currentOutdoorPosition.latitude = 0;
 	currentOutdoorPosition.longitude = 0;
@@ -48,7 +37,7 @@ void setup_gps(char *dev,int baud)
 
 	usleep(1000*1000);
 
-	while(ON_OFF){
+	while(GPSIO_ON_OFF){
 
 	    	serial_read(fd,buf,10);
 
@@ -69,7 +58,20 @@ void setup_gps(char *dev,int baud)
 				if(currentOutdoorPosition.latitude != 0)
 				{
 					good_data = 1;
-				}else{
+					/*
+					// send current position to UI
+					
+					curr_position_UI = malloc(sizeof(GPSLocation));	
+
+					curr_position_UI->latitude = curr.lat;
+					curr_position_UI->longitude = curr.lon;				
+
+					nav_sendCurrentOutdoorPositionToGui(curr_position_UI);
+
+					*/
+				}
+				else
+				{
 					good_data = 0;
 				}
 	
@@ -89,19 +91,33 @@ void gps_navigation(GPSLocation* Destination)
 
 	struct point *pts = init_map(); 			
 
-	struct trac *path = outdoor_nav(pts,destination); 	
+	struct trac *path = calc_path(pts,destination); 	
 
-//	GPSLocation **path_UI = path_for_UI(path,pts);
+	GPSLocation **path_UI = path_for_UI(path,pts);	// Path to UI 
 
-	/* send UI the path */
+/*	printf("UI:  %f,%f\n",path_UI[0]->latitude,path_UI[0]->longitude);
+	printf("UI:  %f,%f\n",path_UI[1]->latitude,path_UI[1]->longitude);
+	printf("UI:  %f,%f\n",path_UI[2]->latitude,path_UI[2]->longitude);
+	printf("UI:  %f,%f\n",path_UI[3]->latitude,path_UI[3]->longitude);
+	printf("UI:  %f,%f\n",path_UI[4]->latitude,path_UI[4]->longitude);
+	printf("UI:  %f,%f\n",path_UI[5]->latitude,path_UI[5]->longitude);
+	printf("UI:  %f,%f\n",path_UI[6]->latitude,path_UI[6]->longitude);
+	printf("UI:  %f,%f\n",path_UI[7]->latitude,path_UI[7]->longitude);
+*/
 
+	/* 
+	//send UI the path 
+
+	nav_sendOutdoorPathToGui(GPSLocation path_UI);
+	*/
+	
 	struct trac *next_Node = path;
 
 	int angle = 0;
 
 	int distance_to_nextNode = 0; 
 
-	while(ON_OFF)
+	while(GPSNAV_ON_OFF)
 	{
 		next_Node = update_path(curr,destination,pts,next_Node);
 
@@ -133,11 +149,12 @@ void gps_navigation(GPSLocation* Destination)
 	set_MovementCommand_False();
 
 	}//sendMovement=1
-
 	*/
 	
 	sleep(1);
 }
+
+	/* dealloc */
 	free(pts);
 	deallocate_trac(path);
 }
@@ -283,7 +300,7 @@ struct link* connect_nodes(struct dist *st1,struct dist *st2,struct dist *end1,s
 
 
 
-struct trac *outdoor_nav(struct point *pts,struct point destination)
+struct trac *calc_path(struct point *pts,struct point destination)
 {
 	struct link *lk = NULL;
 	struct dist *st_1, *st_2, *end_1, *end_2;	/* options of */
@@ -387,6 +404,8 @@ int get_goodData()
 
 
 
+
+/* generate the path what's gonna be sent to UI */
 GPSLocation **path_for_UI(struct trac* path,struct point* pts)
 {
 	struct trac *currp = path;
@@ -397,13 +416,29 @@ GPSLocation **path_for_UI(struct trac* path,struct point* pts)
 
 	int i = 0;
 
+	Route = malloc(sizeof(GPSLocation*));
+
 	while(currp != NULL)
 	{
-		Route = malloc(sizeof(GPSLocation));
+		if(i != 0)
+		Route = realloc(Route,(i+1)*sizeof(GPSLocation*));
 
-		Route[i]->latitude = pts[currp->p - 1].lat;
-		Route[i]->longitude = pts[currp->p - 1].lon;
-		//Route [i] = node;
+		node = malloc(sizeof(GPSLocation));
+
+		if(i == 0)
+		{
+		node->latitude = curr.lat;
+		node->longitude = curr.lon;		
+		}
+		else
+		{
+		node->latitude = pts[currp->p - 1].lat;
+		node->longitude = pts[currp->p - 1].lon;
+		}
+
+		printf("%d index \n",i);
+		Route [i] = node;
+
 		currp = currp->last;
 		i++;		
 	}
@@ -412,18 +447,3 @@ GPSLocation **path_for_UI(struct trac* path,struct point* pts)
 }
 
 
-
-void set_MovementCommand_True(void)
-{
-	sendMovement = 1;			
-}
-
-void set_MovementCommand_False(void)
-{
-	sendMovement = 0;		
-}
-
-int get_MovementCommand(void)
-{
-	return sendMovement;
-}
