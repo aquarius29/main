@@ -40,24 +40,22 @@ volatile static uint8_t bytesReceived = 0;
 volatile static uint8_t isMsgComplete = FALSE;
 
 uint8_t *proto_getRxMsg(void){
-    while (1) {
-        if (isMsgComplete == TRUE) {
-            digitalWrite(13, HIGH);
+    if (isMsgComplete == TRUE) {
+        digitalWrite(13, HIGH);
 
-            /* copy buffer to a new array */
-            copyBuf(dataBuffer, completeMsg);
-            if (completeMsg[0] == 3) {
-                digitalWrite(12, HIGH);
-            }
-            else {
-                digitalWrite(12, LOW);
-            }
-            
-            isMsgComplete = FALSE;
+        /* copy buffer to a new array */
+        copyBuf(dataBuffer, completeMsg);
+        if (completeMsg[0] == 3) {
+            digitalWrite(12, HIGH);
         }
         else {
-            digitalWrite(13, LOW);
+            digitalWrite(12, LOW);
         }
+            
+        isMsgComplete = FALSE;
+    }
+    else {
+        return NULL;
     }
 }
 

@@ -10,6 +10,8 @@
 #ifndef PROTO_STUB_H
 #define PROTO_STUB_H
  
+#include <stdint.h>
+ 
 uint8_t proto_init(void);
 uint8_t proto_run(void);
 
