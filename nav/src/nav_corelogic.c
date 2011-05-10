@@ -28,6 +28,9 @@ pthread_t gpsSetupThread;
 pthread_t gpsNavigationThread;
 pthread_t indoorNavigationThread;
 
+int GPSIO_ON_OFF;
+int GPSNAV_ON_OFF;
+int sendMovement;
 int protocolReading = 0;
 
 static pthread_mutex_t watchdogMutex = PTHREAD_MUTEX_INITIALIZER;
@@ -56,8 +59,8 @@ void nav_runGpsSystem(GPSLocation *dest)
     printf("Initiating GPS System\n");
     
     gpsRunning = 1;
-    ON_OFF = 1;
     
+
     GPSLocation *destination = malloc(sizeof(GPSLocation));
     *destination = *dest;
     
@@ -135,6 +138,9 @@ void *startgpswatchdog(void *ptr)
     //! As long as the GPS System is running, monitor the GPS Threads.
     while (gpsRunning == 1)
     {
+		
+		//killGPSIO();
+		
         /*! pthread_kill(someThread, 0)
         * sending a zero to the thread will not kill the thread
         * using the return value it can check of the thread is dead 
@@ -196,6 +202,8 @@ void *startgpswatchdog(void *ptr)
 //! Setup the GPS IO Thread.
 void *setupgps(void *ptr)
 {
+	GPSIO_ON_OFF = 1;
+
     char *message;
     message = (char *) ptr;
     printf("%s\n", message);
@@ -208,6 +216,8 @@ void *setupgpsnavigation(void *ptr)
 {
     printf("GPS Navigation Thread Started\n");
     
+	GPSNAV_ON_OFF = 1;
+
     /* Point to the destination passed in as a void pointer*/
     GPSLocation *destination;
     destination = (GPSLocation *) ptr;
@@ -396,6 +406,7 @@ void *readProtocol(void *ptr)
         /* Add functions to read different bullshit from the protocol*/
 		/* if (Read from protocol to get the confirmation of a movement command received == 1) 
 		{
+			
 			set_MovementCommand_True();
 		}
 		*/
@@ -411,8 +422,21 @@ void killGPSSystem()
     result = pthread_mutex_lock(&watchdogMutex);
     gpsRunning = 0;
     result = pthread_mutex_unlock(&watchdogMutex);
+	
+	GPSIO_ON_OFF = 0;
+	GPSNAV_ON_OFF = 0;
+	
+    /* result = pthread_cancel(gpsNavigationThread); */
+}
 
-    result = pthread_cancel(gpsNavigationThread);
+void killGPSNavigationSystem()
+{
+	GPSNAV_ON_OFF = 0;
+}
+
+void killGPSIO()
+{
+	GPSIO_ON_OFF = 0;
 }
 
 // function to kill the navigation system e.g. the user wants only manual input.
@@ -467,22 +491,25 @@ void nav_sendIndoorPathToGui(positionList *path)
 }
 /* End interface:out functions for connectivity group */
 
-
 int main(int argc, char **argv) {
- /*
+
  GPSLocation *Destination = malloc(sizeof(GPSLocation));
  Destination->latitude = 57.7053;
  Destination->longitude = 11.9340;
 
 nav_runGpsSystem(Destination);
-*/
+
+
+/*
     position a, b;
     a.x = 1;
     a.y = 1;
     b.x = 9;
     b.y = 5;
     nav_runIndoorSystem(a, b);
- return 0;
+*/
+ 
+return 0;
 
 }
 
@@ -491,6 +518,14 @@ int16_t nav_init(void)
     return 0;
 }
 
+//! Run function to start the navigation system.
+/*! Run function that waits for a decision to start the
+* 	indoor or gps(outdoor) systems.
+*	
+*	It reads using the protocol read functions and checks
+*	the return values before starting the chosen system.
+*
+*/
 int16_t nav_run(void)
 {
 	/*

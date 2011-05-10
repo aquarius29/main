@@ -80,6 +80,12 @@ void nav_killGPSSystem();
 /* kill the navigation system e.g. user wants only manual input. */
 void nav_killIndoorNavigationSystem(); 
 
+/* kill the gps navigation system only and schedule it for restart */
+void killGPSNavigationSystem();
+
+/* kill the gps io system only and schedule it for restart*/
+void killGPSIO();
+
 /* Set a new destination for the gps */
 void nav_setGPSDestination(GPSLocation *destination); 
 
