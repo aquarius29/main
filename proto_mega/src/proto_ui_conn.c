@@ -136,7 +136,7 @@ storeForTint(WRITE,CONNECTIVITY, UNKNOWN, instruct);
     {
 	  //	instructions = "stay on current position";
 	  
-			printf("stay on current position\n");
+			//printf("stay on current position\n");
 			 
 	}
 }

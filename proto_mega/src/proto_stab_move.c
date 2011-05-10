@@ -14,10 +14,10 @@
  
  #ifdef PC
    #include <stdio.h>
-   #include <stdlib.h>
+   
    #include <string.h>
 #endif
-
+	#include <stdlib.h>
  #include "proto_lib.h"
  
 /***************************************************************************** 
@@ -42,7 +42,7 @@ struct stab_gyroscope * proto_stabReadAttitude(void){
 	printf("Movement value set to: %d , %d\n", gyroPtr.roll , gyroPtr.pitch,gyroPtr.yaw);
   #endif
 #endif
-  return gyroPtr;
+  return (struct stab_gyroscope *) gyroPtr;
 }
 
 struct stab_accscope * proto_stabReadAcc(void){ 
@@ -58,7 +58,7 @@ struct stab_accscope * proto_stabReadAcc(void){
 	printf("Movement value set to: %d , %d\n", accPtr.acc_x , accPtr.acc_y,accPtr.acc_z);
   #endif
 #endif
-  return accPtr;
+  return (struct stab_accscope *) accPtr;
 }
  
 
@@ -74,7 +74,7 @@ struct stab_magnetometer * proto_stabReadHeading(void){
   #endif
 #endif
 
-  return magPtr;
+  return (struct stab_magnetometer *) magPtr;
 }
 
 
@@ -90,7 +90,7 @@ struct stab_magnetometer * proto_stabReadHeight(void){
   #endif
 #endif
 
-  return magPtr;
+  return (struct stab_magnetometer *) magPtr;
 
 }
 
@@ -99,7 +99,7 @@ struct stab_magnetometer * magnetometerPtr;
 void proto_stabWriteHeading(int heading){ 
 	
 	if (magPtr == NULL)
-		magPtr = malloc(sizeof(struct stab_magnetometer));
+		magPtr = (struct stab_magnetometer *) malloc(sizeof(struct stab_magnetometer));
 	magPtr->heading = heading;
    
 #ifdef PC
@@ -113,7 +113,7 @@ void proto_stabWriteHeading(int heading){
 
 void proto_stabWriteAcc(float acc_x,float acc_y,float acc_z){ 
 	if (accPtr == NULL)
-	accPtr = malloc(sizeof(struct stab_accelerometer));
+	accPtr = (struct stab_accelerometer *) malloc(sizeof(struct stab_accelerometer));
         accPtr->acc_x = acc_x;
         accPtr->acc_y = acc_y;
         accPtr->acc_z = acc_z;	
@@ -129,7 +129,7 @@ void proto_stabWriteAcc(float acc_x,float acc_y,float acc_z){
 
 void proto_stabWriteAttitude(float roll,float pitch,float yaw){ 
        if (gyroPtr == NULL)
-	gyroPtr = malloc(sizeof(struct stab_gyroscope));
+	gyroPtr = (struct stab_gyroscope *) malloc(sizeof(struct stab_gyroscope));
 	gyroPtr->roll = roll; 
  	gyroPtr->pitch = pitch; 
  	gyroPtr->yaw = yaw; 
@@ -147,7 +147,7 @@ void proto_stabWriteAttitude(float roll,float pitch,float yaw){
 
 void proto_stabWriteHeight(float height){
 	if (magPtr == NULL)
-		magPtr = malloc(sizeof(struct stab_magnetometer));
+		magPtr = (struct stab_magnetometer *) malloc(sizeof(struct stab_magnetometer));
 	magPtr->height = height;
 #ifdef PC
  storeForTint(WRITE, STAB, UNKNOWN, magPtr->height);
@@ -159,7 +159,7 @@ void proto_stabWriteHeight(float height){
 
 
 void createDefaultstabacc(){
-accPtr = malloc(sizeof(struct stab_accelerometer));
+accPtr = (struct stab_accelerometer *) malloc(sizeof(struct stab_accelerometer));
 
 	 accPtr->acc_x = 3;
         accPtr->acc_y = 4;
@@ -167,14 +167,14 @@ accPtr = malloc(sizeof(struct stab_accelerometer));
 }
 
 void createDefaultstabmag(){
-magPtr = malloc(sizeof(struct stab_magnetometer));
+magPtr = (struct stab_magnetometer *) malloc(sizeof(struct stab_magnetometer));
       
       magPtr->heading = 0;
 	magPtr->height = 0;
 }
 
 void createDefaultstabgyro(){
-	gyroPtr = malloc(sizeof(struct stab_gyroscope));
+	gyroPtr = (struct stab_gyroscope *)malloc(sizeof(struct stab_gyroscope));
        gyroPtr->roll = 0; 
  	gyroPtr->pitch = 0; 
  	gyroPtr->yaw = 0; 
