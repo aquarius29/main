@@ -77,22 +77,12 @@ ISR(USART0_RX_vect){
     }
 }
 
-/* Remove this function later */
-void setupMega(void){
-    pinMode(13, OUTPUT);
-    pinMode(12, OUTPUT);
-    digitalWrite(13, LOW);
-    digitalWrite(12, LOW);
-}
-
 /*
  *  USART initialization function for USART port 0
  * 
  *  @author Joakim 
  */
 uint8_t proto_usartInitMega(void){
-    setupMega(); /* should not be called in prduction code */
-    
     /* disable global interrupts */
     cli();
     

@@ -21,7 +21,13 @@ uint8_t proto_run(void){
         /* copy to local buffer */
         copyBuf(proto_getRxMsg(), msgBuffer);
         
-        /* de-serialize data and re-construct the sent struct */
+        if (msgBuffer[0] == 4) {
+            digitalWrite(12, HIGH);
+        }
+        
+        /* de-serialize data and re-construct the received struct */
+
+        /* figure out what message it is and put it in the right place */
         
         return 1;
     }

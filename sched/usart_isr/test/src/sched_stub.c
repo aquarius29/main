@@ -15,12 +15,23 @@
 
 #include "sched_stub.h"
 #include "proto_stub.h"
+#include "group_stub.h"
+
+void setupMega(void){
+    pinMode(13, OUTPUT);
+    pinMode(12, OUTPUT);
+    digitalWrite(13, LOW);
+    digitalWrite(12, LOW);
+}
 
 void doSomeScheduling(void){
+    setupMega();
+
     proto_init();
     
     while (1) {
         proto_run();
-        //delay(2000);
+        group_run();
+//        delay(50);
     }
 }

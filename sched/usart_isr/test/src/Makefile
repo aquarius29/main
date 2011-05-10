@@ -1,6 +1,6 @@
 ########################### Added by jogr 110413 #########################
 
-LIB_SRC_MEGA=proto_usart_isr_mega.c proto_stub.c sched_stub.c
+LIB_SRC_MEGA=proto_usart_isr_mega.c proto_stub.c sched_stub.c group_stub.c
 LIB_SRC_UNO=usart_isr_uno.c
 #LIB_SRC_PC=port.c
 LIB_SRC_PC=port_test.c proto_serial_port.c proto_serial_comm.c proto_serializer.c
