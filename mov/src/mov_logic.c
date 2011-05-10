@@ -49,50 +49,70 @@ void command_logic(void) {
     printOrientation();
 #endif
     char order = navCommand.order;  
-	/*
-	 *If order is set to move, 
-	 *we will attempt to control height, heading, and movement
-	 */
+
 	if (order == '1') {
-		updateDistanceToTravel();
-		check_heading();
-		check_pitch_roll(1);
-		check_changingAltitude();
-		check_height();
-	
-    }
-	/*If order is set land, we attempt to go into hover mode and then land */
-	else if(order == '2') {
-		distanceToTravel = 0;
-		check_pitch_roll(0);
-		check_heading();
-		check_changingAltitude();
-		if (sensorCommand.height <= 0){
-			heightArrived = 1;
-			stop_motors();
-		}
-		/*Order is invalid. Land! */
-		else { 
-			land(); 
-#ifdef SIMULATOR
-			/* simulated - decrease the sensed height */
-			sensorCommand.height = readSensorTest(sensorCommand.height, 'd');
-#endif
-		} 
-    }
-    /*
-	 *If Order is Hover, we will not attempt to move a distance.
-	 * Our pitch and roll is set to hover mode 
-	 */
-    else { 
-		distanceToTravel = 0;
-		check_heading();
-		check_pitch_roll(0);
-		check_changingAltitude();
-		check_height();
+		moveCommand();
+    }else if(order == '2') {
+		landCommand();
+    }else { 
+		hoverCommand();
 	} 
 
 }
+
+
+/*
+ *If Order is Hover, we will not attempt to move a distance.
+ * Our pitch and roll is set to hover mode 
+ */
+void hoverCommand(void) {
+	distanceToTravel = 0;
+	check_heading();
+	check_pitch_roll(0);
+	check_changingAltitude();
+	check_height();
+}
+
+/*
+ *If order is set to move, 
+ *we will attempt to control height, heading, and movement
+ */
+void moveCommand (void){
+	if(yawArrived!=1){
+		check_heading();
+		check_pitch_roll(0);
+		check_changingAltitude();
+		check_height();
+	}
+	else{
+		updateDistanceToTravel();
+		check_pitch_roll(1);
+		check_changingAltitude();
+		check_height();
+	}
+}
+
+/*
+ *If order is set land, 
+ *we attempt to go into hover mode and then land 
+ */
+void landCommand(void){
+	navCommand.height=0;
+	hoverCommand();
+	if (sensorCommand.height <= 0){
+		heightArrived = 1;
+		stop_motors();
+	}
+	/*Order is invalid. Land! */
+	else { 
+		land(); 
+#ifdef SIMULATOR
+		/* simulated - decrease the sensed height */
+		sensorCommand.height = readSensorTest(sensorCommand.height, 'd');
+#endif
+	} 
+}
+
 
 /*
  * Check the collision avoidance

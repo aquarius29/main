@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+
 #include "mov_interface.h"
 
 
@@ -102,7 +103,7 @@ int get_loc(char line[], char c, int indexOfChar){
 
 /*
  * (rand() % (max - min + 1) + min)
- *
+ * for simulating the sensor data
  */
 int readSensorTest(int currentSensor, char command){
    

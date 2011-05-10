@@ -180,8 +180,6 @@ int mov_run(void) {
 
 
 
-
-
 /*
  * send message to motor
  */
@@ -192,7 +190,9 @@ void write_to_motor(unsigned char msg){
 
 }
 
-
+/*
+ * write message to navigation
+ */
 void write_to_nav(void) {
 #ifndef SIMULATOR
 	//write to navigation
@@ -200,6 +200,9 @@ void write_to_nav(void) {
 }
 
 
+/*
+ * read navigation Command
+ */
 void read_navCommand(void) {
 #ifndef SIMULATOR
 	//read navigation command
@@ -212,6 +215,9 @@ void read_navCommand(void) {
 }
 
 
+/*
+ * read collision avoidance command
+ */
 void read_caCommand(void){
 #ifndef SIMULATOR
 	//read collision avoidance command

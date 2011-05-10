@@ -12,7 +12,6 @@
 
 #include <stdio.h>
 
-/* global variables*/
 struct nav
 {
 	char type;
