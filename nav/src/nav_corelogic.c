@@ -28,10 +28,6 @@ pthread_t gpsSetupThread;
 pthread_t gpsNavigationThread;
 pthread_t indoorNavigationThread;
 
-int GPSIO_ON_OFF;
-int GPSNAV_ON_OFF;
-int sendMovement;
-
 int protocolReading = 0;
 
 static pthread_mutex_t watchdogMutex = PTHREAD_MUTEX_INITIALIZER;
