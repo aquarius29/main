@@ -2,7 +2,7 @@
  * file:         mov_logic.c
  * brief:        Contains the logic for calculate movement
  * author:       
- * date:         2011-05-03
+ * date:         2011-05-10
  * version:      0.1
  * history      
  *
@@ -44,10 +44,13 @@ extern struct sensor oldSensorCommand;
  * And then move according to the movement orders
  */
 void command_logic(void) {
+
 	doCa();
+
 #ifdef DEBUG
     printOrientation();
 #endif
+
     char order = navCommand.order;  
 
 	if (order == '1') {
@@ -57,7 +60,6 @@ void command_logic(void) {
     }else { 
 		hoverCommand();
 	} 
-
 }
 
 

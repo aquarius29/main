@@ -2,7 +2,7 @@
  * file:         mov_interface.h
  * brief:
  * author:       Yanling Jin, Amber Olsson
- * date:         2011-05-03
+ * date:         2011-05-10
  * version:      0.1
  * history      
  *
@@ -40,7 +40,7 @@ void check_heading(void);
 void check_pitch_roll(int isHovering);
 void updateDistanceToTravel(void);
 void check_changingAltitude(void);
-double get_acceleration();
+void doCa(void);
 #ifdef DEBUG
 void printOrientation(void);
 #endif
@@ -90,7 +90,6 @@ int mov_init(void);
 int mov_run(void);
 void read_navCommand(void);
 void read_caCommand(void);
-void doCa(void);
 void write_to_motor(unsigned char msg);
 
 /*mov_sensor.c*/
