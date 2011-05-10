@@ -32,6 +32,9 @@ struct sensor
 
 /*mov_logic.c*/
 void command_logic(void);
+void hoverCommand(void);
+void moveCommand (void);
+void landCommand(void);
 void check_height(void);
 void check_heading(void);
 void check_pitch_roll(int isHovering);

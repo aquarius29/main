@@ -85,6 +85,9 @@ pc: clean
 	gcc -DPC $(SRC) -lm -o bin/$(PROG).x
 
 
+pc-debug: clean
+	gcc -DPC -DDEBUG $(SRC) -lm -o bin/$(PROG).x
+
 clean:
 	@ cd bin && rm -f *.o *.rom *.elf *.map *~ *.lst *.x
 	@ echo "Project cleaned"
