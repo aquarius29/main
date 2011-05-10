@@ -236,7 +236,7 @@ void *setupgpsnavigation(void *ptr)
 *
 *
 */
-void nav_runIndoorSystem(position startTile, position destinationTile)
+void nav_runIndoorSystem(tile startTile, tile destinationTile)
 {  
     struct thread_data *data = malloc(sizeof(struct thread_data));
         data->starttile = startTile;
@@ -466,7 +466,7 @@ void nav_sendManualMovementCommand(movementCommand *move)
 /* End functions that are using the protocol */
 
 /* Begin interface:out functions for connectivity group */
-void nav_sendCurrentIndoorPositionToGui(pixel *currentPosition)
+void nav_sendCurrentIndoorPositionToGui(roomPosition *currentPosition)
 {
     /* Put connectivity library function here*/
 }
@@ -490,24 +490,23 @@ void nav_sendIndoorPathToGui(positionList *path)
 
 int main(int argc, char **argv) {
 
+    /*
  GPSLocation *Destination = malloc(sizeof(GPSLocation));
  Destination->latitude = 57.7053;
  Destination->longitude = 11.9340;
 
 nav_runGpsSystem(Destination);
+*/
 
 
-/*
-    position a, b;
+    tile a, b;
     a.x = 1;
     a.y = 1;
     b.x = 9;
     b.y = 5;
     nav_runIndoorSystem(a, b);
-*/
  
-return 0;
-
+    return 0;
 }
 
 int16_t nav_init(void)

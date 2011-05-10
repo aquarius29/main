@@ -21,33 +21,33 @@ typedef struct {
     int32_t lon;
     double angle;
     double distance;
-} pixel;
+} roomPosition;
 typedef struct progressiveNode {
-    pixel p;
+    roomPosition p;
     struct progressiveNode *prev;
     struct progressiveNode *next;
 } progressiveNode;
 typedef struct {
     int32_t y;
     int32_t x;
-}position;
+} tile;
 typedef struct node {
-    position pos;
+    tile pos;
     int32_t totalCost, heuristic;
-    position previous;
+    tile previous;
 }node;
 typedef struct {
-    node * list;
+    node *list;
     int32_t count;
 }nodeList;
 typedef struct {
-    pixel * list;
+    roomPosition *list;
     int32_t num;
 }positionList;
 
-positionList indoorDijkstra(const position *start, const position *end);
-positionList indoorAstar(const position *start, const position *end);
-void initPath(position *start, position *end);
+positionList indoorDijkstra(const tile *start, const tile *end);
+positionList indoorAstar(const tile *start, const tile *end);
+void initPath(tile *start, tile *end);
 void stopIndoorNavigation(void);
 void collisionAvoided(double direction, struct timeval time);
 int8_t commandHandled(void);

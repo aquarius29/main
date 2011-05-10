@@ -24,8 +24,8 @@ GPSLocation;
 
 typedef struct
 {
-    position startTile;
-    position destinationTile;
+    tile startTile;
+    tile destinationTile;
 }
 indoorRouteRequest;
 
@@ -38,14 +38,14 @@ outdoorRouteRequest;
 
 struct thread_data
 {
-    position starttile;
-    position destinationtile;
+    tile starttile;
+    tile destinationtile;
     char *message;
 };
 
 GPSLocation currentOutdoorPosition;
 
-void nav_sendCurrentIndoorPositionToGui(pixel *currentPosition);
+void nav_sendCurrentIndoorPositionToGui(roomPosition *currentPosition);
 
 void nav_sendCurrentOutdoorPositionToGui(GPSLocation *currentPosition);
 
@@ -57,7 +57,7 @@ void nav_sendIndoorPathToGui(positionList *path);
 void nav_runGpsSystem(GPSLocation *dest);
 
 /* setup the indoor navigation system */
-void nav_runIndoorSystem(position startTile, position destinationTile); 
+void nav_runIndoorSystem(tile startTile, tile destinationTile);
 
 /* send the movement to the movement for handling. */
 void nav_sendManualMovementCommand(movementCommand *move); 
