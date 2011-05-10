@@ -10,7 +10,12 @@
 *
 * <IT University of Goteborg>
 *****************************************************************************/
-#include <stdio.h>
+
+
+#ifdef PC
+#include<stdio.h>
+#endif
+
 #include "proto_lib.h"
 
 /*test code for message interpretation. as code is recieved as a binary, it tranforms the message

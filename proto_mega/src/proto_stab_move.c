@@ -15,11 +15,10 @@
  #ifdef PC
    #include <stdio.h>
    #include <stdlib.h>
-   #include "proto_lib.h"
-   #include <stdio.h>
    #include <string.h>
 #endif
 
+ #include "proto_lib.h"
  
 /***************************************************************************** 
     Implementations 

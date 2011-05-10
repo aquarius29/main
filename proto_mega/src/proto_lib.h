@@ -10,9 +10,12 @@
 *
 * <IT University of Goteborg>
 *****************************************************************************/
+
+
+
 //Collision to Movement Header
 #include <stdint.h>
-#ifdef PC
+
 //ca write yaw  
 void proto_write_yaw(int value);// proto API 
  
@@ -38,13 +41,6 @@ unsigned int proto_read_connect(void);
 unsigned char proto_read_navi_to_connectivity(void); //API
  
 void proto_send_navi_to_connectivity(unsigned char msg); //API
-
-/****************************************************************************/
-
-//proto interface
-
-int proto_init(void);
-int proto_run(void);
 
 /****************************************************************************/
 
@@ -215,4 +211,3 @@ proto_sendMsg();
 
 /****************************************************************************/
 
-#endif

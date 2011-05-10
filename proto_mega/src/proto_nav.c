@@ -14,9 +14,9 @@
 #ifdef PC
 #include<stdio.h>
 #include<stdlib.h>
-#include"proto_lib.h"
-#endif
 
+#endif
+#include"proto_lib.h"
 
 /*****************************************************************************
 	Definitions

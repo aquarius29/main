@@ -11,9 +11,12 @@
 * <IT University of Goteborg>
 *****************************************************************************/
 
-
-#include <stdio.h>
+#ifdef PC
+   #include <stdio.h> 
 #include <stdint.h>
+#endif
+
+
 #include "proto_lib.h"
 
 

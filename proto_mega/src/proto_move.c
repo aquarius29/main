@@ -14,8 +14,8 @@
  
  #ifdef PC
    #include <stdio.h>
-   #include "proto_lib.h"
 #endif
+   #include "proto_lib.h"
 
 /*****************************************************************************/
 int dir = 0;//Deafult value 

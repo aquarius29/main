@@ -11,8 +11,11 @@
 * <IT University of Goteborg>
 *****************************************************************************/
 
-#include<stdio.h>
-#include<stdlib.h>
+#ifdef PC
+   #include <stdio.h> 
+   #include<stdlib.h>
+#endif
+
 
 
 
