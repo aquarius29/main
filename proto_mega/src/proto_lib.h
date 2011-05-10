@@ -98,27 +98,7 @@ unsigned char proto_read_destination_msg_(void);// proto API
 void proto_send_destination_msg(unsigned char msg);
 
 /****************************************************************************/
-//Navigation to Movement
 
-
-struct navigation {
-      
-char type;
-char order;
-int distance;
-int yaw;
-int height;
-
-        }navigation;
-
-       
-struct proto read();//API
-
-
-void write(struct proto msg);//API
-
-
-/****************************************************************************/
 
 /// stab to movement
 struct stab_gyroscope{
@@ -197,17 +177,5 @@ struct Message * retrieve(void);
 void flush(void);
 
 /****************************************************************************/
-//UI to Connectivity
 
-#define GO_FORWARD  1
-#define GO_BACKWARD  0
-#define GO_RIGHT  2
-#define GO_LEFT  3
-#define SET_TO_GPS 4
-
-proto_readMsg(int instruction);
-proto_sendMsg();
-
-
-/****************************************************************************/
 
