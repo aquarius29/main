@@ -394,6 +394,11 @@ void *readProtocol(void *ptr)
     while(protocolReading == 1)
     {
         /* Add functions to read different bullshit from the protocol*/
+		/* if (Read from protocol to get the confirmation of a movement command received == 1) 
+		{
+			set_MovementCommand_True();
+		}
+		*/
     }
 }
 
@@ -488,5 +493,24 @@ int16_t nav_init(void)
 
 int16_t nav_run(void)
 {
+	/*
+	int waitingForSystemStart = 1;
+	
+	while (waitingForSystemStart == 0)
+	{
+		if(read from the protocol for indoor system has arguments)
+		{
+			nav_runIndoorSystem(argument a, argument b);
+			waitingForSystemStart = 0;
+		}
+		if(read from the protocol for gps system has arguments)
+		{
+			nav_runGpsSystem(Destination argument);
+			waitingForSystemStart = 0;
+		}
+		
+	}
+	*/
+	
     return 0;
 }
