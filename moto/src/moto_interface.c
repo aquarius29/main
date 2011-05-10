@@ -17,7 +17,7 @@
 
 //#include "
 
-#include "proto_mov_motor.h"
+#include "proto_lib.h"
 #include "moto_interface.h"
 #include "moto_msg_manipulation.h"
 #include "moto_driver_functions.h"

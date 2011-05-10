@@ -67,7 +67,7 @@ PROG=prog
 BASIC_LIBS=-Lstab/lib -Lsched/lib -Lmoto/lib -Lmov/lib -Lca/lib -Lproto/lib -Llib -lsched -lstab -lmoto -lmov -lca -lproto -lm
 
 ##  Set paths to headers used by code on the basic system
-BASIC_INCLUDES=-I../../stab/src -I../../moto/src -I../../mov/src -I../../ca/src -I../../proto/src -I../../include
+BASIC_INCLUDES=-I../../stab/src -I../../moto/src -I../../mov/src -I../../ca/src -I../../proto_mega/src -I../../include
 
 ##  Free of charge
 EXTRA_FLAGS=
