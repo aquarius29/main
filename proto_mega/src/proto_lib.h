@@ -205,8 +205,8 @@ void flush(void);
 #define GO_LEFT  3
 #define SET_TO_GPS 4
 
-proto_readMsg(int instruction);
-proto_sendMsg();
+/* proto_readMsg(int instruction); */
+/* proto_sendMsg(); */
 
 
 /****************************************************************************/

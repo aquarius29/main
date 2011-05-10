@@ -62,7 +62,7 @@ int moto_init(void){
  */
 int moto_run(void){
     moto_cyclesSinceLastMsg++;
-    inputFromProto = read_motor();
+    inputFromProto = 0xf1;//read_motor();
     binary = INT_TO_BITFIELD(&inputFromProto);
 
 #if defined ARDUINO_DBG
