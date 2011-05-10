@@ -4,6 +4,8 @@
 ## -------------------------------------------------------------------------------
 ## Authors: Eugene Groshev, Nikita Englund
 ## Change history:
+##     2011-05-10, Nikita:
+##         - Commented code
 ##     2011-04-28, Eugene:
 ##         - added echolog() function which both print outs and logs passed arguments
 ##         - made $1 a compulsory argument to specify script run mode
@@ -36,6 +38,8 @@ echolog()
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"  >> "${LOG_FILE}" #quotes because of the whitespaces in file path 
 }
 
+#
+#Author: Nikita Englund
 check_return_value()
 {
     RET_VAL=$1
@@ -75,10 +79,12 @@ done
 
 }
 
-
+#
+#Author: Nikita Englund
 get_src()
 {
  
+ #Checks if the working directory is right
  #----Working dir------
 cd ..
 cd ..
@@ -88,6 +94,7 @@ echo "The present working directory is `pwd`"
 log "-----------------------"
 
 
+#Changes directory and pulls, then leaves that directory
 
 # ----Pull Moto-----  
   log "Pulling moto ..."
