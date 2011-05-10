@@ -17,7 +17,7 @@
 void storeForTint(int operation, int source, int meaning, double value)
 {	
 	struct Message * curPtr;
-	curPtr = (Message *) malloc(sizeof(struct Message));
+	curPtr = (struct Message *) malloc(sizeof(struct Message));
 	curPtr->operation = operation;
 	curPtr->source = source;
 	curPtr->meaning = meaning;
