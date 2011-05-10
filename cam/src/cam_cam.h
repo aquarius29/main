@@ -1,6 +1,6 @@
 
 /**
-  * Module: cam.h
+  * Module: cam_cam.h
   *
   * Author (s): Ikuh Henry
   * Created: 2011-05-08

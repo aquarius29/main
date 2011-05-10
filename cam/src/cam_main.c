@@ -23,16 +23,16 @@
 
 int16_t cam_init(void)
 {
-	initialize(void);// init cam
-	return 0;
+    initialize(void);// init cam
+    return 0;
 
 }
 
 int16_t cam_run(void)
 {
-	grab_frame();	
-	save_and_convert_video();
-	video_server();
-	
-	return 0;
+    grab_frame();	
+    save_and_convert_video();
+    video_server();
+
+    return 0;
 }

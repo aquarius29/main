@@ -15,6 +15,7 @@
 #include <pthread.h>
 #include <stdint.h>
 
+
 /*	program header files */
 
 int16_t cam_init(void);
