@@ -30,8 +30,8 @@ int main(void) {
 		|| NULL == CU_add_test(pSuite1, "Test case 2: Testing distance filter", testCase2)
 		|| NULL == CU_add_test(pSuite1, "Test case 3: Testing ir filter", testCase3)
 		|| NULL == CU_add_test(pSuite1, "Test case 4: Testing current direction filter", testCase4)
-//		|| NULL == CU_add_test(pSuite1, "Test case 5: Testing moving closer filter", testCase5)
-//		|| NULL == CU_add_test(pSuite1, "Test case 6: Testing final direction", testCase6)
+		|| NULL == CU_add_test(pSuite1, "Test case 5: Testing moving closer filter", testCase5)
+		|| NULL == CU_add_test(pSuite1, "Test case 6: Testing final direction", testCase6)
 	) {
     CU_cleanup_registry();
     return CU_get_error();

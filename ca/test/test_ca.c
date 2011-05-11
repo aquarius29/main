@@ -16,7 +16,8 @@
 
 #define COMPARE_ARR(a,v1,v2,v3,v4) ( (a[0]==v1) && (a[1]==v2) && (a[2]==v3) && (a[3]==v4))
 #define COMPARE_ARR2(a,v1,v2,v3,v4,v5) ( (a[0]==v1) && (a[1]==v2) && (a[2]==v3) && (a[3]==v4) && (a[4]==v5))
-
+#define PRINT_IT(a) printf("%d %d %d %d %d", a[0], a[1], a[2], a[3], a[4])
+#define PRINT_IT2(a) printf("NUMBER IS %d ", a)
 
 /* Set up and clean up test suite */
 
@@ -75,11 +76,16 @@ void testCase4(void) {
 	CU_ASSERT(COMPARE_ARR2(currentDirection_filter(1,ir_filter(distance_filter(25,10,11,10,10))), 0,0,0,0,1));
 }
 
-/*void testCase5(void){
-	CU_ASSERT(COMPARE_ARR2(moving_closer_filter(moving_closer((1,1,1,1)),currentDirection_filter(1,ir_filter(distance_filter(25,30,40,60,50))), 0,0,0,0,0));
+void testCase5(void){
+//	PRINT_IT(moving_closer_filter(moving_closer(distance_differ(100,100,100,100, 80, 100, 100, 100)),currentDirection_filter(1,ir_filter(distance_filter(25,30,40,60,50)))));
+	CU_ASSERT(COMPARE_ARR2(moving_closer_filter(moving_closer(distance_differ(100,100,100,100, 80, 100, 100, 100)),currentDirection_filter(1,ir_filter(distance_filter(25,30,40,60,50)))), 0,0,1,1,0));
+	CU_ASSERT(COMPARE_ARR2(moving_closer_filter(moving_closer(distance_differ(100,100,100,100, 80, 80, 80, 80)),currentDirection_filter(1,ir_filter(distance_filter(25,30,40,60,50)))), 0,0,0,0,0));
+	CU_ASSERT(COMPARE_ARR2(moving_closer_filter(moving_closer(distance_differ(100,100,100,100,100,100,100, 100)),currentDirection_filter(1,ir_filter(distance_filter(25,10,11,10,10)))), 0,0,0,0,1));
 }
 
 void testCase6(void){
-	CU_ASSERT(final_direction(moving_closer_filter(moving_closer(),currentDirection_filter(1,ir_filter(distance_filter(25,30,40,60,50))))), 
+//	PRINT_IT2(final_direction(1, moving_closer_filter(moving_closer(distance_differ(100,100,100,100, 80, 100, 100, 100)),currentDirection_filter(1,ir_filter(distance_filter(25,30,40,60,50)))))); 
+	CU_ASSERT(final_direction(1, moving_closer_filter(moving_closer(distance_differ(100,100,100,100, 80, 100, 100, 100)),currentDirection_filter(1,ir_filter(distance_filter(25,30,40,60,50)))))==3);
+	CU_ASSERT(final_direction(1, moving_closer_filter(moving_closer(distance_differ(100,100,100,100,100,100,100, 100)),currentDirection_filter(1,ir_filter(distance_filter(25,10,11,10,10)))))==0);
+	CU_ASSERT(final_direction(1, moving_closer_filter(moving_closer(distance_differ(100,100,100,100,100,100,100, 100)),currentDirection_filter(1,ir_filter(distance_filter(25,30,20,10,15)))))==1);
 }
-*/
