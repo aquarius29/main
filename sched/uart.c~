@@ -1,0 +1,15 @@
+#include <avr/io.h>
+
+
+
+  /*Pins Notes: UDR = Data Buffer
+    RXCn/TXCn = Recieve/Transmit complete flags
+    
+  */
+
+void main(){
+
+  printf("%x", RXEN0);
+  
+
+}

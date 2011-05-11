@@ -1,0 +1,46 @@
+
+/*
+ *  initial code for the linked list handler of raw data and processing messages from the
+ *  USART port
+ *
+ *
+ *  author: Justin
+ */
+
+#include "WProgram.h"
+
+
+uint8_t push(struct node n1);
+uint8_t pop(struct node n1);
+
+
+
+struct node{
+  struct node* nxtMsg;
+  uint8_t data[40];
+}
+
+struct list
+{
+  struct node msgQue[10];
+  uint8_t head;
+  uint8_t tail;
+}
+
+
+
+
+
+
+
+
+
+
+
+uint8_t push(struct node n1){
+ 
+}
+
+uint8_t pop(struct node n1){
+
+}
