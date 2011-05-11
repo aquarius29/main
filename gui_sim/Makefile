@@ -1,9 +1,23 @@
-.SILENT:
+########################### Added by Adam 09/05/11 #########################
 
-frame: conn_frame.c conn_frame.h
-	gcc conn_frame.c -o conn_frame `pkg-config --cflags --libs gtk+-2.0` 
+LIB_SRC=conn_tcpserver.c conn_tcpserver_main.c conn_ui_mask.c   
 
-server: conn_tcpserver_main.c
-	gcc conn_tcpserver_main.c -o tcps
+LIB_OBJ = $(LIB_SRC:.c=.o)
+
+%.o: %.c
+	$(GLOBAL_CC) -c -I. $*.c $(GLOBAL_CFLAGS)
+
+lib-pc: $(LIB_OBJ)
+	ar rvs ../lib/libconn.a $(LIB_OBJ)
+
+lib-panda: $(LIB_OBJ)
+	ar rvs ../lib/libconn.a $(LIB_OBJ)
+
+lib-mega: $(LIB_OBJ)
+	@echo Objects: $(LIB_OBJ)
+	avr-ar rvs ../lib/libconn.a $(LIB_OBJ)
+
 clean:
-	rm -f conn_frame
+	rm -f *.o
+
+##########################################################################
