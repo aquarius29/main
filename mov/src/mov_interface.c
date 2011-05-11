@@ -24,6 +24,12 @@
 #include "mov_interface.h"
 #include <stdint.h>
 
+#ifdef DEBUG
+#define DEBUG_PRINT(s)        printf(s)
+#else
+#define DEBUG_PRINT(s)
+#endif
+
 #define SONAR_PIN 5
 #define NO_MESSAGE 11
 
@@ -88,7 +94,7 @@ int mov_init()
  */
 int mov_run()
 {
-    	clear_message_array();
+	clear_message_array();
 	read_sensorCommand();
 
 #ifdef DEBUG
@@ -161,9 +167,7 @@ int mov_run(void) {
 	read_sensorCommand();
 	clear_message_array();
 
-#ifdef DEBUG
-	printf("\n \n*********************LOOOOOOOP***************************\n");
-#endif
+	DEBUG_PRINT("\n \n*********************LOOOOOOOP***************************\n");
 	read_caCommand();
 
 	/*
@@ -224,9 +228,7 @@ void write_to_motor(unsigned char msg){
     case 7: msg7 = msg; break;
     case 8: msg8 = msg; break;
     }
-
     message_counter= message_counter + 1;
-
 }
 
 
@@ -259,7 +261,6 @@ void clear_message_array(){
  *Write a set of messages stored ina  struct to motor
  */
 void write_array(){
-
 #ifndef TEST
     //proto_write_motor2(msg1,msg2,msg3,msg4,msg5,msg6,msg7,msg8);
 #endif
@@ -269,15 +270,14 @@ void write_array(){
  * write message to navigation
  */
 void write_to_nav(void) {
-
-#ifndef SIMULATOR
+#ifndef TEST
 	//write to navigation
 
 #endif
 }
 
 void write_to_nav_comfirm(uint8_t i) {
-  #ifndef TEST
+#ifndef TEST
 	//1 done nav //0 default
 #endif
 }
@@ -286,8 +286,7 @@ void write_to_nav_comfirm(uint8_t i) {
  * read navigation Command
  */
 void read_navCommand(void) {
-
-#ifndef SIMULATOR
+#ifndef TEST
 	//read navigation command
     p-> type = 0;
     p -> order = 0;
@@ -302,20 +301,14 @@ void read_navCommand(void) {
  * read collision avoidance command
  */
 void read_caCommand(void){
-
 #ifndef TEST
-
-	//read collision avoidance command
-    //PROTOCOL READ FROM CA
     caDir = proto_read_yaw();
-    	printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",caDir);
+	printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",caDir);
 #endif
 }
 
 void send_dir_to_ca(int i){
-
 #ifndef TEST
-
 	proto_write_direction(i);
 #endif
 }
@@ -331,12 +324,6 @@ void read_sensorCommand(void){
     pSensorC -> roll = stabCommand -> roll;
     pSensorC -> yaw = stabCommand -> yaw;
     pSensorC -> height = (int) sonar_distance(SONAR_PIN);
-
-
-	/* sensorCommand.pitch = stabCommand->pitch; */
-	/* sensorCommand.roll = stabCommand->roll; */
-	/* sensorCommand.yaw = stabCommand->yaw; */
-	/* sensorCommand.height =(int)sonar_distance(SONAR_PIN); */
 
 	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.pitch); */
 	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.roll); */
