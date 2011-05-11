@@ -27,7 +27,7 @@ int socket_create(void){
 /*Binding socket*/
 int socket_binding(void){
   /*Drone adress need to be hadcodded*/
-  host = (struct hostent *)gethostbyname((char *)"127.0.0.1");
+  host = (struct hostent *)gethostbyname((char *)"129.16.251.251");
   connecting.sin_family = AF_INET;
   connecting.sin_port = htons(PORT);
   connecting.sin_addr= *((struct in_addr *)host->h_addr);

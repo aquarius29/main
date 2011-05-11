@@ -21,7 +21,7 @@ void alt_down(void);
 void drone_connect(void);
 void camera_connect(void);
 void landing(void);
-void gps(void);
+void gps_indoor(void);
 void server(void);
 /*
 
@@ -44,5 +44,5 @@ void button_foward_controll(void);
 void button_auto_controll(void);
 void window_creation(void);
 void destroy_command(void);
-void button_GPS_command(void);
+void button_GPS_indoor(void);
 void button_server_command(void);

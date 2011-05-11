@@ -38,7 +38,7 @@ GtkWidget *button_auto;
 GtkWidget *button_alt_up;
 GtkWidget *button_alt_down;
 GtkWidget *button_landing;
-GtkWidget *button_gps_indoor;
+GtkWidget *button_gps;
 GtkWidget *button_server;
 
 
@@ -78,13 +78,13 @@ void button_landing_command(void){
 }
 
 /*Button for starting gps*/
-void button_GPS_indoor(void){
+void button_GPS_command(void){
 
-  button_gps_indoor = gtk_button_new_with_label("indor");
-  gtk_fixed_put(GTK_FIXED(fixed), button_gps_indoor, menu_panel_x, 60);
-  gtk_widget_set_size_request(button_gps_indoor, 70, 30);
-  g_signal_connect(G_OBJECT(button_gps_indoor), "clicked", 
-		   G_CALLBACK(gps_indoor), G_OBJECT(window));
+  button_gps = gtk_button_new_with_label("GPS");
+  gtk_fixed_put(GTK_FIXED(fixed), button_gps, menu_panel_x, 60);
+  gtk_widget_set_size_request(button_gps, 70, 30);
+  g_signal_connect(G_OBJECT(button_gps), "clicked", 
+		   G_CALLBACK(gps), G_OBJECT(window));
 
 }
 
@@ -258,7 +258,7 @@ int main( int argc, char *argv[])
   button_right_controll();
   button_altitide_up();
   button_altitide_down();
-  button_GPS_indoor(); 
+  button_GPS_command(); 
   button_server_command();
 
   destroy_command();
@@ -350,10 +350,10 @@ void landing(void){
 }
 
 
-void gps_indoor(void){
+void gps(void){
 
   gtk_label_set_text(label,"gps");
-  //  send_indor();
+  send_gps();
 
 }
 void camera_connect(void){

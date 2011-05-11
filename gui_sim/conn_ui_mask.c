@@ -52,10 +52,10 @@ void controll_movement(int i){
     printf("Camra on\n");
   }
   else if (i == 19){
-    printf("GPS on\n");
+    printf("Indorr\n");
   }
    else if (i == 20){
-    printf("GPS on\n");
+    printf("Outdorr\n");
   }
   else{
     printf("Error\n");
