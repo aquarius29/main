@@ -9,7 +9,7 @@
 
 void port_test(void){
     int32_t portHandle;
-    uint8_t data1[] = {4, 1, 2, 3, '\0'};
+    uint8_t data1[] = {10, 1, 10, 2, 3, 4, 5, 6, 7, 8, '\0'};
     uint8_t data2[] = {3, 1, 2, 3, '\0'};
     
     // struct status navInfo;

@@ -4,9 +4,25 @@
  *  reads a message sent on the serial port
  */
 
+#include <stdio.h>
+
+#include "WProgram.h"
+
+#include "proto_stub.h"
+#include "proto_msg_structs.h"
 #include "group_stub.h"
 
+#define TRUE 1
+#define FALSE 0
+
 void group_run(void){
-   /* read data here */
-    
+    struct navData *navMsg = NULL;
+    /* read data here */
+    if (proto_isNewNavMsg() == TRUE) {
+        navMsg = proto_readNavMsg();
+        
+        if (navMsg->type == 10) {
+            digitalWrite(12, HIGH);
+        }
+    }
 }

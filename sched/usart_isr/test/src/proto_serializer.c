@@ -22,9 +22,8 @@ static uint8_t highByte(uint16_t);
 
 /*
  *  signed data types has to be handled properly!
- *
  */
-uint8_t proto_serializeData(struct status *data, uint8_t *serializedData){
+uint8_t proto_serializeMsg(struct status *data, uint8_t *serializedData){
     uint8_t i;
 
     serializedData[0] = data->uInt8;

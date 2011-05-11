@@ -12,6 +12,6 @@ struct status {
     int16_t int16;
 };    
 
-uint8_t proto_serializeData(struct status *, uint8_t *);
+uint8_t proto_serializeMsg(struct status *, uint8_t *);
 
 #endif /* PROTO_SERIALIZER_H */
