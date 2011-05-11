@@ -49,6 +49,10 @@
 ##  2011-04-20 - Fixed problems with linking so correct math lib is used.
 ##				 Order matters among the link-flags! - Joakim
 ##
+##  2011-04-27 - re-structured and merged scheduler implementations and added
+##				 SCHED_FLAG to define implementation. - Anders
+##  2011-05-05 - Fixed some things related to the mega - Anders
+##
 ##  Notes:
 ##  Missing instructions in targets not related to basic system. 
 ##  By no means done and decided with regards to what flags are set and
@@ -68,6 +72,9 @@ BASIC_LIBS=-Lstab/lib -Lsched/lib -Lmoto/lib -Lmov/lib -Lca/lib -Lproto/lib -Lli
 
 ##  Set paths to headers used by code on the basic system
 BASIC_INCLUDES=-I../../stab/src -I../../moto/src -I../../mov/src -I../../ca/src -I../../proto/src -I../../include
+
+##  Set scheduler implementation (-DBATMAN |-DNAIVE)
+SCHED_FLAG=-DBATMAN
 
 ##  Free of charge
 EXTRA_FLAGS=
@@ -109,7 +116,7 @@ LDFLAGS_ARDUINO=-Os -Wl,--gc-sections -mmcu=$(MMCU) -lm
 
 ## pc-targets ###############################################################
 pc: GLOBAL_CC=gcc
-pc: GLOBAL_CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(BASIC_INCLUDES)
+pc: GLOBAL_CFLAGS+=$(SCHED_FLAG) $(PC_FLAGS) $(EXTRA_FLAGS) $(BASIC_INCLUDES)
 pc:
 	cd sched/src && $(MAKE) lib-pc
 	cd stab/src && $(MAKE) lib-pc
@@ -117,12 +124,12 @@ pc:
 	cd mov/src && $(MAKE) lib-pc
 	cd ca/src && $(MAKE) lib-pc
 	cd proto/src && $(MAKE) lib-pc
-	$(GLOBAL_CC) -c main.c -Isched/src
+	$(GLOBAL_CC) -c main.c $(SCHED_FLAG) -Isched/src
 	$(GLOBAL_CC) -o $(PROG) main.o $(BASIC_LIBS)
 	
 
 pc-dbg: GLOBAL_CC=gcc
-pc-dbg: GLOBAL_CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(DEBUG_FLAGS_PC) $(BASIC_INCLUDES)
+pc-dbg: GLOBAL_CFLAGS+=$(SCHED_FLAG) $(PC_FLAGS) $(EXTRA_FLAGS) $(DEBUG_FLAGS_PC) $(BASIC_INCLUDES)
 pc-dbg:
 	cd sched/src && $(MAKE) lib-pc
 	cd stab/src && $(MAKE) lib-pc
@@ -130,7 +137,7 @@ pc-dbg:
 	cd mov/src && $(MAKE) lib-pc
 	cd ca/src && $(MAKE) lib-pc
 	cd proto/src && $(MAKE) lib-pc
-	$(GLOBAL_CC) -c main.c -Isched/src
+	$(GLOBAL_CC) -c main.c $(SCHED_FLAG) -Isched/src
 	$(GLOBAL_CC) -o $(PROG) main.o $(BASIC_LIBS)
 
 
@@ -157,7 +164,7 @@ mega:
 	cd proto/src && $(MAKE) lib-mega
 	avr-ranlib proto/lib/libproto.a	
 
-	$(GLOBAL_CC) -c main.c -Isched/src
+	$(GLOBAL_CC) -c main.c $(SCHED_FLAG) -Isched/src
 	$(GLOBAL_CC) main.o $(BASIC_LIBS) $(LDFLAGS_ARDUINO) -o $(PROG).elf
 	avr-objcopy -O srec $(PROG).elf $(PROG).rom
 
@@ -184,8 +191,8 @@ mega-dbg:
 	cd proto/src && $(MAKE) lib-mega
 	avr-ranlib proto/lib/libproto.a	
 
-	$(GLOBAL_CC) -c main.c -Isched/src
-	$(GLOBAL_CC) main.o $(BASIC_LIBS) $(LDFLAGS_ARDUINO) -o $(PROG).elf
+	$(GLOBAL_CC) -c main.c $(SCHED_FLAG) -Isched/src
+	$(GLOBAL_CC) main.o  $(BASIC_LIBS) $(LDFLAGS_ARDUINO) -o $(PROG).elf
 	avr-objcopy -O srec $(PROG).elf $(PROG).rom
 	
 	
@@ -232,7 +239,7 @@ clean:
 	cd proto/src && $(MAKE) clean
 	cd proto/lib && rm *.a
 
-	rm -f $(PROG) $(PROG).elf $(PROG).rom *.o *.map
+	rm -f $(PROG) $(PROG).exe $(PROG).elf $(PROG).rom *.o *.map
 
 	
 
