@@ -262,7 +262,7 @@ fi
 if [ $1 = "server" ]
 then
     BUILD_DIR=${HOME}/emb-test
-    LOG_DIR=${HOME}/emb-test/log
+    LOG_DIR=${HOME}/log
 fi
 
 # Setting build directory for Eugene's local mode
