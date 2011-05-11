@@ -126,9 +126,6 @@ int mov_run()
 #endif
 
 
-
-
-
 #ifdef PC
 /*
  * PC
@@ -226,7 +223,6 @@ void write_to_motor(unsigned char msg){
     }
 
     message_counter= message_counter + 1;
-
 }
 
 
@@ -261,7 +257,7 @@ void clear_message_array(){
 void write_array(){
 
 #ifndef TEST
-    //proto_write_motor2(msg1,msg2,msg3,msg4,msg5,msg6,msg7,msg8);
+    proto_write_motor2(msg1,msg2,msg3,msg4,msg5,msg6,msg7,msg8);
 #endif
 }
 
