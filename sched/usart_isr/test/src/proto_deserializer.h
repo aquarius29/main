@@ -4,6 +4,9 @@
 
 #include <stdint.h>
 
+/* array index that holds message length */
+#define LEN_INDEX 0
+
 /* array index that holds message ID */
 #define ID_INDEX 1
 
@@ -16,6 +19,7 @@
 #define NAV_DISTANCE_INDEX_HIGHBYTE 7
 #define NAV_YAW_INDEX_LOWBYTE 8
 #define NAV_YAW_INDEX_HIGHBYTE 9
+#define NAV_NULL_INDEX 10
 
 /* message ID for messages from navigation */
 #define MSG_ID_NAV 1
