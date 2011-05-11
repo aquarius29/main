@@ -11,6 +11,7 @@
 
 
 #include <stdio.h>
+#include <stdint.h>
 
 struct nav
 {
@@ -28,6 +29,19 @@ struct sensor
 	int yaw;
 	int height;
 };
+
+struct messages
+{
+    uint8_t msg1;
+    uint8_t msg2;
+    uint8_t msg3;
+    uint8_t msg4;
+    uint8_t msg5;
+    uint8_t msg6;
+    uint8_t msg7;
+    uint8_t msg8;
+};
+
 
 
 /*mov_logic.c*/
@@ -93,6 +107,8 @@ void read_caCommand(void);
 void write_to_motor(unsigned char msg);
 void send_dir_to_ca(int i);
 void read_sensorCommand(void);
+void clear_message_array();
+void write_array();
 
 /*mov_sensor.c*/
 #ifdef ARDUINO

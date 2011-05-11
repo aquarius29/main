@@ -22,9 +22,10 @@
 #endif 
 
 #include "mov_interface.h"
+#include <stdint.h>
 
 #define SONAR_PIN 5
-
+#define NO_MESSAGE 11
 
 /* global variables*/
 #ifdef SIMULATOR
@@ -40,9 +41,13 @@ int heightArrived;
 int start_time;
 int duration;
 
+
 struct nav navCommand;
 struct sensor sensorCommand;
 struct sensor oldSensorCommand;
+struct messages message;
+
+uint8_t message_counter;
 
 int caDir=-1;
 
@@ -72,6 +77,7 @@ int mov_init()
  */
 int mov_run()
 {
+    	clear_message_array();
 	read_sensorCommand();
 
 #ifdef DEBUG
@@ -140,6 +146,7 @@ int mov_init(void) {
  */
 int mov_run(void) {
 	read_sensorCommand();
+	clear_message_array();
 
 #ifdef DEBUG
 	printf("\n \n*********************LOOOOOOOP***************************\n");
@@ -181,6 +188,8 @@ int mov_run(void) {
 	duration = 10;
 
 	send_dir_to_ca(2);
+	
+	write_array();
 	return 0;
 }
 #endif
@@ -188,11 +197,45 @@ int mov_run(void) {
 
 
 /*
- * send message to motor
+ * write a message to an array
  */
 void write_to_motor(unsigned char msg){
+    
+    switch(message_counter){
+    case 1:message.msg1 = msg; break;
+    case 2:message.msg2 = msg;break;
+    case 3: message.msg3 = msg;break;
+    case 4: message.msg4 = msg;break;
+    case 5: message.msg5 = msg;break;
+    case 6: message.msg6 = msg;break;
+    case 7: message.msg7 = msg;break;
+    case 8: message.msg8 = msg;break;
+    }
+
+    message_counter= message_counter + 1;
+}
+
+/*
+ *Clear the message array to NO MESSAGE
+ */
+void clear_message_array(){
+    message_counter = 1;
+    message.msg1 = NO_MESSAGE;
+    message.msg2 = NO_MESSAGE;
+    message.msg3 = NO_MESSAGE;
+    message.msg4 = NO_MESSAGE;
+    message.msg5 = NO_MESSAGE;
+    message.msg6 = NO_MESSAGE;
+    message.msg7 = NO_MESSAGE;
+    message.msg8 = NO_MESSAGE;
+}
+
+/*
+ *Write a set of messages stored ina  struct to motor
+ */
+void write_array(){
 #ifndef SIMULATOR
-	proto_write_motor(msg);
+    //proto_write_motor2(messages);
 #endif
 }
 
