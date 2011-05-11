@@ -41,12 +41,19 @@ int heightArrived;
 int start_time;
 int duration;
 
-
 struct nav navCommand;
 struct sensor sensorCommand;
 struct sensor oldSensorCommand;
-struct messages message;
 
+/*Motor Messages */
+uint8_t msg1;
+uint8_t msg2;
+uint8_t msg3;
+uint8_t msg4;
+uint8_t msg5;
+uint8_t msg6;
+uint8_t msg7;
+uint8_t msg8;
 uint8_t message_counter;
 
 int caDir=-1;
@@ -202,14 +209,14 @@ int mov_run(void) {
 void write_to_motor(unsigned char msg){
     
     switch(message_counter){
-    case 1:message.msg1 = msg; break;
-    case 2:message.msg2 = msg;break;
-    case 3: message.msg3 = msg;break;
-    case 4: message.msg4 = msg;break;
-    case 5: message.msg5 = msg;break;
-    case 6: message.msg6 = msg;break;
-    case 7: message.msg7 = msg;break;
-    case 8: message.msg8 = msg;break;
+    case 1: msg1 = msg; break;
+    case 2: msg2 = msg;break;
+    case 3: msg3 = msg;break;
+    case 4: msg4 = msg;break;
+    case 5: msg5 = msg;break;
+    case 6: msg6 = msg;break;
+    case 7: msg7 = msg;break;
+    case 8: msg8 = msg;break;
     }
 
     message_counter= message_counter + 1;
@@ -220,14 +227,14 @@ void write_to_motor(unsigned char msg){
  */
 void clear_message_array(){
     message_counter = 1;
-    message.msg1 = NO_MESSAGE;
-    message.msg2 = NO_MESSAGE;
-    message.msg3 = NO_MESSAGE;
-    message.msg4 = NO_MESSAGE;
-    message.msg5 = NO_MESSAGE;
-    message.msg6 = NO_MESSAGE;
-    message.msg7 = NO_MESSAGE;
-    message.msg8 = NO_MESSAGE;
+    msg1 = NO_MESSAGE;
+    msg2 = NO_MESSAGE;
+    msg3 = NO_MESSAGE;
+    msg4 = NO_MESSAGE;
+    msg5 = NO_MESSAGE;
+    msg6 = NO_MESSAGE;
+    msg7 = NO_MESSAGE;
+    msg8 = NO_MESSAGE;
 }
 
 /*
@@ -235,7 +242,7 @@ void clear_message_array(){
  */
 void write_array(){
 #ifndef SIMULATOR
-    //proto_write_motor2(messages);
+    //proto_write_motor2(msg1,msg2,msg3,msg4,msg5,msg6,msg7,msg8);
 #endif
 }
 
