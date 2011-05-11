@@ -70,7 +70,7 @@
 void initialize(void)
 {
 	//if(cam_index){
-	video_capture = cvCaptureFromCAM(1);
+	video_capture = cvCaptureFromCAM(0);
 	//}
 		if(!video_capture){
 		perror("could not capture from device");
