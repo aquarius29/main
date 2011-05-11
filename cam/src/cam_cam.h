@@ -16,7 +16,7 @@
 */
 
 
-void initialize(void);
+void initialize();
 
 void grab_frame(void);
 
@@ -24,6 +24,6 @@ void save_and_convert_video(void);
 
 void video_server(void);
 
-void terminate(char*msg, int retval);
+void terminate(char*msg, int ret_value);
 
 

@@ -33,6 +33,7 @@
 #include <pthread.h>
 #include "cv.h"
 #include "highgui.h"
+//#include "../include/highgui.h"
 
 #include "cam_interface.h"
 #include "cam_cam.h"
@@ -48,7 +49,7 @@
 /*
 	Function Prototypes
 */
-    void initialize(void);
+    void initialize();
     void grab_frame(void);
     void save_and_convert_video(void);
 
@@ -67,7 +68,7 @@
 	Function that initializes the camera
 */
 	
-void initialize(void)
+void initialize()
 {
 
     video_capture = cvCaptureFromCAM(1);
