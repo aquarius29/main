@@ -16,6 +16,14 @@
 #include "WProgram.h"
 #include "mov_interface.h"
 
+/* int main(int argc, char *argv[]) */
+/* { */
+/* 	while(1){ */
+/* 		sonar_distance(5); */
+/* 	} */
+/*     return 0; */
+/* } */
+
 
 
 float sonar_distance(int sonarPin)

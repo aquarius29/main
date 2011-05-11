@@ -41,6 +41,7 @@ void updateDistanceToTravel(void);
 void check_changingAltitude(void);
 void doCa(void);
 void printOrientation(void);
+void convertCommand(void);
 
 /*mov_motor.c*/
 void start_motors(void);
