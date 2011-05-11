@@ -1,13 +1,13 @@
-/*
- * file:         ca_prints.c
- * brief:
- * author:       Yanling Jin, Amber Olsson
- * date:         2011-04-26
- * version:      0.1
- * history       2011-04-26  Jin - move these methods from ca_filters.c
- *                                 add arduino print outs
- * 
- * detail:
+/*!
+ *  @file ca_prints.c
+ *
+ *  @brief 
+ *
+ *  @author Yanling Jin, Amber Olsson
+ *  @date 2011-04-26
+ *  @history  2011-04-26  Jin - move these methods from ca_filters.c
+ *                              add arduino print outs -Yanling Jin
+ *  @details  
  */
 
 

@@ -54,11 +54,11 @@ test: EXT=x
 #-Wa,-ahlms=$(PROG).lst
 $(OBJ): $(SRC)
 	@ cd bin && \
-	avr-g++ -c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -mmcu=$(MMCU) -DARDUINO=22 -DF_CPU=$(F_CPU) -DARDUINO=22 -I../include ../$(SRC)
+	avr-g++ -c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -mmcu=$(MMCU) -DARDUINO=22 -DTEST -DF_CPU=$(F_CPU) -DARDUINO=22 -I../include ../$(SRC)
 	@ echo "Object files created"
 
 compile:
-	@ avr-gcc $(OBJ) -Os -Wl,--gc-sections -mmcu=$(MMCU) -o bin/$(PROG).$(EXT) -l$(LIB) -Llib -lm
+	@ avr-gcc $(OBJ) -Os -Wl,--gc-sections -mmcu=$(MMCU) -DTEST -o bin/$(PROG).$(EXT) -l$(LIB) -Llib -lm
 	@ echo "Project compiled"
 
 #-DENABLE_PWM
@@ -71,7 +71,7 @@ test: clean $(OBJ) compile
 install: $(OBJ) compile
 	@ cd bin && avr-objcopy -O srec $(PROG).elf $(PROG).rom
 #	checksize $(PROG).elf
-	@ avrdude -p $(MMCU) -P $(USB_PORT) -c $(STK) -b $(BAUD) -F -u -U flash:w:bin/$(PROG).rom
+	# @ avrdude -p $(MMCU) -P $(USB_PORT) -c $(STK) -b $(BAUD) -F -u -U flash:w:bin/$(PROG).rom
 
 
 mega: clean install
@@ -79,10 +79,11 @@ mega: clean install
 uno: clean install
 
 pc: clean
-	gcc -DPC $(SRC) -o bin/$(PROG).x
+	gcc -DPC -DTEST $(SRC) -o bin/$(PROG).x
 
 pc-debug: clean
-	gcc -DPC -DDEBUG $(SRC) -o bin/$(PROG).x
+	gcc -DPC -DDEBUG -DTEST $(SRC) -o bin/$(PROG).x
+
 
 clean:
 	@ cd bin && rm -f *.o *.rom *.elf *.map *~ *.lst *.x

@@ -7,17 +7,18 @@
  * history       2011-03-30 create the file
  * detail:
  */
+#include <stdint.h> 
 
 /* ca_interface.c */
 #ifdef ARDUINO
-int ca_init(void);
-int ca_run(void);
+int8_t ca_init(void);
+int8_t ca_run(void);
 #elif defined PC
-int ca_init(void);
-int ca_run(void);
+int8_t ca_init(void);
+int8_t ca_run(void);
 #endif 
 
-int get_dir(void);
+int8_t get_dir(void);
 void write_to_move(int direction);
 
 /* ca_logic.c */

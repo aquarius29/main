@@ -19,7 +19,8 @@
 
 #ifndef SIMULATOR
 #include "proto_lib.h"
-#endif
+#endif 
+
 #include "mov_interface.h"
 
 #define SONAR_PIN 5
@@ -72,6 +73,7 @@ int mov_init()
 int mov_run()
 {
 	read_sensorCommand();
+
 #ifdef DEBUG
 	Serial.println("\n*************LOOOOOOOP**************\n");
 #endif
@@ -138,6 +140,7 @@ int mov_init(void) {
  */
 int mov_run(void) {
 	read_sensorCommand();
+
 #ifdef DEBUG
 	printf("\n \n*********************LOOOOOOOP***************************\n");
 #endif
@@ -231,24 +234,28 @@ void read_caCommand(void){
 }
 
 void send_dir_to_ca(int i){
+#ifndef SIMULATOR
 	proto_write_direction(i);
+#endif
 }
 
 
 
 void read_sensorCommand(void){
 
+#ifndef SIMULATOR
 	struct stab_gyroscope *stabCommand = proto_stabReadAttitude();
 
 	sensorCommand.pitch = stabCommand->pitch;
 	sensorCommand.roll = stabCommand->roll;
 	sensorCommand.yaw = stabCommand->yaw;
-	sensorCommand.height =(int)sonar_distance(6);
+	sensorCommand.height =(int)sonar_distance(SONAR_PIN);
 
 	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.pitch); */
 	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.roll); */
 	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.yaw); */
 	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.height); */
+#endif
 }
 
 

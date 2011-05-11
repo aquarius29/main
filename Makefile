@@ -129,7 +129,7 @@ pc-dbg:
 	cd moto/src && $(MAKE) lib-pc
 	cd mov/src && $(MAKE) lib-pc
 	cd ca/src && $(MAKE) lib-pc
-	cd proto/src && $(MAKE) lib-pc
+	cd proto_mega/src && $(MAKE) lib-pc
 	$(GLOBAL_CC) -c main.c -Isched/src
 	$(GLOBAL_CC) -o $(PROG) main.o $(BASIC_LIBS)
 

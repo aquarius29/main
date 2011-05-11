@@ -1,13 +1,15 @@
-/*
- * file:         ca_sensor.c
- * brief:        Read IR sensor data
- * author:       Yanling Jin
- * date:         2011-04-26
- * version:      0.1
- * history       2011-03-30 - create the file\n
- * detail:       This is for calculating the collision avoidance
+/*!
+ *  @file ca_sensor.c
+ *
+ *  @brief Read IR sensor data
+ *
+ *  @author Yanling Jin
+ *  @date 2011-04-26
+ *  @history   2011-03-30 - create the file -Yanling Jin\n
+ *
+ *  @details  This is for calculating the collision avoidance
  */
- 
+
 
 #ifdef ARDUINO
 #include <stdio.h>
