@@ -9,7 +9,6 @@
  * detail:
  */
 
-
 #include <stdio.h>
 #include <stdint.h>
 
@@ -29,7 +28,6 @@ struct sensor
 	int yaw;
 	int height;
 };
-
 
 /*mov_logic.c*/
 void command_logic(void);
@@ -94,6 +92,8 @@ void read_caCommand(void);
 void write_to_motor(unsigned char msg);
 void send_dir_to_ca(int i);
 void read_sensorCommand(void);
+void clear_message_array();
+void write_array();
 
 /*mov_sensor.c*/
 #ifdef ARDUINO
