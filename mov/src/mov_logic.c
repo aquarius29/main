@@ -13,6 +13,13 @@
 #include <stdio.h>
 #endif
 
+#ifdef DEBUG
+#define DEBUG_PRINT(s)        printf(s)
+#else
+#define DEBUG_PRINT(s)
+#endif
+
+
 #include "mov_interface.h"
 
 #define BUFF_YAW 1
@@ -50,9 +57,7 @@ void command_logic(void) {
 
 	doCa();
 
-#ifdef DEBUG
     printOrientation();
-#endif
 
     char order = navCommand.order;  
 
@@ -111,8 +116,6 @@ void landCommand(void){
 	/*Order is invalid. Land! */
 	else { 
 		land(); 
-
-		/* simulated value if simulation is on*/
 		sensorCommand.height = do_sensor_simulation(sensorCommand.height, DECREASING);
 	} 
 }
@@ -171,9 +174,7 @@ void check_changingAltitude(void){
  */
 void check_height(void)
 {
-#ifdef DEBUG
-    printf("!!!!!!!!!!!!!check height: \n");
-#endif
+    DEBUG_PRINT("!!!!!!!!!!!!!check height: \n");
     int height_desire =navCommand.height;
     int height_current =sensorCommand.height;
 
@@ -183,8 +184,6 @@ void check_height(void)
 		    hover();	
 		    decrease_all();
 		}
-
-		/* simulated */
 		sensorCommand.height = do_sensor_simulation(sensorCommand.height, DECREASING);
     }
 
@@ -193,19 +192,15 @@ void check_height(void)
 		if(changingAltitude == 1) {	
 			hover();
 			increase_all();
-		}		
-		/* simulated */		
+		}			
 		sensorCommand.height = do_sensor_simulation(sensorCommand.height, INCREASING);
-
     }
 	/*it's under the perfect height*/
     else{
 		hover();
 		heightArrived = 1;
     }
-#ifdef DEBUG
     printOrientation();
-#endif
 }
 
 
@@ -216,9 +211,7 @@ void check_height(void)
  */
 void check_heading(void)
 {
-#ifdef DEBUG
-    printf("!!!!!!!!!!!!!check heading: \n");
-#endif
+   DEBUG_PRINT ("!!!!!!!!!!!!!check heading: \n");
 
     int heading_desire=navCommand.yaw;
     int heading_current=sensorCommand.yaw;
@@ -226,44 +219,32 @@ void check_heading(void)
 
     if(heading_current>heading_desire+BUFF_YAW && difference>180){
 		turn_right();
-
-		/* simulated */
 		sensorCommand.yaw = do_sensor_simulation(sensorCommand.yaw, INCREASING);
     }
 	else if(heading_current>heading_desire+BUFF_YAW && difference<180){
 		turn_left();
-
-		/* simulated */
 		sensorCommand.yaw = do_sensor_simulation(sensorCommand.yaw, DECREASING);
     }
     else if(heading_current<heading_desire-BUFF_YAW && difference>180){
 		turn_left();
-
-		/* simulated */
 		sensorCommand.yaw = do_sensor_simulation(sensorCommand.yaw, DECREASING);
     }
     else if(heading_current<heading_desire-BUFF_YAW && difference<180){
 		turn_right();
-
-		/* simulated */
 		sensorCommand.yaw = do_sensor_simulation(sensorCommand.yaw, INCREASING);
     }
     else{
 		hover();
 		yawArrived = 1;
     }
-#ifdef DEBUG
     printOrientation();
-#endif
 }
 
 /*
  * 
  */
 void check_pitch_roll(int isHovering) {
-#ifdef DEBUG
-    printf("!!!!!!!!!!!!!check pitch and roll: \n");
-#endif
+    DEBUG_PRINT("!!!!!!!!!!!!!check pitch and roll: \n");
     int pitch_current=sensorCommand.pitch;
     int roll_current=sensorCommand.roll;
     int pitch_desire;
@@ -311,9 +292,7 @@ void check_pitch_roll(int isHovering) {
     else{
 		//great
     }
-#ifdef DEBUG
     printOrientation();
-#endif
 }
 
 
@@ -330,11 +309,11 @@ void updateDistanceToTravel(void){
  * print the drone's current attitude,
  * DEBUG only
  */
-#ifdef DEBUG
 void printOrientation(void)
 {
-    printf("\n {pitch: %d roll: %d, yaw: %d height: %d distance left: %d}\n", 
+#ifdef DEBUG
+   printf("\n {pitch: %d roll: %d, yaw: %d height: %d distance left: %d}\n", 
 		   sensorCommand.pitch, sensorCommand.roll,sensorCommand.yaw,
 		   sensorCommand.height, distanceToTravel );
-}
 #endif
+}
