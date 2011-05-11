@@ -91,6 +91,12 @@ int mov_run(void);
 void read_navCommand(void);
 void read_caCommand(void);
 void write_to_motor(unsigned char msg);
+void send_dir_to_ca(int i);
+void read_sensorCommand(void);
 
 /*mov_sensor.c*/
+#ifdef ARDUINO
 float sonar_distance(int sonarPin);
+#elif defined PC
+float sonar_distance(int sonarPin);
+#endif

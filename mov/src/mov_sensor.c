@@ -27,6 +27,7 @@ float sonar_distance(int sonarPin)
 	 * 2.54 and we get distance in cm
 	 */
 	cm = duration/57.874;
+	return cm;
 }
 
 
@@ -52,4 +53,12 @@ float sonar_distance(int sonarPin)
   return distance;
 
   }*/
+
+#elif defined PC
+
+float sonar_distance(int sonarPin)
+{
+
+	return 100;
+}
 #endif

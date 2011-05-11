@@ -17,7 +17,7 @@
 
 //#include "
 
-#include "proto_mov_motor.h"
+#include "proto_lib.h"
 #include "moto_interface.h"
 #include "moto_msg_manipulation.h"
 #include "moto_driver_functions.h"
@@ -62,7 +62,7 @@ int moto_init(void){
  */
 int moto_run(void){
     moto_cyclesSinceLastMsg++;
-    inputFromProto = read_motor();
+    inputFromProto = proto_read_motor();
     binary = INT_TO_BITFIELD(&inputFromProto);
 
 #if defined ARDUINO_DBG
