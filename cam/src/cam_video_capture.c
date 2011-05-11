@@ -33,6 +33,7 @@
 #include <pthread.h>
 #include "cv.h"
 #include "highgui.h"
+//#include "../include/highgui.h"
 
 #include "cam_interface.h"
 #include "cam_cam.h"
@@ -40,35 +41,36 @@
 /*
 	video capture structure for opencv and the IplImage structure
 */
-	CvCapture* video_capture;
-	IplImage* video_frame; // uncompressed array of BGR images
-	IplImage *gray_frame; // to hold the processed images
-	
+    CvCapture* video_capture;
+    IplImage* video_frame; // uncompressed array of BGR images
+    IplImage *gray_frame; // to hold the processed images
+
 
 /*
 	Function Prototypes
 */
-	void initialize(void);
-	void grab_frame(void);
-	void save_and_convert_video(void);
+    void initialize();
+    void grab_frame(void);
+    void save_and_convert_video(void);
 
 
 
 /*
 	Variables
 */
-	int new_data;
-	int key;
-	//int cam_index = 1;
-	pthread_mutex_t	 mutex = PTHREAD_MUTEX_INITIALIZER;
-	pthread_t 	thread_new;
+    int new_data;
+    int key;
+
+    pthread_mutex_t	 mutex = PTHREAD_MUTEX_INITIALIZER;
+    pthread_t 	server_thread;
 
 /*
 	Function that initializes the camera
 */
 	
-void initialize(void)
+void initialize()
 {
+<<<<<<< HEAD
 	//if(cam_index){
 	video_capture = cvCaptureFromCAM(0);
 	//}
@@ -76,7 +78,17 @@ void initialize(void)
 		perror("could not capture from device");
 		}
 	printf("Initializing ...\n");
+=======
+>>>>>>> b64f14e505c1a54f5e93aefebe0751ca42cc01fe
 
+    video_capture = cvCaptureFromCAM(1);
+
+        if(!video_capture){
+        perror("could not capture from device");
+        }
+    else{
+    printf("Initializing ...\n");
+    }
 }
 
 /*
@@ -85,14 +97,13 @@ void initialize(void)
 void grab_frame(void)
 {
 
-	video_frame = cvQueryFrame(video_capture);
+    video_frame = cvQueryFrame(video_capture);
 
-	fprintf(stdout, "Frame Width: %d\n", video_frame -> width);
-	fprintf(stdout, "Frame Height: %d\n\n", video_frame -> height);
-	printf("******************************\n");
-	fprintf(stdout, "Press Ctrl+C to stop streaming\n");
+    fprintf(stdout, "Frame Width: %d\n", video_frame -> width);
+    fprintf(stdout, "Frame Height: %d\n\n", video_frame -> height);
+    printf("******************************\n");
+    fprintf(stdout, "Press Ctrl+C to stop streaming\n");
 
-	//return 0;
 }
 
 /*
@@ -100,44 +111,44 @@ void grab_frame(void)
 */
 void save_and_convert_video(void)
 {
-	CvSize size = cvSize((int)cvGetCaptureProperty(video_capture,CV_CAP_PROP_FRAME_WIDTH),
-						(int)cvGetCaptureProperty(video_capture,CV_CAP_PROP_FRAME_WIDTH));
-	CvVideoWriter *writer = cvCreateVideoWriter("out.avi", CV_FOURCC('D','I','V','X'), 25,size, 1);
+    CvSize size = cvSize((int)cvGetCaptureProperty(video_capture,CV_CAP_PROP_FRAME_WIDTH),
+                        (int)cvGetCaptureProperty(video_capture,CV_CAP_PROP_FRAME_WIDTH));
+    CvVideoWriter *writer = cvCreateVideoWriter("out.avi", CV_FOURCC('D','I','V','X'), 25,size, 1);
 
 /*	create a variable to hold processed frames*/
-	gray_frame = cvCreateImage(cvGetSize(video_frame),IPL_DEPTH_8U, 1);
+    gray_frame = cvCreateImage(cvGetSize(video_frame),IPL_DEPTH_8U, 1);
 
-	pthread_create(&thread_new, NULL, video_server, NULL);// to the server
+    pthread_create(&server_thread, NULL, video_server, NULL);
 
 
 /*	video processing loop */	
-	cvNamedWindow("QUADROTOR-SERVER",CV_WINDOW_AUTOSIZE); 
-	while(video_frame > 0){
-	video_frame = cvQueryFrame(video_capture);
-	cvWriteFrame(writer, video_frame);
+    cvNamedWindow("QUADROTOR-SERVER",CV_WINDOW_AUTOSIZE); 
+    while(video_frame > 0){
+    video_frame = cvQueryFrame(video_capture);
+    cvWriteFrame(writer, video_frame);
 
-		if(!video_frame)
-		break;
-		video_frame -> origin = 0;
+        if(!video_frame)
+        break;
+        video_frame -> origin = 0;
 
-	pthread_mutex_lock(&mutex);
-	cvCvtColor(video_frame, gray_frame, CV_BGR2GRAY);// we can as well do the compression here
-	new_data = 1;
-	pthread_mutex_unlock(&mutex);
+    pthread_mutex_lock(&mutex);
+    cvCvtColor(video_frame, gray_frame, CV_BGR2GRAY);
+    new_data = 1;
+    pthread_mutex_unlock(&mutex);
 
 /*	show video */
-	cvShowImage("QUADROTOR-SERVER", video_frame);
-	key = cvWaitKey(28);
-	}
+    cvShowImage("QUADROTOR-SERVER", video_frame);
+    key = cvWaitKey(28);
+    }
 
 
 /*
-	clen up memory after use
+	clean up memory after use
 */
-	cvDestroyWindow("QUADROTOR-SERVER");
-	cvReleaseVideoWriter(&writer);
-	cvReleaseImage(&gray_frame);
-	cvReleaseCapture(&video_capture);
-	pthread_mutex_destroy(&mutex);
+    cvDestroyWindow("QUADROTOR-SERVER");
+    cvReleaseVideoWriter(&writer);
+    cvReleaseImage(&gray_frame);
+    cvReleaseCapture(&video_capture);
+    pthread_mutex_destroy(&mutex);
 
 }

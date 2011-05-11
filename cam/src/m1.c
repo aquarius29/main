@@ -11,11 +11,12 @@
 int main(void)
 {
   
- 	initialize();
-	grab_frame();
-	save_and_convert_video();
-	video_server();
- return 0;
+    initialize();
+    grab_frame();
+    save_and_convert_video();
+    video_server();
+
+return 0;
   
  
 }

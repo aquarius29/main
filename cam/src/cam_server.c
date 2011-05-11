@@ -26,106 +26,94 @@
 #define PORT_NUMBER 5457
 
 /*	sockets variables */
-	int serversock;
-	int clientsock;
+    int server_socket;
+    int client_socket;
 
 /*	data variables */
-	int imgsize;
-	int bytes;
-	int new_data;
-	IplImage *gray_frame; // to hold the processed images
+    int bytes;
+    int new_data;
+    IplImage *gray_frame; /*to hold the processed images*/
 
-	pthread_mutex_t	 m = PTHREAD_MUTEX_INITIALIZER;
+    pthread_mutex_t	 m = PTHREAD_MUTEX_INITIALIZER;
 
 /*	the video server function*/
 void video_server(void)
 {
 
-	//pthread_t 	thread_new;
+ 
+    struct sockaddr_in cam_server;
 
-	struct sockaddr_in server;
-	pthread_setcancelstate(PTHREAD_CANCEL_ENABLE,NULL);
-	pthread_setcancelstate(PTHREAD_CANCEL_ASYNCHRONOUS, NULL);
-
-/*	OPEN SERVERSOCK*/
-	if ((serversock = socket (PF_INET,SOCK_STREAM,0)) == -1){
-	terminate("error: socket() could not open",1);
-	}
+/*	OPEN SERVER SOCKET*/
+    if ((server_socket = socket (PF_INET,SOCK_STREAM,0)) == -1){
+    terminate("error: socket() could not open",1);
+    }
 
 /*	SET UP THE IP AND PORT NUMBER OF THE SERVER*/
-	memset(&server, 0, sizeof(server));
-	server.sin_family = AF_INET;
-	server.sin_port = htons(PORT_NUMBER);
-	server.sin_addr.s_addr = INADDR_ANY;
+    memset(&cam_server, 0, sizeof(cam_server));
+    cam_server.sin_family = AF_INET;
+    cam_server.sin_port = htons(PORT_NUMBER);
+    cam_server.sin_addr.s_addr = INADDR_ANY;
 
 
 /*	BIND THE SOCKET*/
-	if(bind(serversock, (const void*) &server, sizeof(server)) == -1){
-	terminate("error: bind() failed ",1);
-	}
+    if(bind(server_socket, (const void*) &cam_server, sizeof(cam_server)) == -1){
+    terminate("error: bind failed ",1);
+    }
 
-/*	listen for client connection*/
-	if (listen(serversock, 10) == -1){
-	terminate("Listening failed",1);
-	}
-	else{
-	printf("Listening ...\n");
-	}
+/*	listen for  a client connection*/
+    if (listen(server_socket, 10) == -1){
+    terminate("Listening  failed",1);
+    }
+    else{
+    printf("Listening ...\n");
+    }
 
 /* accept request for connection from a client*/
-	if ((clientsock = accept(serversock, NULL, NULL)) == -1){
-	terminate("accept failed", 1);
-	}
-	else {
-	printf("connection accepted ...\nNow sending frames to client...\n");
-	}
-
-/*	get the frame size to be sent out, we will be sending the gray_frame from the
-	camera_capture*/
-	imgsize = gray_frame -> imageSize;
+    if ((client_socket = accept(server_socket, NULL, NULL)) == -1){
+    terminate("accept failed", 1);
+    }
+    else {
+    printf("connection accepted ...\nNow sending frames to client...\n");
+    }
 
 /*	send frames to client using pthread, we first need to lock then unlock thread*/
-	while(new_data != 0){
-	pthread_mutex_lock(&m);
-		if(new_data){
-		bytes = send (clientsock, gray_frame -> imageData, imgsize, 0);
+    while(new_data != 0){
+    pthread_mutex_lock(&m);
+        if(new_data){
+        bytes = send (client_socket, gray_frame -> imageData, gray_frame ->imageSize, 0);
 
-		}
-	pthread_mutex_unlock(&m);
+        }
+    pthread_mutex_unlock(&m);
 	
-	if (bytes != imgsize){	
-	fprintf(stderr, "Connection was closed at the client side.\n");
-	close(clientsock);
+    if (bytes != gray_frame ->imageSize){	
+    fprintf(stderr, "Connection was closed at the client side.\n");
+    close(client_socket);
 
-		if ((clientsock = accept(serversock, NULL, NULL)) == -1){
-		terminate("Accept failed",1);
-		}
-	}
-
-/*	cancel the pthread*/
-	pthread_testcancel();
+        if ((client_socket = accept(server_socket, NULL, NULL)) == -1){
+        terminate("Accept failed",1);
+        }
+    }
 	
-	usleep(1000);
-	}
-
+    usleep(100);
+    }
 
 }
 
 /*	A function to quit a process safely */
-void terminate(char*msg, int retval)
+void terminate(char*msg, int ret_value)
 {
 	
-	if (retval == 0){
-		if (msg){ fprintf(stdout,"%s\n", msg);}
-	}
-	else{
-		if(msg) {fprintf(stderr, "%s\n", msg);}
-	}
+    if(ret_value == 0){
+    if(msg){fprintf(stdout,"%s\n", msg);}
+    }
+    else{
+        if(msg) {fprintf(stderr, "%s\n", msg);}
+    }
 
-	close(clientsock);
-	close(serversock);
-	pthread_mutex_destroy(&m);
-	exit(retval);
+    close(client_socket);
+    close(server_socket);
+    pthread_mutex_destroy(&m);
+    exit(ret_value);
 
 }//End of file
 
