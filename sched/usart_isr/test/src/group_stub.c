@@ -24,5 +24,8 @@ void group_run(void){
         if (navMsg->type == 10) {
             digitalWrite(12, HIGH);
         }
+        else if (navMsg->type == 50) {
+            digitalWrite(13, HIGH);
+        }
     }
 }
