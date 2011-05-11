@@ -41,9 +41,13 @@ int heightArrived;
 int start_time;
 int duration;
 
+
 struct nav navCommand;
 struct sensor sensorCommand;
 struct sensor oldSensorCommand;
+
+struct sensor *pSensorC = &sensorCommand;
+struct nav *p = &navCommand;
 
 /*Motor Messages */
 uint8_t msg1;
@@ -131,6 +135,7 @@ int mov_run()
  * all the movement preparations
  */
 int mov_init(void) {
+
 	/*open the file which contains the simulated controls*/
 #ifdef SIMULATOR
     file = fopen("input.txt", "r");
@@ -152,6 +157,7 @@ int mov_init(void) {
  * running the movement code
  */
 int mov_run(void) {
+
 	read_sensorCommand();
 	clear_message_array();
 
@@ -210,13 +216,13 @@ void write_to_motor(unsigned char msg){
     
     switch(message_counter){
     case 1: msg1 = msg; break;
-    case 2: msg2 = msg;break;
-    case 3: msg3 = msg;break;
-    case 4: msg4 = msg;break;
-    case 5: msg5 = msg;break;
-    case 6: msg6 = msg;break;
-    case 7: msg7 = msg;break;
-    case 8: msg8 = msg;break;
+    case 2: msg2 = msg; break;
+    case 3: msg3 = msg; break;
+    case 4: msg4 = msg; break;
+    case 5: msg5 = msg; break;
+    case 6: msg6 = msg; break;
+    case 7: msg7 = msg; break;
+    case 8: msg8 = msg; break;
     }
 
     message_counter= message_counter + 1;
@@ -226,6 +232,7 @@ void write_to_motor(unsigned char msg){
  *Clear the message array to NO MESSAGE
  */
 void clear_message_array(){
+
     message_counter = 1;
     msg1 = NO_MESSAGE;
     msg2 = NO_MESSAGE;
@@ -241,6 +248,7 @@ void clear_message_array(){
  *Write a set of messages stored ina  struct to motor
  */
 void write_array(){
+
 #ifndef SIMULATOR
     //proto_write_motor2(msg1,msg2,msg3,msg4,msg5,msg6,msg7,msg8);
 #endif
@@ -250,6 +258,7 @@ void write_array(){
  * write message to navigation
  */
 void write_to_nav(void) {
+
 #ifndef SIMULATOR
 	//write to navigation
 #endif
@@ -260,13 +269,20 @@ void write_to_nav(void) {
  * read navigation Command
  */
 void read_navCommand(void) {
+
 #ifndef SIMULATOR
 	//read navigation command
-	navCommand.type =0;
-	navCommand.order=0;
-	navCommand.height =10;
-	navCommand.distance=0;
-	navCommand.yaw=0;
+    p-> type = 0;
+    p -> order = 0;
+    p -> height = 0;
+    p -> distance = 0;
+    p -> yaw = 0;
+
+	/* navCommand.type =0; */
+	/* navCommand.order=0; */
+	/* navCommand.height =10; */
+	/* navCommand.distance=0; */
+	/* navCommand.yaw=0; */
 #endif
 }
 
@@ -275,15 +291,17 @@ void read_navCommand(void) {
  * read collision avoidance command
  */
 void read_caCommand(void){
+
 #ifndef SIMULATOR
 	//read collision avoidance command
     //PROTOCOL READ FROM CA
     caDir = proto_read_yaw();
-	printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",caDir);
+    	printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",caDir);
 #endif
 }
 
 void send_dir_to_ca(int i){
+
 #ifndef SIMULATOR
 	proto_write_direction(i);
 #endif
@@ -296,10 +314,16 @@ void read_sensorCommand(void){
 #ifndef SIMULATOR
     struct stab_gyroscope *stabCommand = (struct stab_gyroscope *)proto_stabReadAttitude();
 
-	sensorCommand.pitch = stabCommand->pitch;
-	sensorCommand.roll = stabCommand->roll;
-	sensorCommand.yaw = stabCommand->yaw;
-	sensorCommand.height =(int)sonar_distance(SONAR_PIN);
+    pSensorC -> pitch = stabCommand -> pitch;
+    pSensorC -> roll = stabCommand -> roll;
+    pSensorC -> yaw = stabCommand -> yaw;
+    pSensorC -> height = (int) sonar_distance(SONAR_PIN);
+
+
+	/* sensorCommand.pitch = stabCommand->pitch; */
+	/* sensorCommand.roll = stabCommand->roll; */
+	/* sensorCommand.yaw = stabCommand->yaw; */
+	/* sensorCommand.height =(int)sonar_distance(SONAR_PIN); */
 
 	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.pitch); */
 	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.roll); */
