@@ -231,14 +231,17 @@ void read_caCommand(void){
 }
 
 void send_dir_to_ca(int i){
+    #ifndef SIMULATOR
 	proto_write_direction(i);
+    #endif
 }
 
 
 
 void read_sensorCommand(void){
 
-	struct stab_gyroscope *stabCommand = proto_stabReadAttitude();
+#ifndef SIMULATOR
+    struct stab_gyroscope *stabCommand = (struct stab_gyroscope *)proto_stabReadAttitude();
 
 	sensorCommand.pitch = stabCommand->pitch;
 	sensorCommand.roll = stabCommand->roll;
@@ -249,6 +252,7 @@ void read_sensorCommand(void){
 	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.roll); */
 	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.yaw); */
 	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.height); */
+#endif
 }
 
 

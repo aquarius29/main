@@ -21,6 +21,9 @@
 #define SPEED 100
 #define DEFAULT_CA_DISTANCE 100
 
+/*For Sending to Simulation */
+#define INCREASING 1
+#define DECREASING 2
 
 extern int distanceToTravel;
 extern int distanceTraveled;
@@ -108,10 +111,9 @@ void landCommand(void){
 	/*Order is invalid. Land! */
 	else { 
 		land(); 
-#ifdef SIMULATOR
-		/* simulated - decrease the sensed height */
-		sensorCommand.height = readSensorTest(sensorCommand.height, 'd');
-#endif
+
+		/* simulated value if simulation is on*/
+		sensorCommand.height = do_sensor_simulation(sensorCommand.height, DECREASING);
 	} 
 }
 
@@ -181,10 +183,9 @@ void check_height(void)
 		    hover();	
 		    decrease_all();
 		}
-#ifdef SIMULATOR
+
 		/* simulated */
-		sensorCommand.height = readSensorTest(sensorCommand.height, 'd');
-#endif
+		sensorCommand.height = do_sensor_simulation(sensorCommand.height, DECREASING);
     }
 
 	/*lower than it supposed to be, increase all motors*/
@@ -193,10 +194,8 @@ void check_height(void)
 			hover();
 			increase_all();
 		}		
-#ifdef SIMULATOR
 		/* simulated */		
-		sensorCommand.height = readSensorTest(sensorCommand.height, 'i');
-#endif
+		sensorCommand.height = do_sensor_simulation(sensorCommand.height, INCREASING);
 
     }
 	/*it's under the perfect height*/
@@ -227,31 +226,27 @@ void check_heading(void)
 
     if(heading_current>heading_desire+BUFF_YAW && difference>180){
 		turn_right();
-#ifdef SIMULATOR
+
 		/* simulated */
-		sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'i');
-#endif
+		sensorCommand.yaw = do_sensor_simulation(sensorCommand.yaw, INCREASING);
     }
 	else if(heading_current>heading_desire+BUFF_YAW && difference<180){
 		turn_left();
-#ifdef SIMULATOR
+
 		/* simulated */
-		sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'd');
-#endif
+		sensorCommand.yaw = do_sensor_simulation(sensorCommand.yaw, DECREASING);
     }
     else if(heading_current<heading_desire-BUFF_YAW && difference>180){
 		turn_left();
-#ifdef SIMULATOR
+
 		/* simulated */
-		sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'd');
-#endif
+		sensorCommand.yaw = do_sensor_simulation(sensorCommand.yaw, DECREASING);
     }
     else if(heading_current<heading_desire-BUFF_YAW && difference<180){
 		turn_right();
-#ifdef SIMULATOR
+
 		/* simulated */
-		sensorCommand.yaw = readSensorTest(sensorCommand.yaw, 'i');
-#endif
+		sensorCommand.yaw = do_sensor_simulation(sensorCommand.yaw, INCREASING);
     }
     else{
 		hover();
@@ -285,19 +280,15 @@ void check_pitch_roll(int isHovering) {
     //pitch clac
     if(pitch_current>pitch_desire+BUFF_PR){
 		increase_left_decrease_right();
-
-#ifdef SIMULATOR
+		
 		/* simulated */
-		sensorCommand.pitch = readSensorTest(sensorCommand.pitch, 'd');
-#endif
+		sensorCommand.pitch = do_sensor_simulation(sensorCommand.pitch, DECREASING);
     }
     else if(pitch_current<pitch_desire-BUFF_PR){
 		increase_right_decrease_left();
 
-#ifdef SIMULATOR
 		/* simulated */
-		sensorCommand.pitch = readSensorTest(sensorCommand.pitch, 'i');
-#endif
+		sensorCommand.pitch = do_sensor_simulation(sensorCommand.pitch, INCREASING);
     }
     else{
 		//great
@@ -307,18 +298,15 @@ void check_pitch_roll(int isHovering) {
     if(roll_current>roll_desire+BUFF_PR){
 		increase_front_decrease_rear();
 
-#ifdef SIMULATOR
 		/* simulated */
-		sensorCommand.roll = readSensorTest(sensorCommand.roll, 'd');
-#endif
+		sensorCommand.roll = do_sensor_simulation(sensorCommand.roll, DECREASING);
     }
     else if(roll_current<roll_desire-BUFF_PR){
 		increase_rear_decrease_front();
 
-#ifdef SIMULATOR
+
 		/* simulated */
-		sensorCommand.roll = readSensorTest(sensorCommand.roll, 'i');
-#endif
+		sensorCommand.roll = do_sensor_simulation(sensorCommand.roll, INCREASING);
     }
     else{
 		//great
