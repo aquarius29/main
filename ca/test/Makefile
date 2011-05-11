@@ -1,3 +1,12 @@
+# File:		Makefile
+# Brief:		makefile
+# Author:	Alina Butko
+# Date:		2011-05-09
+# Version:	0.1
+# History:	2011-05-09 create the file
+# Detail:	for creation used one of the makefiles from the T&V assignments
+
+
 SRCPATH = ../../src
 SRCOBJS = $(wildcard $(SRCPATH)/*.o)
 TESTSRCS = $(wildcard *.c)
