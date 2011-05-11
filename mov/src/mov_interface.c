@@ -132,9 +132,6 @@ int mov_run()
 #endif
 
 
-
-
-
 #ifdef PC
 /*
  * PC
@@ -262,7 +259,7 @@ void clear_message_array(){
  */
 void write_array(){
 #ifndef TEST
-    //proto_write_motor2(msg1,msg2,msg3,msg4,msg5,msg6,msg7,msg8);
+    proto_write_motor2(msg1,msg2,msg3,msg4,msg5,msg6,msg7,msg8);
 #endif
 }
 
