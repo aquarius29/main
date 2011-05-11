@@ -17,7 +17,7 @@
 #include <stdio.h>
 #endif
 
-#ifndef SIMULATOR
+#ifndef TEST
 #include "proto_lib.h"
 #endif 
 
@@ -191,20 +191,26 @@ int mov_run(void) {
  * send message to motor
  */
 void write_to_motor(unsigned char msg){
-#ifndef SIMULATOR
+#ifndef TEST
 	proto_write_motor(msg);
 #endif
 }
 
-/*
- * write message to navigation
- */
-void write_to_nav(void) {
-#ifndef SIMULATOR
-	//write to navigation
+
+
+
+void write_to_nav_ca(int16_t direction) {
+#ifndef TEST
+	//call this method when there's a collision
+	//1 collision 0 no collision
 #endif
 }
 
+void write_to_nav_comfirm(uint8_t i) {
+  #ifndef TEST
+	//1 done nav //0 default
+#endif
+}
 
 /*
  * read navigation Command
@@ -225,7 +231,7 @@ void read_navCommand(void) {
  * read collision avoidance command
  */
 void read_caCommand(void){
-#ifndef SIMULATOR
+#ifndef TEST
 	//read collision avoidance command
     //PROTOCOL READ FROM CA
     caDir = proto_read_yaw();
@@ -234,7 +240,7 @@ void read_caCommand(void){
 }
 
 void send_dir_to_ca(int i){
-#ifndef SIMULATOR
+#ifndef TEST
 	proto_write_direction(i);
 #endif
 }
@@ -243,7 +249,7 @@ void send_dir_to_ca(int i){
 
 void read_sensorCommand(void){
 
-#ifndef SIMULATOR
+#ifndef TEST
     struct stab_gyroscope *stabCommand = (struct stab_gyroscope *)proto_stabReadAttitude();
 
 	sensorCommand.pitch = stabCommand->pitch;

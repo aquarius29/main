@@ -11,14 +11,15 @@
 
 
 #include <stdio.h>
+#include <stdint.h>
 
 struct nav
 {
-	char type;
-	char order; 
-	int height;
-	int distance;
-	int yaw;
+	uint8_t type;
+	uint8_t order; 
+	uint16_t height;
+	uint16_t distance;
+	uint16_t yaw;
 };
 
 struct sensor
@@ -71,10 +72,10 @@ void turn_left(void);
 void turn_right(void);
 void land(void);
 
-char to_MotorMessage(char ID0, char ID1, char increasing, char panicMode, 
-					 char motor1,char motor2, char motor3, char motor4);
-void pWrite(char msg);
-void print_char_to_Binary(char bin);
+uint8_t to_MotorMessage(uint8_t ID0, uint8_t ID1, uint8_t increasing,uint8_t panicMode, 
+					 uint8_t motor1,uint8_t motor2, uint8_t motor3, uint8_t motor4);
+void pWrite(uint8_t msg);
+void print_uint8_t_to_Binary(uint8_t bin);
 
 
 

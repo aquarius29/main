@@ -11,6 +11,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdint.h>
 
 #include "mov_interface.h"
 
@@ -19,16 +20,20 @@
 #define SET_FLAG(N, F)        ( (N) |= (F) )
 #define CLR_FLAG(N, F)        ( (N) &= -(F) )
 
+#ifdef DEBUG
+#define DEBUG_PRINT(s)        printf(s)
+#else
+#define DEBUG_PRINT(s)
+#endif
+
 
 /* 
  * 01 00 00 00
  */
 void start_motors(void)
 {
-	char msg = to_MotorMessage(0,1,0,0,0,0,0,0);
-#ifdef DEBUG
-	printf ("start motors\n");
-#endif
+	uint8_t msg = to_MotorMessage(0,1,0,0,0,0,0,0);
+	DEBUG_PRINT ("start motors\n");
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -39,10 +44,8 @@ void start_motors(void)
 void stop_motors(void)
 {
 
-	char msg = to_MotorMessage(0,0,0,0,0,0,0,0);
-#ifdef DEBUG
-	printf ("stop motors\n");
-#endif
+	uint8_t msg = to_MotorMessage(0,0,0,0,0,0,0,0);
+	DEBUG_PRINT ("stop motors\n");
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -51,10 +54,8 @@ void stop_motors(void)
  *  10 10 00 01
  */
 void increase_rear_motor(void){
-	char msg = to_MotorMessage(1,0,1,0,0,0,0,1);
-#ifdef DEBUG
-	printf ("increase rear motor\n");
-#endif
+	uint8_t msg = to_MotorMessage(1,0,1,0,0,0,0,1);
+	DEBUG_PRINT ("increase rear motor\n");
 	pWrite(msg);
 	write_to_motor(msg);
 
@@ -65,10 +66,8 @@ void increase_rear_motor(void){
  */
 void decrease_rear_motor(void){
 
-	char msg = to_MotorMessage(1,0,0,0,0,0,0,1);
-#ifdef DEBUG
-	printf ("decrease rear motors\n");
-#endif
+	uint8_t msg = to_MotorMessage(1,0,0,0,0,0,0,1);
+	DEBUG_PRINT ("decrease rear motors\n");
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -78,10 +77,8 @@ void decrease_rear_motor(void){
  */
 void increase_front_motor(void){
 
-	char msg = to_MotorMessage(1,0,1,0,0,0,1,0);
-#ifdef DEBUG
-	printf ("increase front motor\n");
-#endif
+	uint8_t msg = to_MotorMessage(1,0,1,0,0,0,1,0);
+	DEBUG_PRINT  ("increase front motor\n");
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -91,10 +88,8 @@ void increase_front_motor(void){
  */
 void decrease_front_motor(void){
 
-	char msg = to_MotorMessage(1,0,0,0,0,0,1,0);
-#ifdef DEBUG
-	printf ("decrease front motor\n");
-#endif
+	uint8_t msg = to_MotorMessage(1,0,0,0,0,0,1,0);
+	DEBUG_PRINT  ("decrease front motor\n");
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -103,10 +98,8 @@ void decrease_front_motor(void){
  *  10 10 01 00
  */
 void increase_left_motor(void){
-	char msg = to_MotorMessage(1,0,1,0,0,1,0,0);
-#ifdef DEBUG
-	printf ("increase left motor\n");
-#endif
+	uint8_t msg = to_MotorMessage(1,0,1,0,0,1,0,0);
+	DEBUG_PRINT ("increase left motor\n");
 	pWrite(msg);
 	write_to_motor(msg);
 
@@ -118,10 +111,8 @@ void increase_left_motor(void){
  */
 void decrease_left_motor(void){
 
-	char msg = to_MotorMessage(1,0,0,0,0,1,0,0);
-#ifdef DEBUG
-	printf ("decrease left motor\n");
-#endif
+	uint8_t msg = to_MotorMessage(1,0,0,0,0,1,0,0);
+	DEBUG_PRINT ("decrease left motor\n");
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -132,10 +123,8 @@ void decrease_left_motor(void){
  */
 void increase_right_motor(void){
 
-	char msg = to_MotorMessage(1,0,1,0,1,0,0,0);
-#ifdef DEBUG
-	printf ("increase right motor\n");
-#endif
+	uint8_t msg = to_MotorMessage(1,0,1,0,1,0,0,0);
+	DEBUG_PRINT  ("increase right motor\n");
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -145,10 +134,8 @@ void increase_right_motor(void){
  *  10 00 10 00
  */
 void decrease_right_motor(void){
-	char msg = to_MotorMessage(1,0,0,0,1,0,0,0);
-#ifdef DEBUG
-	printf ("decrease right motor\n");
-#endif
+	uint8_t msg = to_MotorMessage(1,0,0,0,1,0,0,0);
+	DEBUG_PRINT  ("decrease right motor\n");
 	pWrite(msg);
 	write_to_motor(msg);
 
@@ -160,10 +147,8 @@ void decrease_right_motor(void){
  */
 void increase_rear_decrease_front(void){
    
-    char msg = to_MotorMessage(1,1,1,0,0,0,1,1);
-#ifdef DEBUG
-    printf ("increase rear decrease front\n");
-#endif
+    uint8_t msg = to_MotorMessage(1,1,1,0,0,0,1,1);
+    DEBUG_PRINT  ("increase rear decrease front\n");
     pWrite(msg);
 	write_to_motor(msg);
 }
@@ -174,10 +159,8 @@ void increase_rear_decrease_front(void){
  */
 void increase_front_decrease_rear(void){
    
-    char msg = to_MotorMessage(1,1,0,0,0,0,1,1);
-#ifdef DEBUG
-    printf ("increase front decrease rear\n");
-#endif
+    uint8_t msg = to_MotorMessage(1,1,0,0,0,0,1,1);
+   DEBUG_PRINT  ("increase front decrease rear\n");
     pWrite(msg);
 	write_to_motor(msg);
 
@@ -188,10 +171,8 @@ void increase_front_decrease_rear(void){
  */
 void increase_left_decrease_right(void){
    
-    char msg = to_MotorMessage(1,1,1,0,1,1,0,0);
-#ifdef DEBUG
-    printf ("increase left decrease right\n");
-#endif
+    uint8_t msg = to_MotorMessage(1,1,1,0,1,1,0,0);
+    DEBUG_PRINT  ("increase left decrease right\n");
     pWrite(msg);
 	write_to_motor(msg);
 }
@@ -201,10 +182,8 @@ void increase_left_decrease_right(void){
  */
 void increase_right_decrease_left(void){
 
-    char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
-#ifdef DEBUG
-    printf ("increase right decrease left\n");
-#endif
+    uint8_t msg = to_MotorMessage(1,1,0,0,1,1,0,0);
+    DEBUG_PRINT  ("increase right decrease left\n");
     pWrite(msg);
 	write_to_motor(msg);
 }
@@ -213,10 +192,8 @@ void increase_right_decrease_left(void){
  *  10 10 11 11
  */
 void increase_all(void){
-	char msg = to_MotorMessage(1,0,1,0,1,1,1,1);
-#ifdef DEBUG
-	printf ("increase all motors\n");
-#endif
+	uint8_t msg = to_MotorMessage(1,0,1,0,1,1,1,1);
+	DEBUG_PRINT  ("increase all motors\n");
 	pWrite(msg);
 	write_to_motor(msg);
 
@@ -226,10 +203,8 @@ void increase_all(void){
  *  10 00 11 11
  */
 void decrease_all(void){
-    char msg = to_MotorMessage(1,0,0,0,1,1,1,1);
-#ifdef DEBUG
-    printf ("decrease all motors\n");
-#endif
+    uint8_t msg = to_MotorMessage(1,0,0,0,1,1,1,1);
+    DEBUG_PRINT  ("decrease all motors\n");
     pWrite(msg);
 	write_to_motor(msg);
 }
@@ -240,10 +215,8 @@ void decrease_all(void){
  */
 void go_forwards(void)
 {
-	char msg = to_MotorMessage(1,1,0,0,0,0,1,0);
-#ifdef DEBUG
-	printf ("go forward\n");
-#endif
+	uint8_t msg = to_MotorMessage(1,1,0,0,0,0,1,0);
+	DEBUG_PRINT ("go forward\n");
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -254,10 +227,8 @@ void go_forwards(void)
 void go_backwards(void)
 {
 
-	char msg = to_MotorMessage(1,1,0,0,0,0,0,1);
-#ifdef DEBUG
-	printf ("go backward\n");
-#endif
+	uint8_t msg = to_MotorMessage(1,1,0,0,0,0,0,1);
+	DEBUG_PRINT ("go backward\n");
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -267,10 +238,8 @@ void go_backwards(void)
  */
 void strafe_left(void)
 {
-	char msg = to_MotorMessage(1,1,1,0,0,1,0,0);
-#ifdef DEBUG
-	printf ("scrafe left\n");
-#endif
+	uint8_t msg = to_MotorMessage(1,1,1,0,0,1,0,0);
+	DEBUG_PRINT  ("scrafe left\n");
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -281,10 +250,8 @@ void strafe_left(void)
  */
 void strafe_right(void)
 {
-	char msg = to_MotorMessage(1,1,0,0,1,0,0,0);
-#ifdef DEBUG
-	printf ("scrafe right\n");
-#endif
+	uint8_t msg = to_MotorMessage(1,1,0,0,1,0,0,0);
+	DEBUG_PRINT  ("scrafe right\n");
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -294,10 +261,8 @@ void strafe_right(void)
  */
 void turn_left(void){
   
-    char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
-#ifdef DEBUG
-    printf ("turn left\n");
-#endif
+    uint8_t msg = to_MotorMessage(1,1,0,0,1,1,0,0);
+    DEBUG_PRINT  ("turn left\n");
     pWrite(msg);
 	write_to_motor(msg);
 }
@@ -307,10 +272,8 @@ void turn_left(void){
  */
 void turn_right(void)
 {
-    char msg = to_MotorMessage(1,1,0,0,1,1,0,0);
-#ifdef DEBUG
-    printf ("turn right\n");
-#endif
+    uint8_t msg = to_MotorMessage(1,1,0,0,1,1,0,0);
+    DEBUG_PRINT ("turn right\n");
     pWrite(msg);
 	write_to_motor(msg);
 }
@@ -320,38 +283,34 @@ void turn_right(void)
  */
 void hover(void)
 {
-	char msg =to_MotorMessage(1,1,1,1,1,1,1,1);
-#ifdef DEBUG
-	printf ("hover\n");
-#endif
+	uint8_t msg =to_MotorMessage(1,1,1,1,1,1,1,1);
+	DEBUG_PRINT  ("hover\n");
 	pWrite(msg);
 	write_to_motor(msg);
 }
 
 /*
- *  
+ *  land
  */
 void land(void){
 	hover();
 	decrease_all();
-#ifdef DEBUG
-	printf("land\n");
-#endif
+	DEBUG_PRINT ("land\n");
 }
 
 /*
  *Receives if the message is increasing(boolean), is in panic mode(boolean) 
- *and the char representing the binary of the 4 affected motors 
+ *and the uint8_t representing the binary of the 4 affected motors 
  *
- *returns the 8 bits as a char , representing the message
+ *returns the 8 bits as a uint8_t , representing the message
  *Example:
  *<<46>> or 00100110
  *<<protocol:2 = 0, increase/decrease:1 = 1, mode:1 = 0, motors:4 = 6>>
  */
-char to_MotorMessage(char ID0, char ID1, char increasing, char panicMode,
-					 char motor1,char motor2, char motor3, char motor4)
+uint8_t to_MotorMessage(uint8_t ID0, uint8_t ID1, uint8_t increasing, uint8_t panicMode,
+					 uint8_t motor1,uint8_t motor2, uint8_t motor3, uint8_t motor4)
 {
-	char motors = 0;
+	uint8_t motors = 0;
 
 	if(ID0 == 1)
 		SET_FLAG(motors, BIT_POS(7)); 
@@ -384,11 +343,11 @@ char to_MotorMessage(char ID0, char ID1, char increasing, char panicMode,
 /*
  *  
  */
-void pWrite(char msg)
+void pWrite(uint8_t msg)
 {
-#ifdef DEBUG 
-	printf("\nProtocol has this written to it: ");
-   	print_char_to_Binary(msg);
+	DEBUG_PRINT ("\nProtocol has this written to it: ");
+#ifdef DEBUG
+   	print_uint8_t_to_Binary(msg);
 #endif
 }
 
@@ -396,9 +355,10 @@ void pWrite(char msg)
 /*
  *  
  */
-void print_char_to_Binary(char bin)
+void print_uint8_t_to_Binary(uint8_t bin)
 {
-	char counter,temp,bit;
+	uint8_t temp,bit;
+	int8_t counter;
 
 	counter =sizeof(bin) * 8;
 
