@@ -11,11 +11,11 @@
 
 /* ca_interface.c */
 #ifdef ARDUINO
-int8_t ca_init(void);
-int8_t ca_run(void);
+int16_t ca_init(void);
+int16_t ca_run(void);
 #elif defined PC
-int8_t ca_init(void);
-int8_t ca_run(void);
+int16_t ca_init(void);
+int16_t ca_run(void);
 #endif 
 
 int8_t get_dir(void);

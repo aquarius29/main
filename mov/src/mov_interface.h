@@ -82,7 +82,7 @@ void print_char_to_Binary(char bin);
 int read_command(void);
 int get_loc(char line[],char c,int indexOfColumn);
 void assignValue(int index,char *temp);
-int readSensorTest(int currentSensor, char command);
+int do_sensor_simulation(int currentSensorValue, int command);
 
 
 /*interface*/

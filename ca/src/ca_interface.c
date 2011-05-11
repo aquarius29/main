@@ -28,7 +28,7 @@
  * ARDUINO
  * All collision preperation goes here.
  */
-int8_t ca_init(void)
+int16_t ca_init(void)
 {
 	/* to init the arduino lib */
 	init();
@@ -43,7 +43,7 @@ int8_t ca_init(void)
  * ARDUINO
  * Collision is started here
  */
-int8_t ca_run(void)
+int16_t ca_run(void)
 {
 
 	write_to_move(direction_filter());
@@ -57,7 +57,7 @@ int8_t ca_run(void)
  * PC
  * All collision preperation goes here.
  */
-int8_t ca_init(void)
+int16_t ca_init(void)
 {
 
 	return 0;
@@ -68,7 +68,7 @@ int8_t ca_init(void)
  * PC
  * Collision is started here
  */
-int8_t ca_run(void)
+int16_t ca_run(void)
 {
 	/* fake data here*/
 	write_to_move(direction_filter(120,120,50,120, 120,200, 40, 120));

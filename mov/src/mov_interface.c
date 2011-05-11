@@ -244,7 +244,7 @@ void send_dir_to_ca(int i){
 void read_sensorCommand(void){
 
 #ifndef SIMULATOR
-	struct stab_gyroscope *stabCommand = proto_stabReadAttitude();
+    struct stab_gyroscope *stabCommand = (struct stab_gyroscope *)proto_stabReadAttitude();
 
 	sensorCommand.pitch = stabCommand->pitch;
 	sensorCommand.roll = stabCommand->roll;
