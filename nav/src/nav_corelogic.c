@@ -23,6 +23,8 @@
 #include "nav_tilemap.h"
 #include "nav_indoorstructure.h"
 
+static tile roomPositionToTile(roomPosition *current);
+
 pthread_t protocolReadThread;
 pthread_t gpsSetupThread;
 pthread_t gpsNavigationThread;
@@ -284,8 +286,7 @@ void nav_runIndoorSystem(double startX, double startY, double destinationX, doub
             printf("Indoor System quite unexpectedly\nRestarting...\n");
             
 			/* Use the last current position to restart the thread*/
-			data->starttile.x = currPosition->lon; 
-			data->starttile.y = currPosition->lat;
+			data->starttile = roomPositionToTile(currPosition);
 			
             indoorThreadResult = 
                 pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void*) data);
@@ -500,11 +501,11 @@ void nav_sendIndoorPathToGui(positionList *path)
 /* End interface:out functions for connectivity group */
 
 /* Helper Functions */
-tile roomPositionToTile(roomPosition current) 
+static tile roomPositionToTile(roomPosition *current)
 {
     tile temp;
-    temp.x = (current.lon - TILE_CENTER) / CENTIMETRES_PER_TILE;
-    temp.y = (current.lat - TILE_CENTER) / CENTIMETRES_PER_TILE;
+    temp.x = (current->lon - TILE_CENTER) / CENTIMETRES_PER_TILE;
+    temp.y = (current->lat - TILE_CENTER) / CENTIMETRES_PER_TILE;
     return temp;
 }
 
