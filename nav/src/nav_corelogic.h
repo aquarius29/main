@@ -14,7 +14,7 @@ int GPSIO_ON_OFF;
 int GPSNAV_ON_OFF;
 int sendMovement;
 
-pixel *currPosition;
+roomPosition *currPosition;
 
 typedef struct
 {
@@ -55,16 +55,18 @@ void nav_sendOutdoorPathToGui(GPSLocation **path);
 void nav_sendIndoorPathToGui(positionList *path);
 
 /* setup gps system */
-void nav_runGpsSystem(GPSLocation *dest);
+//void nav_runGpsSystem(GPSLocation *dest);
+void nav_runGpsSystem(double lat, double lon);
 
 /* setup the indoor navigation system */
-void nav_runIndoorSystem(tile startTile, tile destinationTile);
+//void nav_runIndoorSystem(tile startTile, tile destinationTile);
+void nav_runIndoorSystem(double startX, double startY, double destinationX, double destinationY);
 
 /* send the movement to the movement for handling. */
-void nav_sendManualMovementCommand(movementCommand *move); 
+void nav_sendManualMovementCommand(struct movCommand *move); 
 
  /* send an auto movement command for handling */
-void nav_sendAutoMovementCommand(movementCommand *move);
+void nav_sendAutoMovementCommand(struct movCommand *move);
 
 /* update the destination at any given time: GPS */
 void nav_updateGPSDestination(GPSLocation *destination); 
@@ -73,7 +75,7 @@ void nav_updateGPSDestination(GPSLocation *destination);
 void nav_updateIndoorDestination(int tileNumber, ThreeDWorld *world); 
 
 /* receive data about the movement from movement group */
-void nav_receiveMovementData(movementCommand *movement); 
+void nav_receiveMovementData(struct movCommand *movement); 
 
 /* create a collision object for the indoor system. */
 void nav_createIndoorCollisionObject(int tileNumber, ThreeDWorld *world);
@@ -102,5 +104,9 @@ void *setupgpsnavigation(void *ptr);
 void *startgpswatchdog(void *ptr);
 void *startIndoorNavigationSystem(void *ptr);
 void *readProtocol(void *ptr);
+
+int16_t nav_init(void);
+int16_t nav_run(void);
+
 
 #endif /* CORELOGIC_H */

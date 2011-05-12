@@ -51,7 +51,8 @@ int indoorSystemRunning = 0;
 *
 *
 */ 
-void nav_runGpsSystem(GPSLocation *dest)
+//void nav_runGpsSystem(GPSLocation *dest)
+void nav_runGpsSystem(double lat, double lon)
 {
     printf("Initiating GPS System\n");
     
@@ -59,7 +60,10 @@ void nav_runGpsSystem(GPSLocation *dest)
     
 
     GPSLocation *destination = malloc(sizeof(GPSLocation));
-    *destination = *dest;
+    //*destination = *dest;
+	
+	destination->latitude = lat;
+	destination->longitude = lon;
     
     printf("destination lat : %lf", destination->latitude);
     
@@ -88,12 +92,15 @@ void nav_runGpsSystem(GPSLocation *dest)
 */
 void *startgpswatchdog(void *ptr)
 {
-    //! Point to the data passed in to the watchdog.
-    GPSLocation *destination;
-    destination = (GPSLocation *) ptr;
-    printf("destination after watchdog receive lat : %lf\n", destination->latitude);
+	//! Copy the data passed in to the thread.
+	GPSLocation *destination = malloc(sizeof(GPSLocation));
+	memcpy(destination, ptr, sizeof(GPSLocation));
+    
+	printf("destination after watchdog receive lat : %lf\n", destination->latitude);
     printf("destination after watchdog receive lon : %lf\n", destination->longitude);
  
+	
+
     //! Thread results for the GPS Threads.
     int protocolReadThreadResult;
     int gpsSetupThreadResult;
@@ -135,7 +142,6 @@ void *startgpswatchdog(void *ptr)
     //! As long as the GPS System is running, monitor the GPS Threads.
     while (gpsRunning == 1)
     {
-		
 		//killGPSIO();
 		
         /*! pthread_kill(someThread, 0)
@@ -193,7 +199,9 @@ void *startgpswatchdog(void *ptr)
     /* wait for the threads to finish */
     pthread_join(protocolReadThread, NULL);
     pthread_join(gpsSetupThread, NULL);
-    pthread_join(gpsNavigationThread, NULL);    
+    pthread_join(gpsNavigationThread, NULL);   
+
+	free(destination); /* clean the filth */ 
 }
 
 //! Setup the GPS IO Thread.
@@ -216,8 +224,7 @@ void *setupgpsnavigation(void *ptr)
     GPSNAV_ON_OFF = 1;
 
     /* Point to the destination passed in as a void pointer*/
-    GPSLocation *destination;
-    destination = (GPSLocation *) ptr;
+    GPSLocation *destination = (GPSLocation *) ptr;
     printf("destination after gps nav receive lat : %lf\n", destination->latitude);
     printf("destination after gps nav receive lon : %lf\n", destination->longitude);
 
@@ -236,11 +243,14 @@ void *setupgpsnavigation(void *ptr)
 *
 *
 */
-void nav_runIndoorSystem(tile startTile, tile destinationTile)
+//void nav_runIndoorSystem(tile startTile, tile destinationTile)
+void nav_runIndoorSystem(double startX, double startY, double destinationX, double destinationY)
 {  
     struct thread_data *data = malloc(sizeof(struct thread_data));
-        data->starttile = startTile;
-        data->destinationtile = destinationTile;
+        data->starttile.x = startX;
+		data->starttile.y = startY;
+        data->destinationtile.x = destinationX;
+		data->destinationtile.y = destinationY;
         data->message = "Indoor system started";
             
     char *message = "protocol read thread started";
@@ -274,8 +284,9 @@ void nav_runIndoorSystem(tile startTile, tile destinationTile)
             printf("Indoor System quite unexpectedly\nRestarting...\n");
             
 			/* Use the last current position to restart the thread*/
-			data->starttile = currPosition; 
-			   
+			data->starttile.x = currPosition->lon; 
+			data->starttile.y = currPosition->lat;
+			
             indoorThreadResult = 
                 pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void*) data);
         }
@@ -305,17 +316,6 @@ void *startIndoorNavigationSystem(void *ptr)
     result = pthread_mutex_lock(&indoorNavigationRunningMutex);
     indoorSystemRunning = 0;
     result = pthread_mutex_unlock(&indoorNavigationRunningMutex);   
-}
-
-// function for the path calculation/navigation to use to 
-// send the movement to the movement for handling. 
-// Movement commands will be processed one at a time
-// NOTE: Wait for correct protocol implementation/
-// Does the path calculation want manual commands sent to them as well so they can update the navigation
-// or do they want to update it when they receive movementsMande data from movement group?
-void nav_sendMovementCommand(movementCommand *move)
-{
-    
 }
 
 /* function to update the destination at any given time: GPS */
@@ -458,12 +458,12 @@ void killProtocolReadThread()
 /* End kill functions */
 
 /* Begin functions that are using the protocol */
-void nav_sendAutoMovementCommand(movementCommand *move)
+void nav_sendAutoMovementCommand(struct movCommand *move)
 {
     /* Add protocol functions to send to movement */
 }
 
-void nav_sendManualMovementCommand(movementCommand *move)
+void nav_sendManualMovementCommand(struct movCommand *move)
 {
     /* 1:   Pause Auto movement command generation */
     /*      Extract or send movement command to nav system */
@@ -471,6 +471,8 @@ void nav_sendManualMovementCommand(movementCommand *move)
     /* 3:   Unpause auto movement command generation */
 }
 /* End functions that are using the protocol */
+
+
 
 /* Begin interface:out functions for connectivity group */
 void nav_sendCurrentIndoorPositionToGui(roomPosition *currentPosition)
@@ -497,6 +499,15 @@ void nav_sendIndoorPathToGui(positionList *path)
 }
 /* End interface:out functions for connectivity group */
 
+/* Helper Functions */
+tile roomPositionToTile(roomPosition current) 
+{
+    tile temp;
+    temp.x = (current.lon - TILE_CENTER) / CENTIMETRES_PER_TILE;
+    temp.y = (current.lat - TILE_CENTER) / CENTIMETRES_PER_TILE;
+    return temp;
+}
+
 int main(int argc, char **argv) {
 
 /*
@@ -509,13 +520,12 @@ int main(int argc, char **argv) {
 
 */
 
-
     tile a, b;
     a.x = 1;
     a.y = 1;
     b.x = 9;
     b.y = 5;
-    nav_runIndoorSystem(a, b);
+    nav_runIndoorSystem(a.x, a.y, b.x, b.y);
  
     return 0;
 }

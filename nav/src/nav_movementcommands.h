@@ -8,6 +8,7 @@
 #ifndef MOVEMENTCOMMANDS_H
 #define MOVEMENTCOMMANDS_H
 
+#include <stdint.h>
 //! MovementCommand struct 
 /*!
 * 

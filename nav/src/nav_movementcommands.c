@@ -21,10 +21,9 @@
 *
 * @see nav_sendAutoMovementCommand().
 */
-void sendautomovementcommand
-(int8_t order , uint16_t height, int16_t distance, uint16_t yaw)
+void sendautomovementcommand(uint8_t order , int16_t height, uint16_t distance, int16_t yaw)
 {
-	movementCommand *move = malloc(sizeof(movementCommand));
+	struct movCommand *move = malloc(sizeof(struct movCommand));
 	if (move == NULL)
 	{
 		printf("Memory couldnt be allocated for move command\n");
@@ -44,7 +43,7 @@ void sendautomovementcommand
 	}
 }
 
-void sendManualMovementCommand
+void sendManualMovementCommand()
 {
 	
 }
