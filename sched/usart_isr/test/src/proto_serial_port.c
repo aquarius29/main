@@ -7,9 +7,12 @@
  *  @author     Michal, Joakim
  *  @date       2011-05-06
  *
- *  @history    2011-05-06 - Created this module, used a lot of code from
+ *  @history    2011-05-06 - Created this module, a lot of code is from
  *                           Michals test module for serial port comm.
  *                           - Joakim
+ *              2011-05-12 - Added a delay in code to let port initialize
+ *                           properly. Previously this had to be done by
+ *                           the module making the call to serialOpen -Joakim
  *
  *  @details
  */
@@ -44,11 +47,14 @@ int32_t proto_serialOpen(void){
 
     tcsetattr(portHandle, TCSANOW, &options);
 
+    /* delay is to make sure the port has time to initialize */
+    sleep(1);
+
     return portHandle;
 }
 
 /* 
- *  function for closing port, takes a FILE pointer
+ *  function for closing port, takes an integer as the port handle
  */
 uint8_t proto_serialClose(int32_t portHandle){
     close(portHandle);

@@ -11,26 +11,17 @@ static struct navData navMsg;
     
 void port_test(void){
     int32_t portHandle;
-    uint8_t data1[NAV_MSG_LEN];
 
     portHandle = proto_serialOpen();
-    sleep(1);
     
     navMsgFill1();
-    proto_serializeNavMsg(&navMsg, data1);
-        
     printf("sending data1\n");
-    proto_serialSend(portHandle, data1);
-    // sleep(1);
-    
-    navMsgFill2();
-    proto_serializeNavMsg(&navMsg, data1);
+    proto_serialSendNavMsg(portHandle, &navMsg);
         
+    navMsgFill2();
     printf("sending data2\n");
-    proto_serialSend(portHandle, data1);
-    
-    
-    
+    proto_serialSendNavMsg(portHandle, &navMsg);
+        
     sleep(2);
 
     proto_serialClose(portHandle);
@@ -45,7 +36,7 @@ void navMsgFill1(void){
 }
 
 void navMsgFill2(void){
-  navMsg.type = 55;
+  navMsg.type = 50;
   navMsg.order = 2;
   navMsg.height = 1027;
   navMsg.distance = 1027;
