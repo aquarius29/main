@@ -40,11 +40,11 @@ static void insertProgressiveNode(void) {
     insertCurrentDestinationNode();
 }
 static void insertInterruptedNode(void) {
-	current->next = realloc(1, sizeof(progressiveNode));
-	current->next->p = current->p;
-	current->next->prev = current;
-	current = current->next;
-	current->next = 0;
+    current->next = realloc(1, sizeof(progressiveNode));
+    current->next->p = current->p;
+    current->next->prev = current;
+    current = current->next;
+    current->next = 0;
 }
 static void freeProgressiveList(void) {
     progressiveNode *temp = 0;
