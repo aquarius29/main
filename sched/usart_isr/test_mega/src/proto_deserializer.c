@@ -1,4 +1,18 @@
 
+/*!
+ *  @file proto_serializer.c
+ *
+ *  @brief Module for serializing data to send over serial port
+ *
+ *  @author     Joakim, Justin
+ *  @date       2011-05-06
+ *
+ *  @history    2011-05-06 - Created this module - Joakim
+ *
+ *  @details
+ */
+
+#include "proto_serialDefine.h"
 #include "proto_deserializer.h"
 #include "proto_msg_structs.h"
 

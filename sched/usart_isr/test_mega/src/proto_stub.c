@@ -6,6 +6,7 @@
 #include "proto_deserializer.h"
 #include "proto_stub.h"
 #include "proto_msg_structs.h"
+#include "proto_serialDefine.h"
 
 #define TRUE 1
 #define FALSE 0
