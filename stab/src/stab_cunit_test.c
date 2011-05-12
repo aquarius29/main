@@ -2,9 +2,7 @@
  * Inpired by Magnus Bergqvist
  * Author(S) Huilin Shi
  * created 16 April 2011
- * updated 28 April 2011 
- * updated  2 May   2011
- * updated 12 May   2011
+ * updated 28 April 2011
  */
 
 /* compile with something like this:  gcc stab_cunit_test.c -o test -lcunit */
@@ -12,11 +10,9 @@
 #include <stdio.h>
 #include "CUnit/CUnit.h"
 #include "../src/stab_filter.c"
-//#include "stab_filter.c"
 
 
-/* 
- * something is strange with "stab_rg.c", can't use it even
+/* something is strange with "stab_rg.c", can't use it even
  * though I include it, that's why I copyed the function instead.
  */
 
@@ -25,7 +21,7 @@ float convert_gyro_raw_to_deg_s(float a)
   return a / SSF;
 }
 
-/* Test convert_gyro_raw_to_deg_s funtion from "stab_rg.c"
+/* 
  * test_convert_gyro_raw_to_deg_s() checks so that expected results are returned, 
  * with a fault tolerance by 0,0001
  */
@@ -37,9 +33,7 @@ void test_convert_gyro_raw_to_deg_s(void)
     CU_ASSERT_DOUBLE_EQUAL(convert_gyro_raw_to_deg_s(6.123), 0.425947826, 0.0001); 
 }
 
-/* 
- *Test comp_filter function from "stab_filter.c"
- * test_comp_filter checks so that expected results are returned, 
+/* test_comp_filter checks so that expected results are returned, 
  * with a fault tolerance by 0,0001
  *it takes 3 arguments, the first one is which function are using, the second is the
  return value (result) and the third one is about the decimals/how accurate it is
@@ -51,8 +45,7 @@ void test_comp_filter(void)
     CU_ASSERT_DOUBLE_EQUAL(comp_filter(28.34, 0.005, 10.29), 10.651294, 0.0001);
 }
 
-/*
- * Test init_filter funtion from "stab_filter.c"
+/* 
  * first I take the global variables from stab_filter.c
  * give them the numbers 1, 2, 3 and after the init_filter
  * they are supposed to be 0, 0, 0 for each of them.
