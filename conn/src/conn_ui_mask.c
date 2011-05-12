@@ -1,78 +1,75 @@
+#include "conn_ui_mask.h"
 
-void controll_movement(int i){
-
+void controll_movement(int identifier){
  
+  switch(identifier){
 
-  if(i == 3){
-    printf("Going forward\n");
-  }
-  else if(i == 4){
-    printf("Stopping forward\n");
-  }
-  else if(i == 5){
-    printf("Going back\n");
-  }
-  else if(i == 6){
-    printf("Stopping back\n");
-  }
-  else if(i == 7){
-    printf("Going left\n");
-  }
-  else if(i == 8){
-    printf("Stopping left\n");
-  }
-  else if(i == 9){
-    printf("Going right\n");
-  }
-  else if(i == 10){
-    printf("Stopping right\n");
-  }
-  else if(i == 11){
-    printf("Going up\n");
-  }
-  else if(i == 12){
-    printf("Stopping up\n");
-  }
-  else if(i == 13){
-    printf("Going down\n");
-  }
-  else if(i == 14){
-    printf("Stopping down\n");
-  }
-  else if(i == 15){
-    printf("Hovering\n");
-  }
-  else if(i == 16){
-    printf("Landing\n");
-  }
-  else if(i == 17){
-    printf("Auto\n");
-  }
-  else if(i == 18){
-    printf("Camra on\n");
-  }
-  else if (i == 19){
-    printf("Indorr\n");
-  }
-   else if (i == 20){
-    printf("Outdorr\n");
-  }
-  else{
-    printf("Error\n");
-  }
+  case FORWARD:
+  printf("Going forward\n");
+  break;
+  
+case BACK:
+  printf("Going back\n");
+  break;
+  
+case LEFT:
+  printf("Going left\n");
+  break;
+  
+case RIGHT:
+  printf("Going right\n");
+  break;
+  
+case UP:
+  printf("Going up\n");
+  break;
+  
+case DOWN:
+  printf("Going down\n");
+  break;
+  
+case LAND:
+  printf("land\n");
+  break;
+  
+case TAKE_OFF:
+  printf("taking off\n");
+  break;
 
- 
+case KILL_INDOOR:
+  printf("kill indoor\n");
+  break;
+  
+case KILL_GPS:
+  printf("kill gps\n");
+  break;
+  
+case KILL_SERVER:
+  printf("kill server\n");
+  break;
+
+case START_CAMERA:
+  printf("starting camera\n");
+  break;
+
+case START_INDOOR_PATH:
+  printf("start indoor path\n");
+  break;
+
+case START_OUTDOOR_PATH:
+  printf("start outdoor path\n");
+  break;
+
+case INDOOR_POSITION:
+  printf("indoor position\n");
+  break;
+
+case OUTDOOR_POSITION:
+  printf("outdoor position\n");
+  break;
+
+
+  }
+  
 }
 
-/*
-int main(){
-
-  int in;
-  printf("Enter something");
-
-  scanf("%i", &in);
-  cmd_up(in);
-
-  return 0;
-}
-*/

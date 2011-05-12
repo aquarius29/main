@@ -6,6 +6,7 @@
  *  @author Michal Musialik
  *  @date 2011-05-07
  *  @history    2011-05-07 - first outcast of conn_tcpserver.h file
+ *  @history    2011-05-11 - adding signal handler - Ali Issa
  */
 
 #define IP_BUFFER_LENGTH 200
@@ -15,9 +16,13 @@
 #define CLOSE_NEW_SOCKET close(new_socket)
 #define CLOSE_SOCKET_TCP close(socket_tcp)
 
+
+
 struct sockaddr_in client; 
 struct sockaddr_in server;
 struct hostent * host ;
+
+
 
 void host_setup(void);
 int socket_create(void);

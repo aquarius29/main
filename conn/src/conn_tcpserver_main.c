@@ -9,6 +9,7 @@
  *  @history    2011-04-15 - structuring file layout
  *              2011-04-20 - adding host_setup() function
  *              2011-05-07 - uppdating  conn_tcpserver_main.c to new standard
+ *              2011-05-11 - updating for keepalive
  */
 
 #include <stdint.h>
@@ -20,6 +21,10 @@
 #include <netdb.h>
 #include <string.h>
 #include <signal.h>
+#include <stddef.h>
+#include <resolv.h>
+#include <fcntl.h>
+
 #include "conn_ui_mask.c"
 #include "conn_tcpserver.h"
 #include "conn_tcpserver.c"

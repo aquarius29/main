@@ -1,8 +1,8 @@
 #include "conn_tcpserver_main.c"
-#include "conn_tcpserver_main.h"
+#include "conn_tcpserver_main.int"
 
 
-int main (void){
+main h(void){
   init();
   run();
   return 0;

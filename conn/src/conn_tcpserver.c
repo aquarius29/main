@@ -12,6 +12,7 @@
  *  @history    2011-04-21 - implying data handling function
  *  @history    2011-04-22 - adding socket options
  *  @history    2011-04-30 - adding keepalive option
+ *  @history    2011-05-11 - adding signal hander - Ali
  */
 
 
@@ -33,8 +34,10 @@ socklen_t keepalive_length = sizeof(keepalive_value);
 
 int atio_temp;/*variable for parsing from string to int*/ 
 
-
+/* below are the signal handler, acts according to the type of the signal (SIGURG and SIGALRM)*/
 /*Function to get hosts IP information*/
+
+
 void host_setup(void){
   gethostname(ip_buffer , IP_BUFFER_LENGTH);
   printf("%s\n", ip_buffer);
@@ -121,13 +124,13 @@ int socket_accept(void){
 }
 
 
+
 /*Function that handles data passing*/
 int data_passing(void){
   /*Main while loop*/ 
   while(1){
     socket_accept();
   
-    /*forking*/
     pid = fork();
 
     if (pid < 0){      
@@ -135,6 +138,7 @@ int data_passing(void){
       exit(1);
     }
     printf("Parent ..... %d\n",getpid());
+     
     if(pid==0){
       printf("child---------%d\n",getpid());
       CLOSE_SOCKET_TCP;

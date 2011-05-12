@@ -1,0 +1,107 @@
+#include "conn_ui_mask.h"
+
+void controll_movement(int i){
+ /*
+  switch(identifier){
+
+  case FORWARD:
+  printf("Going forward\n");
+  break;
+  
+case BACK:
+  printf("Going back\n");
+  break;
+  
+case LEFT:
+  printf("Going left\n");
+  break;
+  
+case RIGHT:
+  printf("Going right\n");
+  break;
+  
+case UP:
+  printf("Going up\n");
+  break;
+  
+case DOWN:
+  printf("Going down\n");
+  break;
+  
+case TAKE_OFF:
+  printf("Going off\n");
+  break;
+  
+case KILL_INDOOR:
+  printf("Going forward\n");
+  break;
+  
+case KILL_GPS:
+  printf("Going forward\n");
+  break;
+  
+case KILL_SERVER:
+  printf("Going forward\n");
+  break;
+  
+case START_CAMERA:
+  printf("Going forward\n");
+  break;
+  }*/
+
+
+  if(i == FORWARD){
+    printf("Going forward\n");
+  }
+  else if(i == BACK){
+    printf("Going back\n");
+  }
+  else if(i == LEFT){
+    printf("Going left\n");
+  }
+  else if(i == RIGHT){
+    printf("Going right\n");
+  }
+  else if(i == UP){
+    printf("Going up\n");
+  }
+  else if(i == DOWN){
+    printf("Going down\n");
+  }
+  else if(i == LAND){
+    printf("Land\n");
+  }
+  else if(i == TAKE_OFF){
+    printf("take off\n");
+  }
+  else if(i == KILL_INDOOR){
+    printf("kill indoor\n");
+  }
+  else if (i == KILL_GPS){
+    printf("kill gps\n");
+  }
+   else if (i == KILL_SERVER){
+    printf("kill server\n");
+  }
+   else if (i == START_CAMERA){
+     printf("start amera\n");
+  }
+ else if (i == START_OUTDOOR_PATH){
+     printf("start outdoor path\n");
+  }
+ else if (i == START_INDOOR_PATH){
+     printf("start indoor path\n");
+  }
+ else if (i == INDOOR_POSITION){
+     printf("start indoor position\n");
+  }
+ else if (i == OUTDOOR_POSITION){
+     printf("start outdoor position\n");
+  }
+  else{
+    printf("Error\n");
+  }
+
+ 
+}
+
