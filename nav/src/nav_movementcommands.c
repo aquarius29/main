@@ -30,7 +30,7 @@ void sendautomovementcommand(uint8_t order , int16_t height, uint16_t distance, 
 	}
 	else 
 	{
-		move->type = 1; /* 1 for auto */
+		move->type = AUTO;
 		move->order = order;
 		move->height = height;
 		move->distance = distance;
@@ -43,7 +43,62 @@ void sendautomovementcommand(uint8_t order , int16_t height, uint16_t distance, 
 	}
 }
 
-void sendManualMovementCommand()
+void sendManualMovementCommand(int identifier)
 {
-	
+	struct movCommand *move = malloc(sizeof(struct movCommand));
+	if (move == NULL)
+	{
+		printf("Memory couldnt be allocated for move command\n");
+	}
+	else 
+	{
+		move->type = MANUAL;
+		
+		switch (identifier)
+		{
+			case FORWARD: 
+				move->order = FORWARD_COMMAND;
+				move->distance = MOVE_FORWARD_COMMAND_VALUE;
+				move->height = ;
+				move->yaw = MOVE_FORWARD_COMMAND_DIRECTION;
+				break;	
+			case BACK:
+				move->order = BACKWARD_COMMAND;
+				move->distance = MOVE_BACKWARD_COMMAND_VALUE;
+				move->height = ;
+				move->yaw = MOVE_BACKWARD_COMMAND_DIRECTION;
+				break;
+			case LEFT:
+				move->order = LEFT_COMMAND;
+				move->distance = MOVE_LEFT_COMMAND_VALUE;
+				move->height = ;
+				move->yaw = MOVE_LEFT_COMMAND_DIRECTION;
+				break;
+			case RIGHT:
+				move->order = RIGHT_COMMAND;
+				move->distance = MOVE_RIGHT_COMMAND_VALUE;
+				move->height = ;
+				move->yaw = MOVE_RIGHT_COMMAND_DIRECTION;
+				break;
+			case UP: /* Modify the height here */
+				move->order = ;
+				move->distance = ;
+				move->height = MOVE_UP_COMMAND_VALUE;
+				move->yaw = ;
+				break;
+			case DOWN: /* Modify the height here */
+				move->order = ;
+				move->distance = ;
+				move->height = MOVE_DOWN_COMMAND_VALUE;
+				move->yaw = ;
+				break;
+			case LAND:
+				move->order = LANDING_COMMAND;
+				break;
+			case TAKE_OFF:
+				move->order = LIFT_OFF_COMMAND;
+				break;
+				
+		}
+	}
 }
