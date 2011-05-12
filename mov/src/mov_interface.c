@@ -38,14 +38,14 @@
 FILE *file;
 #endif
 
-int distanceToTravel;
-int distanceTraveled;
+int16_t distanceToTravel;
+int16_t  distanceTraveled;
 
-int yawArrived;
-int heightArrived;
+uint8_t yawArrived;
+uint8_t heightArrived;
 
-int start_time;
-int duration;
+uint16_t start_time;
+uint16_t duration;
 
 
 struct nav navCommand;
@@ -66,15 +66,16 @@ uint8_t msg7;
 uint8_t msg8;
 uint8_t message_counter;
 
-int caDir=-1;
+int8_t caDir=-1;
 
 #ifdef ARDUINO
 /*
  * ARDUINO
  * all the movement preparation
  */
-int mov_init()
+int16_t mov_init()
 {
+	init();
 	/*init the serial print*/
 	Serial.begin(9600);
 
@@ -92,7 +93,7 @@ int mov_init()
  * ARDUINO 
  * running the movement code
  */
-int mov_run()
+int16_t mov_run()
 {
 	clear_message_array();
 	read_sensorCommand();
@@ -137,7 +138,7 @@ int mov_run()
  * PC
  * all the movement preparations
  */
-int mov_init(void) {
+int16_t mov_init(void) {
 
 	/*open the file which contains the simulated controls*/
 #ifdef SIMULATOR
@@ -159,7 +160,7 @@ int mov_init(void) {
  * PC
  * running the movement code
  */
-int mov_run(void) {
+int16_t mov_run(void) {
 
 	read_sensorCommand();
 	clear_message_array();
@@ -213,7 +214,7 @@ int mov_run(void) {
 /*
  * write a message to an array
  */
-void write_to_motor(unsigned char msg){
+void write_to_motor(uint8_t msg){
     
     switch(message_counter){
     case 1: msg1 = msg; break;
@@ -231,7 +232,7 @@ void write_to_motor(unsigned char msg){
 
 
 
-void write_to_nav_ca(int16_t direction) {
+void write_to_nav_ca(int8_t direction) {
 #ifndef TEST
 	//call this method when there's a collision
 	//1 collision 0 no collision
@@ -304,9 +305,9 @@ void read_caCommand(void){
 #endif
 }
 
-void send_dir_to_ca(int i){
+void send_dir_to_ca(uint8_t dir){
 #ifndef TEST
-	proto_write_direction(i);
+	proto_write_direction(dir);
 #endif
 }
 
@@ -320,7 +321,7 @@ void read_sensorCommand(void){
     pSensorC -> pitch = stabCommand -> pitch;
     pSensorC -> roll = stabCommand -> roll;
     pSensorC -> yaw = stabCommand -> yaw;
-    pSensorC -> height = (int) sonar_distance(SONAR_PIN);
+    pSensorC -> height = (uint16_t) sonar_distance(SONAR_PIN);
 
 	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.pitch); */
 	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.roll); */

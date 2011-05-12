@@ -9,9 +9,9 @@
  */
  
 
-#ifdef ARDUINO
+#include <stdint.h>
 
-#include <stdio.h>
+#ifdef ARDUINO
 #include <math.h>
 #include "WProgram.h"
 #include "mov_interface.h"
@@ -27,9 +27,10 @@
 
 
 
-float sonar_distance(int sonarPin)
+uint16_t sonar_distance(uint8_t sonarPin)
 {
-	double duration, cm;
+	double duration;
+	uint16_t cm;
 	duration = pulseIn(sonarPin, HIGH);
 	/* The number 57.874 I got from the MaxSonar datasheet where we can see
 	 * that the distance can be calculated using the scale factor of 147uS
@@ -66,10 +67,8 @@ float sonar_distance(int sonarPin)
   }*/
 
 #elif defined PC
-
-float sonar_distance(int sonarPin)
+uint16_t sonar_distance(uint8_t sonarPin)
 {
-
 	return 100;
 }
 #endif

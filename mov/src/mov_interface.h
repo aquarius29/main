@@ -16,17 +16,17 @@ struct nav
 {
 	uint8_t type;
 	uint8_t order; 
-	uint16_t height;
-	uint16_t distance;
-	uint16_t yaw;
+	int16_t height;
+	int16_t distance;
+	int16_t yaw;
 };
 
 struct sensor
 {
-	int pitch;
-	int roll;
-	int yaw;
-	int height;
+	uint16_t pitch;
+	int16_t roll;
+	int16_t yaw;
+	int16_t height;
 };
 
 /*mov_logic.c*/
@@ -36,7 +36,7 @@ void moveCommand (void);
 void landCommand(void);
 void check_height(void);
 void check_heading(void);
-void check_pitch_roll(int isHovering);
+void check_pitch_roll(uint8_t isHovering);
 void updateDistanceToTravel(void);
 void check_changingAltitude(void);
 void doCa(void);
@@ -70,33 +70,29 @@ void turn_right(void);
 void land(void);
 
 uint8_t to_MotorMessage(uint8_t ID0, uint8_t ID1, uint8_t increasing,uint8_t panicMode, 
-					 uint8_t motor1,uint8_t motor2, uint8_t motor3, uint8_t motor4);
+						uint8_t motor1,uint8_t motor2, uint8_t motor3, uint8_t motor4);
 void pWrite(uint8_t msg);
 void print_uint8_t_to_Binary(uint8_t bin);
 
 
 
 /*mov_simulator.c*/
-int read_command(void);
-int get_loc(char line[],char c,int indexOfColumn);
-void assignValue(int index,char *temp);
-int do_sensor_simulation(int currentSensorValue, int command);
+uint8_t read_command(void);
+uint8_t get_loc(char line[],char c,uint8_t indexOfColumn);
+void assignValue(uint8_t index,char *temp);
+int16_t do_sensor_simulation(int16_t currentSensorValue, uint8_t command);
 
 
 /*interface*/
-int mov_init(void);
-int mov_run(void);
+int16_t mov_init(void);
+int16_t mov_run(void);
 void read_navCommand(void);
 void read_caCommand(void);
-void write_to_motor(unsigned char msg);
-void send_dir_to_ca(int i);
+void write_to_motor(uint8_t msg);
+void send_dir_to_ca(uint8_t dir);
 void read_sensorCommand(void);
 void clear_message_array(void);
 void write_array(void);
 
 /*mov_sensor.c*/
-#ifdef ARDUINO
-float sonar_distance(int sonarPin);
-#elif defined PC
-float sonar_distance(int sonarPin);
-#endif
+uint16_t sonar_distance(uint8_t sonarPin);

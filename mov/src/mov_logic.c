@@ -32,16 +32,16 @@
 #define INCREASING 1
 #define DECREASING 2
 
-extern int distanceToTravel;
-extern int distanceTraveled;
+extern int16_t distanceToTravel;
+extern int16_t distanceTraveled;
 
-extern int yawArrived;
-extern int heightArrived;
+extern uint8_t yawArrived;
+extern uint8_t heightArrived;
 
-int changingAltitude;
-int changingHeading;
+uint8_t changingAltitude;
+uint8_t changingHeading;
 
-extern int duration;
+extern uint16_t duration;
 
 extern struct nav navCommand;
 extern struct nav *p;
@@ -61,11 +61,11 @@ void command_logic(void) {
     printOrientation();
 	convertCommand();
 
-    char order = navCommand.order;  
+    uint8_t order = navCommand.order;  
 
-	if (order == '1') {
+	if (order == 1) {
 		moveCommand();
-    }else if(order == '2') {
+    }else if(order == 2) {
 		landCommand();
     }else { 
 		hoverCommand();
@@ -75,7 +75,7 @@ void command_logic(void) {
 
 
 void convertCommand(void){
-	if(navCommand.type=='0'){
+	if(navCommand.type==0){
 		p->height=navCommand.height+sensorCommand.height;
 		p->yaw=navCommand.yaw+sensorCommand.yaw;
 	}
@@ -137,7 +137,7 @@ void landCommand(void){
  * Set the default distance to 100
  */
 void doCa(void){
-	extern int caDir;
+	extern int8_t caDir;
 	if(caDir>0){
 		navCommand.order = 1;
 		yawArrived = 0;
@@ -185,8 +185,8 @@ void check_changingAltitude(void){
 void check_height(void)
 {
     DEBUG_PRINT("!!!!!!!!!!!!!check height: \n");
-    int height_desire =navCommand.height;
-    int height_current =sensorCommand.height;
+    uint16_t height_desire =navCommand.height;
+    uint16_t height_current =sensorCommand.height;
 
 	/*higher than it supposed to be, decrease all motors*/
     if(height_current > height_desire+BUFF_DISTSNCE){	
@@ -222,10 +222,9 @@ void check_height(void)
 void check_heading(void)
 {
    DEBUG_PRINT ("!!!!!!!!!!!!!check heading: \n");
-
-    int heading_desire=navCommand.yaw;
-    int heading_current=sensorCommand.yaw;
-    int difference = heading_current-heading_desire;
+   int16_t heading_desire=navCommand.yaw;
+   int16_t heading_current=sensorCommand.yaw;
+   int16_t difference = heading_current-heading_desire;
 
     if(heading_current>heading_desire+BUFF_YAW && difference>180){
 		turn_right();
@@ -253,12 +252,12 @@ void check_heading(void)
 /*
  * 
  */
-void check_pitch_roll(int isHovering) {
+void check_pitch_roll(uint8_t isHovering) {
     DEBUG_PRINT("!!!!!!!!!!!!!check pitch and roll: \n");
-    int pitch_current=sensorCommand.pitch;
-    int roll_current=sensorCommand.roll;
-    int pitch_desire;
-    int roll_desire;
+    int16_t pitch_current=sensorCommand.pitch;
+	int16_t roll_current=sensorCommand.roll;
+	int16_t pitch_desire;
+    int16_t roll_desire;
 
     if(isHovering==0){
 		pitch_desire=0;
@@ -322,7 +321,7 @@ void updateDistanceToTravel(void){
 void printOrientation(void)
 {
 #ifdef DEBUG
-   printf("\n {pitch: %d roll: %d, yaw: %d height: %d distance left: %d}\n", 
+	printf("\n {pitch: %d roll: %d, yaw: %d height: %d distance left: %d}\n", 
 		   sensorCommand.pitch, sensorCommand.roll,sensorCommand.yaw,
 		   sensorCommand.height, distanceToTravel );
 #endif
