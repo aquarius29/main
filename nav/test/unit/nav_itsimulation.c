@@ -1,7 +1,7 @@
 #include "../../src/nav_indoorstructure.h"
 
 void test_indoor_navigation_1() {
-    position a, b;
+    tile a, b;
     
     a.x = 1;
     a.y = 1;
@@ -14,10 +14,10 @@ void test_indoor_navigation_1() {
 // void test_indoor_navigation_2() {
 //     position a, b;
 //     
-//     a.x = 1;
-//     a.y = 1;
-//     b.x = 2;
-//     b.y = 2;
+//     a.lat = 1;
+//     a.lon = 1;
+//     b.lat = 2;
+//     b.lon = 2;
 //     
 //     init_path(a, b);
 //     

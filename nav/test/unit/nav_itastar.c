@@ -2,7 +2,7 @@
 #include "../../src/nav_indooralgorithms.h"
 
 void test_astar_1() {
-    position a, b;
+    tile a, b;
     positionList projectedPath;
     
     a.x = 1;
@@ -35,7 +35,7 @@ void test_astar_1() {
 }
 
 // void test_astar_2() {
-//     position a, b;
+//     tile a, b;
 //     position_list projectedPath;
 //         
 //     a.x = 1;

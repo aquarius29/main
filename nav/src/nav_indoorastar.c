@@ -10,9 +10,9 @@
 #include "nav_tilemap.h"
 
 static void astarAddNeighborsToOpen(node *current, nodeList *open,
-nodeList *closed, const position *end);
-static int32_t GetHeuristicCost(const position *currentNode,
-const position *goalNode);
+nodeList *closed, const tile *end);
+static int32_t GetHeuristicCost(const tile *currentNode,
+const tile *goalNode);
 static positionList final;
 static ThreeDWorld map;
 /*
@@ -22,7 +22,7 @@ static ThreeDWorld map;
  * If the goal is not reachable or if there is a problem to allocate
  * memory NULL is returned
  */
-positionList indoorAstar(const position *start, const position *end)
+positionList indoorAstar(const tile *start, const tile *end)
 {
 	int32_t i = 0;
     nodeList *open = NULL;            /* open list */
@@ -88,7 +88,7 @@ positionList indoorAstar(const position *start, const position *end)
  * adds reachable nodes to the open list
  */
 static void astarAddNeighborsToOpen(node *current, nodeList *open,
-nodeList *closed, const position *end)
+nodeList *closed, const tile *end)
 {
     int32_t sortCounter = 0;
     int32_t y = 0;
@@ -242,8 +242,8 @@ nodeList *closed, const position *end)
     }
 }
 /* Get the heuristic cost from a node to the goal node */
-static int32_t GetHeuristicCost(const position *currentNode,
-const position *goalNode)
+static int32_t GetHeuristicCost(const tile *currentNode,
+const tile *goalNode)
 {
     int32_t h = (fabs(currentNode->y - goalNode->y) + fabs(currentNode->x -
     goalNode->x)) * 10;

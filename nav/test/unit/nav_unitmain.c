@@ -10,6 +10,7 @@
 #include "nav_itdijkstra.c"
 #include "nav_itastar.c"
 #include "nav_itsimulation.c"
+#include "nav_manualtests.c"
 
 /* Set up and clean up test suite */
 
@@ -26,6 +27,7 @@ int main() {
     CU_pSuite dijkstraSuite = NULL;
     CU_pSuite astarSuite = NULL;
     CU_pSuite indoorNavSuite = NULL;
+    CU_pSuite manualSuite = NULL;
 
   /* Initialize the CUnit test registry */
     if(CUE_SUCCESS != CU_initialize_registry())
@@ -36,8 +38,10 @@ int main() {
     dijkstraSuite = CU_add_suite("Dijkstra", init_suite, clean_suite);
     astarSuite = CU_add_suite("AStar", init_suite, clean_suite);
     indoorNavSuite = CU_add_suite("Indoor Navigation", init_suite, clean_suite);
+    manualSuite = CU_add_suite("Manual Commands", init_suite, clean_suite);
     
-    if(	NULL == xmlSuite ) {
+    if(	NULL == xmlSuite || NULL == dijkstraSuite || NULL == astarSuite
+        || NULL == indoorNavSuite || NULL == manualSuite ) {
         CU_cleanup_registry();
         return CU_get_error();
     }
@@ -63,8 +67,16 @@ int main() {
     //     return CU_get_error();
     // }
     
-    if(	NULL == CU_add_test(xmlSuite, "Normal Flight", test_indoor_navigation_1)
-        // || NULL == CU_add_test(xmlSuite, "Flight with Collision Avoidance", test_indoor_navigation_2)
+    // if(  NULL == CU_add_test(xmlSuite, "Normal Flight", test_indoor_navigation_1)
+    //     // || NULL == CU_add_test(xmlSuite, "Flight with Collision Avoidance", test_indoor_navigation_2)
+    // ) {
+    //     CU_cleanup_registry();
+    //     return CU_get_error();
+    // }
+    
+    if(	NULL == CU_add_test(manualSuite, "Initialize list", test_manual_1)
+        || NULL == CU_add_test(manualSuite, "Add first command", test_manual_2)
+        || NULL == CU_add_test(manualSuite, "Add second command", test_manual_3)
     ) {
         CU_cleanup_registry();
         return CU_get_error();

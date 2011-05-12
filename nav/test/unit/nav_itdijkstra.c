@@ -2,7 +2,7 @@
 #include "../../src/nav_indooralgorithms.h"
 
 void test_dijkstra_1() {
-    position a, b;
+    tile a, b;
     positionList projectedPath;
     
     a.x = 1;
@@ -35,13 +35,13 @@ void test_dijkstra_1() {
 }
 
 void test_dijkstra_2() {
-    position a, b;
+    tile a, b;
     positionList projectedPath;
         
     a.x = 1;
-    a.y = 1;
+    a.x = 1;
     b.x = 10;
-    b.y = 5;    
+    b.x = 5;    
     projectedPath = indoorDijkstra(&a, &b);
     
     // CU_ASSERT(selected_tiles_are_valid_for_dijkstra(&a, &b) == 0);

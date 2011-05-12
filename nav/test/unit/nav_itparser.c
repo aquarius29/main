@@ -1,4 +1,4 @@
-#include "../../src/tilemap.h"
+#include "../../src/nav_tilemap.h"
 
 void test_parse_xml() {
     ThreeDWorld map;
