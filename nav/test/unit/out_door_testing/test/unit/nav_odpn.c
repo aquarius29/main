@@ -1,6 +1,7 @@
 #include <stdio.h>
-#include "../../src/pn.h"
+#include "../../src/outdoor/nav_pn.h"
 
+//Amanpreet kaur
 
 //OutdoorPtr outdoor  = NULL;
 

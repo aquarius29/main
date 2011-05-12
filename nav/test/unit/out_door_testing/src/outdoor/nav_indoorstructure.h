@@ -17,8 +17,8 @@
 #define TILE_CENTER (CENTIMETRES_PER_TILE/2)
 
 typedef struct {
-    double lon;
-    double lat;
+    int32_t lat;
+    int32_t lon;
     double angle;
     double distance;
 } roomPosition;
@@ -28,8 +28,8 @@ typedef struct progressiveNode {
     struct progressiveNode *next;
 } progressiveNode;
 typedef struct {
-    int32_t x;
     int32_t y;
+    int32_t x;
 } tile;
 typedef struct node {
     tile pos;
@@ -49,6 +49,7 @@ positionList indoorDijkstra(const tile *start, const tile *end);
 positionList indoorAstar(const tile *start, const tile *end);
 void initPath(tile *start, tile *end);
 void stopIndoorNavigation(void);
-void collisionAvoided(double direction);
+void collisionAvoided(double direction, struct timeval time);
+int8_t commandHandled(void);
 
 #endif /* NAV_INDOORSTRUCTURE_H */

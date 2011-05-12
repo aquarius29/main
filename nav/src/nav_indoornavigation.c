@@ -13,6 +13,8 @@
 #define PRECISION 5
 #define SLEEP_DURATION (0.05 * 1000000000)
 #define ALGORITHM 0
+#define TRUE_NORTH 100 + 90
+#define AVOID_DISTANCE 100
 #define CENTIMETRES_PER_SECOND 100
 #define SAFE_HEIGHT 200 //200 cm
 
@@ -37,6 +39,13 @@ static void insertProgressiveNode(void) {
     current = current->next;
     insertCurrentDestinationNode();
 }
+static void insertInterruptedNode(void) {
+    current->next = realloc(1, sizeof(progressiveNode));
+    current->next->p = current->p;
+    current->next->prev = current;
+    current = current->next;
+    current->next = 0;
+}
 static void freeProgressiveList(void) {
     progressiveNode *temp = 0;
     while (first != 0) {
@@ -46,11 +55,10 @@ static void freeProgressiveList(void) {
     }
 }
 static void setDirection(void) {
-	printf("%d     %d\n", current->next->p.lon, current->next->p.lat);
+	printf("%f    %f\n", current->next->p.lon, current->next->p.lat);
     current->next->p.angle = ((int32_t)((atan2((double)(current->next->p.lat -
     current->prev->p.lat), (double)(current->next->p.lon -
     current->prev->p.lon)) / (M_PI/180)))) * (M_PI/180);
-    current->p.angle = current->next->p.angle;
 }
 static void setDistance(void) {
     current->next->p.distance = (sqrt((current->next->p.lon -
@@ -76,18 +84,18 @@ static void updatePosition(void) {
     current->p.lon = current->prev->p.lon + changeX;
     current->p.lat = current->prev->p.lat + changeY;
 }
+
+//temp function until we actually read from protocol
+static int8_t commandHandled (void) {
+    return 1;
+}
 static void sendCommand(void) {
     setDirection();
     setDistance();
-    int32_t angle = (current->next->p.angle / (M_PI/180)) + 90;
-	int32_t prevAngle = (current->prev->p.angle / (M_PI/180)) + 90;
-	printf("%d\n", prevAngle);
-	if (prevAngle != 0) {
-        angle -= prevAngle;
-	    if (angle < 0) {
-	        angle+= 360;
-	    }
-	}
+    int32_t angle = (current->next->p.angle / (M_PI/180)) + TRUE_NORTH;
+    if (angle > 359) {
+        angle -= 360;
+    }
     printf("Move at angle %d\n", angle);
     /*sendautomovementcommand(1, SAFE_HEIGHT, current->next->p.distance,
     angle);*/
@@ -98,9 +106,6 @@ static void sendCommand(void) {
             break;
         }
     }
-}
-int8_t commandHandled (void) {
-    return 1;
 }
 static void sendPosition(roomPosition *pos) {
     // printf("Longitude = %d\tLatitude = %d\n", pos->lon, pos->lat);
@@ -157,15 +162,14 @@ void initPath(tile *start, tile *end) {
         route = indoorAstar(start, end);
     }
     for (counterUp = 0; counterUp < route.num; counterUp++) {
-        printf("final.x: %d ", route.list[counterUp].lon);
-        printf("final.Y: %d\n", route.list[counterUp].lat);
+        printf("final.x: %f ", route.list[counterUp].lon);
+        printf("final.Y: %f\n", route.list[counterUp].lat);
     }
     printf("num: %d\n", route.num);
     // insert first node and next node for current destination calculation
     first = calloc(1, sizeof(progressiveNode));
     first->p = route.list[count];
     first->prev = 0;
-    first->p.angle = -1.570796; /* Radians for 0 degrees in our system */
     current = first;
     insertCurrentDestinationNode();
     insertProgressiveNode();
@@ -205,13 +209,17 @@ static void recalc(void) {
     sendExpectedPath(&route);
     sendCommand();
 }
-void collisionAvoided(double direction, struct timeval time) {
+void collisionAvoided(double direction) {
+    double changeX = 0;
+    double changeY = 0;
     running = 0;
-    timer = time;
     free(route.list);
     compareTile();
     current->next->p.angle = direction;
-    updatePosition();
+    changeY = AVOID_DISTANCE * sin(current->next->p.angle);
+    changeX = AVOID_DISTANCE * cos(current->next->p.angle);
+    current->p.lon = current->prev->p.lon + changeX;
+    current->p.lat = current->prev->p.lat + changeY;
     compareTile();
     recalc();
 }
@@ -259,13 +267,12 @@ static void navigatePath(void){
         sendCommand();
     }
 }
-
-// int main(){
-//     tile a, b;
-//     a.x = 1;
-//     a.y = 1;
-//     b.x = 3;
-//     b.y = 3;
-//     initPath(&a, &b);
-//     return 0;
-// }
+/*int main(){
+    tile a, b;
+    a.x = 1;
+    a.y = 1;
+    b.x = 9;
+    b.y = 5;
+    initPath(&a, &b);
+    return 0;
+}*/
