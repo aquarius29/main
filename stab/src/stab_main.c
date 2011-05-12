@@ -23,7 +23,8 @@
 #include "stab_interface.h"
 #include "stab.h"
 #include "math.h"
-/*#include <proto_lib.h>*/
+//#include <proto_lib.h>
+
 #elif defined ARDUINO 
 #include <stdio.h>
 #include <stdlib.h>
@@ -73,7 +74,7 @@ int16_t stab_init(void)
 {
   // code to init the hardware goes in here as well
 #if defined PC 
-    init_filter();
+    //init_filter();
 #elif defined ARDUINO
     init();
     init_filter();
@@ -96,8 +97,21 @@ int16_t stab_init(void)
 int16_t stab_run(void)
 {
 #ifdef PC
-    gyro_vect = init_sim();
-    accel_vect = init_sim();
+    gyro_vect = sim_vector();
+    accel_vect = sim_vector();
+    heading = sim_heading();
+    baro = sim_baro();
+    
+    //UNCOMMENT THE FOLLOWING proto_ CALLS TO ACTIVATE MESSAGE SENDING.
+    // THIS REQUIRES THE PROTOCOL CODE TO BE ACCESSIBLE
+/*    proto_stabWriteAttitude(gyro_vect.y, gyro_vect.x, gyro_vect.z);*/
+/*    proto_stabWriteAcc(accel_vect.x, accel_vect.y, accel_vect.z);*/
+/*    proto_stabWriteHeading(heading);*/
+/*    proto_stabWriteHeight(baro.height);*/
+    
+    
+    //gyro_vect = init_sim();
+    //accel_vect = init_sim();
   
 /*    filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x); // filtered pitch angle*/
 /*    filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y); // filtered roll angle*/
