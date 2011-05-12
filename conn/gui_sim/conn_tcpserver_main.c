@@ -11,7 +11,7 @@
  *              2011-05-07 - uppdating  conn_tcpserver_main.c to new standard
  */
 
-
+#include <stdint.h>
 #include <stdio.h>
 #include <sys/types.h>
 #include <netinet/in.h>
@@ -26,7 +26,7 @@
 #include "conn_tcpserver_main.h"
 
 /*Initiazion function*/
-void init(void){
+int16_t init(void){
 
   host_setup();
   socket_create();
@@ -34,13 +34,13 @@ void init(void){
   socket_keep_alive();
   socket_binding();
   socket_listening();
-  data_passing();
-  
+  return 0;
+
  }
 
+int16_t run(void){
 
-int main(void){
-  init();
+  data_passing();
 
   return 0;
 }

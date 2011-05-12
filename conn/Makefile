@@ -1,4 +1,3 @@
-<<<<<<< .merge_file_HhkfjA
 <<<<<<< .merge_file_wEzWGB
 <<<<<<< .merge_file_XxTeJ2
 
@@ -68,8 +67,6 @@ clean:
 =======
 =======
 >>>>>>> .merge_file_0UbhQC
-=======
->>>>>>> .merge_file_ZFVOWA
 ################################################################################
 ## Description:
 ## Makefile is used to build several programs that purpouse is to provide wireless
@@ -151,10 +148,7 @@ frame_debug:$(SRC)conn_frame.c $(SRC)conn_tcpserver_main.c
 #Removing creataed binary
 clean:
 	cd $(BIN) && $(RM) *
-<<<<<<< .merge_file_HhkfjA
 <<<<<<< .merge_file_wEzWGB
 >>>>>>> .merge_file_j8AiP3
 =======
 >>>>>>> .merge_file_0UbhQC
-=======
->>>>>>> .merge_file_ZFVOWA
