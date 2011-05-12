@@ -1,12 +1,12 @@
-/*
- * file:         mov_main.c
- * brief:        Running the movement component
- * author:       Yanling Jin, Amber Olsson
- * date:         2011-05-03
- * version:      0.1
- * history       2011-04-17 create the file
+/*!
+ * @file:         mov_main.c
+ * @brief:        Running the movement component
+ * @author:       Yanling Jin, Amber Olsson
+ * @date:         2011-05-03
+ * @version:      0.1
+ * @history       2011-04-17 create the file
  *
- * detail:      This file contains the main method for running the movement component,\n
+ * @detail:      This file contains the main method for running the movement component,\n
  *              This file should not be included for integration
  */
 

@@ -1,12 +1,12 @@
-/*
- * file:         mov_interface.c
- * brief:
- * author:       Yanling Jin, Amber Olsson
- * date:         2011-05-03
- * version:      0.1
- * history      
+/*!
+ * @file:         mov_interface.c
+ * @brief:
+ * @author:       Yanling Jin, Amber Olsson
+ * @date:         2011-05-03
+ * @version:      0.1
+ * @history      
  *
- * detail:
+ * @detail:
  */
 
 #include <stdlib.h>
@@ -23,7 +23,7 @@
 #ifdef DEBUG
 #define DEBUG_PRINT(s)        printf(s)
 #else
-#define DEBUG_PRINT(s)
+#define DEBUG_PRINT(s)        printf(s)
 #endif
 
 
@@ -261,7 +261,7 @@ void strafe_right(void)
  */
 void turn_left(void){
   
-    uint8_t msg = to_MotorMessage(1,1,0,0,1,1,0,0);
+    uint8_t msg = to_MotorMessage(1,1,1,0,1,1,0,0);
     DEBUG_PRINT  ("turn left\n");
     pWrite(msg);
 	write_to_motor(msg);
@@ -297,6 +297,7 @@ void land(void){
 	decrease_all();
 	DEBUG_PRINT ("land\n");
 }
+
 
 /*
  *Receives if the message is increasing(boolean), is in panic mode(boolean) 

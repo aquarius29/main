@@ -1,12 +1,12 @@
-/*
- * file:         mov_interface.h
- * brief:
- * author:       Yanling Jin, Amber Olsson
- * date:         2011-05-10
- * version:      0.1
- * history      
+/*!
+ * @file:         mov_interface.h
+ * @brief:
+ * @author:       Yanling Jin, Amber Olsson
+ * @date:         2011-05-10
+ * @version:      0.1
+ * @history      
  *
- * detail:
+ * @detail:
  */
 
 #include <stdio.h>
@@ -83,7 +83,7 @@ void assignValue(uint8_t index,char *temp);
 int16_t do_sensor_simulation(int16_t currentSensorValue, uint8_t command);
 
 
-/*interface*/
+/*mov_interface.c*/
 int16_t mov_init(void);
 int16_t mov_run(void);
 void read_navCommand(void);

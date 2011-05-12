@@ -1,12 +1,12 @@
-/*
- * file:         mov_logic.c
- * brief:        Contains the logic for calculate movement
- * author:       
- * date:         2011-05-10
- * version:      0.1
- * history      
+/*!
+ * @file:         mov_logic.c
+ * @brief:        Contains the logic for calculate movement
+ * @author:       
+ * @date:         2011-05-10
+ * @version:      0.1
+ * @history      
  *
- * detail:
+ * @detail:
  */
 #ifdef PC
 #include <stdlib.h>
@@ -41,7 +41,7 @@ extern uint8_t heightArrived;
 uint8_t changingAltitude;
 uint8_t changingHeading;
 
-extern uint16_t duration;
+extern double duration;
 
 extern struct nav navCommand;
 extern struct nav *p;
@@ -56,7 +56,7 @@ extern struct sensor oldSensorCommand;
  */
 void command_logic(void) {
 
-	doCa();
+	//	doCa();
 
     printOrientation();
 	convertCommand();
@@ -161,7 +161,7 @@ void doCa(void){
 		yawArrived = 0;
 		distanceToTravel =0;
 	}
-    caDir = -1;
+    caDir = 5;
 }
 
 /*

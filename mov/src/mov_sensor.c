@@ -1,11 +1,11 @@
-/*
- * File:         mov_sensor.c
- * Brief:        Read SONAR sensor data
- * Author:       Alina Butko
- * Date:         2011-05-05
- * Version:      0.1
- * History       
- * Detail:       
+/*!
+ * @file:         mov_sensor.c
+ * @brief:        Read SONAR sensor data
+ * @author:       Alina Butko
+ * @date:         2011-05-05
+ * @version:      0.1
+ * @history       
+ * @detail:       
  */
  
 

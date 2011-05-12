@@ -1,12 +1,12 @@
-/*
- * file:         mov_interface.c
- * brief:        Contains the interface of movement component
- * author:       Yanling Jin, Amber Olsson
- * date:         2011-05-03
- * version:      0.1
- * history       2011-04-17 create the file
+/*!
+ * @file:         mov_interface.c
+ * @brief:        Contains the interface of movement component
+ * @author:       Yanling Jin, Amber Olsson
+ * @date:         2011-05-03
+ * @version:      0.1
+ * @history       2011-04-17 create the file
  *
- * detail:       This file is the interface of the movement component\n
+ * @detail:       This file is the interface of the movement component\n
  */
 
 
@@ -31,7 +31,7 @@
 #endif
 
 #define SONAR_PIN 5
-#define NO_MESSAGE 11
+#define NO_MESSAGE 0xB
 
 /* global variables*/
 #ifdef SIMULATOR
@@ -44,8 +44,8 @@ int16_t  distanceTraveled;
 uint8_t yawArrived;
 uint8_t heightArrived;
 
-uint16_t start_time;
-uint16_t duration;
+uint32_t start_time;
+double duration;
 
 
 struct nav navCommand;
@@ -66,7 +66,7 @@ uint8_t msg7;
 uint8_t msg8;
 uint8_t message_counter;
 
-int8_t caDir=-1;
+int8_t caDir=5;
 
 #ifdef ARDUINO
 /*
@@ -105,7 +105,7 @@ int16_t mov_run()
 
 	/*calculate the duration*/
 	if(start_time != 0){
-		duration = millis() - start_time;
+		duration = (millis() - start_time)/1000;
 	}
 
 	/*
@@ -210,6 +210,13 @@ int16_t mov_run(void) {
 #endif
 
 
+void write_to_nav_ca(int8_t direction) {
+#ifndef TEST
+	//call this method when there's a collision
+	//1 collision 0 no collision
+#endif
+}
+
 
 /*
  * write a message to an array
@@ -227,16 +234,6 @@ void write_to_motor(uint8_t msg){
     case 8: msg8 = msg; break;
     }
     message_counter= message_counter + 1;
-}
-
-
-
-
-void write_to_nav_ca(int8_t direction) {
-#ifndef TEST
-	//call this method when there's a collision
-	//1 collision 0 no collision
-#endif
 }
 
 /*
@@ -288,7 +285,7 @@ void read_navCommand(void) {
 	//read navigation command
     p-> type = 0;
     p -> order = 0;
-    p -> height = 0;
+    p -> height = 20;
     p -> distance = 0;
     p -> yaw = 0;
 #endif
@@ -301,7 +298,6 @@ void read_navCommand(void) {
 void read_caCommand(void){
 #ifndef TEST
     caDir = proto_read_yaw();
-	printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",caDir);
 #endif
 }
 
@@ -310,7 +306,6 @@ void send_dir_to_ca(uint8_t dir){
 	proto_write_direction(dir);
 #endif
 }
-
 
 
 void read_sensorCommand(void){
@@ -322,7 +317,6 @@ void read_sensorCommand(void){
     pSensorC -> roll = stabCommand -> roll;
     pSensorC -> yaw = stabCommand -> yaw;
     pSensorC -> height = (uint16_t) sonar_distance(SONAR_PIN);
-
 	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.pitch); */
 	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.roll); */
 	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.yaw); */

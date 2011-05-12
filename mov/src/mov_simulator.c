@@ -1,12 +1,12 @@
-/*
- * file:         mov_simulator.c
- * brief:
- * author:       Yanling Jin, Amber Olsson
- * date:         2011-05-03
- * version:      0.1
- * history      
+/*!
+ * @file:         mov_simulator.c
+ * @brief:
+ * @author:       Yanling Jin, Amber Olsson
+ * @date:         2011-05-03
+ * @version:      0.1
+ * @history      
  *
- * detail:
+ * @detail:
  */
 
 #include <stdint.h>
@@ -32,7 +32,9 @@ uint8_t read_command(void){
 
     char line[60];
     if (fgets(line, sizeof(line) + 1, file) != NULL) {
+#ifdef DEBUG
 		printf("$$$$$$$$$$$$$$LINE: %s\n", line);
+#endif
 		uint8_t i;
 		for (i = 1; i < 6; i++) {
 			uint8_t start = get_loc(line, ':', i);
