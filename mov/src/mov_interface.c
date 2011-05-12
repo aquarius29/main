@@ -68,6 +68,8 @@ uint8_t message_counter;
 
 int8_t caDir=5;
 
+uint8_t count=0;
+
 #ifdef ARDUINO
 /*
  * ARDUINO
@@ -235,6 +237,7 @@ void write_to_motor(uint8_t msg){
     }
     message_counter= message_counter + 1;
 }
+
 
 /*
  *Clear the message array to NO MESSAGE
