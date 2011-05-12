@@ -499,12 +499,14 @@ void nav_sendIndoorPathToGui(positionList *path)
 
 int main(int argc, char **argv) {
 
-    /*
- GPSLocation *Destination = malloc(sizeof(GPSLocation));
- Destination->latitude = 57.7053;
- Destination->longitude = 11.9340;
+/*
 
-nav_runGpsSystem(Destination);
+ 	GPSLocation *Destination = malloc(sizeof(GPSLocation));
+ 	Destination->latitude = 57.7053;
+ 	Destination->longitude = 11.9340;
+
+	nav_runGpsSystem(Destination);
+
 */
 
 
@@ -551,7 +553,6 @@ int16_t nav_run(void)
 		
 	}
 	*/
-	
-	
+
     return 0;
 }
