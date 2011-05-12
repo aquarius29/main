@@ -108,6 +108,9 @@ uint8_t proto_serialSendMovConfirmMsg(uint8_t msg){
 }
 
 static uint8_t proto_serialSendToPanda(uint8_t *data){
+    // if (data[0] == 3) {
+    //     digitalWrite(12, HIGH);
+    // }
     
     
     return 1;
