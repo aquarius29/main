@@ -13,14 +13,16 @@
 //! Create a movement command.
 /*!
 * Function to be used by the navigation systems to create auto movement commands.
+*
 * @param order 0 = hover, 1 = moving, 2 = landing.
 * @param height The height the drone should be at.
 * @param distance The distance to move the drone.
 * @param yaw The direction to move the drone in.
+*
 * @see nav_sendAutoMovementCommand().
 */
 void sendautomovementcommand
-(char order , int height, int distance, int yaw)
+(int8_t order , uint16_t height, int16_t distance, uint16_t yaw)
 {
 	movementCommand *move = malloc(sizeof(movementCommand));
 	if (move == NULL)
@@ -40,4 +42,9 @@ void sendautomovementcommand
 		
 		free(move);
 	}
+}
+
+void sendManualMovementCommand
+{
+	
 }

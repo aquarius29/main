@@ -14,6 +14,7 @@ int GPSIO_ON_OFF;
 int GPSNAV_ON_OFF;
 int sendMovement;
 
+pixel *currPosition;
 
 typedef struct
 {

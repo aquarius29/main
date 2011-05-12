@@ -253,7 +253,7 @@ void nav_runIndoorSystem(position startTile, position destinationTile)
     
     printf("Attempting to create indoor nav thread\n");
     indoorThreadResult = 
-        pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void *) data);
+        pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void*) data);
     
     /* duplicate the mutex variable for lock/unlock in while loop */
     int duplicateRunning = 1; 
@@ -273,13 +273,11 @@ void nav_runIndoorSystem(position startTile, position destinationTile)
             
             printf("Indoor System quite unexpectedly\nRestarting...\n");
             
-            data = malloc(sizeof(struct thread_data));
-            // newData->
-            //      newData->
-            //      newData->
-            
+			/* Use the last current position to restart the thread*/
+			data->starttile = currPosition; 
+			   
             indoorThreadResult = 
-                pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void *) data);
+                pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void*) data);
         }
         
         int result;
@@ -302,14 +300,11 @@ void *startIndoorNavigationSystem(void *ptr)
     struct thread_data *data = (struct thread_data*) ptr;
 
     initPath(&data->starttile, &data->destinationtile);
-
-    /* Call the indoor nav system here and pass in the data ptr */
     
     int result;
     result = pthread_mutex_lock(&indoorNavigationRunningMutex);
     indoorSystemRunning = 0;
-    result = pthread_mutex_unlock(&indoorNavigationRunningMutex);
-    
+    result = pthread_mutex_unlock(&indoorNavigationRunningMutex);   
 }
 
 // function for the path calculation/navigation to use to 
@@ -439,7 +434,7 @@ void killGPSIO()
 // function to kill the navigation system e.g. the user wants only manual input.
 void killIndoorNavigationSystem()
 {
-    
+	stopIndoorNavigation();
 }
 
 void killThread()
@@ -448,6 +443,18 @@ void killThread()
     pthread_exit(NULL);
     printf("KILLED\n");
 }
+
+void killProtocolReadThread()
+{
+	int result;
+	result = pthread_cancel(protocolReadThread);
+	
+	if(result == 0)
+	{
+		printf("Protocol read thread killed\n");
+	}
+}
+
 /* End kill functions */
 
 /* Begin functions that are using the protocol */
@@ -468,7 +475,9 @@ void nav_sendManualMovementCommand(movementCommand *move)
 /* Begin interface:out functions for connectivity group */
 void nav_sendCurrentIndoorPositionToGui(pixel *currentPosition)
 {
-    /* Put connectivity library function here*/
+	/* Save the current position before sending it */
+	/* currPosition = currentPosition */
+	/* Put connectivity library function here*/
 }
 
 void nav_sendCurrentOutdoorPositionToGui(GPSLocation *currentPosition)
@@ -543,6 +552,7 @@ int16_t nav_run(void)
 		
 	}
 	*/
+	
 	
     return 0;
 }
