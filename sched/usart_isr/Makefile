@@ -66,7 +66,11 @@ PROG=prog
 
 ##  Libraries to include when building the basic system, 
 ##  only include libs that work for all targets for that system here!
-BASIC_LIBS=-Ltest/lib -Llib -ltest -lm
+BASIC_LIBS=-Ltest_mega/lib -Llib -ltest -lm
+
+##  Libraries to include when building the extended system, 
+##  only include libs that work for all targets for that system here!
+PANDA_LIBS=-Ltest_mega/lib -Llib -ltest -lm
 
 ##  Set paths to headers used by code on the basic system
 BASIC_INCLUDES=-I../../include
@@ -118,40 +122,40 @@ LDFLAGS_ARDUINO_UNO=-Os -Wl,--gc-sections -mmcu=$(MMCU_UNO) -lm
 pc: GLOBAL_CC=gcc
 pc: GLOBAL_CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(BASIC_INCLUDES)
 pc:
-	cd test/src && $(MAKE) lib-pc
-	$(GLOBAL_CC) -c pc_main.c -Itest/src
+	cd test_panda/src && $(MAKE) lib-pc
+	$(GLOBAL_CC) -c pc_main.c -Itest_panda/src
 	$(GLOBAL_CC) -o $(PROG) pc_main.o $(BASIC_LIBS)
 	
 
 pc-dbg: GLOBAL_CC=gcc
 pc-dbg: GLOBAL_CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(DEBUG_FLAGS_PC) $(BASIC_INCLUDES)
 pc-dbg:
-	cd test/src && $(MAKE) lib-pc
-	$(GLOBAL_CC) -c pc_main.c -Itest/src
+	cd test_panda/src && $(MAKE) lib-pc
+	$(GLOBAL_CC) -c pc_main.c -Itest_panda/src
 	$(GLOBAL_CC) -o $(PROG) pc_main.o $(BASIC_LIBS)
 
 
 ## mega-targets #############################################################
-mega: BASIC_LIBS+=-l$(CORE_LIB_MEGA)  ## add the arduino-specific lib to BASIC_LIBS
+mega: PANDA_LIBS+=-l$(CORE_LIB_MEGA)  ## add the arduino-specific lib to PANDA_LIBS
 mega: GLOBAL_CC=avr-g++
 mega: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS_MEGA) $(EXTRA_FLAGS) $(BASIC_INCLUDES)
 mega:
-	cd test/src && $(MAKE) lib-mega
-	avr-ranlib test/lib/libtest.a
+	cd test_mega/src && $(MAKE) lib-mega
+	avr-ranlib test_mega/lib/libtest.a
 
-	$(GLOBAL_CC) -c mega_main.c -Itest/src
+	$(GLOBAL_CC) -c mega_main.c -Itest_mega/src
 	$(GLOBAL_CC) mega_main.o $(BASIC_LIBS) $(LDFLAGS_ARDUINO_MEGA) -o $(PROG).elf
 	avr-objcopy -O srec $(PROG).elf $(PROG).rom
 
 
-mega-dbg: BASIC_LIBS+=-l$(CORE_LIB_MEGA)  ## add the arduino-specific lib to BASIC_LIBS
+mega-dbg: PANDA_LIBS+=-l$(CORE_LIB_MEGA)  ## add the arduino-specific lib to PANDA_LIBS
 mega-dbg: GLOBAL_CC=avr-g++
 mega-dbg: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS_MEGA) $(EXTRA_FLAGS) $(BASIC_INCLUDES) $(DEBUG_FLAGS_ARDUINO)
 mega-dbg:
-	cd test/src && $(MAKE) lib-mega
-	avr-ranlib test/lib/libtest.a
+	cd test_mega/src && $(MAKE) lib-mega
+	avr-ranlib test_mega/lib/libtest.a
 	
-	$(GLOBAL_CC) -c mega_main.c -Itest/src
+	$(GLOBAL_CC) -c mega_main.c -Itest_mega/src
 	$(GLOBAL_CC) mega_main.o $(BASIC_LIBS) $(LDFLAGS_ARDUINO_MEGA) -o $(PROG).elf
 	avr-objcopy -O srec $(PROG).elf $(PROG).rom
 	
