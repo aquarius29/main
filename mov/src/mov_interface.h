@@ -91,8 +91,8 @@ void read_caCommand(void);
 void write_to_motor(unsigned char msg);
 void send_dir_to_ca(int i);
 void read_sensorCommand(void);
-void clear_message_array();
-void write_array();
+void clear_message_array(void);
+void write_array(void);
 
 /*mov_sensor.c*/
 #ifdef ARDUINO

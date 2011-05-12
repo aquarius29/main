@@ -56,9 +56,56 @@ unsigned int proto_read_direction(void);
 
 
 /****************************************************************************/
+
+//Move to Nav
+
+
+struct movCommand
+{
+  uint8_t type; // (manual/auto)
+  uint8_t order; //(hovering/ moving / landing / lift off / forward / backward / right / left)
+  int16_t height;
+  uint16_t distance;
+  int16_t yaw;
+};
+
+struct movCommand * proto_read_move_to_nav(void);
+void createDefaultmove_to_nav();
+
+void proto_write_nav_to_move(uint8_t type,uint8_t order,int16_t height,uint16_t distance,int16_t yaw);
+
+
+
+//write movement to nav
+void proto_write_move_to_nav(uint8_t isca);
+ 
+ 
+//read nav from move
+uint8_t proto_read_nav_to_move(void);
+
+
+
+/****************************************************************************/
+
 //movement to Motor
 void proto_write_motor(uint8_t message);
 uint8_t proto_read_motor(void);
+
+struct move_commands * proto_read_motor2(void);
+void createDefaultmove();
+
+void proto_write_motor2(uint8_t message1,uint8_t message2,uint8_t message3,uint8_t message4,uint8_t message5,uint8_t message6,uint8_t message7,uint8_t message8);
+
+struct move_commands{
+	uint8_t message1;
+	uint8_t message2;
+	uint8_t message3;
+	uint8_t message4;
+	uint8_t message5;
+	uint8_t message6;
+	uint8_t message7;
+	uint8_t message8;
+};
 
 
 /****************************************************************************/

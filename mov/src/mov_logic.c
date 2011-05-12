@@ -44,6 +44,7 @@ int changingHeading;
 extern int duration;
 
 extern struct nav navCommand;
+extern struct nav *p;
 extern struct sensor sensorCommand;
 extern struct sensor oldSensorCommand;
 
@@ -58,6 +59,7 @@ void command_logic(void) {
 	doCa();
 
     printOrientation();
+	convertCommand();
 
     char order = navCommand.order;  
 
@@ -70,6 +72,14 @@ void command_logic(void) {
 	} 
 }
 
+
+
+void convertCommand(void){
+	if(navCommand.type=='0'){
+		p->height=navCommand.height+sensorCommand.height;
+		p->yaw=navCommand.yaw+sensorCommand.yaw;
+	}
+}
 
 /*
  *If Order is Hover, we will not attempt to move a distance.

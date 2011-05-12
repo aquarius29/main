@@ -20,17 +20,12 @@
 	#include <stdlib.h>
  #include "proto_lib.h"
 
-
-/// stab to movement
-struct stab_gyroscope *gyroPtr;
-
-
-struct stab_accelerometer* accPtr;
-
-
-struct stab_magnetometer* magPtr;
-
-
+/***************************************************************************** 
+    Definitions 
+*****************************************************************************/ 
+struct stab_gyroscope * gyroPtr;
+struct stab_accelerometer * accPtr;
+struct stab_magnetometer * magPtr;
  
 /***************************************************************************** 
     Implementations 

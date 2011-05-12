@@ -160,7 +160,7 @@ void increase_rear_decrease_front(void){
 void increase_front_decrease_rear(void){
    
     uint8_t msg = to_MotorMessage(1,1,0,0,0,0,1,1);
-   DEBUG_PRINT  ("increase front decrease rear\n");
+	DEBUG_PRINT  ("increase front decrease rear\n");
     pWrite(msg);
 	write_to_motor(msg);
 
@@ -308,7 +308,7 @@ void land(void){
  *<<protocol:2 = 0, increase/decrease:1 = 1, mode:1 = 0, motors:4 = 6>>
  */
 uint8_t to_MotorMessage(uint8_t ID0, uint8_t ID1, uint8_t increasing, uint8_t panicMode,
-					 uint8_t motor1,uint8_t motor2, uint8_t motor3, uint8_t motor4)
+						uint8_t motor1,uint8_t motor2, uint8_t motor3, uint8_t motor4)
 {
 	uint8_t motors = 0;
 

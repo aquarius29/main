@@ -59,7 +59,6 @@ int16_t ca_run(void)
  */
 int16_t ca_init(void)
 {
-
 	return 0;
 }
 
@@ -83,12 +82,12 @@ int16_t ca_run(void)
  * return the current flying direction
  * read from movement
  */
-int8_t get_dir(void)
+uint8_t get_dir(void)
 {	
 #ifdef TEST
-	return 1;//simulate, 1 means go front, could change 0,1,2,3,4
+	return 1;//0 hover, 1 front, 2 back, 3 left, 4 right 
 #else
-	int8_t dir = proto_read_direction();
+	uint8_t dir = proto_read_direction();
 	return  dir;
 #endif
 }
@@ -99,7 +98,7 @@ int8_t get_dir(void)
  * send to the movement
  * 0 hover 1 front 2 back 3 left 4 right  REST free to go 
  */
-void write_to_move(int direction){
+void write_to_move(uint8_t direction){
 #ifndef TEST
 	proto_write_yaw(direction);
 #endif
