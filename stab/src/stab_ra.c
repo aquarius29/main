@@ -27,14 +27,14 @@ struct vector
 /*
  *Function prototypes
  */
-void init_accel();
 struct vector readAccel();
+
+void init_accel();
 
 /*Read data from accelerometer memory*/
 struct vector readAccel()
 {
   struct vector vect;
-  unsigned int result;
   int x,y,z;
   int temp;
   
@@ -47,21 +47,26 @@ struct vector readAccel()
     {
       int lsb = Wire.receive()>>2;
       int msb = Wire.receive();
-      vect.x =(msb<<6)+lsb; 
+      /* Since values are 14 bits we need to add 2 bits to fit 2s complement value */
+      /* that is why we check for the sign by checking 14th bit and add corresponding value to 16th bit */
+      x =(msb<<6)+lsb; 
       if (x&0x2000) x|=0xc000;
       /* shift 2 unused bits */
       lsb = Wire.receive()>>2;
       msb = Wire.receive();
-      vect.y =(msb<<6)+lsb;
+      y =(msb<<6)+lsb;
       if (y&0x2000) y|=0xc000;
       lsb = Wire.receive()>>2;
       msb = Wire.receive();
-      vect.z =(msb<<6)+lsb;
+      z =(msb<<6)+lsb;
       if (z&0x2000) z|=0xc000;
+      /* Temperature values if we need them to use */
       temp = Wire.receive();
       if (temp&0x80) temp|=0xff00;
     }
-  
+  vect.x = x;
+  vect.y = y;
+  vect.z = z;   
   return vect;
 }
 
@@ -106,6 +111,7 @@ void init_accel()
     delay(10);
   }
 }
+
 
 #endif
 
