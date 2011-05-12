@@ -57,11 +57,8 @@ void nav_runGpsSystem(double lat, double lon)
     printf("Initiating GPS System\n");
     
     gpsRunning = 1;
-    
 
-    GPSLocation *destination = malloc(sizeof(GPSLocation));
-    //*destination = *dest;
-	
+    GPSLocation *destination = malloc(sizeof(GPSLocation));	
 	destination->latitude = lat;
 	destination->longitude = lon;
     
@@ -292,6 +289,11 @@ void nav_runIndoorSystem(double startX, double startY, double destinationX, doub
         }
         
         int result;
+		
+		/* 
+		*lock the mutex when setting the value to the return 
+		*of an accessor function in another module 
+		*/
         result = pthread_mutex_lock(&indoorNavigationRunningMutex);
         duplicateRunning = indoorSystemRunning;
         result = pthread_mutex_unlock(&indoorNavigationRunningMutex);
@@ -398,6 +400,8 @@ void *readProtocol(void *ptr)
         /* Add functions to read different bullshit from the protocol*/
 		/* if (Read from protocol to get the confirmation of a movement command received == 1) 
 		{
+			int id = readManualMovementCommand from connectivity;
+			sendManualMovementCommand(id); /* Call the function from movement module*/
 			
 			set_MovementCommand_True();
 		}
