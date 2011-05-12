@@ -32,9 +32,17 @@
  *  containing the data to send.
  *
  *  Author: Joakim
- */
+ */ 
 uint8_t proto_serialSendNavMsg(int32_t portHandle, struct navData *data);
 
+/*
+ *
+ */
+uint8_t proto_serialSendMovConfirmMsg(uint8_t msg);
+
+/*
+ *
+ */
 struct navData *proto_serialReadNavMsg(void);
 
 #endif /* PROTO_SERIAL_COMM_H */

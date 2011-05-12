@@ -24,6 +24,18 @@ static uint8_t highByte(uint16_t);
 /*
  *
  */
+uint8_t proto_serializeMovConfirmMsg(uint8_t data, uint8_t *serializedData){
+    serializedData[LEN_INDEX] = MOV_CONFIRM_MSG_LEN;
+    serializedData[ID_INDEX] = MSG_ID_MOV_CONFIRM;
+    serializedData[MOV_CONFIRM_VAL_INDEX] = data;
+    serializedData[MOV_CONFIRM_NULL_INDEX] = '\0';
+ 
+    return 1;
+}
+
+/*
+ *
+ */
 uint8_t proto_serializeNavMsg(struct navData *data, uint8_t *serializedData){
     serializedData[LEN_INDEX] = NAV_MSG_LEN;
     serializedData[ID_INDEX] = MSG_ID_NAV;

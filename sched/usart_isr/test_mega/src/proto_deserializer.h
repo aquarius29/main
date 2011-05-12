@@ -3,6 +3,7 @@
 #define PROTO_DESERIALIZER_H
 
 #include <stdint.h>
+#include "proto_msg_structs.h"
 
 /* array index that holds message length */
 #define LEN_INDEX 0
@@ -23,6 +24,13 @@
 
 /* message ID for messages from navigation */
 #define MSG_ID_NAV 1
+
+/* movement confirm array indexes*/
+#define MOV_CONFIRM_VAL_INDEX 2
+#define MOV_CONFIRM_NULL_INDEX 3
+
+/* message ID for movements confirmation message */
+#define MSG_ID_MOV_CONFIRM 2
 
 uint8_t proto_reConstructMsgNav(uint8_t *data, struct navData *);
 

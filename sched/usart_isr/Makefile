@@ -70,7 +70,7 @@ BASIC_LIBS=-Ltest_mega/lib -Llib -ltest -lm
 
 ##  Libraries to include when building the extended system, 
 ##  only include libs that work for all targets for that system here!
-PANDA_LIBS=-Ltest_panda/lib -Llib -ltest -lm
+PANDA_LIBS=-Ltest_mega/lib -Llib -ltest -lm
 
 ##  Set paths to headers used by code on the basic system
 BASIC_INCLUDES=-I../../include
@@ -122,16 +122,16 @@ LDFLAGS_ARDUINO_UNO=-Os -Wl,--gc-sections -mmcu=$(MMCU_UNO) -lm
 pc: GLOBAL_CC=gcc
 pc: GLOBAL_CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(BASIC_INCLUDES)
 pc:
-	cd test_panda/src && $(MAKE) lib-pc
-	$(GLOBAL_CC) -c pc_main.c -Itest_panda/src
+	cd test_mega/src && $(MAKE) lib-pc
+	$(GLOBAL_CC) -c pc_main.c -Itest_mega/src
 	$(GLOBAL_CC) -o $(PROG) pc_main.o $(PANDA_LIBS)
 	
 
 pc-dbg: GLOBAL_CC=gcc
 pc-dbg: GLOBAL_CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(DEBUG_FLAGS_PC) $(BASIC_INCLUDES)
 pc-dbg:
-	cd test_panda/src && $(MAKE) lib-pc
-	$(GLOBAL_CC) -c pc_main.c -Itest_panda/src
+	cd test_mega/src && $(MAKE) lib-pc
+	$(GLOBAL_CC) -c pc_main.c -Itest_mega/src
 	$(GLOBAL_CC) -o $(PROG) pc_main.o $(PANDA_LIBS)
 
 
@@ -205,9 +205,6 @@ flash-uno:
 clean:
 	cd test_mega/src && $(MAKE) clean
 	cd test_mega/lib && rm -f *.a
-
-	cd test_panda/src && $(MAKE) clean
-	cd test_panda/lib && rm -f *.a
 
 	rm -f $(PROG).elf $(PROG).rom *.o *.map
 

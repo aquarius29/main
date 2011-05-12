@@ -8,7 +8,6 @@
 
 #include "WProgram.h"
 
-#include "proto_stub.h"
 #include "proto_msg_structs.h"
 #include "group_stub.h"
 #include "proto_serial_comm.h"
@@ -18,17 +17,21 @@
 
 void group_run(void){
     struct navData *navMsg = NULL;
+    uint8_t data;
     /* read data here */
     navMsg = proto_serialReadNavMsg();
-    if (navMsg != NULL) {
-        if (navMsg->type == 10) {
-            digitalWrite(12, HIGH);
-        }
-        else if (navMsg->type == 50) {
-            digitalWrite(13, HIGH);
-        }
-    }
-    else {
-        ;
-    }
+    // if (navMsg != NULL) {
+    //     if (navMsg->type == 10) {
+    //         digitalWrite(12, HIGH);
+    //     }
+    //     else if (navMsg->type == 50) {
+    //         digitalWrite(13, HIGH);
+    //     }
+    // }
+    // else {
+    //     ;
+    // }
+    
+    data = 101;
+    proto_serialSendMovConfirmMsg(data);
 }
