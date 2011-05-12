@@ -8,6 +8,9 @@
 #include <stdio.h>
 
 static struct navData navMsg;
+
+void navMsgFill1(void);
+void navMsgFill2(void);
     
 void port_test(void){
     int32_t portHandle;

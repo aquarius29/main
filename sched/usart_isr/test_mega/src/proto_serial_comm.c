@@ -41,6 +41,18 @@ uint8_t proto_serialSendNavMsg(int32_t portHandle, struct navData *data){
     return 1;
 }
 
+struct navData *proto_serialReadNavMsg(void){
+    struct navData *navMsg = NULL;
+    /* read data here */
+    if (proto_isNewNavMsg() == TRUE) {
+        navMsg = proto_readNavMsg();
+        return navMsg;
+    }
+    else {
+        return NULL;
+    }
+}
+
 /*
  *  Function for sending serial data on serial port
  *  

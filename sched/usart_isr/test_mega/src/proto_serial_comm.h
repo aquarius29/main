@@ -35,4 +35,6 @@
  */
 uint8_t proto_serialSendNavMsg(int32_t portHandle, struct navData *data);
 
+struct navData *proto_serialReadNavMsg(void);
+
 #endif /* PROTO_SERIAL_COMM_H */
