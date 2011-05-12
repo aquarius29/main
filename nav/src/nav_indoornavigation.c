@@ -32,13 +32,13 @@ static void insertCurrentDestinationNode(void) {
     count++;
 }
 static void insertProgressiveNode(void) {
-        current->next->p = route.list[count];
-        current->next->prev = current;
-        current = current->next;
-        insertCurrentDestinationNode();
+    current->next->p = route.list[count];
+    current->next->prev = current;
+    current = current->next;
+    insertCurrentDestinationNode();
 }
 static void freeProgressiveList(void) {
-    progressiveNode *temp = NULL;
+    progressiveNode *temp = 0;
     while (first != 0) {
         temp = first->next;
         free(first);
@@ -103,7 +103,7 @@ int8_t commandHandled (void) {
     return 1;
 }
 static void sendPosition(roomPosition *pos) {
-    printf("Longitude = %d\tLatitude = %d\n", pos->lon, pos->lat);
+    // printf("Longitude = %d\tLatitude = %d\n", pos->lon, pos->lat);
     //nav_sendCurrentIndoorPositionToGui(pos);
 }
 static void sendExpectedPath(positionList *path) {
@@ -260,12 +260,12 @@ static void navigatePath(void){
     }
 }
 
-/*int main(){
-    tile a, b;
-    a.x = 1;
-    a.y = 1;
-    b.x = 9;
-    b.y = 5;
-    initPath(&a, &b);
-    return 0;
-}*/
+// int main(){
+//     tile a, b;
+//     a.x = 1;
+//     a.y = 1;
+//     b.x = 3;
+//     b.y = 3;
+//     initPath(&a, &b);
+//     return 0;
+// }
