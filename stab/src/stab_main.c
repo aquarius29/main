@@ -15,6 +15,7 @@
  *    08/05/2011: Removed some stuff and while loop //Adam
  *    09/05/2011: Completed message passing to protocol, 
  *                fixed some coding standards //My
+ *    12/05/2011: Tiny changes..movement group wants raw data from Gyrosensor instead of Accelerometer //Yuwen
  **************************************************************************/
 #ifdef PC 
 #include <stdio.h>
@@ -105,7 +106,7 @@ int16_t stab_run(void)
     //UNCOMMENT THE FOLLOWING proto_ CALLS TO ACTIVATE MESSAGE SENDING.
     // THIS REQUIRES THE PROTOCOL CODE TO BE ACCESSIBLE
 /*    proto_stabWriteAttitude(gyro_vect.y, gyro_vect.x, gyro_vect.z);*/
-/*    proto_stabWriteAcc(accel_vect.x, accel_vect.y, accel_vect.z);*/
+/*    proto_stabWriteGyro(gyro_vect.x, gyro_vect.y, gyro_vect.z);*/
 /*    proto_stabWriteHeading(heading);*/
 /*    proto_stabWriteHeight(baro.height);*/
     
@@ -161,7 +162,7 @@ int16_t stab_run(void)
     filter_vect.z = comp_filter(heading, gyro_vect.z, filter_vect.z); // filtered yaw angle
      
 /*    proto_stabWriteAttitude(filter_vect.y, filter_vect.x, filter_vect.z);*/
-/*    proto_stabWriteAcc(accel_vect.x, accel_vect.y, accel_vect.z);*/
+/*    proto_stabWriteGyro(gyro_vect.x, gyro_vect.y, gyro_vect.z);*/
 /*    proto_stabWriteHeading((int)heading);*/
 /*    proto_stabWriteHeight(baro.height);*/
       
