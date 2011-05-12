@@ -261,12 +261,12 @@ void write_array(){
 }
 
 /*
- * write message to navigation
+ * write message to navigation direction
  */
-void write_to_nav(void) {
+void write_to_dir(void) {
 #ifndef TEST
-	//write to navigation
-
+	//write to navigation 
+	//uint16_t
 #endif
 }
 
