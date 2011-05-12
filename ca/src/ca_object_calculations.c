@@ -21,10 +21,10 @@
  * return the distance difference of this two sets of distances
  * The resturn value is the input for method moving_closer
  */
-int *distance_differ(int ir1, int ir2, int ir3, int ir4, 
-							   int ir11, int ir22, int ir33, int ir44)
+int16_t *distance_differ(uint16_t ir1, uint16_t ir2, uint16_t ir3, uint16_t ir4,
+					 uint16_t ir11, uint16_t ir22, uint16_t ir33, uint16_t ir44)
 {
-	int *distance_diff = (int *) calloc(4, sizeof(int));
+	int16_t *distance_diff = (int16_t *) calloc(4, sizeof(int16_t));
     *distance_diff = ir11 - ir1;
     *(distance_diff + 1) = ir22 - ir2;
     *(distance_diff + 2) = ir33- ir3;
@@ -40,13 +40,13 @@ int *distance_differ(int ir1, int ir2, int ir3, int ir4,
  * 0 is moving closer
  * 1 is moving farther away
  */
-unsigned char* moving_closer (int* irDistances)
+uint8_t * moving_closer (int16_t * irDistances)
 {
   
 	//an array of 4 values 0 or 1, to be returned
-	unsigned char *movements = (unsigned char *)calloc(4, sizeof(unsigned char) );
+	uint8_t *movements = (uint8_t*)calloc(4, sizeof(uint8_t) );
 
-	unsigned char i;
+	uint8_t i;
 	for(i = 0; i < 4; i++)
 		{
 			//** The IGNORINGLITTLECHANGE helps ignore sensor variations

@@ -12,7 +12,6 @@
 
 
 #ifdef ARDUINO
-#include <stdio.h>
 #include <math.h>
 #include "WProgram.h"
 #include "ca_interface.h"
@@ -22,10 +21,10 @@
  * require 5 volts, if running 3.3.volts then change 3.3/1024
  * convert to the distance according to the formula from luckylarry.co.uk
  */
-int ir_distance(int irpin)
+	uint16_t ir_distance(uint8_t irpin)
 {
-	int value=analogRead(irpin);
-	int distance = 65*pow(value*0.0048828125, -1.10);
+	uint16_t  value=analogRead(irpin);
+	uint16_t distance = 65*pow(value*0.0048828125, -1.10);
 	return distance; 
 }
 #endif

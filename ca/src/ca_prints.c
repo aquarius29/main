@@ -27,6 +27,7 @@
 #endif
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdint.h>
 
 #include "ca_interface.h"
 
@@ -35,7 +36,7 @@
  * translate the 0 and 1
  * return 0 as not ok, 1 as ok
  */
-char *translate(int i)
+char *translate(uint8_t i)
 {
     char *result;
     if (i == 0)
@@ -48,7 +49,7 @@ char *translate(int i)
 
 
 #ifdef ARDUINO
-void print_speed_dangerzone(int speed, int dangerzone){
+void print_speed_dangerzone(int16_t speed, uint16_t dangerzone){
 	Serial.println("================================");
 	Serial.print("Quadrocopter travels at speed ");
 	Serial.print(speed);
@@ -58,19 +59,19 @@ void print_speed_dangerzone(int speed, int dangerzone){
 	Serial.println();
 }
 
-void print_dangerzone_ir(unsigned char *irBooleans){
+void print_dangerzone_ir(uint8_t *irBooleans){
 	Serial.println("================================");
 	Serial.print("Result for which ir is triggered:");
 	outputIR(irBooleans);
 }
 
-void print_result_after_dangerzone(unsigned char *result){
+void print_result_after_dangerzone(uint8_t *result){
 	Serial.println("================================");
 	Serial.println("after filter the according to the ir BOOLEANS");
 	print_result(result);
 }
 
-void print_result_after_flying_dir(int dir, unsigned char *result){
+void print_result_after_flying_dir(uint8_t dir, uint8_t*result){
 	Serial.println("================================");
 	Serial.println("Quadrocopter heading towards ");
 	outputdirection(dir);
@@ -79,30 +80,30 @@ void print_result_after_flying_dir(int dir, unsigned char *result){
 	print_result(result);
 }
 
-void print_movingCloser_ir(unsigned char *moving_close){
+void print_movingCloser_ir(uint8_t *moving_close){
 	Serial.println("================================");
 	Serial.println("Result for which direction is moving closer");
 	outputIR(moving_close);
 }
 
-void print_result_after_movingCloser(unsigned char *result){
+void print_result_after_movingCloser(uint8_t *result){
 Serial.println("================================");
 	Serial.println("after filter according to the moving object\n");
 	print_result(result);
 }
 
-void print_final_result(unsigned char *result){
+void print_final_result(uint8_t *result){
 	Serial.println("========FINAL=============");
 	print_result(result);
 }
 
-void print_final_direction(int finalDir){
+void print_final_direction(uint8_t finalDir){
 	Serial.println("================================");
 	Serial.println("IF I HAVE TO PICK A DIRECTION\nI CHOOSE ");
 	outputdirection(finalDir);
 }
 /*translate the output of IR*/
-void outputIR(unsigned char *result)
+void outputIR(uint8_t *result)
 {
 	Serial.print("detects an object at ");
 
@@ -128,7 +129,7 @@ void outputIR(unsigned char *result)
  * translate the current direction
  * {front, back, left, right, hover}
  */
-void outputdirection(int direction)
+void outputdirection(uint8_t direction)
 {
     switch (direction) {
 
@@ -163,9 +164,9 @@ void outputdirection(int direction)
 
 
 /*translate the result of the directions options*/
-void print_result(unsigned char *result)
+void print_result(uint8_t *result)
 {
-    int i;
+    uint8_t i;
     char *answer;
 
     for (i = 0; i < 5; i++) {
@@ -201,25 +202,25 @@ void print_result(unsigned char *result)
 
 #elif defined PC
 
-void print_speed_dangerzone(int speed, int dangerzone){
+void print_speed_dangerzone(uint16_t speed, uint16_t dangerzone){
 	printf("\n================================\n");
 	printf("Quadrocopter travels at speed %d\n", speed);
 	printf("dangerous zone is %d\n", dangerzone);
 }
 
-void print_dangerzone_ir(unsigned char *irBooleans){
+void print_dangerzone_ir(uint8_t *irBooleans){
 	printf("\n================================\n");
 	printf("Result for which ir is triggered: \n");
 	outputIR(irBooleans);
 }
 
-void print_result_after_dangerzone(unsigned char *result){
+void print_result_after_dangerzone(uint8_t *result){
 	printf("\n================================\n");
 	printf ("after filter the according to the ir BOOLEANS\n\n");
 	print_result(result);
 }
 
-void print_result_after_flying_dir(int dir, unsigned char *result){
+void print_result_after_flying_dir(uint8_t dir, uint8_t *result){
 	printf("\n================================\n");
 	printf("Quadrocopter heading towards ");
 	outputdirection(dir);
@@ -228,32 +229,32 @@ void print_result_after_flying_dir(int dir, unsigned char *result){
 	print_result(result);
 }
 
-void print_movingCloser_ir(unsigned char *moving_close){
+void print_movingCloser_ir(uint8_t *moving_close){
 	printf("\n================================\n");
 	printf("Result for which direction is moving closer \n");
 	outputIR(moving_close);
 }
 
-void print_result_after_movingCloser(unsigned char *result){
+void print_result_after_movingCloser(uint8_t *result){
 	printf("\n================================\n");
 	printf("after filter according to the moving object\n");
 	print_result(result);
 }
 
-void print_final_result(unsigned char *result){
+void print_final_result(uint8_t *result){
 	printf("\n================================\n");
 	printf("\nFINAL\n\n");
 	print_result(result);
 }
 
-void print_final_direction(int finalDir){
+void print_final_direction(uint8_t finalDir){
 	printf("\n================================\n");
 	printf("\nIF I HAVE TO PICK A DIRECTION\nI CHOOSE ");
 	outputdirection(finalDir);
 }
 
 /*translate the output of IR*/
-void outputIR(unsigned char *result)
+void outputIR(uint8_t *result)
 {
 	printf("\n detects an object at ");
 
@@ -277,7 +278,7 @@ void outputIR(unsigned char *result)
  * translate the current direction
  * {front, back, left, right, hover}
  */
-void outputdirection(int direction)
+void outputdirection(uint8_t direction)
 {
     switch (direction) {
 
@@ -312,9 +313,9 @@ void outputdirection(int direction)
 
 
 /*translate the result of the directions options*/
-void print_result(unsigned char *result)
+void print_result(uint8_t *result)
 {
-    int i;
+    uint8_t i;
     char *answer;
 
     for (i = 0; i < 5; i++) {

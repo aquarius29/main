@@ -25,7 +25,9 @@
 #include <stdlib.h>
 #endif
 
-int const speed=100;  /*cm*/
+#include <stdint.h> 
+
+uint16_t const speed=100;  /*cm*/
 
 #ifdef ARDUINO
 /*
@@ -33,32 +35,32 @@ int const speed=100;  /*cm*/
  * filter the direction according to the collision logic
  * return the direction to go
  */
-int direction_filter(void)
+uint8_t direction_filter(void)
 {
-    int dir = get_dir();
+    uint8_t dir = get_dir();
 
     /* get the distance */
-    int ir1 = ir_distance(IRPIN1);
-    int ir2 = ir_distance(IRPIN2);
-    int ir3 = ir_distance(IRPIN3);
-    int ir4 = ir_distance(IRPIN4);
+	uint16_t ir1 = ir_distance(IRPIN1);
+    uint16_t ir2 = ir_distance(IRPIN2);
+    uint16_t ir3 = ir_distance(IRPIN3);
+    uint16_t ir4 = ir_distance(IRPIN4);
 
     /* SPEED -> DANGERZONE */
-    int dangerzone;
+	uint16_t dangerzone;
     dangerzone = speed_filter(speed);
 #ifdef DEBUG
 	print_speed_dangerzone(speed,dangerzone);
 #endif
 
     /* DANGERZONE + IR DISTANCE-> BOOLEANS */
-    unsigned char *irBooleans;
+    uint8_t *irBooleans;
     irBooleans = distance_filter(dangerzone, ir1, ir2, ir3, ir4);
 #ifdef DEBUG
 	print_dangerzone_ir(irBooleans);
 #endif
 
     /* BOOLEANS -> DIRECTION RESULTS */
-    unsigned char *result;
+    uint8_t *result;
     result = ir_filter(irBooleans);
     free(irBooleans);
 #ifdef DEBUG
@@ -72,11 +74,11 @@ int direction_filter(void)
 #endif
 
     /* DISTANCE DIFFERENCE-> TOWARDS WHICH IR  */
-	int *distance_diff = distance_differ(ir1,ir2,ir3,ir4,
-										 ir_distance(IRPIN1), ir_distance(IRPIN2),
-										 ir_distance(IRPIN3),ir_distance(IRPIN4));
+	int16_t *distance_diff = distance_differ(ir1,ir2,ir3,ir4,
+											ir_distance(IRPIN1), ir_distance(IRPIN2),
+											ir_distance(IRPIN3),ir_distance(IRPIN4));
 
-    unsigned char *moving_close = moving_closer(distance_diff);
+	uint8_t *moving_close = moving_closer(distance_diff);
     free(distance_diff);
 #ifdef DEBUG
 	print_movingCloser_ir(moving_close);
@@ -91,7 +93,7 @@ int direction_filter(void)
 #endif
 
     /* RESULT -> PICK ONE DIRECTION */
-    int finalDir = final_direction(dir, result);
+	uint8_t finalDir = final_direction(dir, result);
     free(result);
 
 	/* 
@@ -118,20 +120,20 @@ int direction_filter(void)
  * return the direction to go
  */
 
-int direction_filter(int ir1, int ir2, int ir3, int ir4,
-					 int ir11, int ir22, int ir33, int ir44) {
+uint8_t direction_filter(uint16_t ir1, uint16_t ir2, uint16_t ir3,uint16_t ir4,
+						 uint16_t ir11, uint16_t ir22, uint16_t ir33,uint16_t ir44) {
 
-    int dir = get_dir();
+	uint8_t dir = get_dir();
 
     /* SPEED -> DANGERZONE */
-    int dangerzone;
+    uint16_t dangerzone;
     dangerzone = speed_filter(speed);
 #ifdef DEBUG
 	print_speed_dangerzone(speed, dangerzone);
 #endif
 
     /* DANGERZONE+IR DISTANCE-> BOOLEANS */
-    unsigned char *irBooleans;
+	uint8_t *irBooleans;
     irBooleans = distance_filter(dangerzone, ir1, ir2, ir3, ir4);
 #ifdef DEBUG
 	print_dangerzone_ir(irBooleans);
@@ -139,7 +141,7 @@ int direction_filter(int ir1, int ir2, int ir3, int ir4,
 
 
     /* BOOLEANS -> DIRECTION RESULTS */
-    unsigned char *result;
+    uint8_t *result;
     result = ir_filter(irBooleans);
     free(irBooleans);
 #ifdef DEBUG
@@ -154,8 +156,8 @@ int direction_filter(int ir1, int ir2, int ir3, int ir4,
 #endif
 
 	/* DISTANCE DIFFERENCE-> TOWARDS WHICH IR  */
-	int *distance_diff = distance_differ(ir1,ir2,ir3,ir4,
-										 ir11, ir22, ir33,ir44);
+	int16_t *distance_diff = distance_differ(ir1,ir2,ir3,ir4,
+											ir11, ir22, ir33,ir44);
 	unsigned char *moving_close = moving_closer(distance_diff);
 	free(distance_diff);
 #ifdef DEBUG
@@ -171,7 +173,7 @@ int direction_filter(int ir1, int ir2, int ir3, int ir4,
 #endif
 
     /* RESULT -> PICK ONE DIRECTION */
-    int finalDir = final_direction(dir, result);
+    uint8_t finalDir = final_direction(dir, result);
     free(result);
 
 	/* 

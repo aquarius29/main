@@ -26,6 +26,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdint.h>
 
 #include "ca_interface.h"
 
@@ -54,7 +55,7 @@
  * filter the dangerous zone for the quadrocopter to react according to the speed
  * return the dangerous zone in "cm"
  */
-int speed_filter(int speed)
+uint16_t speed_filter(uint16_t speed)
 {
     int dangerzone;
 
@@ -80,7 +81,9 @@ int speed_filter(int speed)
  * return 0 if the ir is NOT triggered, 1 as triggered
  * return an array of irs.
  */
-unsigned char *distance_filter(int dangerzone, int ir1, int ir2, int ir3, int ir4)
+uint8_t * distance_filter( uint16_t dangerzone,
+						   uint16_t ir1, uint16_t ir2,
+						   uint16_t ir3, uint16_t ir4)
 {
 
     unsigned char irBoolean1 = 1;
@@ -105,7 +108,7 @@ unsigned char *distance_filter(int dangerzone, int ir1, int ir2, int ir3, int ir
 	}
 
     /* Allocates an array of 4 unsigned characters */
-    unsigned char *irBooleans = (unsigned char *) calloc(4, sizeof(unsigned char));
+    uint8_t *irBooleans = (uint8_t *) calloc(4, sizeof(uint8_t));
     *irBooleans = irBoolean1;
     *(irBooleans + 1) = irBoolean2;
     *(irBooleans + 2) = irBoolean3;
@@ -121,13 +124,13 @@ unsigned char *distance_filter(int dangerzone, int ir1, int ir2, int ir3, int ir
  * according to the boolean value of four irs
  * return the boolean value of 5 directions (front, back, left, right, hover)
  */
-unsigned char *ir_filter(unsigned char *irBooleans)
+uint8_t *ir_filter(uint8_t *irBooleans)
 {
-	unsigned char front = 1;
-	unsigned char back = 1;
-	unsigned char left = 1;
-	unsigned char right = 1;
-	unsigned char hover = 1;
+	uint8_t front = 1;
+	uint8_t back = 1;
+	uint8_t left = 1;
+	uint8_t right = 1;
+	uint8_t hover = 1;
 
 	/* ir1 detects collision */
 	if (*irBooleans == 1) {
@@ -149,7 +152,7 @@ unsigned char *ir_filter(unsigned char *irBooleans)
 		right = 0;
 	}
 
-	unsigned char *directions = (unsigned char *) calloc(5, sizeof(unsigned char));
+	uint8_t *directions = (uint8_t *) calloc(5, sizeof(uint8_t));
 	*directions = front;
 	*(directions + 1) = back;
 	*(directions + 2) = left;
@@ -165,7 +168,7 @@ unsigned char *ir_filter(unsigned char *irBooleans)
  *According to the direction the quadrocopter is flying towards
  *return the boolean value of 5 directions (front, back, left, right, hover)
  */
-unsigned char *currentDirection_filter(int currentDirection, unsigned char *directions)
+uint8_t *currentDirection_filter(uint8_t currentDirection, uint8_t *directions)
 {
     if (currentDirection == FRONT) {
 		*(directions + 1) = 0;
@@ -187,7 +190,7 @@ unsigned char *currentDirection_filter(int currentDirection, unsigned char *dire
  *According to the objects which is moving towards
  *return the boolean value of 5 directions (front, back, left, right, hover)
  */
-unsigned char *moving_closer_filter(unsigned char *is_moving, unsigned char *directions)
+uint8_t *moving_closer_filter(uint8_t *is_moving, uint8_t *directions)
 {
     /* moving towards front */
     if (*is_moving == 1) {
@@ -217,10 +220,10 @@ unsigned char *moving_closer_filter(unsigned char *is_moving, unsigned char *dir
  * return the first available direction in the list
  * return the integer, 1 front 2 back 3 left 4 right 0 hover
  */
-int final_direction(int currentDir, unsigned char *directions)
+uint8_t final_direction(uint8_t currentDir, uint8_t *directions)
 {
-    int i;
-    int dir = 6;
+    uint8_t i;
+    uint8_t dir = 6;
 
     for (i = 0; i < 5; i++) {
 		/* return the first one which fullfill the requirement */
