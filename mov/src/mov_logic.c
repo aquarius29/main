@@ -11,14 +11,9 @@
 #ifdef PC
 #include <stdlib.h>
 #include <stdio.h>
+#elif defined ARDUINO
+#include "WProgram.h"
 #endif
-
-#ifdef DEBUG
-#define DEBUG_PRINT(s)        printf(s)
-#else
-#define DEBUG_PRINT(s)
-#endif
-
 
 #include "mov_interface.h"
 
@@ -65,10 +60,13 @@ void command_logic(void) {
 
 	if (order == 1) {
 		moveCommand();
+		send_dir_to_ca(1);
     }else if(order == 2) {
 		landCommand();
+		send_dir_to_ca(0);
     }else { 
 		hoverCommand();
+		send_dir_to_ca(0);
 	} 
 }
 
@@ -76,6 +74,7 @@ void command_logic(void) {
 
 void convertCommand(void){
 	if(navCommand.type==0){
+		p->type=1;
 		p->height=navCommand.height+sensorCommand.height;
 		p->yaw=navCommand.yaw+sensorCommand.yaw;
 	}
@@ -184,7 +183,14 @@ void check_changingAltitude(void){
  */
 void check_height(void)
 {
-    DEBUG_PRINT("!!!!!!!!!!!!!check height: \n");
+#ifdef DEBUG
+#ifdef PC
+    printf("!!!!!!!!!!!!!check height: \n");
+#elif defined ARDUINO
+	Serial.println("!!!!!!!!!!!!!check height:");
+#endif
+#endif
+
     uint16_t height_desire =navCommand.height;
     uint16_t height_current =sensorCommand.height;
 
@@ -221,7 +227,14 @@ void check_height(void)
  */
 void check_heading(void)
 {
-   DEBUG_PRINT ("!!!!!!!!!!!!!check heading: \n");
+#ifdef DEBUG
+#ifdef PC
+    printf("!!!!!!!!!!!!!check heading: \n");
+#elif defined ARDUINO
+	Serial.println("!!!!!!!!!!!!!check heading:");
+#endif
+#endif
+
    int16_t heading_desire=navCommand.yaw;
    int16_t heading_current=sensorCommand.yaw;
    int16_t difference = heading_current-heading_desire;
@@ -253,7 +266,15 @@ void check_heading(void)
  * 
  */
 void check_pitch_roll(uint8_t isHovering) {
-    DEBUG_PRINT("!!!!!!!!!!!!!check pitch and roll: \n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("!!!!!!!!!!!!!check pitch and roll: \n");
+#elif defined ARDUINO
+	Serial.println("!!!!!!!!!!!!!check pitch and roll:");
+#endif
+#endif
+
     int16_t pitch_current=sensorCommand.pitch;
 	int16_t roll_current=sensorCommand.roll;
 	int16_t pitch_desire;
@@ -321,8 +342,21 @@ void updateDistanceToTravel(void){
 void printOrientation(void)
 {
 #ifdef DEBUG
+#ifdef PC
 	printf("\n {pitch: %d roll: %d, yaw: %d height: %d distance left: %d}\n", 
 		   sensorCommand.pitch, sensorCommand.roll,sensorCommand.yaw,
 		   sensorCommand.height, distanceToTravel );
+#elif defined ARDUINO
+	Serial.println("PITCH:");
+	Serial.print(sensorCommand.pitch);
+	Serial.println(" ROLL:");
+	Serial.print(sensorCommand.roll);
+	Serial.println(" YAW:");
+	Serial.print(sensorCommand.yaw);
+	Serial.println(" HEIGHT:");
+	Serial.print(sensorCommand.height);
+	Serial.println(" DISTANCE TO TRAVEL:");
+	Serial.print(distanceToTravel);
+#endif
 #endif
 }

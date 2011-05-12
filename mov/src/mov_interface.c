@@ -24,12 +24,6 @@
 #include "mov_interface.h"
 #include <stdint.h>
 
-#ifdef DEBUG
-#define DEBUG_PRINT(s)        printf(s)
-#else
-#define DEBUG_PRINT(s)
-#endif
-
 #define SONAR_PIN 5
 #define NO_MESSAGE 0xB
 
@@ -166,8 +160,10 @@ int16_t mov_run(void) {
 
 	read_sensorCommand();
 	clear_message_array();
-
-	DEBUG_PRINT("\n \n*********************LOOOOOOOP***************************\n");
+	
+#ifdef DEBUG
+	printf("\n*********************LOOOOOOOP***************************\n");
+#endif
 	read_caCommand();
 
 	/*
@@ -185,7 +181,9 @@ int16_t mov_run(void) {
 #ifdef SIMULATOR
 		if (read_command()== 0) {  
 			fclose(file);
+#ifdef DEBUG
 			printf("**end of the file**\n");
+#endif
 			return 1;
 		}
 		else{
@@ -203,8 +201,6 @@ int16_t mov_run(void) {
 	oldSensorCommand = sensorCommand;
 	/*get the duration*/
 	duration = 10;
-
-	send_dir_to_ca(2);
 	
 	write_array();
 	return 0;
@@ -286,11 +282,21 @@ void write_to_nav_comfirm(uint8_t i) {
 void read_navCommand(void) {
 #ifndef TEST
 	//read navigation command
-    p-> type = 0;
-    p -> order = 0;
-    p -> height = 20;
-    p -> distance = 0;
-    p -> yaw = 0;
+	if(count ==0){
+		p-> type = 0;
+		p -> order = 0;
+		p -> height = 20;
+		p -> distance = 0;
+		p -> yaw = 0;
+		count =1;
+	}
+	else{
+		p-> type = 0;
+		p -> order = 0;
+		p -> height = 0;
+		p -> distance = 0;
+		p -> yaw = 0;
+	}
 #endif
 }
 
@@ -315,15 +321,27 @@ void read_sensorCommand(void){
 
 #ifndef TEST
     struct stab_gyroscope *stabCommand = (struct stab_gyroscope *)proto_stabReadAttitude();
-
     pSensorC -> pitch = stabCommand -> pitch;
     pSensorC -> roll = stabCommand -> roll;
     pSensorC -> yaw = stabCommand -> yaw;
     pSensorC -> height = (uint16_t) sonar_distance(SONAR_PIN);
-	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.pitch); */
-	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.roll); */
-	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.yaw); */
-	/* printf("@@@@@@@@@@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.height); */
+#ifdef DEBUG
+#ifdef PC
+	printf("@@@@@@@PITCH@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.pitch);
+	printf("@@@@@@@ROLL@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.roll);
+	printf("@@@@@@YAW@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.yaw);
+	printf("@@@@@@HEIGHT@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.height);
+#elif defined ARDUINO
+	Serial.println("@@@@@@@@@@SENSOECOMMAND  PITCH@@@@@@@@@");
+	Serial.print(sensorCommand.pitch);
+	Serial.println("@@@@@@@@@@SENSOECOMMAND  ROLL@@@@@@@@@");
+	Serial.print(sensorCommand.roll);
+	Serial.println("@@@@@@@@@@SENSOECOMMAND  YAW@@@@@@@@@");
+	Serial.println(sensorCommand.yaw);
+	Serial.println("@@@@@@@@@@SENSOECOMMAND  HEIGHT@@@@@@@@@");
+	Serial.println(sensorCommand.height);
+#endif
+#endif
 #endif
 }
 

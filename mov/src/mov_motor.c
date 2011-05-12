@@ -9,9 +9,13 @@
  * @detail:
  */
 
+#ifdef ARDUINO
+#include "WProgram.h"
+#elif defined PC
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
+#endif
 
 #include "mov_interface.h"
 
@@ -20,20 +24,20 @@
 #define SET_FLAG(N, F)        ( (N) |= (F) )
 #define CLR_FLAG(N, F)        ( (N) &= -(F) )
 
-#ifdef DEBUG
-#define DEBUG_PRINT(s)        printf(s)
-#else
-#define DEBUG_PRINT(s)        printf(s)
-#endif
-
-
 /* 
  * 01 00 00 00
  */
 void start_motors(void)
 {
 	uint8_t msg = to_MotorMessage(0,1,0,0,0,0,0,0);
-	DEBUG_PRINT ("start motors\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("start motors\n");
+#elif defined ARDUINO
+	Serial.println("start motors\n");
+#endif
+#endif
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -45,7 +49,14 @@ void stop_motors(void)
 {
 
 	uint8_t msg = to_MotorMessage(0,0,0,0,0,0,0,0);
-	DEBUG_PRINT ("stop motors\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("stop motors\n");
+#elif defined ARDUINO
+	Serial.println("stop motors\n");
+#endif
+#endif
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -54,8 +65,16 @@ void stop_motors(void)
  *  10 10 00 01
  */
 void increase_rear_motor(void){
+
 	uint8_t msg = to_MotorMessage(1,0,1,0,0,0,0,1);
-	DEBUG_PRINT ("increase rear motor\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("increase rear motor\n");
+#elif defined ARDUINO
+	Serial.println("increase rear motor\n");
+#endif
+#endif
 	pWrite(msg);
 	write_to_motor(msg);
 
@@ -67,7 +86,14 @@ void increase_rear_motor(void){
 void decrease_rear_motor(void){
 
 	uint8_t msg = to_MotorMessage(1,0,0,0,0,0,0,1);
-	DEBUG_PRINT ("decrease rear motors\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("decrease rear motors\n");
+#elif defined ARDUINO
+	Serial.println("decrease rear motors\n");
+#endif
+#endif
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -78,7 +104,14 @@ void decrease_rear_motor(void){
 void increase_front_motor(void){
 
 	uint8_t msg = to_MotorMessage(1,0,1,0,0,0,1,0);
-	DEBUG_PRINT  ("increase front motor\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("increase front motor\n");
+#elif defined ARDUINO
+	Serial.println("increase front motor\n");
+#endif
+#endif
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -89,7 +122,14 @@ void increase_front_motor(void){
 void decrease_front_motor(void){
 
 	uint8_t msg = to_MotorMessage(1,0,0,0,0,0,1,0);
-	DEBUG_PRINT  ("decrease front motor\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("decrease front motor\n");
+#elif defined ARDUINO
+	Serial.println("decrease front motor\n");
+#endif
+#endif
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -98,8 +138,16 @@ void decrease_front_motor(void){
  *  10 10 01 00
  */
 void increase_left_motor(void){
+
 	uint8_t msg = to_MotorMessage(1,0,1,0,0,1,0,0);
-	DEBUG_PRINT ("increase left motor\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("increase left motor\n");
+#elif defined ARDUINO
+	Serial.println("increase left motor\n");
+#endif
+#endif
 	pWrite(msg);
 	write_to_motor(msg);
 
@@ -112,7 +160,14 @@ void increase_left_motor(void){
 void decrease_left_motor(void){
 
 	uint8_t msg = to_MotorMessage(1,0,0,0,0,1,0,0);
-	DEBUG_PRINT ("decrease left motor\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("decrease left motor\n");
+#elif defined ARDUINO
+	Serial.println("decrease left motor\n");
+#endif
+#endif
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -124,7 +179,14 @@ void decrease_left_motor(void){
 void increase_right_motor(void){
 
 	uint8_t msg = to_MotorMessage(1,0,1,0,1,0,0,0);
-	DEBUG_PRINT  ("increase right motor\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("increase right motor\n");
+#elif defined ARDUINO
+	Serial.println("increase right motor\n");
+#endif
+#endif
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -134,8 +196,16 @@ void increase_right_motor(void){
  *  10 00 10 00
  */
 void decrease_right_motor(void){
+
 	uint8_t msg = to_MotorMessage(1,0,0,0,1,0,0,0);
-	DEBUG_PRINT  ("decrease right motor\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("decrease right motor\n");
+#elif defined ARDUINO
+	Serial.println("decrease right motor\n");
+#endif
+#endif
 	pWrite(msg);
 	write_to_motor(msg);
 
@@ -148,7 +218,14 @@ void decrease_right_motor(void){
 void increase_rear_decrease_front(void){
    
     uint8_t msg = to_MotorMessage(1,1,1,0,0,0,1,1);
-    DEBUG_PRINT  ("increase rear decrease front\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("increase rear decrease front\n");
+#elif defined ARDUINO
+	Serial.println("increase rear decrease front\n");
+#endif
+#endif
     pWrite(msg);
 	write_to_motor(msg);
 }
@@ -160,7 +237,14 @@ void increase_rear_decrease_front(void){
 void increase_front_decrease_rear(void){
    
     uint8_t msg = to_MotorMessage(1,1,0,0,0,0,1,1);
-	DEBUG_PRINT  ("increase front decrease rear\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("increase front decrease rear\n");
+#elif defined ARDUINO
+	Serial.println("increase front decrease rear\n");
+#endif
+#endif
     pWrite(msg);
 	write_to_motor(msg);
 
@@ -172,7 +256,14 @@ void increase_front_decrease_rear(void){
 void increase_left_decrease_right(void){
    
     uint8_t msg = to_MotorMessage(1,1,1,0,1,1,0,0);
-    DEBUG_PRINT  ("increase left decrease right\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("increase left decrease right\n");
+#elif defined ARDUINO
+	Serial.println("increase left decrease right\n");
+#endif
+#endif
     pWrite(msg);
 	write_to_motor(msg);
 }
@@ -183,7 +274,14 @@ void increase_left_decrease_right(void){
 void increase_right_decrease_left(void){
 
     uint8_t msg = to_MotorMessage(1,1,0,0,1,1,0,0);
-    DEBUG_PRINT  ("increase right decrease left\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("increase right decrease left\n");
+#elif defined ARDUINO
+	Serial.println("increase right decrease left\n");
+#endif
+#endif
     pWrite(msg);
 	write_to_motor(msg);
 }
@@ -192,8 +290,16 @@ void increase_right_decrease_left(void){
  *  10 10 11 11
  */
 void increase_all(void){
+
 	uint8_t msg = to_MotorMessage(1,0,1,0,1,1,1,1);
-	DEBUG_PRINT  ("increase all motors\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("increase all motors\n");
+#elif defined ARDUINO
+	Serial.println("increase all motors\n");
+#endif
+#endif
 	pWrite(msg);
 	write_to_motor(msg);
 
@@ -203,8 +309,16 @@ void increase_all(void){
  *  10 00 11 11
  */
 void decrease_all(void){
+
     uint8_t msg = to_MotorMessage(1,0,0,0,1,1,1,1);
-    DEBUG_PRINT  ("decrease all motors\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("decrease all motors\n");
+#elif defined ARDUINO
+	Serial.println("decrease all motors\n");
+#endif
+#endif
     pWrite(msg);
 	write_to_motor(msg);
 }
@@ -213,10 +327,17 @@ void decrease_all(void){
 /*
  * 11 00 00 10
  */
-void go_forwards(void)
-{
+void go_forwards(void){
+
 	uint8_t msg = to_MotorMessage(1,1,0,0,0,0,1,0);
-	DEBUG_PRINT ("go forward\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("go forward\n");
+#elif defined ARDUINO
+	Serial.println("go forward\n");
+#endif
+#endif
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -224,11 +345,17 @@ void go_forwards(void)
 /*
  * 11 00 00 01 
  */
-void go_backwards(void)
-{
+void go_backwards(void){
 
 	uint8_t msg = to_MotorMessage(1,1,0,0,0,0,0,1);
-	DEBUG_PRINT ("go backward\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("go backward\n");
+#elif defined ARDUINO
+	Serial.println("go backward\n");
+#endif
+#endif
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -239,7 +366,14 @@ void go_backwards(void)
 void strafe_left(void)
 {
 	uint8_t msg = to_MotorMessage(1,1,1,0,0,1,0,0);
-	DEBUG_PRINT  ("scrafe left\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("scrafe left\n");
+#elif defined ARDUINO
+	Serial.println("scrafe left\n");
+#endif
+#endif
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -251,7 +385,14 @@ void strafe_left(void)
 void strafe_right(void)
 {
 	uint8_t msg = to_MotorMessage(1,1,0,0,1,0,0,0);
-	DEBUG_PRINT  ("scrafe right\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("scrafe right\n");
+#elif defined ARDUINO
+	Serial.println("scrafe right\n");
+#endif
+#endif
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -262,7 +403,14 @@ void strafe_right(void)
 void turn_left(void){
   
     uint8_t msg = to_MotorMessage(1,1,1,0,1,1,0,0);
-    DEBUG_PRINT  ("turn left\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("turn left\n");
+#elif defined ARDUINO
+	Serial.println("turn left\n");
+#endif
+#endif
     pWrite(msg);
 	write_to_motor(msg);
 }
@@ -273,7 +421,14 @@ void turn_left(void){
 void turn_right(void)
 {
     uint8_t msg = to_MotorMessage(1,1,0,0,1,1,0,0);
-    DEBUG_PRINT ("turn right\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("turn right\n");
+#elif defined ARDUINO
+	Serial.println("turn right\n");
+#endif
+#endif
     pWrite(msg);
 	write_to_motor(msg);
 }
@@ -284,7 +439,14 @@ void turn_right(void)
 void hover(void)
 {
 	uint8_t msg =to_MotorMessage(1,1,1,1,1,1,1,1);
-	DEBUG_PRINT  ("hover\n");
+
+#ifdef DEBUG
+#ifdef PC
+    printf("hover\n");
+#elif defined ARDUINO
+	Serial.println("hover\n");
+#endif
+#endif
 	pWrite(msg);
 	write_to_motor(msg);
 }
@@ -295,7 +457,13 @@ void hover(void)
 void land(void){
 	hover();
 	decrease_all();
-	DEBUG_PRINT ("land\n");
+#ifdef DEBUG
+#ifdef PC
+    printf("land\n");
+#elif defined ARDUINO
+	Serial.println("land\n");
+#endif
+#endif
 }
 
 
@@ -346,10 +514,14 @@ uint8_t to_MotorMessage(uint8_t ID0, uint8_t ID1, uint8_t increasing, uint8_t pa
  */
 void pWrite(uint8_t msg)
 {
-	DEBUG_PRINT ("\nProtocol has this written to it: ");
 #ifdef DEBUG
-   	print_uint8_t_to_Binary(msg);
+#ifdef PC
+    printf("\nProtocol has this written to it: ");
+#elif defined ARDUINO
+	Serial.println("\nProtocol has this written to it: ");
 #endif
+	print_uint8_t_to_Binary(msg);
+#endif 
 }
 
 
@@ -363,15 +535,27 @@ void print_uint8_t_to_Binary(uint8_t bin)
 
 	counter =sizeof(bin) * 8;
 
-	for(counter = counter - 1; counter >= 0; counter--)
-		{
-			temp = 1 << counter;
-			bit = temp & bin;
-			if( bit == 0)
-				printf("0");
-			else
-				printf("1");
+	for(counter = counter - 1; counter >= 0; counter--){
+		temp = 1 << counter;
+		bit = temp & bin;
+		if( bit == 0){
+#ifdef PC
+			printf("0");
+#elif defined ARDUINO
+			Serial.print("0");
+#endif
 		}
-
+		else{
+#ifdef PC
+			printf("1");
+#elif defined ARDUINO
+			Serial.print("1");
+#endif				
+		}
+	}
+#ifdef PC
 	printf("\n");
+#elif defined ARDUINO
+	Serial.println();
+#endif	
 }
