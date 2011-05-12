@@ -70,7 +70,7 @@ BASIC_LIBS=-Ltest_mega/lib -Llib -ltest -lm
 
 ##  Libraries to include when building the extended system, 
 ##  only include libs that work for all targets for that system here!
-PANDA_LIBS=-Ltest_mega/lib -Llib -ltest -lm
+PANDA_LIBS=-Ltest_panda/lib -Llib -ltest -lm
 
 ##  Set paths to headers used by code on the basic system
 BASIC_INCLUDES=-I../../include
@@ -124,7 +124,7 @@ pc: GLOBAL_CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(BASIC_INCLUDES)
 pc:
 	cd test_panda/src && $(MAKE) lib-pc
 	$(GLOBAL_CC) -c pc_main.c -Itest_panda/src
-	$(GLOBAL_CC) -o $(PROG) pc_main.o $(BASIC_LIBS)
+	$(GLOBAL_CC) -o $(PROG) pc_main.o $(PANDA_LIBS)
 	
 
 pc-dbg: GLOBAL_CC=gcc
@@ -132,11 +132,11 @@ pc-dbg: GLOBAL_CFLAGS+=$(PC_FLAGS) $(EXTRA_FLAGS) $(DEBUG_FLAGS_PC) $(BASIC_INCL
 pc-dbg:
 	cd test_panda/src && $(MAKE) lib-pc
 	$(GLOBAL_CC) -c pc_main.c -Itest_panda/src
-	$(GLOBAL_CC) -o $(PROG) pc_main.o $(BASIC_LIBS)
+	$(GLOBAL_CC) -o $(PROG) pc_main.o $(PANDA_LIBS)
 
 
 ## mega-targets #############################################################
-mega: PANDA_LIBS+=-l$(CORE_LIB_MEGA)  ## add the arduino-specific lib to PANDA_LIBS
+mega: BASIC_LIBS+=-l$(CORE_LIB_MEGA)  ## add the arduino-specific lib to BASIC_LIBS
 mega: GLOBAL_CC=avr-g++
 mega: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS_MEGA) $(EXTRA_FLAGS) $(BASIC_INCLUDES)
 mega:
@@ -148,7 +148,7 @@ mega:
 	avr-objcopy -O srec $(PROG).elf $(PROG).rom
 
 
-mega-dbg: PANDA_LIBS+=-l$(CORE_LIB_MEGA)  ## add the arduino-specific lib to PANDA_LIBS
+mega-dbg: BASIC_LIBS+=-l$(CORE_LIB_MEGA)  ## add the arduino-specific lib to BASIC_LIBS
 mega-dbg: GLOBAL_CC=avr-g++
 mega-dbg: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS_MEGA) $(EXTRA_FLAGS) $(BASIC_INCLUDES) $(DEBUG_FLAGS_ARDUINO)
 mega-dbg:
@@ -203,8 +203,11 @@ flash-uno:
 
 ## clean-target #############################################################
 clean:
-	cd test/src && $(MAKE) clean
-	cd test/lib && rm -f *.a
+	cd test_mega/src && $(MAKE) clean
+	cd test_mega/lib && rm -f *.a
+
+	cd test_panda/src && $(MAKE) clean
+	cd test_panda/lib && rm -f *.a
 
 	rm -f $(PROG).elf $(PROG).rom *.o *.map
 
