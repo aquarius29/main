@@ -7,7 +7,7 @@
 #define ANGLE_PER_COMMAND 5
 #define HEIGHT_PER_COMMAND 5
 
-#define SLEEP_DURATION (0.5 * 1000000000)
+#define SLEEP_DURATION (0.1 * 1000000000)
 
 #define FORWARD 3
 #define BACK 5
@@ -94,15 +94,18 @@ void receiveManualMovementCommand(int command) {
     
     queueManualCommand(command);
     calculateNewCommand();
-    while (commandHandled() == 1) {
-        nanosleep(&t , NULL);
-        // usleep(SLEEP_DURATION);
-    }
-    else {
-        printf("%d\t %d\t %d\n", newCommand[0], newCommand[1], newCommand[2]);
-        // nav_sendManualMovementCommand(newCommand[0], newCommand[1], newCommand[2]);
-        // track current position for indoor system
-        freeManualCommandList();
+    
+    for (;;) {
+        if (commandHandled() == 1) {
+            nanosleep(&t , NULL);
+        }
+        else {
+            printf("%d\t %d\t %d\n", newCommand[0], newCommand[1], newCommand[2]);
+            // nav_sendManualMovementCommand(newCommand[0], newCommand[1], newCommand[2]);
+            // track current position for indoor system
+            freeManualCommandList();
+            break;
+        }
     }
 }
 
