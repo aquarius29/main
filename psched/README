@@ -1,17 +1,26 @@
 DESCRIPTION
 -----------
+A fork based applcation that runs modules
+paralelly and share a semaphore for state 
+modifications and message passing.
 
-A fork based applcation that could keep track of processes running different functions paralelly and pass messages between them.
+States of each process is shared using 
+an IPC Shared Memory library.
 
-INSTALLATION AND RUNNING
+INSTALLATION
 ------------------------
-In order to run the current version of the extended scheduler, 
+In order to install the library run: 
+   make && make lib
+   - dont forget to clean.
 
-1. Run 'make install'. 
-2. ./sched_ext_mngr
+RUNNING
+-------
+Check the examples folder for example code.
 
 CHANGELOG
 ---------
-
 04/04/2011 v1.0 - Basic data structure implemented
 12/04/2011 v1.1 - A runnable prototype running two (or more) different functions paralelly.
+04/05/2011 v1.2 - A finalized version of the extended scheduler (ALPHA) 
+	        - Message queue library
+		- IPC Shared memory library.
