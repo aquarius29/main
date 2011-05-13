@@ -9,13 +9,11 @@
 #define PROC_CAM 1
 #define PROC_UI 2
 #define PROC_NAV 3
-#define PROC_CONN 4
 
 typedef enum proc_type{
   proc_cam = PROC_CAM, /* camera */
   proc_ui = PROC_UI,  /* ui */
-  proc_nav = PROC_NAV,  /* navigation */
-  proc_conn /* connection */
+  proc_nav = PROC_NAV  /* navigation */
 } proc_type ; 
 
 
