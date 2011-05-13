@@ -4,7 +4,6 @@
  *        types defined.
  * @date 2011-04-26
  * @author Taher Odeh
- * @version 1.0
  * * * * * * * * * * * * * * * * * * * */
 
 #define PROC_CAM 1

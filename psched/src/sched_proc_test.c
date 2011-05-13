@@ -8,11 +8,6 @@
 int16_t init1();
 int16_t run1();
 
-//int main(void){
-//  init();
-//  run();
-//}
-
 int16_t init1(void){
   printf("initialized...\n");
   return 1;
