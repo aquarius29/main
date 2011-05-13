@@ -15,7 +15,7 @@ typedef enum proc_type{
   proc_cam = PROC_CAM, /* camera */
   proc_ui = PROC_UI,  /* ui */
   proc_nav = PROC_NAV,  /* navigation */
-  proc_conn /* connection */
+  proc_conn = PROC_CONN/* connection */
 } proc_type ; 
 
 
