@@ -1,2 +1,17 @@
+DESCRIPTION
+-----------
 
-This is the folder for the PandaBoard "scheduler"
+A fork based applcation that could keep track of processes running different functions paralelly and pass messages between them.
+
+INSTALLATION AND RUNNING
+------------------------
+In order to run the current version of the extended scheduler, 
+
+1. Run 'make install'. 
+2. ./sched_ext_mngr
+
+CHANGELOG
+---------
+
+04/04/2011 v1.0 - Basic data structure implemented
+12/04/2011 v1.1 - A runnable prototype running two (or more) different functions paralelly.
