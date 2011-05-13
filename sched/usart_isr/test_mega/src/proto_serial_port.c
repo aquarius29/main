@@ -22,7 +22,9 @@
 #include <termios.h>
 #include <stdint.h>
 
-#include "proto_serial_port.h" 
+#include "proto_serial_port.h"
+
+#define BAUD_RATE B9600
  
 #define TRUE 1
 #define FALSE 0
@@ -54,15 +56,22 @@ int32_t proto_serialOpen(void){
     portHandle = open(PROTO_SERIAL_PORT, (O_RDWR | O_NOCTTY | O_NDELAY));
     /* perform error-checking on open return value here */
 
+    fcntl(portHandle, F_SETFL, 0);
+    // fcntl(portHandle, F_SETFL, FNDELAY);
+    
     /* put in comments to explain the port and serial options chosen */
     tcgetattr(portHandle, &options);
-    cfsetispeed(&options, B9600);
-    cfsetospeed(&options, B9600);
+    cfsetispeed(&options, BAUD_RATE);
+    cfsetospeed(&options, BAUD_RATE);
     options.c_cflag |= CLOCAL;
     options.c_cflag |= CREAD;
     options.c_cflag |= CS8;
  
+    // options.c_cflag &= ~(ICANON | ECHO | ECHOE | ISIG);
     options.c_oflag &= ~OPOST;
+    // options.c_oflag = 0;
+
+    // options.c_iflag &= ~(IXON | IXOFF | IXANY);
 
     tcsetattr(portHandle, TCSANOW, &options);
 

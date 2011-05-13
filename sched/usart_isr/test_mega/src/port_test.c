@@ -31,12 +31,14 @@ void port_test(void){
     printf("sending data1\n");
     proto_serialSendNavMsg(portHandle, &navMsg);
     
-    // p_serialData = proto_serialReceiveFromMega(portHandle);
-    // printf("we received %d\n", *p_serialData);
-    //     
-    // navMsgFill2();
-    // printf("sending data2\n");
-    // proto_serialSendNavMsg(portHandle, &navMsg);
+    p_serialData = proto_serialReceiveFromMega(portHandle);
+    printf("we received %d\n", *p_serialData);
+
+    sleep(1);
+        
+    navMsgFill2();
+    printf("sending data2\n");
+    proto_serialSendNavMsg(portHandle, &navMsg);
         
     p_serialData = proto_serialReceiveFromMega(portHandle);
     printf("we received %d\n", *p_serialData);

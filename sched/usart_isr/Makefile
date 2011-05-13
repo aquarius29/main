@@ -146,7 +146,7 @@ mega:
 	$(GLOBAL_CC) -c mega_main.c -Itest_mega/src
 	$(GLOBAL_CC) mega_main.o $(BASIC_LIBS) $(LDFLAGS_ARDUINO_MEGA) -o $(PROG).elf
 	avr-objcopy -O srec $(PROG).elf $(PROG).rom
-
+	
 
 mega-dbg: BASIC_LIBS+=-l$(CORE_LIB_MEGA)  ## add the arduino-specific lib to BASIC_LIBS
 mega-dbg: GLOBAL_CC=avr-g++

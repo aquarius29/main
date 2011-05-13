@@ -49,6 +49,7 @@ uint8_t proto_isNewNavMsg(void){
 }
 
 struct navData *proto_readNavMsg(void){
+    isNewNavMsg = FALSE;
     return &navMsg;
 }
 

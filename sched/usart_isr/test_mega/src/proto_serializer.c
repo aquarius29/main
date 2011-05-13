@@ -18,6 +18,7 @@
 #include "proto_serial_define.h"
 #include "proto_msg_structs.h"
 
+
 static uint8_t lowByte(uint16_t);
 static uint8_t highByte(uint16_t);
 
