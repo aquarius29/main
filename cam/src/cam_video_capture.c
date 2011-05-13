@@ -67,16 +67,6 @@
 	
 void initialize()
 {
-<<<<<<< HEAD
-	//if(cam_index){
-	video_capture = cvCaptureFromCAM(0);
-	//}
-		if(!video_capture){
-		perror("could not capture from device");
-		}
-	printf("Initializing ...\n");
-=======
->>>>>>> b64f14e505c1a54f5e93aefebe0751ca42cc01fe
 
     video_capture = cvCaptureFromCAM(0);
 
