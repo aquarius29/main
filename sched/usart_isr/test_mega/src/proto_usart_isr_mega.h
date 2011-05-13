@@ -4,9 +4,6 @@
 
 #include <stdint.h>
 
-/* size of buffers used and maximum message length */
-#define PROTO_MAX_MSG_LEN 40
-
 /* CPU clock speed */
 #define PROTO_FOSC 16000000UL
 
@@ -53,5 +50,14 @@ uint8_t proto_isRxMsgComplete(void);
  *  @author Joakim
  */
 uint8_t *proto_getRxMsg(void);
+
+/*!
+ *
+ *
+ *
+ */
+uint8_t proto_usartTransmit(uint8_t *serialData);
+ 
+ 
 
 #endif /* PROTO_USART_ISR_MEGA_H */

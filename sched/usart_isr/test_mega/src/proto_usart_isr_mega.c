@@ -28,6 +28,9 @@ volatile static uint8_t msgLen = 0;
 volatile static uint8_t bytesReceived = 0;
 volatile static uint8_t isMsgComplete = FALSE;
 
+static void USART_transmit(uint8_t data);
+
+
 
 uint8_t proto_isRxMsgComplete(void){
     return isMsgComplete;
@@ -42,8 +45,32 @@ uint8_t *proto_getRxMsg(void){
     }
 }
 
+/*!
+ *  USART_tansmit taken from a code example in the datasheet for atmega2560
+ */
+static void USART_transmit(uint8_t data){
+    /* wait for empty transmit buffer *** BLOCKING?! */
+    while (!(UCSR0A & (1 << UDRE0))){
+        ;
+    }
+    /* put data in buffer, sends the data */
+    UDR0 = data;
+}
+
+uint8_t proto_usartTransmit(uint8_t *serialData){
+    while (*serialData != '\0') {
+        USART_transmit(*serialData);
+        serialData++;
+    }
+
+    return 1;
+}
+
 /*
  *  Interrupt service routine for RX Receive Interrupt on USART0
+ *
+ *  Does very little to check for badly formatted messages! Can not handle
+ *  multiple messages if they are not sent in a proper way.
  *
  *  @author Joakim
  */

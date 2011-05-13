@@ -21,6 +21,7 @@
 
 #define PROTO_SERIAL_PORT "/dev/tty.usbmodemfa141"
 
+int32_t proto_getSerialPort(void);
 int32_t proto_serialOpen(void);
 uint8_t proto_serialClose(int32_t);
 
