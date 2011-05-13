@@ -10,7 +10,7 @@ an IPC Shared Memory library.
 INSTALLATION
 ------------------------
 In order to install the library run: 
-   make && make pc-lib
+   make && make lib
    - dont forget to clean.
 
 RUNNING
