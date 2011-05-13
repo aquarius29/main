@@ -24,13 +24,33 @@
 
 #include "proto_serial_port.h" 
  
+#define TRUE 1
+#define FALSE 0
+ 
+static int32_t portHandle;
+static uint8_t isPortOpen = FALSE;
+
+/* 
+ *  function for getting the port if it's already open
+ */
+int32_t getSerialPort(void){
+    if (isPortOpen == TRUE) {
+        return portHandle;
+    }
+    else {
+        return 0;
+    }
+}
+
 /* 
  *  function for initializing and opening port
+ *
+ *  NOTE: Only call this function when in an initialization sequence
+ *  of the system. Calling it while in fliht will be a disaster
  */
 int32_t proto_serialOpen(void){
     struct termios options;
-    int32_t portHandle;
-    
+
     portHandle = open(PROTO_SERIAL_PORT, (O_RDWR | O_NOCTTY | O_NDELAY));
     /* perform error-checking on open return value here */
 
@@ -49,7 +69,9 @@ int32_t proto_serialOpen(void){
 
     /* delay is to make sure the port has time to initialize */
     sleep(1);
-
+        
+    isPortOpen = TRUE;
+        
     return portHandle;
 }
 

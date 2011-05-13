@@ -17,7 +17,11 @@
  *  @details
  */
 
+#ifdef ARDUINO
+
 #include "WProgram.h"
+
+#endif /* ARDUINO */
  
 #include <stdio.h> 
 
@@ -42,6 +46,26 @@ static uint8_t proto_serialSendToPanda(uint8_t *data);
 
 
 #ifdef PC
+
+uint8_t *proto_readMovConfirmMsg(int32_t portHandle){
+    /* return the specific confirm message from movement */
+    uint8_t serialData[NAV_MSG_LEN];
+    
+    //returnMsg = a port read function
+    //proto_serialReceiveFromMega(portHandle, serialData);
+    
+    //return returnMsg;
+}
+
+uint8_t *proto_serialReceiveFromMega(int32_t portHandle, uint8_t *dataBuffer){
+    uint8_t byte;
+    uint8_t i;
+    
+    //byte = read(portHandle, dataBuffer, 1);
+    while (byte != '\0' && i < PROTO_MAX_MSG_LEN) {
+        ;
+    }
+}
 
 /*
  *  Function to send navigation data message on serial port
@@ -108,9 +132,9 @@ uint8_t proto_serialSendMovConfirmMsg(uint8_t msg){
 }
 
 static uint8_t proto_serialSendToPanda(uint8_t *data){
-    // if (data[0] == 3) {
-    //     digitalWrite(12, HIGH);
-    // }
+    if (data[0] == 3) {
+        digitalWrite(12, HIGH);
+    }
     
     
     return 1;

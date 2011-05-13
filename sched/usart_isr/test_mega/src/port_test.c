@@ -1,4 +1,9 @@
 
+/*
+ *  Module represents a group on the panda (sort of). It uses the serial
+ *  API to open a serial port and send and receive data on it.
+ */
+ 
 #include "proto_serial_port.h"
 #include "proto_serial_comm.h"
 #include "proto_serializer.h"
