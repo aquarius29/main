@@ -40,7 +40,7 @@ static void insertProgressiveNode(void) {
     insertCurrentDestinationNode();
 }
 static void insertInterruptedNode(void) {
-    current->next = realloc(1, sizeof(progressiveNode));
+    current->next = realloc(current->next, sizeof(progressiveNode));
     current->next->p = current->p;
     current->next->prev = current;
     current = current->next;
@@ -108,7 +108,7 @@ static void sendCommand(void) {
     }
 }
 static void sendPosition(roomPosition *pos) {
-    // printf("Longitude = %d\tLatitude = %d\n", pos->lon, pos->lat);
+    printf("Longitude = %f\tLatitude = %f\n", pos->lon, pos->lat);
     //nav_sendCurrentIndoorPositionToGui(pos);
 }
 static void sendExpectedPath(positionList *path) {
@@ -185,7 +185,7 @@ static void compareTile(void) {
     (current->p.lat - TILE_CENTER)/CENTIMETRES_PER_TILE !=
     (current->prev->p.lat - TILE_CENTER)/CENTIMETRES_PER_TILE)
     {
-        current->prev = current;
+        insertInterruptedNode();
     }
 }
 static void recalc(void) {
