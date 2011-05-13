@@ -16,6 +16,7 @@
 #include "WProgram.h"
 
 #include "proto_usart_isr_mega.h"
+#include "proto_serial_define.h"
 
 #define TRUE 1
 #define FALSE 0

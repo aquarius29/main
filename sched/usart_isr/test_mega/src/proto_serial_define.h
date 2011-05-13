@@ -13,6 +13,9 @@
 #ifndef PROTO_SERIALDEFINE_H
 #define PROTO_SERIALDEFINE_H
 
+/* size of buffers used and maximum message length */
+#define PROTO_MAX_MSG_LEN 100
+
 /* Length defines for messages passed */
 #define DATA_BUFFER_LEN 100
 #define NAV_MSG_LEN 10
