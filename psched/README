@@ -24,3 +24,4 @@ CHANGELOG
 04/05/2011 v1.2 - A finalized version of the extended scheduler (ALPHA) 
 	        - Message queue library
 		- IPC Shared memory library.
+12/05/2011 v1.2 - Function return types changed to int16_t
