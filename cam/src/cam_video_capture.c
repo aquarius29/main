@@ -23,44 +23,41 @@
 			 2011-04-20 - grabing frames
 			 2011-04-28 - compress, convert and send
 			 2011-05-06 - re structure source code
+			 2011-05-13 - changed the video saving. to reduce larging
 
   * Description: Contains the functions that captures video from the web cam 
   				 and convert video frames for streaming 
-*/
+**********************************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
 #include "cv.h"
 #include "highgui.h"
-//#include "../include/highgui.h"
 
 #include "cam_interface.h"
 #include "cam_cam.h"
 
 /*
-	video capture structure for opencv and the IplImage structure
+	video capture structure for opencv and the IplImage structure / global variable
 */
     CvCapture* video_capture;
     IplImage* video_frame; // uncompressed array of BGR images
     IplImage *gray_frame; // to hold the processed images
-
+    int new_data;
+    int key;
 
 /*
 	Function Prototypes
 */
     void initialize();
     void grab_frame(void);
-    void save_and_convert_video(void);
-
+    void convert_and_send_video(void);
 
 
 /*
-	Variables
+	declare threads to be used
 */
-    int new_data;
-    int key;
-
     pthread_mutex_t	 mutex = PTHREAD_MUTEX_INITIALIZER;
     pthread_t 	server_thread;
 
@@ -71,7 +68,7 @@
 void initialize()
 {
 
-    video_capture = cvCaptureFromCAM(1);
+    video_capture = cvCaptureFromCAM(0);
 
         if(!video_capture){
         perror("could not capture from device");
@@ -99,23 +96,18 @@ void grab_frame(void)
 /*
 	Function that saves a compressed mpeg4 video stream to file
 */
-void save_and_convert_video(void)
+void convert_and_send_video(void)
 {
-    CvSize size = cvSize((int)cvGetCaptureProperty(video_capture,CV_CAP_PROP_FRAME_WIDTH),
-                        (int)cvGetCaptureProperty(video_capture,CV_CAP_PROP_FRAME_WIDTH));
-    CvVideoWriter *writer = cvCreateVideoWriter("out.avi", CV_FOURCC('D','I','V','X'), 25,size, 1);
-
 /*	create a variable to hold processed frames*/
     gray_frame = cvCreateImage(cvGetSize(video_frame),IPL_DEPTH_8U, 1);
 
+/*  create a thread to send the frame */
     pthread_create(&server_thread, NULL, video_server, NULL);
 
 
 /*	video processing loop */	
-    cvNamedWindow("QUADROTOR-SERVER",CV_WINDOW_AUTOSIZE); 
     while(video_frame > 0){
     video_frame = cvQueryFrame(video_capture);
-    cvWriteFrame(writer, video_frame);
 
         if(!video_frame)
         break;
@@ -126,17 +118,13 @@ void save_and_convert_video(void)
     new_data = 1;
     pthread_mutex_unlock(&mutex);
 
-/*	show video */
-    cvShowImage("QUADROTOR-SERVER", video_frame);
-    key = cvWaitKey(28);
-    }
 
+    }
 
 /*
 	clean up memory after use
 */
-    cvDestroyWindow("QUADROTOR-SERVER");
-    cvReleaseVideoWriter(&writer);
+
     cvReleaseImage(&gray_frame);
     cvReleaseCapture(&video_capture);
     pthread_mutex_destroy(&mutex);

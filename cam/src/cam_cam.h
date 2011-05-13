@@ -20,7 +20,7 @@ void initialize();
 
 void grab_frame(void);
 
-void save_and_convert_video(void);
+void convert_and_send_video(void);
 
 void video_server(void);
 

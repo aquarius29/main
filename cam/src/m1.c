@@ -7,13 +7,16 @@
 #include "cam_cam.h"
 #include <stdio.h>
 
+#include "cam_server.c"
+#include "cam_video_capture.c"
+
 
 int main(void)
 {
   
     initialize();
     grab_frame();
-    save_and_convert_video();
+    convert_and_send_video();
     video_server();
 
 return 0;

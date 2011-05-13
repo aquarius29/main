@@ -31,7 +31,7 @@ int16_t cam_init(void)
 int16_t cam_run(void)
 {
     grab_frame();	
-    save_and_convert_video();
+    convert_and_send_video();
     video_server();
 
     return 0;
