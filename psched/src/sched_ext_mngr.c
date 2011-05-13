@@ -6,15 +6,9 @@
  * @version 1.2
  * * * * * * * * * * * * * * * * * * * */
 
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <unistd.h>
 #include <sys/types.h>
 #include "sched_ext_mngr.h"
 
-//#include "sched_proc_test.c"
-//#include "sched_proc_test2.c"
-//#include "ex_pthread.c"
 
 #define NUM_PROC 2 /* number of processes */
 
@@ -24,7 +18,7 @@
  * run_fun: run function of module 
  * return: a process struct member with it's type, init function and run function set.
  */
-struct extsched_proc create_proc(enum proc_type type, int (*init_fun)(), int (*run_fun)()){
+struct extsched_proc create_proc(enum proc_type type, int16_t (*init_fun)(), int16_t (*run_fun)()){
   struct extsched_proc p;
   p.init_fun = init_fun;
   p.run_fun  = run_fun;
@@ -45,7 +39,7 @@ void init_proc(struct extsched_proc *p){
 
   int ret= (*p->init_fun)(); /* run initialization function */
 
-  if ( ret == 1 ){
+  //if ( ret == 1 ){
     
     // ** initialize message queue (disabled in ver 1.2) - 
     // ** ipc shared memory used instead.
@@ -57,7 +51,7 @@ void init_proc(struct extsched_proc *p){
     pool[pool->num_procs].p = p;
     pool[pool->num_procs-1].next_proc = &pool[pool->num_procs];
     pool->num_procs= pool->num_procs+1;
-  }
+    //}
 }
 
 /* 
@@ -106,7 +100,7 @@ void run_pool(struct proc_pool *pool){
       p->running_time = 0; // not used yet.  
       p->pid= getpid(); // not used.
       p->running = 1; // not used
-      (*p->run_fun)(); /* start the run loop for the process */ 
+      while (1) (*p->run_fun)(); /* start the run loop for the process */ 
       _exit(0);
     } else {
       pool = pool->next_proc; /* itedrate */

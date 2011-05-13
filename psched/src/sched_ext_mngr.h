@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdio.h>
-
+#include <stdint.h>
 #include <unistd.h> 
 #include <time.h>
 
@@ -21,8 +21,8 @@ struct extsched_proc{
   pid_t pid; /* pid of the running process */
   char running; /* process status (not used). */
   time_t running_time; /* elapsed time (not used) */
-  int (*init_fun)(); /* init function pointer */
-  int (*run_fun)(); /* run function pointer */
+  int16_t (*init_fun)(); /* init function pointer */
+  int16_t (*run_fun)(); /* run function pointer */
   enum proc_type type; /* process type (defined in extsched_proc_types.h) */
 };
 
@@ -39,7 +39,7 @@ struct proc_pool{
 /* creates a process.
    return: a process struct member with it's type, init function and run function set.
  */
-struct extsched_proc create_proc(enum proc_type type, int (*init_fun)(), int (*run_fun)());
+struct extsched_proc create_proc(enum proc_type type, int16_t (*init_fun)(), int16_t (*run_fun)());
 
 /* initializes a process and adds it to the poll */
 void init_proc(struct extsched_proc *);

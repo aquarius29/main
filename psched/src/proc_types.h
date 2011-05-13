@@ -6,12 +6,15 @@
  * @author Taher Odeh
  * @version 1.0
  * * * * * * * * * * * * * * * * * * * */
-typedef enum proc_type{
-  proc_cam = 1, /* camera */
-  proc_ui = 2,  /* ui */
-  proc_nav = 3  /* navigation */
-} proc_type ; 
 
 #define PROC_CAM 1
 #define PROC_UI 2
 #define PROC_NAV 3
+
+typedef enum proc_type{
+  proc_cam = PROC_CAM, /* camera */
+  proc_ui = PROC_UI,  /* ui */
+  proc_nav = PROC_NAV  /* navigation */
+} proc_type ; 
+
+
