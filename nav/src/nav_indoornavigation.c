@@ -13,7 +13,7 @@
 #define PRECISION 5
 #define SLEEP_DURATION (0.05 * 1000000000)
 #define ALGORITHM 0
-#define TRUE_NORTH 100 + 90
+#define TRUE_NORTH 10 + 90
 #define AVOID_DISTANCE 100
 #define CENTIMETRES_PER_SECOND 100
 #define SAFE_HEIGHT 200 //200 cm
@@ -40,7 +40,7 @@ static void insertProgressiveNode(void) {
     insertCurrentDestinationNode();
 }
 static void insertInterruptedNode(void) {
-    current->next = realloc(1, sizeof(progressiveNode));
+    current->next = realloc(current->next, sizeof(progressiveNode));
     current->next->p = current->p;
     current->next->prev = current;
     current = current->next;
@@ -68,19 +68,27 @@ static void setDistance(void) {
     current->prev->p.lat)));
 }
 static void updatePosition(void) {
-    struct timeval current_time;
     double changeX = 0;
     double changeY = 0;
-    double time = 0;
-    double microseconds = 0;
-    gettimeofday(&current_time, NULL);
-    microseconds = (current_time.tv_usec - timer.tv_usec);
-    if (microseconds != 0) {
-        microseconds = microseconds/1000000;
+    if (running == 0) {
+        changeY = AVOID_DISTANCE * sin(current->next->p.angle);
+        changeX = AVOID_DISTANCE * cos(current->next->p.angle);
     }
-    time = (current_time.tv_sec - timer.tv_sec) + microseconds;
-    changeY = (time * CENTIMETRES_PER_SECOND) * sin(current->next->p.angle);
-    changeX = (time * CENTIMETRES_PER_SECOND) * cos(current->next->p.angle);
+    else {
+        struct timeval current_time;
+        double time = 0;
+        double microseconds = 0;
+        gettimeofday(&current_time, NULL);
+        microseconds = (current_time.tv_usec - timer.tv_usec);
+        if (microseconds != 0) {
+            microseconds = microseconds/1000000;
+        }
+        time = (current_time.tv_sec - timer.tv_sec) + microseconds;
+        changeY = (time * CENTIMETRES_PER_SECOND) *
+        sin(current->next->p.angle);
+        changeX = (time * CENTIMETRES_PER_SECOND) *
+        cos(current->next->p.angle);
+    }
     current->p.lon = current->prev->p.lon + changeX;
     current->p.lat = current->prev->p.lat + changeY;
 }
@@ -92,7 +100,7 @@ static int8_t commandHandled (void) {
 static void sendCommand(void) {
     setDirection();
     setDistance();
-    int32_t angle = (current->next->p.angle / (M_PI/180)) + TRUE_NORTH;
+    int32_t angle = (current->next->p.angle / (M_PI / 180)) + TRUE_NORTH;
     if (angle > 359) {
         angle -= 360;
     }
@@ -108,7 +116,7 @@ static void sendCommand(void) {
     }
 }
 static void sendPosition(roomPosition *pos) {
-    // printf("Longitude = %d\tLatitude = %d\n", pos->lon, pos->lat);
+    printf("Longitude = %f\tLatitude = %f\n", pos->lon, pos->lat);
     //nav_sendCurrentIndoorPositionToGui(pos);
 }
 static void sendExpectedPath(positionList *path) {
@@ -185,7 +193,7 @@ static void compareTile(void) {
     (current->p.lat - TILE_CENTER)/CENTIMETRES_PER_TILE !=
     (current->prev->p.lat - TILE_CENTER)/CENTIMETRES_PER_TILE)
     {
-        current->prev = current;
+        insertInterruptedNode();
     }
 }
 static void recalc(void) {
@@ -209,20 +217,22 @@ static void recalc(void) {
     sendExpectedPath(&route);
     sendCommand();
 }
-void collisionAvoided(double direction) {
-    double changeX = 0;
-    double changeY = 0;
+void collisionAvoided(int32_t direction) {
     running = 0;
     free(route.list);
     compareTile();
-    current->next->p.angle = direction;
-    changeY = AVOID_DISTANCE * sin(current->next->p.angle);
-    changeX = AVOID_DISTANCE * cos(current->next->p.angle);
-    current->p.lon = current->prev->p.lon + changeX;
-    current->p.lat = current->prev->p.lat + changeY;
+    current->next->p.angle = (direction - TRUE_NORTH) * (M_PI / 180);
+    updatePosition();
     compareTile();
     recalc();
 }
+// void getPositionAfterManual(int32_t direction, int32_t distance) {
+//     changeX = distance * cos(direction);
+//     changeY = distance * sin(direction);
+//     current->p.lon = current->prev->p.lon + changeX;
+//     current->p.lat = current->prev->p.lat + changeY;
+// }
+
 static int32_t check(roomPosition a, roomPosition b){
     double diffX;
     double diffY;
@@ -267,7 +277,7 @@ static void navigatePath(void){
         sendCommand();
     }
 }
-/*int main(){
+int main(){
     tile a, b;
     a.x = 1;
     a.y = 1;
@@ -275,4 +285,4 @@ static void navigatePath(void){
     b.y = 5;
     initPath(&a, &b);
     return 0;
-}*/
+}

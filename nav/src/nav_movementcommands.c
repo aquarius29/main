@@ -1,7 +1,8 @@
+
 /*!
 * @author 	Jarryd Hall.
 * @brief 	Drone Movement Commands.
-* @details  A module for creating and sending auto movement commands.
+* @details  A module for creating and sending manual and auto movement commands.
 *           This is used by the navigation systems to generate movement commands
 *		    from their path calculations.
 */
@@ -9,6 +10,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "nav_movementcommands.h"
+#include "nav_corelogic.h"
 
 //! Create a movement command.
 /*!
@@ -43,7 +45,14 @@ void sendautomovementcommand(uint8_t order , int16_t height, uint16_t distance, 
 	}
 }
 
-void sendManualMovementCommand(int identifier)
+/* 	@author Jarryd Hall
+* 	@brief Function to create a manual movement command
+*	@details Function creates a movement command
+*	based on the identifier passed in.
+*
+*	@param identifier The id to identify the command requested
+*/
+void processMovementCommand(int identifier)
 {
 	struct movCommand *move = malloc(sizeof(struct movCommand));
 	if (move == NULL)
@@ -52,53 +61,60 @@ void sendManualMovementCommand(int identifier)
 	}
 	else 
 	{
-		move->type = MANUAL;
+		move->type = (((uint8_t)MANUAL));
 		
 		switch (identifier)
 		{
 			case FORWARD: 
-				move->order = FORWARD_COMMAND;
-				move->distance = MOVE_FORWARD_COMMAND_VALUE;
-				move->height = ;
-				move->yaw = MOVE_FORWARD_COMMAND_DIRECTION;
+				move->order = 1;
+				move->height = 0;
+				move->distance = 10;
+				move->yaw = 0;
 				break;	
+			/*
 			case BACK:
 				move->order = BACKWARD_COMMAND;
+				move->height = (((int16_t)the value here));
 				move->distance = MOVE_BACKWARD_COMMAND_VALUE;
-				move->height = ;
 				move->yaw = MOVE_BACKWARD_COMMAND_DIRECTION;
 				break;
+			*/
 			case LEFT:
-				move->order = LEFT_COMMAND;
-				move->distance = MOVE_LEFT_COMMAND_VALUE;
-				move->height = ;
-				move->yaw = MOVE_LEFT_COMMAND_DIRECTION;
+				move->order = 0;
+				move->height = 0;
+				move->distance = 0;
+				move->yaw = -10;
 				break;
 			case RIGHT:
-				move->order = RIGHT_COMMAND;
-				move->distance = MOVE_RIGHT_COMMAND_VALUE;
-				move->height = ;
-				move->yaw = MOVE_RIGHT_COMMAND_DIRECTION;
+				move->order = 0;
+				move->height = 0;
+				move->distance = 0;
+				move->yaw = 10;
 				break;
 			case UP: /* Modify the height here */
-				move->order = ;
-				move->distance = ;
-				move->height = MOVE_UP_COMMAND_VALUE;
-				move->yaw = ;
+				move->order = 0;
+				move->height = 10;
+				move->distance = 0;
+				move->yaw = 0;
 				break;
 			case DOWN: /* Modify the height here */
-				move->order = ;
-				move->distance = ;
-				move->height = MOVE_DOWN_COMMAND_VALUE;
-				move->yaw = ;
+				move->order = 0;
+				move->height = -10;
+				move->distance = 0;
+				move->yaw = 0;
 				break;
 			case LAND:
-				move->order = LANDING_COMMAND;
+				move->order = 2;
+				move->height = 0;
+				move->distance = 0;
+				move->yaw = 0;
 				break;
 			case TAKE_OFF:
-				move->order = LIFT_OFF_COMMAND;
-				break;
-				
+				move->order = 0;
+				move->height = 50;
+				move->distance = 0;
+				move->yaw = 0;
+				break;		
 		}
 	}
 }
