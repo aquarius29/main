@@ -15,7 +15,9 @@
 #include <libxml/xmlmemory.h>
 #include <libxml/parser.h>
 #include <libxml/xpath.h>
+#include <unistd.h>
 #include "nav_tilemap.h"
+
 
 //! Retrieve the xml node set.
 /*!
@@ -270,6 +272,15 @@ void parseDoc(char *docname, ThreeDWorld *world)
 	return;
 }
 
+static char * getPathToXML(char *str) {
+    char *getcwd(char *buf, size_t size);
+    char cwd[1024];
+    getcwd(cwd, sizeof(cwd));
+    strcpy(str, cwd);
+    strcat(str, "/lib/secondYearSquare.xml");
+    return str;
+}
+
 //! Fill a ThreeDWorld with valued.
 /*!
 * The replacement main for this module.
@@ -277,7 +288,8 @@ void parseDoc(char *docname, ThreeDWorld *world)
 * @param world The ThreeDWorld that is being filled.
 */
 void fill_map(ThreeDWorld *world) {
-	char *doc = "secondYearSquare.xml";
+    char str[1050];
+	char *doc = getPathToXML(str);
 	parseDoc(doc, world);
     xmlCleanupParser();
 }

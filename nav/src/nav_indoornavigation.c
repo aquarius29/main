@@ -223,12 +223,12 @@ void collisionAvoided(double direction) {
     compareTile();
     recalc();
 }
-void getPositionAfterManual(int32_t direction, int32_t distance) {
-    changeX = distance * cos(direction);
-    changeY = distance * sin(direction);
-    current->p.lon = current->prev->p.lon + changeX;
-    current->p.lat = current->prev->p.lat + changeY;
-}
+// void getPositionAfterManual(int32_t direction, int32_t distance) {
+//     changeX = distance * cos(direction);
+//     changeY = distance * sin(direction);
+//     current->p.lon = current->prev->p.lon + changeX;
+//     current->p.lat = current->prev->p.lat + changeY;
+// }
 
 static int32_t check(roomPosition a, roomPosition b){
     double diffX;
@@ -274,7 +274,7 @@ static void navigatePath(void){
         sendCommand();
     }
 }
-/*int main(){
+int main(){
     tile a, b;
     a.x = 1;
     a.y = 1;
@@ -282,4 +282,4 @@ static void navigatePath(void){
     b.y = 5;
     initPath(&a, &b);
     return 0;
-}*/
+}

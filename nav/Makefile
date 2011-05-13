@@ -11,7 +11,7 @@ default:
 	@echo "make unit        run unit tests"
 	@echo "make valg        run unit tests with valgrind"
 
-indoor:
+indoor: 
 	cd bin && $(MAKE) indoor
 
 clean:
