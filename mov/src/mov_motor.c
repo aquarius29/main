@@ -18,17 +18,27 @@
 #endif
 
 #include "mov_interface.h"
-
+#define NO_MESSAGE 0xB
 /* BitMasking example http://www.indiabix.com/technical/c/bits-and-bytes/ */
 #define BIT_POS(N)            ( 1U << (N) )
 #define SET_FLAG(N, F)        ( (N) |= (F) )
 #define CLR_FLAG(N, F)        ( (N) &= -(F) )
 
+/*Motor Messages */
+extern uint8_t msg1;
+extern uint8_t msg2;
+extern uint8_t msg3;
+extern uint8_t msg4;
+extern uint8_t msg5;
+extern uint8_t msg6;
+extern uint8_t msg7;
+extern uint8_t msg8;
+uint8_t message_counter;
 /* 
  * 01 00 00 00
  */
-void start_motors(void)
-{
+void start_motors(void){
+
 	uint8_t msg = to_MotorMessage(0,1,0,0,0,0,0,0);
 
 #ifdef DEBUG
@@ -45,8 +55,7 @@ void start_motors(void)
 /*
  *  00 00 00 00
  */
-void stop_motors(void)
-{
+void stop_motors(void){
 
 	uint8_t msg = to_MotorMessage(0,0,0,0,0,0,0,0);
 
@@ -77,7 +86,6 @@ void increase_rear_motor(void){
 #endif
 	pWrite(msg);
 	write_to_motor(msg);
-
 }
 
 /*
@@ -468,6 +476,42 @@ void land(void){
 
 
 /*
+ * write a message to an array
+ */
+void write_to_motor(uint8_t msg){
+    
+    switch(message_counter){
+    case 1: msg1 = msg; break;
+    case 2: msg2 = msg; break;
+    case 3: msg3 = msg; break;
+    case 4: msg4 = msg; break;
+    case 5: msg5 = msg; break;
+    case 6: msg6 = msg; break;
+    case 7: msg7 = msg; break;
+    case 8: msg8 = msg; break;
+    }
+    message_counter= message_counter + 1;
+}
+
+
+/*
+ *Clear the message array to NO MESSAGE
+ */
+void clear_message_array(){
+
+    message_counter = 1;
+    msg1 = NO_MESSAGE;
+    msg2 = NO_MESSAGE;
+    msg3 = NO_MESSAGE;
+    msg4 = NO_MESSAGE;
+    msg5 = NO_MESSAGE;
+    msg6 = NO_MESSAGE;
+    msg7 = NO_MESSAGE;
+    msg8 = NO_MESSAGE;
+}
+
+
+/*
  *Receives if the message is increasing(boolean), is in panic mode(boolean) 
  *and the uint8_t representing the binary of the 4 affected motors 
  *
@@ -514,14 +558,14 @@ uint8_t to_MotorMessage(uint8_t ID0, uint8_t ID1, uint8_t increasing, uint8_t pa
  */
 void pWrite(uint8_t msg)
 {
-#ifdef DEBUG
-#ifdef PC
-    printf("\nProtocol has this written to it: ");
-#elif defined ARDUINO
-	Serial.println("\nProtocol has this written to it: ");
-#endif
-	print_uint8_t_to_Binary(msg);
-#endif 
+/* #ifdef DEBUG */
+/* #ifdef PC */
+/*     printf("\nProtocol has this written to it: "); */
+/* #elif defined ARDUINO */
+/* 	Serial.println("\nProtocol has this written to it: "); */
+/* #endif */
+/* 	print_uint8_t_to_Binary(msg); */
+/* #endif */
 }
 
 
@@ -538,6 +582,7 @@ void print_uint8_t_to_Binary(uint8_t bin)
 	for(counter = counter - 1; counter >= 0; counter--){
 		temp = 1 << counter;
 		bit = temp & bin;
+
 		if( bit == 0){
 #ifdef PC
 			printf("0");
@@ -545,6 +590,7 @@ void print_uint8_t_to_Binary(uint8_t bin)
 			Serial.print("0");
 #endif
 		}
+
 		else{
 #ifdef PC
 			printf("1");
@@ -553,6 +599,7 @@ void print_uint8_t_to_Binary(uint8_t bin)
 #endif				
 		}
 	}
+
 #ifdef PC
 	printf("\n");
 #elif defined ARDUINO

@@ -33,7 +33,7 @@ uint8_t read_command(void){
     char line[60];
     if (fgets(line, sizeof(line) + 1, file) != NULL) {
 #ifdef DEBUG
-		printf("$$$$$$$$$$$$$$LINE: %s\n", line);
+		printf("$$$$$$$$$$$$$$$$LINE: %s\n", line);
 #endif
 		uint8_t i;
 		for (i = 1; i < 6; i++) {
@@ -117,7 +117,7 @@ int16_t do_sensor_simulation(int16_t currentSensorValue, uint8_t command){
 #ifdef SIMULATOR
     int8_t i = (rand() % (6 - 0 + 1) + 0);  
 
-    int new;
+    int16_t new;
 
     switch (command) {
     case 1:

@@ -95,7 +95,7 @@ export GLOBAL_CC
 PC_FLAGS=-DPC
 
 ##  Debug flags for PC
-DEBUG_FLAGS_PC=-g -DDEBUG -Wall
+DEBUG_FLAGS_PC=-g -DDEBUG
 
 ##  Arduino specific flags
 ARDUINO_FLAGS=-Os -w -fno-exceptions -ffunction-sections -fdata-sections -mmcu=$(MMCU) -DARDUINO=22 -DF_CPU=$(F_CPU)

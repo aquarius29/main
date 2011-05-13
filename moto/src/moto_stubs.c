@@ -27,34 +27,34 @@
 
 /* writeMicroseconds from servo library from arduino standard libraries */
 void writeMicroseconds(unsigned char value){
-    PRINTOUT_2("writeMicroseconds received %d\n", value);
+    /* PRINTOUT_2("writeMicroseconds received %d\n", value); */
 }
 
 /* readMicroseconds from servo library from arduino standard libraries */
 unsigned int readMicroseconds(void){
-    PRINTOUT_1("readMicroseconds was called\n");
+    /* PRINTOUT_1("readMicroseconds was called\n"); */
 }
 
 /* attach from servo library from arduino standard libraries */
 unsigned char attach(unsigned char pin){
-    PRINTOUT_2("attach was called for pin %d\n", pin);
+    /* PRINTOUT_2("attach was called for pin %d\n", pin); */
 }
 
 /* analogWrite from arduino standard libraries, used for ordinary pwm out */
 void analogWrite(int motor, uint16_t pulse){
     
-    if(motor == LEFT_MOTOR){
-        PRINTOUT_2("\nLEFT_MOTOR received %d\n", pulse);
-    }
-    if(motor == RIGHT_MOTOR){
-        PRINTOUT_2("\nRIGHT_MOTOR received %d\n", pulse);
-    }
-    if(motor == FRONT_MOTOR){
-        PRINTOUT_2("\nFRONT_MOTOR received %d\n", pulse);
-    }
-    if(motor == REAR_MOTOR){
-        PRINTOUT_2("\nREAR_MOTOR received %d\n", pulse);
-    }
+    /* if(motor == LEFT_MOTOR){ */
+    /*     PRINTOUT_2("\nLEFT_MOTOR received %d\n", pulse); */
+    /* } */
+    /* if(motor == RIGHT_MOTOR){ */
+    /*     PRINTOUT_2("\nRIGHT_MOTOR received %d\n", pulse); */
+    /* } */
+    /* if(motor == FRONT_MOTOR){ */
+    /*     PRINTOUT_2("\nFRONT_MOTOR received %d\n", pulse); */
+    /* } */
+    /* if(motor == REAR_MOTOR){ */
+    /*     PRINTOUT_2("\nREAR_MOTOR received %d\n", pulse); */
+    /* } */
 }
 
 

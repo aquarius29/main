@@ -18,6 +18,7 @@
 
 /* int main(int argc, char *argv[]) */
 /* { */
+/* 	init(); */
 /* 	Serial.init(9600); */
 /* 	while(1){ */
 /* 		sonar_distance(5); */
@@ -38,7 +39,7 @@ uint16_t sonar_distance(uint8_t sonarPin)
 	 * 2.54 and we get distance in cm
 	 */
 	cm = duration/57.874;
-	Serial.println(cm);
+	//	Serial.println(cm);
 	return cm;
 }
 

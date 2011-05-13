@@ -25,7 +25,6 @@
 #include <stdint.h>
 
 #define SONAR_PIN 5
-#define NO_MESSAGE 0xB
 
 /* global variables*/
 #ifdef SIMULATOR
@@ -58,7 +57,6 @@ uint8_t msg5;
 uint8_t msg6;
 uint8_t msg7;
 uint8_t msg8;
-uint8_t message_counter;
 
 int8_t caDir=5;
 
@@ -123,7 +121,8 @@ int16_t mov_run()
 	oldSensorCommand = sensorCommand;	
 	/*reset the start time*/
 	start_time = millis();
-  
+
+	write_array();
 	return 0;
 }
 #endif
@@ -217,46 +216,24 @@ void write_to_nav_ca(int8_t direction) {
 
 
 /*
- * write a message to an array
- */
-void write_to_motor(uint8_t msg){
-    
-    switch(message_counter){
-    case 1: msg1 = msg; break;
-    case 2: msg2 = msg; break;
-    case 3: msg3 = msg; break;
-    case 4: msg4 = msg; break;
-    case 5: msg5 = msg; break;
-    case 6: msg6 = msg; break;
-    case 7: msg7 = msg; break;
-    case 8: msg8 = msg; break;
-    }
-    message_counter= message_counter + 1;
-}
-
-
-/*
- *Clear the message array to NO MESSAGE
- */
-void clear_message_array(){
-
-    message_counter = 1;
-    msg1 = NO_MESSAGE;
-    msg2 = NO_MESSAGE;
-    msg3 = NO_MESSAGE;
-    msg4 = NO_MESSAGE;
-    msg5 = NO_MESSAGE;
-    msg6 = NO_MESSAGE;
-    msg7 = NO_MESSAGE;
-    msg8 = NO_MESSAGE;
-}
-
-/*
  *Write a set of messages stored ina  struct to motor
+ *send the structure to motor
  */
 void write_array(){
 #ifndef TEST
     proto_write_motor2(msg1,msg2,msg3,msg4,msg5,msg6,msg7,msg8);
+#ifdef DEBUG
+	printf("@@@@@@@@@@@@@@SEND MESSAGE@@@@@@@@@@@@@@@\n");
+	print_uint8_t_to_Binary(msg1);
+	print_uint8_t_to_Binary(msg2);
+	print_uint8_t_to_Binary(msg3);
+	print_uint8_t_to_Binary(msg4);
+	print_uint8_t_to_Binary(msg5);
+	print_uint8_t_to_Binary(msg6);
+	print_uint8_t_to_Binary(msg7);
+	print_uint8_t_to_Binary(msg8);
+	printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
+#endif
 #endif
 }
 
@@ -297,6 +274,11 @@ void read_navCommand(void) {
 		p -> distance = 0;
 		p -> yaw = 0;
 	}
+#ifdef DEBUG
+	printf("@@@@@@TO DO :{type: %d order: %d, height: %d distance: %d yaw: %d}@@@@@@\n", 
+		   navCommand.type, navCommand.order,navCommand.height,
+		   navCommand.distance, navCommand.yaw);
+#endif
 #endif
 }
 
@@ -327,10 +309,10 @@ void read_sensorCommand(void){
     pSensorC -> height = (uint16_t) sonar_distance(SONAR_PIN);
 #ifdef DEBUG
 #ifdef PC
-	printf("@@@@@@@PITCH@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.pitch);
-	printf("@@@@@@@ROLL@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.roll);
-	printf("@@@@@@YAW@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.yaw);
-	printf("@@@@@@HEIGHT@@@@@@@\n @@@@@@@@@@@@@ %d  @@@@@@@@@@@@\n @@@@@@@@@@@@@",sensorCommand.height);
+	printf("@@@@@@@ PITCH  @@@@@@@@@@@@@@@@@ %d  @@@@@@@@@@@@@@@@@@@@\n",sensorCommand.pitch);
+	printf("@@@@@@@ ROLL   @@@@@@@@@@@@@@@@@ %d  @@@@@@@@@@@@@@@@@@@@\n",sensorCommand.roll);
+	printf("@@@@@@@ YAW    @@@@@@@@@@@@@@@@@ %d  @@@@@@@@@@@@@@@@@@@@\n",sensorCommand.yaw);
+	printf("@@@@@@@ HEIGHT @@@@@@@@@@@@@@@@@ %d  @@@@@@@@@@@@@@@@@@@@\n",sensorCommand.height);
 #elif defined ARDUINO
 	Serial.println("@@@@@@@@@@SENSOECOMMAND  PITCH@@@@@@@@@");
 	Serial.print(sensorCommand.pitch);
@@ -344,9 +326,5 @@ void read_sensorCommand(void){
 #endif
 #endif
 }
-
-
-
-
 
 

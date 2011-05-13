@@ -101,39 +101,39 @@ int moto_run(void){
     /* will always receive 8 messages in the loop from struct */
     uint8_t i;
     for(i = 0; i < 8; i++){
-#ifdef ARDUINO_DBG
-      Serial.print("msg is: ");
-      Serial.println(BITFIELD_TO_CHAR(mp), HEX);
-#elif defined PC
-      printf("msg is: %x\n", BITFIELD_TO_CHAR(mp));
-#endif
+/* #ifdef ARDUINO_DBG */
+/*       Serial.print("msg is: "); */
+/*       Serial.println(BITFIELD_TO_CHAR(mp), HEX); */
+/* #elif defined PC */
+/*       printf("msg is: %x\n", BITFIELD_TO_CHAR(mp)); */
+/* #endif */
         if(BITFIELD_TO_CHAR(mp) == 0xf1)
         {
-#ifdef ARDUINO_DBG
-      Serial.println("No new message in protocol");
-#elif defined PC
-      printf("No new message in protocol\n");
-#endif
+/* #ifdef ARDUINO_DBG */
+/*       Serial.println("No new message in protocol"); */
+/* #elif defined PC */
+/*       printf("No new message in protocol\n"); */
+/* #endif */
       return 0;
     }
 
     if(BITFIELD_TO_CHAR(mp) == 0xf)
     {
-#ifdef ARDUINO_DBG
-      Serial.println("No new message in scanhexmsg");
-#elif defined PC
-      printf("No new message in scanhexmsg\n");
-#endif
+/* #ifdef ARDUINO_DBG */
+/*       Serial.println("No new message in scanhexmsg"); */
+/* #elif defined PC */
+/*       printf("No new message in scanhexmsg\n"); */
+/* #endif */
       return 0;
     }
 
     if(BITFIELD_TO_CHAR(mp) == 0xB)
     {
-#ifdef ARDUINO_DBG
-      Serial.println("Struct does not contain more messages!");
-#elif defined PC
-      printf("Struct does not contain more messages!\n");
-#endif
+/* #ifdef ARDUINO_DBG */
+/*       Serial.println("Struct does not contain more messages!"); */
+/* #elif defined PC */
+/*       printf("Struct does not contain more messages!\n"); */
+/* #endif */
       return 0;
     }
 

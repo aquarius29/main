@@ -31,48 +31,48 @@
 #include "moto_printer_functions.h"
 
 void printMsg(msg_pointer mp){
-    PRINT_STRING("***********************************");
-    PRINT_NEW_LINE;
-    PRINT_NEW_LINE;
-    PRINT_STRING("         Message Information");
-    PRINT_NEW_LINE;
-    PRINT_NEW_LINE;
-    PRINT_STRING("Bits are:");
-    PRINT_NEW_LINE;
-    PRINT_STRING("ID: ");
-    PRINT_DEC(mp->ID);
-    PRINT_NEW_LINE;
-    PRINT_STRING("Increase: ");
-    PRINT_DEC(mp->increase);
-    PRINT_NEW_LINE;
-    PRINT_STRING("Panic: ");
-    PRINT_DEC(mp->panic);
-    PRINT_NEW_LINE;
+    /* PRINT_STRING("***********************************"); */
+    /* PRINT_NEW_LINE; */
+    /* PRINT_NEW_LINE; */
+    /* PRINT_STRING("         Message Information"); */
+    /* PRINT_NEW_LINE; */
+    /* PRINT_NEW_LINE; */
+    /* PRINT_STRING("Bits are:"); */
+    /* PRINT_NEW_LINE; */
+    /* PRINT_STRING("ID: "); */
+    /* PRINT_DEC(mp->ID); */
+    /* PRINT_NEW_LINE; */
+    /* PRINT_STRING("Increase: "); */
+    /* PRINT_DEC(mp->increase); */
+    /* PRINT_NEW_LINE; */
+    /* PRINT_STRING("Panic: "); */
+    /* PRINT_DEC(mp->panic); */
+    /* PRINT_NEW_LINE; */
     
-    PRINT_STRING("Right: ");
-    PRINT_DEC(mp->right);
-    PRINT_NEW_LINE;
-    PRINT_STRING("Left: ");
-    PRINT_DEC(mp->left);
-    PRINT_NEW_LINE;
-    PRINT_STRING("Front: ");
-    PRINT_DEC(mp->front);
-    PRINT_NEW_LINE;
-    PRINT_STRING("Rear: ");
-    PRINT_DEC(mp->rear);
+    /* PRINT_STRING("Right: "); */
+    /* PRINT_DEC(mp->right); */
+    /* PRINT_NEW_LINE; */
+    /* PRINT_STRING("Left: "); */
+    /* PRINT_DEC(mp->left); */
+    /* PRINT_NEW_LINE; */
+    /* PRINT_STRING("Front: "); */
+    /* PRINT_DEC(mp->front); */
+    /* PRINT_NEW_LINE; */
+    /* PRINT_STRING("Rear: "); */
+    /* PRINT_DEC(mp->rear); */
     
-    PRINT_NEW_LINE;
-    PRINT_STRING("Size of bitfield: ");
-    PRINT_DEC(sizeof(*mp));
-    PRINT_NEW_LINE;
-    PRINT_STRING("Hexadecimal representation: ");
-    PRINT_HEX(BITFIELD_TO_CHAR(mp));
-    PRINT_NEW_LINE;
-    PRINT_STRING("Decimal representation: ");
-    PRINT_DEC(BITFIELD_TO_CHAR(mp));
-    PRINT_NEW_LINE;
+    /* PRINT_NEW_LINE; */
+    /* PRINT_STRING("Size of bitfield: "); */
+    /* PRINT_DEC(sizeof(*mp)); */
+    /* PRINT_NEW_LINE; */
+    /* PRINT_STRING("Hexadecimal representation: "); */
+    /* PRINT_HEX(BITFIELD_TO_CHAR(mp)); */
+    /* PRINT_NEW_LINE; */
+    /* PRINT_STRING("Decimal representation: "); */
+    /* PRINT_DEC(BITFIELD_TO_CHAR(mp)); */
+    /* PRINT_NEW_LINE; */
     
-    PRINT_STRING("***********************************");
-    PRINT_NEW_LINE;
+    /* PRINT_STRING("***********************************"); */
+    /* PRINT_NEW_LINE; */
 
 }
