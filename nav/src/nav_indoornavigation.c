@@ -68,19 +68,27 @@ static void setDistance(void) {
     current->prev->p.lat)));
 }
 static void updatePosition(void) {
-    struct timeval current_time;
     double changeX = 0;
     double changeY = 0;
-    double time = 0;
-    double microseconds = 0;
-    gettimeofday(&current_time, NULL);
-    microseconds = (current_time.tv_usec - timer.tv_usec);
-    if (microseconds != 0) {
-        microseconds = microseconds/1000000;
+    if (running == 0) {
+        changeY = AVOID_DISTANCE * sin(current->next->p.angle);
+        changeX = AVOID_DISTANCE * cos(current->next->p.angle);
     }
-    time = (current_time.tv_sec - timer.tv_sec) + microseconds;
-    changeY = (time * CENTIMETRES_PER_SECOND) * sin(current->next->p.angle);
-    changeX = (time * CENTIMETRES_PER_SECOND) * cos(current->next->p.angle);
+    else {
+        struct timeval current_time;
+        double time = 0;
+        double microseconds = 0;
+        gettimeofday(&current_time, NULL);
+        microseconds = (current_time.tv_usec - timer.tv_usec);
+        if (microseconds != 0) {
+            microseconds = microseconds/1000000;
+        }
+        time = (current_time.tv_sec - timer.tv_sec) + microseconds;
+        changeY = (time * CENTIMETRES_PER_SECOND) *
+        sin(current->next->p.angle);
+        changeX = (time * CENTIMETRES_PER_SECOND) *
+        cos(current->next->p.angle);
+    }
     current->p.lon = current->prev->p.lon + changeX;
     current->p.lat = current->prev->p.lat + changeY;
 }
@@ -92,7 +100,7 @@ static int8_t commandHandled (void) {
 static void sendCommand(void) {
     setDirection();
     setDistance();
-    int32_t angle = (current->next->p.angle / (M_PI/180)) + TRUE_NORTH;
+    int32_t angle = (current->next->p.angle / (M_PI / 180)) + TRUE_NORTH;
     if (angle > 359) {
         angle -= 360;
     }
@@ -209,17 +217,12 @@ static void recalc(void) {
     sendExpectedPath(&route);
     sendCommand();
 }
-void collisionAvoided(double direction) {
-    double changeX = 0;
-    double changeY = 0;
+void collisionAvoided(int32_t direction) {
     running = 0;
     free(route.list);
     compareTile();
-    current->next->p.angle = direction;
-    changeY = AVOID_DISTANCE * sin(current->next->p.angle);
-    changeX = AVOID_DISTANCE * cos(current->next->p.angle);
-    current->p.lon = current->prev->p.lon + changeX;
-    current->p.lat = current->prev->p.lat + changeY;
+    current->next->p.angle = (direction - TRUE_NORTH) * (M_PI / 180);
+    updatePosition();
     compareTile();
     recalc();
 }
