@@ -402,7 +402,7 @@ void *readProtocol(void *ptr)
 		/* if (Read from protocol to get the confirmation of a movement command received == 1) 
 		{
 			int id = readManualMovementCommand from connectivity;
-			sendManualMovementCommand(id); /* Call the function from movement module*/
+			sendManualMovementCommand(id); // Call the function from movement module
 			
 			set_MovementCommand_True();
 		}
