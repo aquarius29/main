@@ -15,8 +15,8 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#include "proto_serialDefine.h"
-#include "proto_serialize.h"
+#include "proto_serial_define.h"
+#include "proto_msg_structs.h"
 
 static uint8_t lowByte(uint16_t);
 static uint8_t highByte(uint16_t);

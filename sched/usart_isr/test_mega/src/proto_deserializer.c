@@ -12,7 +12,7 @@
  *  @details
  */
 
-#include "proto_serialDefine.h"
+#include "proto_serial_define.h"
 #include "proto_deserializer.h"
 #include "proto_msg_structs.h"
 

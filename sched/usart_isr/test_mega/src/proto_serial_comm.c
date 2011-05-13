@@ -17,13 +17,18 @@
  *  @details
  */
 
+#ifdef ARDUINO
+
 #include "WProgram.h"
+
+#endif /* ARDUINO */
  
 #include <stdio.h> 
 
 #include "proto_serial_comm.h"
 #include "proto_serializer.h"
 #include "proto_stub.h"
+#include "proto_serial_define.h"
 
 #define TRUE 1
 #define FALSE 0
@@ -108,6 +113,11 @@ uint8_t proto_serialSendMovConfirmMsg(uint8_t msg){
 }
 
 static uint8_t proto_serialSendToPanda(uint8_t *data){
+    // if (data[0] == 4) {
+    //     digitalWrite(12, HIGH);
+    // }
+    
+    /* call the usart_isr_mega code here to send data over Tx */
     
     
     return 1;
