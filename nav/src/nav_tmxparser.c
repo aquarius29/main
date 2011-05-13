@@ -272,13 +272,13 @@ void parseDoc(char *docname, ThreeDWorld *world)
 	return;
 }
 
-static char * getPathToXML(char *str) {
+static char * getPathToXML(char *path) {
     char *getcwd(char *buf, size_t size);
     char cwd[1024];
     getcwd(cwd, sizeof(cwd));
-    strcpy(str, cwd);
-    strcat(str, "/lib/secondYearSquare.xml");
-    return str;
+    strcpy(path, cwd);
+    strcat(path, "/lib/secondYearSquare.xml");
+    return path;
 }
 
 //! Fill a ThreeDWorld with valued.
@@ -288,8 +288,8 @@ static char * getPathToXML(char *str) {
 * @param world The ThreeDWorld that is being filled.
 */
 void fill_map(ThreeDWorld *world) {
-    char str[1050];
-	char *doc = getPathToXML(str);
+    char path[1050];
+	char *doc = getPathToXML(path);
 	parseDoc(doc, world);
     xmlCleanupParser();
 }
