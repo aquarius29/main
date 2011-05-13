@@ -49,6 +49,6 @@ positionList indoorDijkstra(const tile *start, const tile *end);
 positionList indoorAstar(const tile *start, const tile *end);
 void initPath(tile *start, tile *end);
 void stopIndoorNavigation(void);
-void collisionAvoided(double direction);
+void collisionAvoided(int32_t direction);
 
 #endif /* NAV_INDOORSTRUCTURE_H */
