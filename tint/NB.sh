@@ -4,10 +4,14 @@
 ## -------------------------------------------------------------------------------
 ## Authors: Eugene Groshev, Nikita Englund
 ## Change history:
-##     2011-04-10, Eugene:
+##     2011-05-12, Eugene:
+##         - fixed REPOS array initialization and traversing problems (works!)
+##         - added 3rd runtime parameter, allowing to skip pulling code from GitHub
+##     2011-05-11, Eugene:
+##         - added 2nd runtime parameter (Movement implementation)
+##     2011-05-10, Eugene:
+##         - added handling of README.txt files (before only README were recognized)
 ##         - added sections to clean_up() and copy_code() for handling the Panda scheduler (sched/psched)
-##     2011-05-10, Nikita:
-##         - Commented code
 ##     2011-05-04, Eugene:
 ##         - added create_branch() function for creating new test branch in 'main'
 ##         - finalized copy_code() function
@@ -41,11 +45,18 @@
 ## -------------------------------------------------------------------------------
 
 # If no mode is specified, script exits with an error message
-if [ $# -lt 1 ]
+if [ $# -lt 2 ]
 then
-    echo "Please specify script mode:"
-    echo "    NB.sh server - runs script in server mode"
-    echo "    NB.sh izimbra - runs script in Eugene's local mode" 
+    echo "Please specify parameters: NB.sh MODE MOV [PULL]"
+    echo "    MODE - chooses the script running mode:"
+    echo "        server - runs script in server mode"
+    echo "        izimbra - runs script in Eugene's local mode" 
+    echo "    MOV - chooses implementation of the Movement task:"
+    echo "        mv - Jin & Amber"
+    echo "        mov_dev - Sepideh & Maryam"
+    echo "        aydan_mov - Aydan (CA code is not used!)"
+    echo "    PULL - tells the script if the code has to be pulled"
+    echo "        nopull - skips pulling code from GitHub"
     exit -1
 fi
 
@@ -63,6 +74,9 @@ then
     LOG_DIR=$SEMB/log
 fi
 
+# 2nd srcipt parameter specifies which branch of 'mov' repo to use
+MOV_BRANCH=$2
+
 # Optional Nikita mode here
 
 # Setting log file of they day 
@@ -71,7 +85,7 @@ LOG_FILE=${LOG_DIR}/${DATE}.log
 rm -f "${LOG_FILE}" #quotes because of the whitespaces in file path 
 
 # Specifying list of groups to be processed by the script
-typeset -ra GROUPS=(sched ca moto proto stab) #conn nav cam ui - exclude UI and Panda groups for now 
+declare -a REPOS=( sched ca moto proto stab ) #conn nav cam ui - exclude UI and Panda groups for now 
 
 
 ## -------------------------------------------------------------------------------
@@ -92,31 +106,26 @@ echolog()
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"  >> "${LOG_FILE}" #quotes because of the whitespaces in file path 
 }
 
+#check_return_value()
+#{
+#    RET_VAL=$1
+#    COMMENT=$2
+#    #cd emb-2011
+#   if [ $RET_VAL -ne 0 ]
+#   then
+#   	echo "FAIL:  $COMMENT"
+#  	exit $RET_VAL
+#   fi
+#}
 
-#
-#Author: Nikita Englund
-check_return_value()
-{
-    RET_VAL=$1
-    COMMENT=$2
-    #cd emb-2011
-   if [ $RET_VAL -ne 0 ]
-   then
-   	echo "FAIL:  $COMMENT"
-  	exit $RET_VAL
-   fi
-}
 
 
 
 ## Initial version of the source code pull function
 ## -----------------------------------------------------------------
-#
-#Author: Nikita Englund
 get_src()
 {
  
- #Checks if the working directory is right
  #----Working dir------
 cd ..
 cd ..
@@ -126,7 +135,6 @@ echo "The present working directory is `pwd`"
 log "-----------------------"
 
 
-#Changes directory and pulls, then leaves that directory
 
 # ----Pull Moto-----  
   log "Pulling moto ..."
@@ -289,12 +297,18 @@ PROJECT_CHANGED=0 # variable to store the change state of the project
 
 # loop through local repos and pull from remotes
 #for REPO in ca cam conn moto nav proto sched stab ui
-for REPO in $GROUPS
+for REPO in ${REPOS[@]}
 do
     log "----------------------------------------------------------"
 	log "Pulling $REPO"
-    cd $REPO
-    STATUS=`git pull origin master`
+    if [ $REPO = ca ]
+    then
+        cd $MOV_BRANCH
+        STATUS=`git pull origin $MOV_BRANCH`
+    else    
+    	cd $REPO
+        STATUS=`git pull origin master`
+    fi
     log $STATUS 
     if [ "$STATUS" != "Already up-to-date." ]
     then
@@ -315,7 +329,7 @@ done
 clean_up()
 {
 cd main # cd to main project directory 
-for REPO in $GROUPS
+for REPO in ${REPOS[@]}
 do
 #    if [ $REPO = "ca" ]
 #    then
@@ -329,6 +343,7 @@ do
             rm -rf test/*
             rm -rf Makefile
             rm -rf README  
+            rm -rf README.txt
             cd .. # cd back to main   
             # clean up Movement code 
             cd mov
@@ -338,6 +353,7 @@ do
             rm -rf test/*
             rm -rf Makefile
             rm -rf README  
+            rm -rf README.txt
             cd .. # cd back to main
             ;;
             
@@ -350,6 +366,7 @@ do
             rm -rf test/*
             rm -rf Makefile
             rm -rf README  
+            rm -rf README.txt
             cd .. # cd back to main   
             # clean up Panda code
             cd proto_panda
@@ -359,6 +376,7 @@ do
             rm -rf test/*
             rm -rf Makefile
             rm -rf README  
+            rm -rf README.txt
             cd .. # cd back to main            
             ;;
         sched)  # 'sched' repo have code for both Arduino and Panda
@@ -370,6 +388,7 @@ do
             rm -rf test/*
             rm -rf Makefile
             rm -rf README  
+            rm -rf README.txt  
             cd .. # cd back to main   
             # clean up Panda code
             cd psched
@@ -379,6 +398,7 @@ do
             rm -rf test/*
             rm -rf Makefile
             rm -rf README  
+            rm -rf README.txt  
             cd .. # cd back to main            
             ;;
             
@@ -391,6 +411,7 @@ do
             rm -rf test/*
             rm -rf Makefile
             rm -rf README
+            rm -rf README.txt  
             cd .. # cd back to main
             ;;
     esac
@@ -405,7 +426,7 @@ cd .. # cd back to ${BUILD_DIR}
 ## -----------------------------------------------------------------
 copy_code()
 {     
-for REPO in $GROUPS
+for REPO in ${REPOS[@]}
 do
 #    if [ $REPO = "ca" ]
 #    then
@@ -413,45 +434,56 @@ do
         ca)  # 'ca' have both CA and Movement code
             # copy CA code
             # /src
-            cp -p ${REPO}/ca/src/*.c main/ca/src
-            cp -p ${REPO}/ca/src/*.h main/ca/src
-            cp -p ${REPO}/ca/src/Makefile main/ca/src
-            cp -p ${REPO}/ca/src/README main/ca/src
+            cp -p ${MOV_BRANCH}/ca/src/*.c main/ca/src
+            cp -p ${MOV_BRANCH}/ca/src/*.h main/ca/src
+            cp -p ${MOV_BRANCH}/ca/src/Makefile main/ca/src
+            cp -p ${MOV_BRANCH}/ca/src/README main/ca/src
+            cp -p ${MOV_BRANCH}/ca/src/README.txt main/ca/src
+
             # /lib
-            cp -p ${REPO}/ca/lib/*.a main/ca/lib
-            cp -p ${REPO}/ca/lib/README main/ca/lib
+            cp -p ${MOV_BRANCH}/ca/lib/*.a main/ca/lib
+            cp -p ${MOV_BRANCH}/ca/lib/README main/ca/lib
+            cp -p ${MOV_BRANCH}/ca/lib/README.txt main/ca/lib
             # /include
-            cp -p ${REPO}/ca/include/*.h main/ca/include
-            cp -p ${REPO}/ca/include/README main/ca/include
+            cp -p ${MOV_BRANCH}/ca/include/*.h main/ca/include
+            cp -p ${MOV_BRANCH}/ca/include/README main/ca/include
+            cp -p ${MOV_BRANCH}/ca/include/README.txt main/ca/include
             # /test
-            cp -p ${REPO}/ca/test/*.c main/ca/test
-            cp -p ${REPO}/ca/test/*.h main/ca/test
-            cp -p ${REPO}/ca/test/Makefile main/ca/test
-            cp -p ${REPO}/ca/test/README main/ca/test
+            cp -p ${MOV_BRANCH}/ca/test/*.c main/ca/test
+            cp -p ${MOV_BRANCH}/ca/test/*.h main/ca/test
+            cp -p ${MOV_BRANCH}/ca/test/Makefile main/ca/test
+            cp -p ${MOV_BRANCH}/ca/test/README main/ca/test
+            cp -p ${MOV_BRANCH}/ca/test/README.txt main/ca/test
             # Makefile and README
-            cp -p ${REPO}/ca/Makefile main/ca
-            cp -p ${REPO}/ca/README main/ca
+            cp -p ${MOV_BRANCH}/ca/Makefile main/ca
+            cp -p ${MOV_BRANCH}/ca/README main/ca
+            cp -p ${MOV_BRANCH}/ca/README.txt main/ca
             
             # copy Movement code 
             # /src
-            cp -p ${REPO}/mov/src/*.c main/mov/src
-            cp -p ${REPO}/mov/src/*.h main/mov/src
-            cp -p ${REPO}/mov/src/Makefile main/mov/src
-            cp -p ${REPO}/mov/src/README main/mov/src
+            cp -p ${MOV_BRANCH}/mov/src/*.c main/mov/src
+            cp -p ${MOV_BRANCH}/mov/src/*.h main/mov/src
+            cp -p ${MOV_BRANCH}/mov/src/Makefile main/mov/src
+            cp -p ${MOV_BRANCH}/mov/src/README main/mov/src
+            cp -p ${MOV_BRANCH}/mov/src/README.txt main/mov/src
             # /lib
-            cp -p ${REPO}/mov/lib/*.a main/mov/lib
-            cp -p ${REPO}/mov/lib/README main/mov/lib
+            cp -p ${MOV_BRANCH}/mov/lib/*.a main/mov/lib
+            cp -p ${MOV_BRANCH}/mov/lib/README main/mov/lib
+            cp -p ${MOV_BRANCH}/mov/lib/README.txt main/mov/lib
             # /include
-            cp -p ${REPO}/mov/include/*.h main/mov/include
-            cp -p ${REPO}/mov/include/README main/mov/include
+            cp -p ${MOV_BRANCH}/mov/include/*.h main/mov/include
+            cp -p ${MOV_BRANCH}/mov/include/README main/mov/include
+            cp -p ${MOV_BRANCH}/mov/include/README.txt main/mov/include
             # /test
-            cp -p ${REPO}/mov/test/*.c main/mov/test
-            cp -p ${REPO}/mov/test/*.h main/mov/test
-            cp -p ${REPO}/mov/test/Makefile main/mov/test
-            cp -p ${REPO}/mov/test/README main/mov/test
+            cp -p ${MOV_BRANCH}/mov/test/*.c main/mov/test
+            cp -p ${MOV_BRANCH}/mov/test/*.h main/mov/test
+            cp -p ${MOV_BRANCH}/mov/test/Makefile main/mov/test
+            cp -p ${MOV_BRANCH}/mov/test/README main/mov/test
+            cp -p ${MOV_BRANCH}/mov/test/README.txt main/mov/test
             # Makefile and README
-            cp -p ${REPO}/mov/Makefile main/mov
-            cp -p ${REPO}/mov/README main/mov
+            cp -p ${MOV_BRANCH}/mov/Makefile main/mov
+            cp -p ${MOV_BRANCH}/mov/README main/mov
+            cp -p ${MOV_BRANCH}/mov/README.txt main/mov
             ;;
             
         proto)  # 'proto' repo have code for both Arduino and Panda
@@ -461,20 +493,25 @@ do
             cp -p ${REPO}/proto_mega/src/*.h main/proto_mega/src
             cp -p ${REPO}/proto_mega/src/Makefile main/proto_mega/src
             cp -p ${REPO}/proto_mega/src/README main/proto_mega/src
+            cp -p ${REPO}/proto_mega/src/README.txt main/proto_mega/src
             # /lib
             cp -p ${REPO}/proto_mega/lib/*.a main/proto_mega/lib
             cp -p ${REPO}/proto_mega/lib/README main/proto_mega/lib
+            cp -p ${REPO}/proto_mega/lib/README.txt main/proto_mega/lib
             # /include
             cp -p ${REPO}/proto_mega/include/*.h main/proto_mega/include
             cp -p ${REPO}/proto_mega/include/README main/proto_mega/include
+            cp -p ${REPO}/proto_mega/include/README.txt main/proto_mega/include
             # /test
             cp -p ${REPO}/proto_mega/test/*.c main/proto_mega/test
             cp -p ${REPO}/proto_mega/test/*.h main/proto_mega/test
             cp -p ${REPO}/proto_mega/test/Makefile main/proto_mega/test
             cp -p ${REPO}/proto_mega/test/README main/proto_mega/test
+            cp -p ${REPO}/proto_mega/test/README.txt main/proto_mega/test
             # Makefile and README
             cp -p ${REPO}/proto_mega/Makefile main/proto_mega
             cp -p ${REPO}/proto_mega/README main/proto_mega
+            cp -p ${REPO}/proto_mega/README.txt main/proto_mega
              
             # copy Panda code:
             # /src
@@ -482,20 +519,25 @@ do
             cp -p ${REPO}/proto_panda/src/*.h main/proto_panda/src
             cp -p ${REPO}/proto_panda/src/Makefile main/proto_panda/src
             cp -p ${REPO}/proto_panda/src/README main/proto_panda/src
+            cp -p ${REPO}/proto_panda/src/README.txt main/proto_panda/src
             # /lib
             cp -p ${REPO}/proto_panda/lib/*.a main/proto_panda/lib
             cp -p ${REPO}/proto_panda/lib/README main/proto_panda/lib
+            cp -p ${REPO}/proto_panda/lib/README.txt main/proto_panda/lib
             # /include
             cp -p ${REPO}/proto_panda/include/*.h main/proto_panda/include
             cp -p ${REPO}/proto_panda/include/README main/proto_panda/include
+            cp -p ${REPO}/proto_panda/include/README.txt main/proto_panda/include
             # /test
             cp -p ${REPO}/proto_panda/test/*.c main/proto_panda/test
             cp -p ${REPO}/proto_panda/test/*.h main/proto_panda/test
             cp -p ${REPO}/proto_panda/test/Makefile main/proto_panda/test
             cp -p ${REPO}/proto_panda/test/README main/proto_panda/test
+            cp -p ${REPO}/proto_panda/test/README.txt main/proto_panda/test
             # Makefile and README
             cp -p ${REPO}/proto_panda/Makefile main/proto_panda
             cp -p ${REPO}/proto_panda/README main/proto_panda
+            cp -p ${REPO}/proto_panda/README.txt main/proto_panda
             ;;
         
         sched)  # 'sched' repo have code for both Arduino and Panda
@@ -505,20 +547,25 @@ do
             cp -p ${REPO}/sched/src/*.h main/sched/src
             cp -p ${REPO}/sched/src/Makefile main/sched/src
             cp -p ${REPO}/sched/src/README main/sched/src
+            cp -p ${REPO}/sched/src/README.txt main/sched/src
             # /lib
             cp -p ${REPO}/sched/lib/*.a main/sched/lib
             cp -p ${REPO}/sched/lib/README main/sched/lib
+            cp -p ${REPO}/sched/lib/README.txt main/sched/lib
             # /include
             cp -p ${REPO}/sched/include/*.h main/sched/include
             cp -p ${REPO}/sched/include/README main/sched/include
+            cp -p ${REPO}/sched/include/README.txt main/sched/include
             # /test
             cp -p ${REPO}/sched/test/*.c main/sched/test
             cp -p ${REPO}/sched/test/*.h main/sched/test
             cp -p ${REPO}/sched/test/Makefile main/sched/test
             cp -p ${REPO}/sched/test/README main/sched/test
+            cp -p ${REPO}/sched/test/README.txt main/sched/test
             # Makefile and README
             cp -p ${REPO}/sched/Makefile main/sched
             cp -p ${REPO}/sched/README main/sched
+            cp -p ${REPO}/sched/README.txt main/sched
              
             # copy Panda code:
             # /src
@@ -526,20 +573,25 @@ do
             cp -p ${REPO}/psched/src/*.h main/psched/src
             cp -p ${REPO}/psched/src/Makefile main/psched/src
             cp -p ${REPO}/psched/src/README main/psched/src
+            cp -p ${REPO}/psched/src/README.txt main/psched/src
             # /lib
             cp -p ${REPO}/psched/lib/*.a main/psched/lib
             cp -p ${REPO}/psched/lib/README main/psched/lib
+            cp -p ${REPO}/psched/lib/README.txt main/psched/lib
             # /include
             cp -p ${REPO}/psched/include/*.h main/psched/include
             cp -p ${REPO}/psched/include/README main/psched/include
+            cp -p ${REPO}/psched/include/README.txt main/psched/include
             # /test
             cp -p ${REPO}/psched/test/*.c main/psched/test
             cp -p ${REPO}/psched/test/*.h main/psched/test
             cp -p ${REPO}/psched/test/Makefile main/psched/test
             cp -p ${REPO}/psched/test/README main/psched/test
+            cp -p ${REPO}/psched/test/README.txt main/psched/test
             # Makefile and README
             cp -p ${REPO}/psched/Makefile main/psched
             cp -p ${REPO}/psched/README main/psched
+            cp -p ${REPO}/psched/README.txt main/psched
             ;;
                 
         *)  # all other repos have only one folder of original code 
@@ -548,20 +600,25 @@ do
             cp -p ${REPO}/${REPO}/src/*.h main/${REPO}/src
             cp -p ${REPO}/${REPO}/src/Makefile main/${REPO}/src
             cp -p ${REPO}/${REPO}/src/README main/${REPO}/src
+            cp -p ${REPO}/${REPO}/src/README.txt main/${REPO}/src
             # /lib
             cp -p ${REPO}/${REPO}/lib/*.a main/${REPO}/lib
             cp -p ${REPO}/${REPO}/lib/README main/${REPO}/lib
+            cp -p ${REPO}/${REPO}/lib/README.txt main/${REPO}/lib
             # /include
             cp -p ${REPO}/${REPO}/include/*.h main/${REPO}/include
             cp -p ${REPO}/${REPO}/include/README main/${REPO}/include
+            cp -p ${REPO}/${REPO}/include/README.txt main/${REPO}/include
             # /test
             cp -p ${REPO}/${REPO}/test/*.c main/${REPO}/test
             cp -p ${REPO}/${REPO}/test/*.h main/${REPO}/test
             cp -p ${REPO}/${REPO}/test/Makefile main/${REPO}/test
             cp -p ${REPO}/${REPO}/test/README main/${REPO}/test
+            cp -p ${REPO}/${REPO}/test/README.txt main/${REPO}/test
             # Makefile and README
             cp -p ${REPO}/${REPO}/Makefile main/${REPO}
             cp -p ${REPO}/${REPO}/README main/${REPO}
+            cp -p ${REPO}/${REPO}/README.txt main/${REPO}
             ;;
     esac
 
@@ -578,7 +635,7 @@ done
 create_branch()
 {
 cd main
-BRANCH=test-$(date '+%Y%m%d-%H%M')
+BRANCH=test-$(date '+%Y%m%d-%H%M')-$MOV_BRANCH
 echolog  $BRANCH 
 git checkout -b $BRANCH 
 cd ..  # cd back to ${BUILD_DIR}
@@ -590,11 +647,13 @@ cd ..  # cd back to ${BUILD_DIR}
 ## -------------------------------------------------------------------------------
 
 # Echo & log script initialization data
-echolog " Starting TINT script in _$1_ mode"
+echolog " Running TINT script in _$1_ mode"
+echolog " Movement implementation is taken from ca/${MOV_BRANCH} branch" 
 echolog " Build directory is: $BUILD_DIR"
 echolog " Log directory is: $LOG_DIR"
 echolog " Log file is: $LOG_FILE"
 echo "   "
+echolog " Groups to be integrated: ${REPOS[*]}" 
 
 # cd to build dir
 cd "${BUILD_DIR}"
@@ -605,27 +664,33 @@ cd "${BUILD_DIR}"
 #
 #  Get code from GIT
 #
-log "=========================================================="
-log " Pulling code "
-log "=========================================================="
+if [ $3 = "nopull" ]
+then
+    log "=========================================================="
+    log " Skipping pulling code from GitHub "
+    log "=========================================================="
+else
+    log "=========================================================="
+    log " Pulling code from GitHub "
+    log "=========================================================="
+    git_pull # if new code is present, the function will set $PROJECT_CHANGED to 1  
+    # Eventual exit, if no code has been changed
+    if [ $PROJECT_CHANGED = 0 ]
+    then
+        log "=========================================================="
+        echolog " EXIT: No new code"
+        log "=========================================================="
+        exit $PROJECT_CHANGED
+    fi
+fi
 
-#git_pull # if new code is present, the function will set $PROJECT_CHANGED to 1  
-#
-## Eventual exit, if no code has been changed
-#if [ $PROJECT_CHANGED = 0 ]
-#then
-#    log "=========================================================="
-#    log " EXIT: No new code"
-#    log "=========================================================="
-#    exit $PROJECT_CHANGED
-#fi
 
 
 #
 #  If project has changed, first create and switch to new git branch
 #  in the 'main' repo
 #
-#create_branch
+create_branch
 
 #
 # After that, clean up the 'main' working direcotory
@@ -633,6 +698,7 @@ log "=========================================================="
 log "=========================================================="
 log " Cleaning up group subfolders of the 'main' directory "
 log "=========================================================="
+
 
 clean_up
 
