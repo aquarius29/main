@@ -28,27 +28,27 @@
 
 
 
-uint16_t sonar_distance(uint8_t sonarPin)
-{
-	double duration;
-	uint16_t cm;
-	duration = pulseIn(sonarPin, HIGH);
-	/* The number 57.874 I got from the MaxSonar datasheet where we can see
-	 * that the distance can be calculated using the scale factor of 147uS
-	 * per inch but as soon as we want data in cm we need to divide 147 by
-	 * 2.54 and we get distance in cm
-	 */
-	cm = duration/57.874;
-	//	Serial.println(cm);
-	return cm;
-}
+/* uint16_t sonar_distance(uint8_t sonarPin) */
+/* { */
+/* 	double duration; */
+/* 	uint16_t cm; */
+/* 	duration = pulseIn(sonarPin, HIGH); */
+/* 	/\* The number 57.874 I got from the MaxSonar datasheet where we can see */
+/* 	 * that the distance can be calculated using the scale factor of 147uS */
+/* 	 * per inch but as soon as we want data in cm we need to divide 147 by */
+/* 	 * 2.54 and we get distance in cm */
+/* 	 *\/ */
+/* 	cm = duration/57.874; */
+/* 	//	Serial.println(cm); */
+/* 	return cm; */
+/* } */
 
 
 /*
  * reference: 
  * http://arduino.cc/en/Tutorial/Ping?from=Tutorial.UltrasoundSensor
  */
-/*float sonar_distance(int sonarPin){
+uint16_t sonar_distance(int sonarPin){
 
   long duration;
 
@@ -61,11 +61,11 @@ uint16_t sonar_distance(uint8_t sonarPin)
 
   pinMode(sonarPin, INPUT);
   duration = pulseIn(sonarPin, HIGH);
-  float distance= duration/29/2;
+  uint16_t distance= duration/29/2;
 
   return distance;
 
-  }*/
+  }
 
 #elif defined PC
 uint16_t sonar_distance(uint8_t sonarPin)
