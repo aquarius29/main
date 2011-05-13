@@ -60,6 +60,7 @@ uint8_t proto_serialSendMovConfirmMsg(uint8_t msg);
  */
 struct navData *proto_serialReadNavMsg(void);
 
+uint8_t *proto_serialReceiveFromMega(int32_t portHandle);
 
 
 #endif /* PROTO_SERIAL_COMM_H */

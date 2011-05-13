@@ -29,9 +29,13 @@
 #include "proto_serializer.h"
 #include "proto_stub.h"
 #include "proto_serial_define.h"
+#include "proto_usart_isr_mega.h"
 
 #define TRUE 1
 #define FALSE 0
+
+static uint8_t dataBuffer[PROTO_MAX_MSG_LEN];
+
 
 #ifdef PC
 
@@ -50,7 +54,11 @@ static uint8_t proto_serialSendToPanda(uint8_t *data);
 
 uint8_t *proto_readMovConfirmMsg(int32_t portHandle){
     /* return the specific confirm message from movement */
-    uint8_t serialData[NAV_MSG_LEN];
+    uint8_t *serialData;
+    
+    serialData = proto_serialReceiveFromMega(portHandle);
+    
+    return serialData;
     
     //returnMsg = a port read function
     //proto_serialReceiveFromMega(portHandle, serialData);
@@ -58,14 +66,32 @@ uint8_t *proto_readMovConfirmMsg(int32_t portHandle){
     //return returnMsg;
 }
 
-uint8_t *proto_serialReceiveFromMega(int32_t portHandle, uint8_t *dataBuffer){
+uint8_t *proto_serialReceiveFromMega(int32_t portHandle){
     uint8_t byte;
-    uint8_t i;
+    uint8_t i = 0;
+    uint8_t done = FALSE;
+    uint8_t msgLength = 0;
     
-    //byte = read(portHandle, dataBuffer, 1);
-    while (byte != '\0' && i < PROTO_MAX_MSG_LEN) {
-        ;
-    }
+    do {
+        if (read(portHandle, dataBuffer, sizeof(dataBuffer)) == 0) {
+            done = TRUE;
+            printf("return value of read was zero\n");
+        }
+        else {    
+            printf("databuffer[%d] = %d\n", i, dataBuffer[i]);
+            msgLength = dataBuffer[0];
+            printf("message length: %d\n", msgLength);
+
+            i++;
+
+            if (i >= msgLength || i == sizeof(dataBuffer)) {
+                done = TRUE;
+            }
+        }
+        
+    } while (done != TRUE);
+    
+    return dataBuffer;
 }
 
 /*
@@ -127,18 +153,23 @@ uint8_t proto_serialSendMovConfirmMsg(uint8_t msg){
     uint8_t serialData[NAV_MSG_LEN];
     
     proto_serializeMovConfirmMsg(msg, serialData);
+    
+    // if (serialData[2] == 101) {
+    //     digitalWrite(12, HIGH);
+    // }
+    
     proto_serialSendToPanda(serialData);
  
     return 1;
 }
 
 static uint8_t proto_serialSendToPanda(uint8_t *data){
-    // if (data[0] == 4) {
+    // if (data[0] == 3) {
     //     digitalWrite(12, HIGH);
     // }
     
     /* call the usart_isr_mega code here to send data over Tx */
-    
+    proto_usartTransmit(data);
     
     return 1;
 }

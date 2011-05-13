@@ -17,6 +17,8 @@
 #include "proto_stub.h"
 #include "group_stub.h"
 
+uint32_t startTime;
+
 void setupMega(void){
     pinMode(13, OUTPUT);
     pinMode(12, OUTPUT);
@@ -32,6 +34,6 @@ void doSomeScheduling(void){
     while (1) {
         proto_run();
         group_run();
-//        delay(50);
+        // put some home made delay here
     }
 }

@@ -9,6 +9,7 @@
 #include "proto_serializer.h"
 #include "proto_msg_structs.h"
 #include "port_test.h"
+#include "proto_serial_define.h"
 
 #include <stdio.h>
 
@@ -19,19 +20,29 @@ void navMsgFill2(void);
     
 void port_test(void){
     int32_t portHandle;
+    uint8_t serialData[PROTO_MAX_MSG_LEN];
+    uint8_t *p_serialData = NULL;
+    
+    p_serialData = serialData;
 
     portHandle = proto_serialOpen();
     
     navMsgFill1();
     printf("sending data1\n");
     proto_serialSendNavMsg(portHandle, &navMsg);
+    
+    // p_serialData = proto_serialReceiveFromMega(portHandle);
+    // printf("we received %d\n", *p_serialData);
+    //     
+    // navMsgFill2();
+    // printf("sending data2\n");
+    // proto_serialSendNavMsg(portHandle, &navMsg);
         
-    navMsgFill2();
-    printf("sending data2\n");
-    proto_serialSendNavMsg(portHandle, &navMsg);
-        
-    sleep(2);
+    p_serialData = proto_serialReceiveFromMega(portHandle);
+    printf("we received %d\n", *p_serialData);
 
+    sleep(2);
+    
     proto_serialClose(portHandle);
 }
 

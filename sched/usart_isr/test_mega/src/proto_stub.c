@@ -8,9 +8,6 @@
 #include "proto_msg_structs.h"
 #include "proto_serial_define.h"
 
-#define TRUE 1
-#define FALSE 0
-
 static struct navData navMsg;
 static uint8_t isNewNavMsg = FALSE;
 

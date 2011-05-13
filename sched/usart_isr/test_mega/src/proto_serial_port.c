@@ -54,7 +54,6 @@ int32_t proto_serialOpen(void){
     portHandle = open(PROTO_SERIAL_PORT, (O_RDWR | O_NOCTTY | O_NDELAY));
     /* perform error-checking on open return value here */
 
-    
     /* put in comments to explain the port and serial options chosen */
     tcgetattr(portHandle, &options);
     cfsetispeed(&options, B9600);

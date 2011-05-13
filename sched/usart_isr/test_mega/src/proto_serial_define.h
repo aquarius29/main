@@ -13,6 +13,9 @@
 #ifndef PROTO_SERIALDEFINE_H
 #define PROTO_SERIALDEFINE_H
 
+#define TRUE 1
+#define FALSE 0
+
 /* size of buffers used and maximum message length */
 #define PROTO_MAX_MSG_LEN 100
 
