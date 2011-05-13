@@ -48,7 +48,7 @@
  * reference: 
  * http://arduino.cc/en/Tutorial/Ping?from=Tutorial.UltrasoundSensor
  */
-uint16_t sonar_distance(int sonarPin){
+uint16_t sonar_distance(uint8_t sonarPin){
 
   long duration;
 
