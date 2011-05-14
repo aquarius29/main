@@ -29,7 +29,12 @@ uint8_t proto_serializeMovConfirmMsg(uint8_t data, uint8_t *serializedData){
     serializedData[LEN_INDEX] = MOV_CONFIRM_MSG_LEN;
     serializedData[ID_INDEX] = MSG_ID_MOV_CONFIRM;
     serializedData[MOV_CONFIRM_VAL_INDEX] = data;
+    // serializedData[TEST1] = '\r';
+    // serializedData[TEST2] = '\n';
+    serializedData[TEST1] = 101;
+    serializedData[TEST2] = 102;
     serializedData[MOV_CONFIRM_NULL_INDEX] = '\0';
+    // serializedData[MOV_CONFIRM_NULL_INDEX] = 'x';
  
     return 1;
 }

@@ -67,7 +67,7 @@ int32_t proto_serialOpen(void){
     options.c_cflag |= CREAD;
     options.c_cflag |= CS8;
  
-    // options.c_cflag &= ~(ICANON | ECHO | ECHOE | ISIG);
+    // options.c_cflag |= (ICANON | ECHO | ECHOE | ISIG);
     options.c_oflag &= ~OPOST;
     // options.c_oflag = 0;
 
