@@ -100,8 +100,7 @@ void getMapDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
     free(mapWidth);
     free(mapHeight);
     free(tileWidth);
-    free(tileHeight);
-    
+    free(tileHeight);   
 }
 
 
