@@ -15,6 +15,7 @@
  *    11/04/2011: Renamed file to stab_sim (was stab_gyro_sim) // Adam
  *    18/04/2011: Updated code to reflect coding standards
  *    11/05/2011: //My
+ *    15/05/2011: Fixed a small integer overflow error //Adam
  *************************************************************************/
 #ifdef PC
 #include <stdio.h>
@@ -122,7 +123,7 @@ float gen_float(float start, float end) {
  * Function that generates random int
  */
 int gen_int(int start, int end) { 
-    return start + (int)(end * rand() / (RAND_MAX + 1));
+    return start + (int)(end * rand() / (RAND_MAX + 1.0));
 }
 
 /*

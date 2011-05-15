@@ -105,13 +105,10 @@ int16_t stab_run(void)
   /* proto_stabWriteHeading(heading); */
   /* proto_stabWriteHeight(baro.height); */
   
-  gyro_vect = init_sim();
-  accel_vect = init_sim();
-  
   filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x); // filtered pitch angle
   filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y); // filtered roll angle
-  filter_est[2] = comp_filter(acc_vector[2], gyro_vect[2], filter_est[2]); // filtered yaw angle
-  filter_vect.z = gyro_vect.z;
+  filter_vect.z = comp_filter(heading, gyro_vect.z, filter_vect.z); // filtered yaw angle
+  
   
 #ifdef DEBUG 
   printf("ESTIMATED X %f\n", filter_vect.x);
