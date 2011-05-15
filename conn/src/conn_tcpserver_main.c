@@ -12,26 +12,16 @@
  *              2011-05-11 - updating for keepalive
  */
 
-#include <stdint.h>
-#include <stdio.h>
-#include <sys/types.h>
-#include <netinet/in.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <netdb.h>
-#include <string.h>
-#include <signal.h>
-#include <stddef.h>
-#include <resolv.h>
-#include <fcntl.h>
 
-#include "conn_ui_mask.c"
+
+#include <stdio.h>
+
+
 #include "conn_tcpserver.h"
-#include "conn_tcpserver.c"
 #include "conn_tcpserver_main.h"
 
 /*Initiazion function*/
-int16_t init(void){
+int conn_init(void){
 
   host_setup();
   socket_create();
@@ -43,7 +33,7 @@ int16_t init(void){
 
  }
 
-int16_t run(void){
+int conn_run(void){
 
   data_passing();
 

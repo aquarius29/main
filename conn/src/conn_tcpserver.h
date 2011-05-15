@@ -15,14 +15,10 @@
 #define MAX_NR_OF_CONNECTIONS 3
 #define CLOSE_NEW_SOCKET close(new_socket)
 #define CLOSE_SOCKET_TCP close(socket_tcp)
+#define DEBUG(x) printf("%s",x);
 
 
-
-struct sockaddr_in client; 
-struct sockaddr_in server;
 struct hostent * host ;
-
-
 
 void host_setup(void);
 int socket_create(void);

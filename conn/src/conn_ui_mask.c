@@ -1,71 +1,114 @@
+/*!
+ *  @file conn_mask_ui.c
+ *
+ *  @brief tcpclient file
+ *
+ *  @author Michal Musialik
+ *  @date 2011-05-07
+ *  @history    2011-04-15 - first outcast of conn_tcpclient.c file
+ *  @history    2011-05-07 - changing to switch
+ *  @history    2011-04-13 - adding nav functions
+ *  
+ */
+
+
+
 #include "conn_ui_mask.h"
+#include "conn_tcpserver.h"
+/*
+to nav
+nav_SetMovmentIdentifier(int id); - send movment command from mask
+nav_RunGPSSystem(double lat, double lon); - send lon lat to ui
+nav_RunIndoorSystem(double startX,doublr,startY,double stopX, double, stopY); - 
+from nav
+
+nav_SendCurrentIndoorPosistionToGUI();
+nav_SendCurrentOutdoorPositionToGUI();
+nav_SendOutdoorPathToGUI();
+nav_SendIdoorPathToGUI();
+
+
+*/
+
+#include <stdio.h>
+#define DEBUG(x) printf("%s",x);
 
 void controll_movement(int identifier){
  
   switch(identifier){
 
   case FORWARD:
-  printf("Going forward\n");
+  DEBUG("Going forward\n")
+  // nav_SetMovmentIdentifier(FORWARD);
   break;
   
 case BACK:
-  printf("Going back\n");
+  DEBUG("Going back\n")
+  // nav_SetMovmentIdentifier(BACK);
   break;
   
 case LEFT:
-  printf("Going left\n");
+  DEBUG("Going left\n")
+ // nav_SetMovmentIdentifier(LEFT);
   break;
   
 case RIGHT:
-  printf("Going right\n");
+  DEBUG("Going right\n")
+// nav_SetMovmentIdentifier(RIGHT);
   break;
   
 case UP:
-  printf("Going up\n");
+  DEBUG("Going up\n")
+// nav_SetMovmentIdentifier(UP);
   break;
   
 case DOWN:
-  printf("Going down\n");
+  DEBUG("Going down\n")
+// nav_SetMovmentIdentifier(DOWN);
   break;
   
 case LAND:
-  printf("land\n");
+  DEBUG("land\n")
+// nav_SetMovmentIdentifier(LAND);
   break;
   
 case TAKE_OFF:
-  printf("taking off\n");
+  DEBUG("taking off\n")
+// nav_SetMovmentIdentifier(TAKE_OFF);
   break;
 
 case KILL_INDOOR:
-  printf("kill indoor\n");
+  DEBUG("kill indoor\n")
+  // nav_killGPSSystem();
   break;
   
 case KILL_GPS:
-  printf("kill gps\n");
+  DEBUG("kill gps\n")
+  //  nav_killGPSSystem();
   break;
   
 case KILL_SERVER:
-  printf("kill server\n");
+  DEBUG("kill server\n")
   break;
 
 case START_CAMERA:
-  printf("starting camera\n");
+  DEBUG("starting camera\n")
   break;
 
 case START_INDOOR_PATH:
-  printf("start indoor path\n");
+  DEBUG("start indoor path\n")
   break;
 
 case START_OUTDOOR_PATH:
-  printf("start outdoor path\n");
+  DEBUG("start outdoor path\n")
   break;
 
 case INDOOR_POSITION:
-  printf("indoor position\n");
+  DEBUG("indoor position\n")
   break;
 
 case OUTDOOR_POSITION:
-  printf("outdoor position\n");
+  DEBUG("outdoor position\n")
   break;
 
 

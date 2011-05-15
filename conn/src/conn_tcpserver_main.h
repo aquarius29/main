@@ -7,5 +7,6 @@
  *  @date 2011-05-07
  *  @history    2011-05-07 - first outcast of conn_tcpserver_main.h file
  */
-int16_t init(void);
-int16_t run(void);
+
+int conn_init(void);
+int conn_run(void);

@@ -16,9 +16,12 @@
 #define CLOSE_NEW_SOCKET close(new_socket)
 #define CLOSE_SOCKET_TCP close(socket_tcp)
 
+
+
 struct sockaddr_in client; 
 struct sockaddr_in server;
 struct hostent * host ;
+
 
 
 void host_setup(void);
