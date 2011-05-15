@@ -10,6 +10,8 @@
 #ifndef CORELOGIC_H
 #define CORELOGIC_H
 
+//#define CENTIMETRES_PER_TILE 
+
 int GPSIO_ON_OFF;
 int GPSNAV_ON_OFF;
 int sendMovement;
@@ -44,6 +46,7 @@ struct thread_data
     char *message;
 };
 
+GPSLocation *destination;
 GPSLocation currentOutdoorPosition;
 
 void nav_sendCurrentIndoorPositionToGui(roomPosition *currentPosition);
@@ -95,6 +98,12 @@ void killGPSIO();
 /* Set a new destination for the gps */
 void nav_setGPSDestination(GPSLocation *destination); 
 
+/* Used by connectivity to send movement commands using an identifier int */
+void nav_setMovementIdentifier(int id);
+
+/* start and monitor the protocol read thread */
+void *protocolReadWatchdog(void *ptr);
+
 void killThread();
 void dealloc();
 
@@ -103,7 +112,9 @@ void *setupgps(void *ptr);
 void *setupgpsnavigation(void *ptr);
 void *startgpswatchdog(void *ptr);
 void *startIndoorNavigationSystem(void *ptr);
+void *startIndoorWatchdogThread(void *ptr);
 void *readProtocol(void *ptr);
+void *protocolReadWatchdog(void *ptr);
 
 int16_t nav_init(void);
 int16_t nav_run(void);
