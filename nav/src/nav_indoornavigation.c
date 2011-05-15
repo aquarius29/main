@@ -96,6 +96,8 @@ static void updatePosition(void) {
 
 //temp function until we actually read from protocol
 static int8_t commandHandled (void) {
+    /*Still waiting for protocol to make the function we need to call to see
+    what value movement has set the variable to*/
     return 1;
 }
 static void sendCommand(void) {
