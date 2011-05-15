@@ -771,7 +771,7 @@ void nav_setIndoorData(double startX, double startY, double destinationX, double
 	result = pthread_mutex_unlock(&startIndoorMutex);
 }
 
-nav_setOutdoorData(double destinationX, double destinationY)
+void nav_setOutdoorData(double destinationX, double destinationY)
 {
 	int result; /* Use the result for testing */
 	
