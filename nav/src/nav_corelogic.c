@@ -34,21 +34,198 @@ pthread_t gpsNavigationThread;
 pthread_t indoorWatchdogThread;
 pthread_t indoorNavigationThread;
 
+pthread_t connectivityListenerWatchdogThread;
+pthread_t connectivityListenerThread;
+
 int protocolReading = 0;
 int monitoringProtocolThread = 1;
 
 static pthread_mutex_t watchdogMutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t watchdogCond = PTHREAD_COND_INITIALIZER;
-
 int waitingForGpsSetupThread = 1;
 
 static pthread_mutex_t gpsRunningMutex = PTHREAD_MUTEX_INITIALIZER;
-
 int gpsRunning = 0;
 
 static pthread_mutex_t indoorNavigationRunningMutex = PTHREAD_MUTEX_INITIALIZER;
-
 int indoorSystemRunning = 0;
+
+static pthread_mutex_t movementIdMutex = PTHREAD_MUTEX_INITIALIZER;
+int nav_movementId;
+
+static pthread_mutex_t newMovementMutex = PTHREAD_MUTEX_INITIALIZER;
+int nav_newMovement;
+
+static pthread_mutex_t gpsDestinationXMutex = PTHREAD_MUTEX_INITIALIZER;
+double nav_runGPSDestinationX;
+
+static pthread_mutex_t gpsDestinationYMutex = PTHREAD_MUTEX_INITIALIZER;
+double nav_runGPSDestinationY;
+
+static pthread_mutex_t indoorStartXMutex = PTHREAD_MUTEX_INITIALIZER;
+double nav_runIndoorStartX;
+
+static pthread_mutex_t indoorStartYMutex = PTHREAD_MUTEX_INITIALIZER;
+double nav_runIndoorStartY;
+
+static pthread_mutex_t indoorEndXMutex = PTHREAD_MUTEX_INITIALIZER;
+double nav_runIndoorEndX;
+
+static pthread_mutex_t indoorEndYMutex = PTHREAD_MUTEX_INITIALIZER;
+double nav_runIndoorEndY;
+
+static pthread_mutex_t startIndoorMutex = PTHREAD_MUTEX_INITIALIZER;
+int nav_startIndoor;
+
+static pthread_mutex_t startOutdoorMutex = PTHREAD_MUTEX_INITIALIZER;
+int nav_startOutdoor;
+
+
+void startConnectivityListenerThreads()
+{
+	
+}
+
+void *startConnectivityListenerWatchdog(void *ptr)
+{
+	/* Multithreading FTFW */
+	
+	char *message;
+    message = (char *) ptr;
+	printf("%s\n", message);
+
+	int conListenerThreadResult;
+	
+	char *message2 = "Connectivity Listener Started";
+	
+    conListenerThreadResult = 
+		pthread_create(&connectivityListenerThread, NULL, startConnectivityListener, (void*) message2);
+	
+	int watching = 1;
+	
+	while(watching == 1)
+	{
+		if (pthread_kill(connectivityListenerThread, 0) != 0) /* Listener died */
+		{
+			conListenerThreadResult = 
+				pthread_create(&connectivityListenerThread, NULL, startConnectivityListener, (void*) message2);
+		}
+	}
+	
+	 pthread_join(connectivityListenerThread, NULL);
+}
+
+void *startConnectivityListener(void *ptr)
+{
+	char *message;
+    message = (char *) ptr;
+	printf("%s\n", message);
+	
+	/* Declare safety variables because segments cant be locked/unlocked 
+	*  using mutexes if they are checking in statement such as if and while.
+	*/
+	int newMoveCheck;
+	int startIndoorCheck;
+	int startOutdoorCheck;
+	
+	int listening = 1;
+	
+	while(listening == 1)
+	{
+		int result; /* Use for testing */
+		
+		/* check if a new movement command waits */
+		result = pthread_mutex_lock(&newMovementMutex);
+		newMoveCheck = nav_newMovement;
+	    result = pthread_mutex_unlock(&newMovementMutex);
+	
+		if(newMoveCheck == 1)
+		{
+			int tempId;
+			int result; /* Use for testing */
+			
+			/* fetch the id of the movement requested */
+			result = pthread_mutex_lock(&movementIdMutex);
+		    tempId = nav_movementId;
+		    result = pthread_mutex_unlock(&movementIdMutex);
+		
+			/* Add function to send movement command to manual movement handler. */
+		}
+		
+		/* Check if indoor system start request has been made */
+		result = pthread_mutex_lock(&startIndoorMutex);
+		int startIndoorCheck = nav_startIndoor;
+		result = pthread_mutex_lock(&startIndoorMutex);
+		
+		if (startIndoorCheck == 1)
+		{
+			double indoorStartX;
+			double indoorStartY;
+			double indoorEndX;
+			double indoorEndY;
+			
+			/* Lock and Unlock Variables to copy values for triggering indoor start system
+			*  This wouldnt be necessary if I knew the input was in sequence 
+			*  and a write wouldnt occur to these variables elsewhere at this point. 
+			*  Basically: This is for thread safety. :D
+			*
+			* If you are wondering why there are so many mutexes( 1 per variable)
+			* I want to maintain concurrency as much as possible, releasing mutex 
+			* ownership as quickly as possible.
+			*/
+			
+			int result; /* Use for testing */
+
+		    result = pthread_mutex_lock(&indoorStartXMutex);
+		    indoorStartX = nav_runIndoorStartX;
+		    result = pthread_mutex_unlock(&indoorStartXMutex);
+
+			result = pthread_mutex_lock(&indoorStartYMutex);
+			indoorStartY = nav_runIndoorStartY;
+		    result = pthread_mutex_unlock(&indoorStartYMutex);
+
+			result = pthread_mutex_lock(&indoorEndXMutex);
+		    indoorEndX = nav_runIndoorEndX;
+		    result = pthread_mutex_unlock(&indoorEndXMutex);
+
+			result = pthread_mutex_lock(&indoorEndYMutex);
+		    indoorEndY = nav_runIndoorEndY;
+		    result = pthread_mutex_unlock(&indoorEndYMutex);
+		
+			/* 
+			*  call the trigger function with the new values
+			*  Waiting on the new function for starting path calculation
+			*  once system is running
+			*/
+		}
+		
+		/* Again, these check are needed because locking/unlocking cant be done
+		*  in if and while statements.
+		*/
+		result = pthread_mutex_lock(&startOutdoorMutex);
+		startOutdoorCheck = nav_startOutdoor;
+		result = pthread_mutex_lock(&startOutdoorMutex);
+		
+		if(startOutdoorCheck == 1)
+		{
+			double destinationX;
+			double destinationY;
+			int result; /* Use for testing*/
+			
+			result = pthread_mutex_lock(&gpsDestinationXMutex);
+		    destinationX = nav_runGPSDestinationX;
+		    result = pthread_mutex_unlock(&gpsDestinationXMutex);
+
+			result = pthread_mutex_lock(&gpsDestinationYMutex);
+		    destinationY = nav_runGPSDestinationY;
+		    result = pthread_mutex_unlock(&gpsDestinationYMutex);
+		
+			/* Start the GPS System with destination values */
+			nav_runGpsSystem(destinationX, destinationY);
+		}
+	}
+	
+}
 
 /* GPS System Functions start here */
 
@@ -436,6 +613,7 @@ void *readProtocol(void *ptr)
     
     while(protocolReading == 1)
     {
+		printf("Reading from protocol \n");
         /* Add functions to read different bullshit from the protocol*/
 		/* if (Read from protocol to get the confirmation of a movement command received == 1) 
 		{
@@ -524,7 +702,58 @@ void nav_sendManualMovementCommand(struct movCommand *move)
 /* Function for connectivity to call to pass on a movement command */
 void nav_setMovementIdentifier(int id)
 {
-	/* Call manual movement handler and pass in the id */
+	int result; /* Use the result for testing */
+	
+    result = pthread_mutex_lock(&movementIdMutex);
+    nav_movementId = id;
+    result = pthread_mutex_unlock(&movementIdMutex);
+	
+	result = pthread_mutex_lock(&newMovementMutex);
+    nav_newMovement = 1;
+    result = pthread_mutex_unlock(&newMovementMutex);
+}
+
+void nav_setIndoorData(double startX, double startY, double destinationX, double destinationY)
+{
+	
+	int result; /* Use the result for testing */
+	
+	result = pthread_mutex_lock(&startIndoorMutex);
+	nav_startIndoor = 1;
+	result = pthread_mutex_lock(&startIndoorMutex);
+	
+    result = pthread_mutex_lock(&indoorStartXMutex);
+    nav_runIndoorStartX = startX;
+    result = pthread_mutex_unlock(&indoorStartXMutex);
+
+	result = pthread_mutex_lock(&indoorStartYMutex);
+    nav_runIndoorStartY = startY;
+    result = pthread_mutex_unlock(&indoorStartYMutex);
+
+	result = pthread_mutex_lock(&indoorEndXMutex);
+    nav_runIndoorEndX = destinationX;
+    result = pthread_mutex_unlock(&indoorEndXMutex);
+
+	result = pthread_mutex_lock(&indoorEndYMutex);
+    nav_runIndoorEndY = destinationY;
+    result = pthread_mutex_unlock(&indoorEndYMutex);
+}
+
+nav_setOutdoorData(double destinationX, double destinationY)
+{
+	int result; /* Use the result for testing */
+	
+	result = pthread_mutex_lock(&startOutdoorMutex);
+	nav_startOutdoor = 1;
+	result = pthread_mutex_lock(&startOutdoorMutex);
+	
+    result = pthread_mutex_lock(&gpsDestinationXMutex);
+    nav_runGPSDestinationX = destinationX;
+    result = pthread_mutex_unlock(&gpsDestinationXMutex);
+
+	result = pthread_mutex_lock(&gpsDestinationYMutex);
+    nav_runGPSDestinationY = destinationY;
+    result = pthread_mutex_unlock(&gpsDestinationYMutex);
 }
 
 /* Begin interface:out functions for connectivity group */
@@ -577,11 +806,12 @@ int main(int argc, char **argv) {
 	runProtocolThread();
 	
     // tile a, b;
-    //    a.x = 1;
-    //    a.y = 1;
-    //    b.x = 9;
-    //    b.y = 5;
-    //    nav_runIndoorSystem(a.x, a.y, b.x, b.y);
+    //            a.x = 1;
+    //            a.y = 1;
+    //            b.x = 9;
+    //            b.y = 5;
+    // 
+    //     nav_runIndoorSystem(a.x, a.y, b.x, b.y);
 	
 
     return 0;

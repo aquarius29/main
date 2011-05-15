@@ -101,6 +101,9 @@ void nav_setGPSDestination(GPSLocation *destination);
 /* Used by connectivity to send movement commands using an identifier int */
 void nav_setMovementIdentifier(int id);
 
+/* Start the conectivity Listener thread system */
+void startConnectivityListenerThreads();
+
 /* start and monitor the protocol read thread */
 void *protocolReadWatchdog(void *ptr);
 
@@ -115,6 +118,8 @@ void *startIndoorNavigationSystem(void *ptr);
 void *startIndoorWatchdogThread(void *ptr);
 void *readProtocol(void *ptr);
 void *protocolReadWatchdog(void *ptr);
+void *startConnectivityListener(void *ptr);
+void *startConnectivityListenerWatchdog(void *ptr);
 
 int16_t nav_init(void);
 int16_t nav_run(void);
