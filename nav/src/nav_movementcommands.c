@@ -41,7 +41,7 @@ void sendautomovementcommand(uint8_t order , int16_t height, uint16_t distance, 
 		printf("Sending Auto Movement Command\n");
 		nav_sendAutoMovementCommand(move);
 		
-		free(move);
+		//free(move);
 	}
 }
 

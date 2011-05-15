@@ -107,6 +107,9 @@ void startConnectivityListenerThreads();
 /* start and monitor the protocol read thread */
 void *protocolReadWatchdog(void *ptr);
 
+void nav_setIndoorData(double startX, double startY, double destinationX, double destinationY);
+void nav_setOutdoorData(double destinationX, double destinationY);
+
 void killThread();
 void dealloc();
 

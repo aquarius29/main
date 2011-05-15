@@ -506,6 +506,10 @@ void *startIndoorWatchdogThread(void *ptr)
 /* Function to be run in a pthread for indoor navigation */
 void *startIndoorNavigationSystem(void *ptr)
 {
+	char *message;
+    message = (char *) ptr;
+    printf("%s\n", message);
+
     // printf("Started the indoor navigation tread\n");
     //     struct thread_data *data = (struct thread_data*) ptr;
     
@@ -643,10 +647,10 @@ void *readProtocol(void *ptr)
     printf("%s\n", message);
 
     protocolReading = 1;
+	
     
     while(protocolReading == 1)
     {
-		printf("Reading from protocol \n");
         /* Add functions to read different bullshit from the protocol*/
 		/* if (Read from protocol to get the confirmation of a movement command received == 1) 
 		{
@@ -719,6 +723,7 @@ void killProtocolReadThread()
 /* Begin functions that are using the protocol */
 void nav_sendAutoMovementCommand(struct movCommand *move)
 {
+	printf("in nav core logic send auto movement command\n");
     /* Add protocol functions to send to movement */
 	
 }
@@ -877,18 +882,25 @@ int16_t nav_init(void)
 */
 int16_t nav_run(void)
 {
+	
 	int conListenerThreadResult;
 	char *message = "Connectivity Listener Started";
 	conListenerThreadResult = 
 		pthread_create(&connectivityListenerThread, NULL, startConnectivityListener, (void*) message);
-		
+		    
+    int protocolReadThreadResult;
+    char *message3 = "Protocol Read Thread Started";
+    protocolReadThreadResult =
+ 		pthread_create(&protocolReadThread, NULL, readProtocol, (void*) message3);
+	
 	int indoorThreadResult;
 	char *message2 = "Indoor Thread Started";
     indoorThreadResult = 
         pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void*) message2);
-    
-     
-       		
+	
+	/* Wait for the thread to finish */
+	pthread_join(protocolReadThread, NULL);
+   		
 	//nav_setIndoorData(1, 1, 9, 5);	
 	
 	/* duplicate the mutex variable for lock/unlock in while loop */
@@ -907,7 +919,8 @@ int16_t nav_run(void)
 		}
 		
 		/* Monitor the indoor system */
-		if (duplicateRunning == 1 && pthread_kill(indoorNavigationThread, 0) != 0)
+		//if (duplicateRunning == 1 && pthread_kill(indoorNavigationThread, 0) != 0)
+		if (pthread_kill(indoorNavigationThread, 0) != 0)
         {
             
             printf("Indoor System quite unexpectedly\nRestarting...\n");
@@ -918,6 +931,13 @@ int16_t nav_run(void)
             indoorThreadResult = 
                 pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void*) message2);
         }
+
+		if(pthread_kill(protocolReadThread, 0) != 0)
+    	{
+        	printf("Protocol reader thread died\nRecreating......\n");
+        	protocolReadThreadResult = 
+        		pthread_create(&protocolReadThread, NULL, readProtocol, (void*) message3);
+    	}
 
 		int result; /* Use for testing */
 
@@ -934,25 +954,6 @@ int16_t nav_run(void)
 	pthread_join(connectivityListenerThread, NULL);
 	pthread_join(indoorNavigationThread, NULL);
    	printf("indoor navigation system shut down\n");
-	
-	/*
-	int waitingForSystemStart = 1;
-	
-	while (waitingForSystemStart == 0)
-	{
-		if(read from the protocol for indoor system has arguments)
-		{
-			nav_runIndoorSystem(argument a, argument b);
-			waitingForSystemStart = 0;
-		}
-		if(read from the protocol for gps system has arguments)
-		{
-			nav_runGpsSystem(Destination argument);
-			waitingForSystemStart = 0;
-		}
-		
-	}
-	*/
 
     return 0;
 }
