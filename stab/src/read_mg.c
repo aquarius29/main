@@ -7,7 +7,7 @@
  *    20/04/2011: Initial version // Adam
  ****************************************************************************/
 #ifdef ARDUINO
-#include <Wire.h>
+#include "Wire.h"
 #include "WProgram.h"
 #include "stab.h"
 #include <stdlib.h>
@@ -50,13 +50,6 @@ struct vector read_magn_data()
   vect.x = -((buffer[0] << 8) | buffer[1]);
   vect.y = -((buffer[2] << 8) | buffer[3]);
   vect.z = ((buffer[4] << 8) | buffer[5]);
-
-  //vect.x = ((vect.x*M_PI)/180.0) - 15;
-  //vect.y = ((vect.y*M_PI)/180.0) + 4.5;
-  //vect.z = ((vect.z*M_PI)/180.0) - 31;
-  //Serial.println(vect.x);
-  //Serial.println(vect.y);
-  //Serial.println(vect.z);
 
   return vect;
 }

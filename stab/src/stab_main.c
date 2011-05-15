@@ -16,8 +16,10 @@
  *    09/05/2011: Completed message passing to protocol, 
  *                fixed some coding standards //My
  *    12/05/2011: Tiny changes..movement group wants raw data from Gyrosensor instead of Accelerometer //Yuwen
+ *    15/05/2011: Added DEBUG flag and cleaned up code // Adam
+ *
  **************************************************************************/
-#ifdef PC 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -26,17 +28,11 @@
 #include "math.h"
 //#include <proto_lib.h>
 
-#elif defined ARDUINO 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdint.h>
-#include "stab_interface.h"
-#include "stab.h"
-#include <Wire.h>
-#include <WProgram.h>
-#include "math.h"
-/*#include <proto_lib.h>*/
+#ifdef ARDUINO
+#include "Wire.h"
+#include "WProgram.h"
 #endif 
+
 /************************************************************
  * Global variables used to save input/output of the algorithm:
  *    acc_vector: Holds the values of the accelerometer output (x, y, z)
@@ -69,13 +65,12 @@ float data(float x, float y, float z);
 
 /*
  * Inits the main hardware components of the shield
- * A LOT OF CHANGES EXPECTED 
  */
 int16_t stab_init(void)
 {
   // code to init the hardware goes in here as well
 #if defined PC 
-    //init_filter();
+  //init_filter();
 #elif defined ARDUINO
     init();
     init_filter();
@@ -98,99 +93,102 @@ int16_t stab_init(void)
 int16_t stab_run(void)
 {
 #ifdef PC
-    gyro_vect = sim_vector();
-    accel_vect = sim_vector();
-    heading = sim_heading();
-    baro = sim_baro();
-    
-    //UNCOMMENT THE FOLLOWING proto_ CALLS TO ACTIVATE MESSAGE SENDING.
-    // THIS REQUIRES THE PROTOCOL CODE TO BE ACCESSIBLE
-/*    proto_stabWriteAttitude(gyro_vect.y, gyro_vect.x, gyro_vect.z);*/
-/*    proto_stabWriteGyro(gyro_vect.x, gyro_vect.y, gyro_vect.z);*/
-/*    proto_stabWriteHeading(heading);*/
-/*    proto_stabWriteHeight(baro.height);*/
-    
-    
-    //gyro_vect = init_sim();
-    //accel_vect = init_sim();
+  gyro_vect = sim_vector();
+  accel_vect = sim_vector();
+  heading = sim_heading();
+  baro = sim_baro();
   
-/*    filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x); // filtered pitch angle*/
-/*    filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y); // filtered roll angle*/
-/*    filter_est[2] = comp_filter(acc_vector[2], gyro_vect[2], filter_est[2]); // filtered yaw angle*/
-/*    filter_vect.z = gyro_vect.z;*/
-
-/*    printf("ESTIMATED X %f\n", filter_vect.x);*/
-/*    printf("ESTMIATED Y %f\n", filter_vect.y);*/
-/*    printf("ESTMIATED Z %f\n", filter_vect.z);*/
+  //UNCOMMENT THE FOLLOWING proto_ CALLS TO ACTIVATE MESSAGE SENDING.
+  // THIS REQUIRES THE PROTOCOL CODE TO BE ACCESSIBLE
+  /* proto_stabWriteAttitude(gyro_vect.y, gyro_vect.x, gyro_vect.z); */
+  /* proto_stabWriteGyro(gyro_vect.x, gyro_vect.y, gyro_vect.z); */
+  /* proto_stabWriteHeading(heading); */
+  /* proto_stabWriteHeight(baro.height); */
   
-#elif defined ARDUINO
-    gyro_vect =  read_gyro_data();
-    accel_vect = readAccel();
-    convert_accel_raw_to_deg();
-    magn_vect = read_magn_data();
-    heading = (atan2(magn_vect.y , magn_vect.x)+M_PI)*180/M_PI;
-    baro = read_baro_data();
-      
-    Serial.println("Gyro data now:");
-    Serial.println(gyro_vect.x);
-    Serial.println(gyro_vect.y);
-    Serial.println(gyro_vect.z);
-    Serial.println();
-      
-    Serial.println("Accel data now:");
-    Serial.println(accel_vect.x);
-    Serial.println(accel_vect.y);
-    Serial.println(accel_vect.z);
-    Serial.println();
-    
-    float d = data(magn_vect.x, magn_vect.y, magn_vect.z);
-    Serial.println("Magnetometer data now:");
-    Serial.println(magn_vect.x);
-    Serial.println(magn_vect.y);
-    Serial.println(magn_vect.z);
-    Serial.println(heading);
-    Serial.print("The constant is: ");
-    Serial.println(d);
-    Serial.println();
-
-    Serial.println("Barometer data now:");
-    Serial.println(baro.temp);
-    Serial.println(baro.pressure);
-    Serial.println();
-    filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x); // filtered pitch angle
-    filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y); // filtered roll angle
-    filter_vect.z = comp_filter(heading, gyro_vect.z, filter_vect.z); // filtered yaw angle
-     
-/*    proto_stabWriteAttitude(filter_vect.y, filter_vect.x, filter_vect.z);*/
-/*    proto_stabWriteGyro(gyro_vect.x, gyro_vect.y, gyro_vect.z);*/
-/*    proto_stabWriteHeading((int)heading);*/
-/*    proto_stabWriteHeight(baro.height);*/
-      
-    Serial.println("Filtered data now:");
-    Serial.println(filter_vect.x);
-    Serial.println(filter_vect.y);
-    Serial.println(filter_vect.z);
-    Serial.println();
-
+  gyro_vect = init_sim();
+  accel_vect = init_sim();
+  
+  filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x); // filtered pitch angle
+  filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y); // filtered roll angle
+  filter_est[2] = comp_filter(acc_vector[2], gyro_vect[2], filter_est[2]); // filtered yaw angle
+  filter_vect.z = gyro_vect.z;
+  
+#ifdef DEBUG 
+  printf("ESTIMATED X %f\n", filter_vect.x);
+  printf("ESTMIATED Y %f\n", filter_vect.y);
+  printf("ESTMIATED Z %f\n", filter_vect.z);
 #endif
   
-    return 0;
+#elif defined ARDUINO
+  gyro_vect =  read_gyro_data();
+  accel_vect = readAccel();
+  convert_accel_raw_to_deg();
+  magn_vect = read_magn_data();
+  heading = (atan2(magn_vect.y , magn_vect.x)+M_PI)*180/M_PI;
+  baro = read_baro_data();
+  float d = data(magn_vect.x, magn_vect.y, magn_vect.z);
+  
+  filter_vect.x = comp_filter(accel_vect.x, gyro_vect.y, filter_vect.x); // filtered pitch angle
+  filter_vect.y = comp_filter(accel_vect.y, gyro_vect.x, filter_vect.y); // filtered roll angle
+  filter_vect.z = comp_filter(heading, gyro_vect.z, filter_vect.z); // filtered yaw angle
+  
+  /* proto_stabWriteAttitude(filter_vect.y, filter_vect.x, filter_vect.z); */
+  /* proto_stabWriteGyro(gyro_vect.x, gyro_vect.y, gyro_vect.z); */
+  /* proto_stabWriteHeading((int)heading); */
+  /* proto_stabWriteHeight(baro.height); */
+  
+#ifdef DEBUG
+  Serial.println("Gyro data now:");
+  Serial.println(gyro_vect.x);
+  Serial.println(gyro_vect.y);
+  Serial.println(gyro_vect.z);
+  Serial.println();
+  
+  Serial.println("Accel data now:");
+  Serial.println(accel_vect.x);
+  Serial.println(accel_vect.y);
+  Serial.println(accel_vect.z);
+  Serial.println();
+  
+  Serial.println("Magnetometer data now:");
+  Serial.println(magn_vect.x);
+  Serial.println(magn_vect.y);
+  Serial.println(magn_vect.z);
+  Serial.println(heading);
+  Serial.print("The constant is: ");
+  Serial.println(d);
+  Serial.println();
+  
+  Serial.println("Barometer data now:");
+  Serial.println(baro.temp);
+  Serial.println(baro.pressure);
+  Serial.println();
+  
+  Serial.println("Filtered data now:");
+  Serial.println(filter_vect.x);
+  Serial.println(filter_vect.y);
+  Serial.println(filter_vect.z);
+  Serial.println();
+#endif 
+#endif
+  
+  return 0;
 }
 
 
 /************************************************************
-* Converts the raw data from the accelerometer to the scaled value
-* in degrees
-************************************************************/
+ * Converts the raw data from the accelerometer to the scaled value
+ * in degrees
+ ************************************************************/
 void convert_accel_raw_to_deg()
 {
-    float R = sqrt((pow(accel_vect.x, 2))+(pow(accel_vect.y, 2))+(pow(accel_vect.z, 2)));
-    accel_vect.x = acos(accel_vect.x/R);
-    accel_vect.y = acos(accel_vect.y/R);
-    accel_vect.z = acos(accel_vect.z/R);
+  float R = sqrt((pow(accel_vect.x, 2))+(pow(accel_vect.y, 2))+(pow(accel_vect.z, 2)));
+  accel_vect.x = acos(accel_vect.x/R);
+  accel_vect.y = acos(accel_vect.y/R);
+  accel_vect.z = acos(accel_vect.z/R);
 }
 
 float data(float x, float y, float z)
 {
-    return sqrt((pow(x, 2))+(pow(y, 2))+(pow(z, 2)));
+  return sqrt((pow(x, 2))+(pow(y, 2))+(pow(z, 2)));
 }
