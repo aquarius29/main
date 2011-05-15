@@ -7,20 +7,22 @@
 #define ANGLE_PER_COMMAND 5
 #define HEIGHT_PER_COMMAND 5
 
-#define SLEEP_DURATION (0.5 * 1000000000)
+#define SLEEP_DURATION (0.1 * 1000000000)
 
-#define FORWARD 3
-#define BACK 5
-#define LEFT 7
-#define RIGHT 9
-#define UP 11
-#define DOWN 13
+// Get these from nav_movementcommands.h
+// #define FORWARD 3
+// #define BACK 5
+// #define LEFT 7
+// #define RIGHT 9
+// #define UP 11
+// #define DOWN 13
 
-static int newCommand[3];
+static int32_t newCommand[3];
 static manualCommand *first;
 static manualCommand *last;
+static int8_t bool;
 
-int ch;
+int8_t ch;
 
 static void queueManualCommand(int n) {
     manualCommand  *temp;
@@ -33,6 +35,7 @@ static void queueManualCommand(int n) {
         newCommand[0] = 0; // Altitude
         newCommand[1] = 0; // Distance
         newCommand[2] = 0; // Angle
+        bool = 1;
     }
     else {
         last->next = temp;
@@ -86,7 +89,11 @@ static void calculateNewCommand(void) {
     }
 }
 
-void receiveManualMovementCommand(int command) {
+static void trackChangedPosition(void) {
+    
+}
+
+void receiveManualMovementCommand(int32_t command) {
     
     struct timespec t;
     t.tv_sec = 0;
@@ -94,15 +101,24 @@ void receiveManualMovementCommand(int command) {
     
     queueManualCommand(command);
     calculateNewCommand();
-    while (commandHandled() == 1) {
-        nanosleep(&t , NULL);
-        // usleep(SLEEP_DURATION);
-    }
-    else {
-        printf("%d\t %d\t %d\n", newCommand[0], newCommand[1], newCommand[2]);
-        // nav_sendManualMovementCommand(newCommand[0], newCommand[1], newCommand[2]);
-        // track current position for indoor system
-        freeManualCommandList();
+    
+    if (bool == 1) {
+        for (;;) {
+            if (commandHandled() == 1) {
+                nanosleep(&t , NULL);
+                bool = 0;
+            }
+            else {
+                printf("%d\t %d\t %d\n", newCommand[0], newCommand[1], newCommand[2]);
+                // nav_sendManualMovementCommand(newCommand[0], newCommand[1], newCommand[2]);
+                // track current position for indoor system
+                trackNewPosition();
+                
+                
+                freeManualCommandList();
+                break;
+            }
+        }
     }
 }
 

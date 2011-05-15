@@ -55,7 +55,7 @@ void nav_sendCurrentOutdoorPositionToGui(GPSLocation *currentPosition);
 
 void nav_sendOutdoorPathToGui(GPSLocation **path);
 
-void nav_sendIndoorPathToGui(positionList *path);
+void nav_sendIndoorPathToGui(positionList *path, int8_t type);
 
 /* setup gps system */
 //void nav_runGpsSystem(GPSLocation *dest);

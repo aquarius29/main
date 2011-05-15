@@ -8,12 +8,12 @@
 #include <stdio.h>
 #include <time.h>
 #include "nav_indoorstructure.h"
-//#include "movementcommands.h"
+#include "nav_corelogic.h"
 
 #define PRECISION 5
 #define SLEEP_DURATION (0.05 * 1000000000)
 #define ALGORITHM 0
-#define TRUE_NORTH 100 + 90
+#define TRUE_NORTH 10 + 90
 #define AVOID_DISTANCE 100
 #define CENTIMETRES_PER_SECOND 100
 #define SAFE_HEIGHT 200 //200 cm
@@ -55,7 +55,8 @@ static void freeProgressiveList(void) {
     }
 }
 static void setDirection(void) {
-	printf("%f    %f\n", current->next->p.lon, current->next->p.lat);
+	printf("Heading towards X: %f    Y: %f\n", current->next->p.lon,
+	current->next->p.lat);
     current->next->p.angle = ((int32_t)((atan2((double)(current->next->p.lat -
     current->prev->p.lat), (double)(current->next->p.lon -
     current->prev->p.lon)) / (M_PI/180)))) * (M_PI/180);
@@ -68,37 +69,47 @@ static void setDistance(void) {
     current->prev->p.lat)));
 }
 static void updatePosition(void) {
-    struct timeval current_time;
     double changeX = 0;
     double changeY = 0;
-    double time = 0;
-    double microseconds = 0;
-    gettimeofday(&current_time, NULL);
-    microseconds = (current_time.tv_usec - timer.tv_usec);
-    if (microseconds != 0) {
-        microseconds = microseconds/1000000;
+    if (running == 0) {
+        changeY = AVOID_DISTANCE * sin(current->next->p.angle);
+        changeX = AVOID_DISTANCE * cos(current->next->p.angle);
     }
-    time = (current_time.tv_sec - timer.tv_sec) + microseconds;
-    changeY = (time * CENTIMETRES_PER_SECOND) * sin(current->next->p.angle);
-    changeX = (time * CENTIMETRES_PER_SECOND) * cos(current->next->p.angle);
+    else {
+        struct timeval current_time;
+        double time = 0;
+        double microseconds = 0;
+        gettimeofday(&current_time, NULL);
+        microseconds = (current_time.tv_usec - timer.tv_usec);
+        if (microseconds != 0) {
+            microseconds = microseconds/1000000;
+        }
+        time = (current_time.tv_sec - timer.tv_sec) + microseconds;
+        changeY = (time * CENTIMETRES_PER_SECOND) *
+        sin(current->next->p.angle);
+        changeX = (time * CENTIMETRES_PER_SECOND) *
+        cos(current->next->p.angle);
+    }
     current->p.lon = current->prev->p.lon + changeX;
     current->p.lat = current->prev->p.lat + changeY;
 }
 
 //temp function until we actually read from protocol
 static int8_t commandHandled (void) {
+    /*Still waiting for protocol to make the function we need to call to see
+    what value movement has set the variable to*/
     return 1;
 }
 static void sendCommand(void) {
     setDirection();
     setDistance();
-    int32_t angle = (current->next->p.angle / (M_PI/180)) + TRUE_NORTH;
+    int32_t angle = (current->next->p.angle / (M_PI / 180)) + TRUE_NORTH;
     if (angle > 359) {
         angle -= 360;
     }
     printf("Move at angle %d\n", angle);
-    /*sendautomovementcommand(1, SAFE_HEIGHT, current->next->p.distance,
-    angle);*/
+    sendautomovementcommand(1, SAFE_HEIGHT, current->next->p.distance,
+    angle);
     for (;;) {
         int8_t bin = commandHandled();
         if (bin == 1) {
@@ -108,35 +119,35 @@ static void sendCommand(void) {
     }
 }
 static void sendPosition(roomPosition *pos) {
-    printf("Longitude = %f\tLatitude = %f\n", pos->lon, pos->lat);
-    //nav_sendCurrentIndoorPositionToGui(pos);
+    nav_sendCurrentIndoorPositionToGui(pos);
 }
 static void sendExpectedPath(positionList *path) {
     /* Free path & path->list in corelogic */
-    //path = realloc(path, sizeof(positionList));
+    positionList *temp = malloc(sizeof(positionList));
+    *temp = *path;
     printf("This is the path given by path calc.\n");
     printf("Lines should be drawn between each point in list.\n");
-    //nav_sendIndoorPathToGui(path)
+    nav_sendIndoorPathToGui(temp, 0);
 }
 static void sendActualPath(progressiveNode *first) {
     /* Free path & path->list in corelogic */
-   /* progressiveNode temp = *first;
+    progressiveNode temp = *first;
     positionList *path = malloc(sizeof(positionList));
     path->num = 1;
-    path->list = malloc(sizeof(pixel) * 2);
+    path->list = malloc(sizeof(roomPosition) * 2);
     path->list[0] = temp.p;
     // creating positionList from linked list, must be freed in UI.
-    while (temp.next != 0) {
+    while (temp.next->next != 0) {
         path->list[path->num] = temp.next->p;
         path->num++;
-        path->list = realloc(path->list, sizeof(pixel) * path->num + 1);
+        path->list = realloc(path->list, sizeof(roomPosition) *
+        (path->num + 1));
         temp = *temp.next;
     }
-    */
     //Give corelogic the finalized path after destination reached.
     printf("This is the path actually taken until ");
     printf("destination reached/nav interrupted.\n");
-    //nav_sendIndoorPathToGui(path);
+    nav_sendIndoorPathToGui(path, 1);
     }
 void stopIndoorNavigation(void) {
     //Tell corelogic to tell movement to stop
@@ -149,10 +160,9 @@ void stopIndoorNavigation(void) {
 //Send start and end point received from corelogic
 //to path calculation.
 void initPath(tile *start, tile *end) {
-    int32_t counterUp = 0;
     running = 1;
     count = 0;
-    // sendautomovementcommand(0, SAFE_HEIGHT, 0, 0);
+    sendautomovementcommand(0, SAFE_HEIGHT, 0, 0);
     if (ALGORITHM == 0) {
         printf("Dijkstra\n");
         route = indoorDijkstra(start, end);
@@ -161,11 +171,6 @@ void initPath(tile *start, tile *end) {
         printf("Astar\n");
         route = indoorAstar(start, end);
     }
-    for (counterUp = 0; counterUp < route.num; counterUp++) {
-        printf("final.x: %f ", route.list[counterUp].lon);
-        printf("final.Y: %f\n", route.list[counterUp].lat);
-    }
-    printf("num: %d\n", route.num);
     // insert first node and next node for current destination calculation
     first = calloc(1, sizeof(progressiveNode));
     first->p = route.list[count];
@@ -195,6 +200,7 @@ static void recalc(void) {
     a.y = (current->prev->p.lat - TILE_CENTER) / CENTIMETRES_PER_TILE;
     b.x = (route.list[route.num-1].lon - TILE_CENTER) / CENTIMETRES_PER_TILE;
     b.y = (route.list[route.num-1].lat - TILE_CENTER) / CENTIMETRES_PER_TILE;
+    free(route.list);
     if (ALGORITHM == 0) {
         printf("Dijkstra\n");
         route = indoorDijkstra(&a, &b);
@@ -209,20 +215,20 @@ static void recalc(void) {
     sendExpectedPath(&route);
     sendCommand();
 }
-void collisionAvoided(double direction) {
-    double changeX = 0;
-    double changeY = 0;
+void collisionAvoided(int32_t direction) {
     running = 0;
-    free(route.list);
     compareTile();
-    current->next->p.angle = direction;
-    changeY = AVOID_DISTANCE * sin(current->next->p.angle);
-    changeX = AVOID_DISTANCE * cos(current->next->p.angle);
-    current->p.lon = current->prev->p.lon + changeX;
-    current->p.lat = current->prev->p.lat + changeY;
+    current->next->p.angle = (direction - TRUE_NORTH) * (M_PI / 180);
+    updatePosition();
     compareTile();
     recalc();
 }
+// void getPositionAfterManual(int32_t direction, int32_t distance) {
+//     changeX = distance * cos(direction);
+//     changeY = distance * sin(direction);
+//     current->p.lon = current->prev->p.lon + changeX;
+//     current->p.lat = current->prev->p.lat + changeY;
+// }
 static int32_t check(roomPosition a, roomPosition b){
     double diffX;
     double diffY;
@@ -267,12 +273,3 @@ static void navigatePath(void){
         sendCommand();
     }
 }
-/*int main(){
-    tile a, b;
-    a.x = 1;
-    a.y = 1;
-    b.x = 9;
-    b.y = 5;
-    initPath(&a, &b);
-    return 0;
-}*/
