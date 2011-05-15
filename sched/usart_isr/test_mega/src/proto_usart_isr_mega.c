@@ -50,7 +50,7 @@ uint8_t *proto_getRxMsg(void){
  *  USART_tansmit taken from a code example in the datasheet for atmega2560
  */
 static void USART_transmit(uint8_t data){
-    /* wait for empty transmit buffer *** BLOCKING?! */
+    /* wait for empty transmit buffer *** BLOCKING! */
     while (!(UCSR0A & (1 << UDRE0))){
         ;
     }
@@ -89,19 +89,23 @@ ISR(USART0_RX_vect){
             if (bytesReceived == msgLen) {
                 isMsgComplete = TRUE;
                 copyBuf(dataBuffer, completeBuffer);
+                
                 /* flush buffer here? */
+                // memset((void *)dataBuffer, '\0', sizeof(dataBuffer));
+                
                 bytesReceived = 0;
             }
         }
     }
     else if (bytesReceived == 0) {
+        isMsgComplete = FALSE;
         msgLen = data;
         dataBuffer[bytesReceived] = msgLen;
         bytesReceived++;
     }
     else if (bytesReceived >= PROTO_MAX_MSG_LEN) {
         // too long message, light upp error-led
-        digitalWrite(12, HIGH);
+        //digitalWrite(12, HIGH);
     }
 }
 

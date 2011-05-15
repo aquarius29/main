@@ -27,19 +27,27 @@ void group_run(void){
     if (navMsg != NULL) {
         if (navMsg->type == 10) {
             digitalWrite(12, HIGH);
+            // proto_serialSendMovConfirmMsg(data);
+            if (sentFlag == FALSE) {
+                proto_serialSendMovConfirmMsg(data2);
+                sentFlag = TRUE;
+            }
         }
-        proto_serialSendMovConfirmMsg(data);
+        else if (navMsg->type == 50) {
+            digitalWrite(13, HIGH);
+            if (sentFlag == FALSE) {
+                proto_serialSendMovConfirmMsg(data);
+                sentFlag = TRUE;
+            }
+        }
     }
 
-    navMsg = proto_serialReadNavMsg();
-    if (navMsg != NULL) {
-        if (navMsg->type == 50) {
-            digitalWrite(13, HIGH);
-        }
-        proto_serialSendMovConfirmMsg(data2);
-    }
-    // else {
-    //     ;
+    // navMsg = proto_serialReadNavMsg();
+    // if (navMsg != NULL) {
+    //     if (navMsg->type == 50) {
+    //         digitalWrite(13, HIGH);
+    //     }
+    //     // proto_serialSendMovConfirmMsg(data);
     // }
     
     // if (sentFlag == FALSE) {

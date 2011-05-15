@@ -73,22 +73,30 @@ uint8_t *proto_serialReceiveFromMega(int32_t portHandle){
     uint8_t msgLength = 0;
     
     do {
-        if (read(portHandle, dataBuffer, sizeof(dataBuffer)) == 0) {
-            done = TRUE;
-            printf("return value of read was zero\n");
-        }
-        else {    
-            printf("databuffer[%d] = %d\n", i, dataBuffer[i]);
+        // if (read(portHandle, dataBuffer, sizeof(dataBuffer)) == 0) {
+        //     done = TRUE;
+        //     printf("return value of read was zero\n");
+        // }
+        // else {    
+        //     printf("databuffer[%d] = %d\n", i, dataBuffer[i]);
+        //     msgLength = dataBuffer[0];
+        //     printf("message length: %d\n", msgLength);
+        // 
+        //     i++;
+        // 
+        //     if (i >= msgLength || i == sizeof(dataBuffer)) {
+        //         done = TRUE;
+        //     }
+        // }
+        read(portHandle, &dataBuffer[i], 1);
+        printf("i is %d, dataBuffer[%d] is %d\n", i, i, dataBuffer[i]);
+        if (i == 0) {
             msgLength = dataBuffer[0];
-            printf("message length: %d\n", msgLength);
-
-            i++;
-
-            if (i >= msgLength || i == sizeof(dataBuffer)) {
-                done = TRUE;
-            }
         }
-        
+        i++;
+        if (i >= msgLength) {
+            done = TRUE;
+        }
     } while (done != TRUE);
     
     return dataBuffer;
@@ -150,7 +158,7 @@ struct navData *proto_serialReadNavMsg(void){
 }
 
 uint8_t proto_serialSendMovConfirmMsg(uint8_t msg){
-    uint8_t serialData[NAV_MSG_LEN];
+    uint8_t serialData[MOV_CONFIRM_MSG_LEN];
     
     proto_serializeMovConfirmMsg(msg, serialData);
     
@@ -168,7 +176,11 @@ static uint8_t proto_serialSendToPanda(uint8_t *data){
     //     digitalWrite(12, HIGH);
     // }
     
-    /* call the usart_isr_mega code here to send data over Tx */
+    /* call the usart_isr_mega code here to send data over Tx 
+     * This should be changed to instead notifying the proto_run code
+     * that a message needs to be sent and then let that code send it
+     * when proto is scheduled
+    */
     proto_usartTransmit(data);
     
     return 1;

@@ -17,7 +17,11 @@
 #include "proto_stub.h"
 #include "group_stub.h"
 
-uint32_t startTime;
+
+#define TRUE 1
+#define FALSE 0
+
+static uint32_t LIGHT = TRUE;
 
 void setupMega(void){
     pinMode(13, OUTPUT);
@@ -29,11 +33,22 @@ void setupMega(void){
 void doSomeScheduling(void){
     setupMega();
 
-    proto_init();
+//    proto_init();
     
     while (1) {
-        proto_run();
-        group_run();
+//        digitalWrite(12, HIGH);
+        // proto_run();
+        // group_run();
         // put some home made delay here
+        delay(500);
+        if (LIGHT == TRUE) {
+            digitalWrite(12, HIGH);
+            LIGHT = FALSE;
+        }
+        else {
+            digitalWrite(12, LOW);        
+            LIGHT = TRUE;
+        }
+ //       delay(500);
     }
 }

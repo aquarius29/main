@@ -49,6 +49,8 @@ int32_t getSerialPort(void){
  *
  *  NOTE: Only call this function when in an initialization sequence
  *  of the system. Calling it while in fliht will be a disaster
+ *
+ *  Maybe make this return the already open port if called again?
  */
 int32_t proto_serialOpen(void){
     struct termios options;
@@ -67,6 +69,8 @@ int32_t proto_serialOpen(void){
     options.c_cflag |= CREAD;
     options.c_cflag |= CS8;
  
+    // options.c_iflag |= IGNPAR;
+ 
     // options.c_cflag |= (ICANON | ECHO | ECHOE | ISIG);
     options.c_oflag &= ~OPOST;
     // options.c_oflag = 0;
@@ -74,6 +78,7 @@ int32_t proto_serialOpen(void){
     // options.c_iflag &= ~(IXON | IXOFF | IXANY);
 
     tcsetattr(portHandle, TCSANOW, &options);
+    // tcsetattr(portHandle, TCSAFLUSH, &options);
 
     /* delay is to make sure the port has time to initialize */
     sleep(1);
