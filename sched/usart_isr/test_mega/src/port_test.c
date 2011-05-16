@@ -15,10 +15,14 @@
 
 static struct navData navMsg;
 
-void navMsgFill1(void);
+void navMsgFill1(uint8_t n);
 void navMsgFill2(void);
+
+#define ITERATIONS 2
     
 void port_test(void){
+    uint8_t x = 0;
+
     int32_t portHandle;
     uint8_t serialData[PROTO_MAX_MSG_LEN];
     uint8_t *p_serialData = NULL;
@@ -27,28 +31,34 @@ void port_test(void){
 
     portHandle = proto_serialOpen();
     
-    // navMsgFill1();
-    // printf("sending data1\n");
-    // proto_serialSendNavMsg(portHandle, &navMsg);
-    // 
-    // p_serialData = proto_serialReceiveFromMega(portHandle);
-    // printf("we received %d\n", *p_serialData);
-
-    // sleep(1);
+    while (x < ITERATIONS) {
+    // while (1) {
+        if (x == 0) { 
+            navMsgFill1(x);
+            printf("sending data1\n");
+            proto_serialSendNavMsg(portHandle, &navMsg);
+            
+            p_serialData = proto_serialReceiveFromMega(portHandle);
+            printf("we received %d\n", *p_serialData);
+        }
         
-    navMsgFill2();
-    printf("sending data2\n");
-    proto_serialSendNavMsg(portHandle, &navMsg);
+        if (x == 1) {
+            navMsgFill2();
+            // navMsgFill1(x);
+            printf("sending data2\n");
+            proto_serialSendNavMsg(portHandle, &navMsg);
         
-    p_serialData = proto_serialReceiveFromMega(portHandle);
-    printf("we received %d\n", *p_serialData);
-
+            p_serialData = proto_serialReceiveFromMega(portHandle);
+            printf("we received %d\n", *p_serialData);
+        }
+        x++;
+    }
     sleep(1);
     
     proto_serialClose(portHandle);
 }
 
-void navMsgFill1(void){
+void navMsgFill1(uint8_t n){
   navMsg.type = 10;
   navMsg.order = 2;
   navMsg.height = 1027;

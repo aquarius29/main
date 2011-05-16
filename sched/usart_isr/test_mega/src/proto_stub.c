@@ -15,23 +15,12 @@ static uint8_t copyBuf(volatile uint8_t *source, uint8_t *target);
 static uint8_t deSerializeMsg(uint8_t *serialMsg);
 
 
-static uint8_t LIGHT = TRUE;
-
 uint8_t proto_init(void){
     proto_usartInitMega();
 }
 
 uint8_t proto_run(void){
     uint8_t serialMsg[PROTO_MAX_MSG_LEN];
-    
-    if (LIGHT == TRUE) {
-        digitalWrite(12, HIGH);
-        LIGHT = FALSE;
-    }
-    else {
-        digitalWrite(12, LOW);        
-        LIGHT = TRUE;
-    }
     
     /* there is an unread message */
     if (proto_isRxMsgComplete()) {

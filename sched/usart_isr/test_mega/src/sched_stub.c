@@ -17,11 +17,11 @@
 #include "proto_stub.h"
 #include "group_stub.h"
 
-
 #define TRUE 1
 #define FALSE 0
 
-static uint32_t LIGHT = TRUE;
+void myDelay(uint32_t n);
+void andersWait(uint32_t time);
 
 void setupMega(void){
     pinMode(13, OUTPUT);
@@ -30,25 +30,37 @@ void setupMega(void){
     digitalWrite(12, LOW);
 }
 
+void myDelayMs(uint32_t n){
+    uint32_t x;
+    
+    while (n--) {
+        x = 300000;
+        
+        while (x--) {
+            ;
+        }
+    }
+}
+
+void andersWait(uint32_t time){
+    uint32_t start;
+    
+    start = millis();
+    while (start+time > millis()) {
+        ;
+    }
+}
+
 void doSomeScheduling(void){
     setupMega();
 
-//    proto_init();
+    proto_init();
     
     while (1) {
-//        digitalWrite(12, HIGH);
-        // proto_run();
-        // group_run();
+        proto_run();
+        group_run();
         // put some home made delay here
-        delay(500);
-        if (LIGHT == TRUE) {
-            digitalWrite(12, HIGH);
-            LIGHT = FALSE;
-        }
-        else {
-            digitalWrite(12, LOW);        
-            LIGHT = TRUE;
-        }
- //       delay(500);
+        myDelayMs(5000000);
+        // andersWait(20);
     }
 }

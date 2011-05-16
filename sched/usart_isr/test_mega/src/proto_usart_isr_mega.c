@@ -39,6 +39,7 @@ uint8_t proto_isRxMsgComplete(void){
 
 uint8_t *proto_getRxMsg(void){
     if (isMsgComplete == TRUE) {
+        isMsgComplete = FALSE;
         return completeBuffer;
     }
     else {
@@ -98,7 +99,7 @@ ISR(USART0_RX_vect){
         }
     }
     else if (bytesReceived == 0) {
-        isMsgComplete = FALSE;
+        // isMsgComplete = FALSE;
         msgLen = data;
         dataBuffer[bytesReceived] = msgLen;
         bytesReceived++;

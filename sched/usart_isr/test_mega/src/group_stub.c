@@ -15,7 +15,6 @@
 #define TRUE 1
 #define FALSE 0
 
-uint8_t sentFlag = FALSE;
 
 void group_run(void){
     struct navData *navMsg = NULL;
@@ -25,35 +24,19 @@ void group_run(void){
     /* read data here */
     navMsg = proto_serialReadNavMsg();
     if (navMsg != NULL) {
+        digitalWrite(13, LOW);
         if (navMsg->type == 10) {
-            digitalWrite(12, HIGH);
-            // proto_serialSendMovConfirmMsg(data);
-            if (sentFlag == FALSE) {
-                proto_serialSendMovConfirmMsg(data2);
-                sentFlag = TRUE;
-            }
+            // digitalWrite(12, HIGH);
+            proto_serialSendMovConfirmMsg(data);
         }
         else if (navMsg->type == 50) {
-            digitalWrite(13, HIGH);
-            if (sentFlag == FALSE) {
-                proto_serialSendMovConfirmMsg(data);
-                sentFlag = TRUE;
-            }
+            // digitalWrite(13, HIGH);
+            proto_serialSendMovConfirmMsg(data2);
         }
     }
-
-    // navMsg = proto_serialReadNavMsg();
-    // if (navMsg != NULL) {
-    //     if (navMsg->type == 50) {
-    //         digitalWrite(13, HIGH);
-    //     }
-    //     // proto_serialSendMovConfirmMsg(data);
-    // }
-    
-    // if (sentFlag == FALSE) {
-    //     proto_serialSendMovConfirmMsg(data2);
-    //     sentFlag = TRUE;
-    // }
+    else {
+        digitalWrite(13, HIGH);
+    }
 }
 
 
