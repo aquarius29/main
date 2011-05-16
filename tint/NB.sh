@@ -4,6 +4,8 @@
 ## -------------------------------------------------------------------------------
 ## Authors: Eugene Groshev, Nikita Englund
 ## Change history:
+##		 2011-05-16, Nikita:
+##				 - comment code, removing un-used code.
 ##     2011-05-12, Eugene:
 ##         - fixed REPOS array initialization and traversing problems (works!)
 ##         - added 3rd runtime parameter, allowing to skip pulling code from GitHub
@@ -122,10 +124,12 @@ echolog()
 
 
 ## Initial version of the source code pull function
+## Author: Nikita Englund
 ## -----------------------------------------------------------------
 get_src()
 {
  
+ #Check what the working dir is.
  #----Working dir------
 cd ..
 cd ..
@@ -135,7 +139,8 @@ echo "The present working directory is `pwd`"
 log "-----------------------"
 
 
-
+#
+#Go to the right dir, pull from repo, check_return, leave dir.
 # ----Pull Moto-----  
   log "Pulling moto ..."
   cd moto
@@ -150,7 +155,8 @@ log "-----------------------"
   log "Leaving dir...."
   log "-------------------"
 
-
+#
+#Go to the right dir, pull from repo, check_return, leave dir.
 #-----Pull Sched-----  
   log "Pulling Sched ..."
   cd sched
@@ -165,6 +171,8 @@ log "-----------------------"
   log "-------------------"
   
  
+#
+#Go to the right dir, pull from repo, check_return, leave dir.
  #-----Pull Nav-----  
   log "Pulling nav ..."
   cd nav
@@ -179,6 +187,8 @@ log "-----------------------"
   log "-------------------" 
   
   
+#
+#Go to the right dir, pull from repo, check_return, leave dir.
    #-----Pull Conn-----  
   log "Pulling conn ..."
   cd conn
@@ -193,6 +203,8 @@ log "-----------------------"
   log "-------------------" 
   
   
+#
+#Go to the right dir, pull from repo, check_return, leave dir.
      #-----Pull Cam-----  
   log "Pulling cam ..."
   cd cam
@@ -206,6 +218,9 @@ log "-----------------------"
   log "Leaving dir...."
   log "-------------------" 
   
+  
+#
+#Go to the right dir, pull from repo, check_return, leave dir.
     #-----Pull Ca-----  
   log "Pulling ca ..."
   cd ca
@@ -219,6 +234,8 @@ log "-----------------------"
   log "Leaving dir...."
   log "-------------------" 
   
+#
+#Go to the right dir, pull from repo, check_return, leave dir.
       #-----Pull proto-----  
   log "Pulling proto ..."
   cd proto
@@ -232,6 +249,8 @@ log "-----------------------"
   log "Leaving dir...."
   log "-------------------" 
   
+#
+#Go to the right dir, pull from repo, check_return, leave dir.
        #-----Pull UI-----  
   log "Pulling ui ..."
   cd ui
@@ -245,22 +264,6 @@ log "-----------------------"
   log "Leaving dir...."
   log "-------------------" 
   
-  #Git Pull ca,cam,conn,filter,main,moto,nav,proto,sched,stab,ui
-  #git remote add moto git@github.com:SEMB2011/moto.git
-
-  #log "Getting sources from git"
-  #log "   git  clone  git://github.com/SEMB2011/main.git"
-	#git  clone  git://github.com/SEMB2011/main.git
-  #GIT_RET=$?
-  #log "   return $GIT_RET"
-  #check_return_value $GIT_RET "git clone"
-  
-#  log "Adding remote moto ..."
-#  log "    git remote add moto git@github.com:SEMB2011/moto.git"
-#  git remote add moto git@github.com:SEMB2011/moto.git
-#  GIT_RET=$?
-#  log "   return $GIT_RET"
-#  check_return_value $GET_RET "git remote add"  
 }
 
 
