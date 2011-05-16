@@ -222,7 +222,7 @@ void write_to_nav_ca(int8_t direction) {
 void write_array(){
 #ifndef TEST
     proto_write_motor2(msg1,msg2,msg3,msg4,msg5,msg6,msg7,msg8);
-	//#ifdef DEBUG
+	#ifdef DEBUG
 	printf("@@@@@@@@@@@@@@SEND MESSAGE@@@@@@@@@@@@@@@\n");
 	print_uint8_t_to_Binary(msg1);
 	print_uint8_t_to_Binary(msg2);
@@ -233,7 +233,7 @@ void write_array(){
 	print_uint8_t_to_Binary(msg7);
 	print_uint8_t_to_Binary(msg8);
 	printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
-	//#endif
+	#endif
 #endif
 }
 
@@ -307,7 +307,7 @@ void read_sensorCommand(void){
     pSensorC -> roll = stabCommand -> roll;
     pSensorC -> yaw = stabCommand -> yaw;
     pSensorC -> height = (uint16_t) sonar_distance(SONAR_PIN);
-	//#ifdef DEBUG
+	#ifdef DEBUG
 #ifdef PC
 	printf("@@@@@@@ PITCH  @@@@@@@@@@@@@@@@@ %d  @@@@@@@@@@@@@@@@@@@@\n",sensorCommand.pitch);
 	printf("@@@@@@@ ROLL   @@@@@@@@@@@@@@@@@ %d  @@@@@@@@@@@@@@@@@@@@\n",sensorCommand.roll);
@@ -322,7 +322,7 @@ void read_sensorCommand(void){
 	Serial.println(sensorCommand.yaw);
 	Serial.println("@@@@@@@@@@SENSOECOMMAND  HEIGHT@@@@@@@@@");
 	Serial.println(sensorCommand.height);
-	//#endif
+	#endif
 #endif
 #endif
 }

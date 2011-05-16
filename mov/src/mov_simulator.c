@@ -10,14 +10,15 @@
  */
 
 #include <stdint.h>
+#include "mov_interface.h"
 
 #ifdef SIMULATOR
+#ifdef PC
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
-#include "mov_interface.h"
 
 extern FILE *file;
 extern struct nav *p;
@@ -104,6 +105,7 @@ uint8_t get_loc(char line[], char c, uint8_t indexOfChar){
     return i;
 }
 #endif 
+#endif
 
 
 
@@ -113,7 +115,8 @@ uint8_t get_loc(char line[], char c, uint8_t indexOfChar){
  * 
  * Only changing values if simulation is on
  */
-int16_t do_sensor_simulation(int16_t currentSensorValue, uint8_t command){
+int16_t do_sensor_simulation(int16_t currentSensorValue, uint8_t command)
+{
 #ifdef SIMULATOR
     int8_t i = (rand() % (6 - 0 + 1) + 0);  
 
