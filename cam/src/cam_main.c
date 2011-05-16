@@ -23,7 +23,11 @@
 
 int16_t cam_init(void)
 {
+<<<<<<< HEAD
     initialize();// init cam
+=======
+    initialize(void);// init cam
+>>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
     return 0;
 
 }

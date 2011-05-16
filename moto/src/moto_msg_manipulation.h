@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*!@author Kristofer Hansson Aspman
  * @file moto_msg_manipulation.h
  * @version v0.02
@@ -20,12 +21,15 @@
 #ifdef ARDUINO_DBG
     #define ARDUINO
 #endif
+=======
+>>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
 #ifdef ARDUINO
    #include "WProgram.h"
 #elif defined PC
    #include <stdio.h>
 #endif
 
+<<<<<<< HEAD
 /* Casts a uint8_t into a pointer of type msg_pointer */
 #define INT_TO_BITFIELD(a) *(msg_pointer)a
 
@@ -68,4 +72,35 @@ typedef struct control_message{
  * Uses Serial.print or printf depending on what flag has been set\n
  * for the compilation (ARDUINO_DBG or PC respectively).
  */
+=======
+#define INT_TO_BITFIELD(a) *(msg_pointer)a
+#define BITFIELD_TO_CHAR(a) *(unsigned char*)a
+
+//Big endian control message
+typedef struct control_message{
+  //unsigned char may not be portable
+  //if that is the case, try just unsigned
+  //also, endianess may be different on arduino
+  unsigned char rear :1;
+  unsigned char front :1;
+  unsigned char left :1;
+  unsigned char right :1;
+  unsigned char panic :1;
+  unsigned char increase :1;
+  unsigned char ID :2;
+} msg, *msg_pointer;
+
+//Little endian control message
+/* struct control_message{ */
+/*   unsigned char ID :2; */
+/*   unsigned char increase :1; */
+/*   unsigned char panic :1; */
+/*   unsigned char right :1; */
+/*   unsigned char left :1; */
+/*   unsigned char front :1; */
+/*   unsigned char rear :1; */
+
+/* } msg; */
+
+>>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
 void printMsg(msg_pointer mp);

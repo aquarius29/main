@@ -26,6 +26,7 @@ clean:
 
 
 
+<<<<<<< HEAD
 # #######################################################################
 # Makefile for inclusion by other projects
 # heavily copied from original libarduino sources
@@ -121,3 +122,5 @@ USB_PORT=/dev/tty.usbmodem411
 .PHONY : clean uno due mega install help lib
 
 
+=======
+>>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881

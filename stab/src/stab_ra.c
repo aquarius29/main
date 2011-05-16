@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /***************************************************************************
  * @file stab_ra.c
  * @brief Takes care of the communication with the accelerometer
@@ -115,3 +116,20 @@ void init_accel()
 
 #endif
 
+=======
+#include "stab.h"
+
+
+
+
+float read_accel()
+{
+  
+  
+
+
+  
+  return 0;
+
+}
+>>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881

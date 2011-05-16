@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /***************************************************************************
  * @file read_rg.c
  * @brief Takes care of the communication with the gyroscope
@@ -127,3 +128,18 @@ float convert_gyro_raw_to_deg_s(float a)
   return a / SSF;
 }
 #endif 
+=======
+#include "stab.h"
+
+
+float read_gyro()
+{
+  
+  
+
+
+  
+  return 0;
+
+}
+>>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881

@@ -7,11 +7,15 @@
  *               by tools.c, motor_control.c and parser.c.
  *
  */
+<<<<<<< HEAD
 #include <stdint.h>
 
 #ifdef ARDUINO_DBG
     #define ARDUINO
 #endif
+=======
+
+>>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
 #ifdef ARDUINO
    #include "WProgram.h"
 #elif defined PC
@@ -19,6 +23,7 @@
 #endif
 
 //Parser functions
+<<<<<<< HEAD
 int examineID(msg_pointer mp);
 void controlMotors(msg_pointer mp);
 void specialMotorCommand(msg_pointer mp);
@@ -26,3 +31,12 @@ void specialMotorCommand(msg_pointer mp);
 //#ifdef ARDUINO_DBG
 //uint8_t serReadUnsignedChar(void);
 //#endif
+=======
+void examineID(msg_pointer mp);
+void controlMotors(msg_pointer mp);
+void specialMotorCommand(msg_pointer mp);
+msg scanHexMsgSTDIN(void);
+#ifdef ARDUINO
+unsigned char serReadUnsignedChar(void);
+#endif
+>>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
