@@ -13,18 +13,18 @@
 #define PRECISION 5
 #define SLEEP_DURATION (0.05 * 1000000000)
 #define ALGORITHM 0
-#define TRUE_NORTH 10 + 90
 #define AVOID_DISTANCE 100
 #define CENTIMETRES_PER_SECOND 100
 #define SAFE_HEIGHT 200 //200 cm
 
 static void navigatePath(void);
 static int32_t count;
-static int32_t running;
+static int8_t running;
 static positionList route;
 static struct timeval timer;
 static progressiveNode *first;
 static progressiveNode *current;
+static tile destinationTile;
 
 static void insertCurrentDestinationNode(void) {
     current->next = calloc(1, sizeof(progressiveNode));
@@ -157,11 +157,30 @@ void stopIndoorNavigation(void) {
     freeProgressiveList();
     free(route.list);
 }
+
+roomPosition getCurrentPosition(void) {
+    return current->p;
+}
+
+static void setDestinationTile(tile *end) {
+    destinationTile.x = end->x;
+    destinationTile.y = end->y;
+}
+
+tile * getDestinationTile(void) {
+    return &destinationTile;
+}
+
+int8_t getRunning(void) {
+    return running;
+}
+
 //Send start and end point received from corelogic
 //to path calculation.
 void initPath(tile *start, tile *end) {
     running = 1;
     count = 0;
+    setDestinationTile(end);
     sendautomovementcommand(0, SAFE_HEIGHT, 0, 0);
     if (ALGORITHM == 0) {
         printf("Dijkstra\n");
@@ -223,12 +242,7 @@ void collisionAvoided(int32_t direction) {
     compareTile();
     recalc();
 }
-// void getPositionAfterManual(int32_t direction, int32_t distance) {
-//     changeX = distance * cos(direction);
-//     changeY = distance * sin(direction);
-//     current->p.lon = current->prev->p.lon + changeX;
-//     current->p.lat = current->prev->p.lat + changeY;
-// }
+
 static int32_t check(roomPosition a, roomPosition b){
     double diffX;
     double diffY;

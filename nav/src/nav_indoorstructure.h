@@ -15,6 +15,7 @@
 #define NUM_ADJACENT 8
 #define CENTIMETRES_PER_TILE 108
 #define TILE_CENTER (CENTIMETRES_PER_TILE/2)
+#define TRUE_NORTH 10 + 90
 
 typedef struct {
     double lon;
@@ -50,5 +51,9 @@ positionList indoorAstar(const tile *start, const tile *end);
 void initPath(tile *start, tile *end);
 void stopIndoorNavigation(void);
 void collisionAvoided(int32_t direction);
+
+roomPosition getCurrentPosition(void);
+tile * getDestinationTile(void);
+int8_t getRunning();
 
 #endif /* NAV_INDOORSTRUCTURE_H */
