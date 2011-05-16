@@ -11,7 +11,6 @@
 
 #include "nav_pn.h"
 
-
 /* calculate the distance between 2 nodes using latitude and longitude
  *
  *
@@ -25,7 +24,7 @@ double calc_dist(struct point start, struct point node){
     double dRadLatitude2 = node.lat*PI/180.0;
     double dDisLatitude = dRadLatitude1 - dRadLatitude2;
     double dDisLongitude = start.lon*PI/180.0 - node.lon*PI/180.0;
-    dist= 2 * asin(sqrt(pow(sin(dDisLatitude/2),2) + cos(dRadLatitude1)*cos(dRadLatitude2)*pow(sin(dDisLongitude/2),2)));
+    dist= 2*asin(sqrt(pow(sin(dDisLatitude/2),2)+cos(dRadLatitude1)*cos(dRadLatitude2)*pow(sin(dDisLongitude/2),2)));
     dist *= EARTH_RADIUS*1000;
     return dist;
 }
@@ -38,7 +37,7 @@ double calc_dist(struct point start, struct point node){
  *
  */
 double calc_k(struct point start, struct point dest){
-    double k,c;	
+    double k = 0;	
     k= (start.lon - dest.lon)/(start.lat-dest.lat);
     return k;	
     }
@@ -51,7 +50,8 @@ double calc_k(struct point start, struct point dest){
  *
  */
 double calc_c(struct point start,struct point dest){
-    double k,c;
+    double k = 0;
+    double c = 0;
     k= (start.lon- dest.lon)/ (start.lat-dest.lat);	
     c=start.lon-k*start.lat;	
     return c;	
@@ -65,7 +65,7 @@ double calc_c(struct point start,struct point dest){
 
 
 
-int check_position(double k, double c, struct point node){
+int32_t check_position(double k, double c, struct point node){
     double position;
     position = node.lon - k*node.lat-c;
     if (position>0)        /*position>0, the node is up of line,return 1*/          
@@ -86,12 +86,13 @@ int check_position(double k, double c, struct point node){
  *
  *
  */
-#define MAX_DIST 10000
-
 struct dist* pnode(struct point start, struct point dest, struct point* node, char request){
     struct dist* p = malloc(sizeof(struct dist));
     int i=0;
-    double dist,k,c;
+    double dist = 0;
+    double k = 0;
+    double c = 0;
+
     p->distance = MAX_DIST;
     p->name = 0;
 	
@@ -145,13 +146,13 @@ struct dist* pnode(struct point start, struct point dest, struct point* node, ch
 double in_degree(double input)
 {
 	double output = 0;
-	int degree = 0;
+	int32_t degree = 0;
 
 	input = input/100;
 
-	degree = (int)input;
+	degree = (int32_t)input;
 
-	output = (input - degree)/0.6;
+	output = (input - degree)/DEGREE_CONVERTER;	/*  */
 
 	output += degree;
 
@@ -160,27 +161,32 @@ double in_degree(double input)
 
 
 /* longitudinal & minutes */
+/*
 double degree_minutes(double input)
 {
 	double output = 0;
-	int degree = 0;	
+	int32_t degree = 0;	
 
-	degree = (int)input;
+	degree = (int32_t)input;
 
 	output = (input - degree)*60 + degree*100;
 
 	return output;
 }
-
+*/
 
 /* Calculate the direction between 2 points, the angle is in degree(0~360)
  *
  *
  */
 double calc_angle(struct point start, struct point dest){
-     double x,y,angle;
+     double x = 0; 
+     double y = 0;
+     double angle = 0;
+
      x=dest.lon-start.lon;
      y=dest.lat-start.lat;
+
      if(x>=0 && y>0){
           angle = atan(x/y)*180/PI;   // 0 <=angle<90 
      }
