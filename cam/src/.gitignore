@@ -1,0 +1,32 @@
+# The files and file extensions mentioned within this file
+# will be ignored by git
+
+# Specific files
+#################
+main.c
+m1.c
+src/m1.c
+src/main.c
+src/test.elf
+src/test.rom
+test.rom
+test.elf
+.gitignore~
+Makefile~
+README~
+../Makefile
+../Makefile-template
+../src/blink.c
+
+# File types
+#################
+*.o
+*.c~
+*.c#
+*.map
+
+# Directories
+#################
+bin/
+../bin/
+doc/

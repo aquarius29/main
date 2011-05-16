@@ -1,6 +1,7 @@
 /**
  * Module:       motor_control.h
  * Author(s):    Kristofer Hansson Aspman
+ *               Magnus Bergqvist
  *
  * Description:  The typedef of the bitfield struct and
  *               all the prototypes for the functions used
@@ -18,15 +19,40 @@
 #endif
 #include <stdint.h>
 
-#define NORMAL_INCREMENT 2
-#define PANIC_INCREMENT 4
-#define NORMAL_DECREMENT -2
-#define PANIC_DECREMENT -4
+#define NORMAL_STEP 5
+#define PANIC_STEP 50
+
 /* defines which "pin" in the arduino, to be changed further on */
-#define LEFT_MOTOR 6
-#define RIGHT_MOTOR 3
-#define FRONT_MOTOR 4
-#define REAR_MOTOR 5
+#define RIGHT_MOTOR 2
+#define LEFT_MOTOR 3
+#define FRONT_MOTOR 5
+#define REAR_MOTOR 6
+
+
+/* defines maximum and minimum pulse width in µs for every motor 
+   i.e. at which pulse the motor starts turning and at which pulse it
+   reaches its max speed */
+#define MIN_PULSE_FRONT 1000
+#define MAX_PULSE_FRONT 2000
+#define MIN_PULSE_REAR 1000
+#define MAX_PULSE_REAR 2000
+#define MIN_PULSE_LEFT 1000
+#define MAX_PULSE_LEFT 2000
+#define MIN_PULSE_RIGHT 1000
+#define MAX_PULSE_RIGHT 2000
+
+/* defines the min and max values (pulse width in µs that are allowed) */
+#define MIN_ESC_PULSE 1000
+#define MAX_ESC_PULSE 2000
+
+#define IDLE_SPEED 1100
+#define STOP_PULSE 1000
+
+/* defines hover speed pulse width in µs for every motor */
+#define HOVER_PULSE_RIGHT 1400
+#define HOVER_PULSE_LEFT 1400
+#define HOVER_PULSE_FRONT 1400
+#define HOVER_PULSE_REAR 1400
 
 extern uint16_t rightPulse;
 extern uint16_t leftPulse;
@@ -70,6 +96,20 @@ void moto_decreaseFrontPanic(void);
 void moto_decreaseRearPanic(void);
 
 void printMotorStatus(void);
+
+void moto_left_motor(unsigned char,unsigned char);
+void moto_right_motor(unsigned char,unsigned char);
+void moto_front_motor(unsigned char,unsigned char);
+void moto_rear_motor(unsigned char,unsigned char);
+
+uint16_t rightMotorLimitIncrease(uint16_t currentPulse, uint16_t increment);
+uint16_t rightMotorLimitDecrease(uint16_t currentPulse, uint16_t decrement);
+uint16_t leftMotorLimitIncrease(uint16_t currentPulse, uint16_t increment);
+uint16_t leftMotorLimitDecrease(uint16_t currentPulse, uint16_t decrement);
+uint16_t frontMotorLimitIncrease(uint16_t currentPulse, uint16_t increment);
+uint16_t frontMotorLimitDecrease(uint16_t currentPulse, uint16_t decrement);
+uint16_t rearMotorLimitIncrease(uint16_t currentPulse, uint16_t increment);
+uint16_t rearMotorLimitDecrease(uint16_t currentPulse, uint16_t decrement);
 
 struct pulses{
     uint16_t right;
