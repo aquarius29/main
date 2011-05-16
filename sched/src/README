@@ -1,1 +1,2 @@
-It was an empty README!
+Scheduler contains two implementations: NAIVE & BATMAN
+each set with the name as a define flag to choose implementation

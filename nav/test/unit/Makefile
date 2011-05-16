@@ -1,0 +1,28 @@
+# 
+#  Makefile for Abstract Navigation's test/unit directory
+# 
+#  Created on: 10 apr 2011
+#      Author: Shan Huang
+# 
+
+BINPATH = ../../bin
+SRCOBJS = $(wildcard $(BINPATH)/*.o)
+TESTSRCS = $(wildcard *.c)
+
+unit: testsuite
+	@echo Running tests...
+	./testsuite
+
+valg: EXTRAGCCFLAGS+= -g
+valg: testsuite
+	@echo Running tests under valgrind...
+    valgrind --leak-check=full --show-reachable=yes --track-origins=yes ./testsuite
+
+testsuite.o: $(TESTSRCS)
+	gcc -I/usr/include/libxml2 -lxml2 -c nav_unitmain.c -o testsuite.o $(EXTRAGCCFLAGS)
+
+testsuite: $(SRCOBJS) testsuite.o
+	gcc -I/usr/include/libxml2 -lxml2 $(SRCOBJS) testsuite.o -o testsuite $(EXTRAGCCFLAGS) -lcunit 
+
+clean:
+	rm -f testsuite testsuite.exe testsuite.o *.gcov *.gcda *.gcno

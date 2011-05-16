@@ -2,10 +2,23 @@ To get all this shit to compile outside the scheduler context create a main.c an
 
 /* main.c */
 #include "moto_interface.h"
+#include "move_stub.h"
+
+#ifdef ARDUINO_DBG
+    #define ARDUINO
+#endif
+
+#ifdef ARDUINO
+    #include "WProgram.h"
+#endif
 
 int main(void){
-
-  moto_init();
-  moto_run();
-
+#ifdef ARDUINO
+    init();
+#endif
+    moto_init();
+    while(1){
+        move_run();
+        moto_run();
+    }
 }

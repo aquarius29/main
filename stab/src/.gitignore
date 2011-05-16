@@ -5,6 +5,10 @@
 #################
 main.c
 src/main.c
+src/test.elf
+src/test.rom
+test.rom
+test.elf
 .gitignore~
 Makefile~
 README~
