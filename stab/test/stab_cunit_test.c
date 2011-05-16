@@ -1,11 +1,15 @@
-/* 
- * Inpired by Magnus Bergqvist
- * Author(S) Huilin Shi
- * created 16 April 2011
- * updated 28 April 2011 
- * updated  2 May   2011
- * updated 12 May   2011
- */
+/*************************************************************************************
+ * @file stab_cunit_test.c
+ * @brief Test the funtions in the code of stablization group 
+ * @author Huilin Shi
+ * Inpired by Magnus Bergqvist(motor groups code)
+ * @date 16/04/2011
+ * @history
+ *    16/04/2011: Initial version // Huilin Shi
+      28/04/2011: Added more test funtions // Huilin Shi
+ *    02/05/2011: Added more test funtions // Huilin Shi
+ *    12/05/2011: Added more test funitons + format // Huilin Shi
+ *************************************************************************************/
 
 /* compile with something like this:  gcc stab_cunit_test.c -o test -lcunit */
 
