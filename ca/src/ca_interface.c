@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * file:         ca_interface.c
  * brief:
@@ -8,11 +9,24 @@
  * detail:
  */
 
+=======
+/*****************************************************************************
+ * Product: movementInterface.c
+ * Version: 0.1
+ * Created: April 7, 2011
+ * History:
+ *          
+ *
+ * Movement/CA Group
+ *****************************************************************************/
+#include "ca_interface.h"
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 #include <stdlib.h>
 #include <stdio.h>
 
 #ifdef ARDUINO
 #include <WProgram.h>
+<<<<<<< HEAD
 #endif
 
 #include "ca_interface.h"
@@ -46,10 +60,45 @@ int ca_run(void)
 	write_to_move(direction_filter());
 
 	return 0;
+=======
+
+//************************************************************
+// ARDUINO
+// All collision preperation goes here.
+//************************************************************
+int ca_init(void)
+{
+  return 1;
+}
+
+
+//************************************************************
+// ARDUINO
+// Collision is started here
+//************************************************************
+int ca_run(void)
+{
+  init();
+
+  /* //init the serial output */
+  // serial_init();
+  // fdevopen(serial_putchar, serial_getchar);
+
+  int i=0;
+  while(i<1000)
+    {
+      direction_filter();
+      i++;
+    }
+
+  return 1;
+
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 }
 
 
 #elif defined PC
+<<<<<<< HEAD
 /*
  * PC
  * All collision preperation goes here.
@@ -106,3 +155,40 @@ void write_to_move(int direction){
 
 	//	write(direction)
 }
+=======
+//************************************************************
+// PC
+//  All movement preperation goes here.
+//************************************************************
+int ca_init(void)
+{
+  
+
+  return 1;
+
+
+}
+
+//************************************************************
+// PC
+// Movement is started here
+//************************************************************
+int ca_run(void)
+{
+
+  int ir1=100;
+  int ir2=100;
+  int ir3=100;
+  int ir4=100;
+  int i=0;
+  while (i<5){
+    direction_filter(get_speed(),get_dir(),ir1, ir2, ir3, ir4);
+    i++;
+  }
+
+  return 1;
+}
+
+
+#endif
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16

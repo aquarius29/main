@@ -5,10 +5,13 @@
 #################
 main.c
 src/main.c
+<<<<<<< HEAD
 src/test.elf
 src/test.rom
 test.rom
 test.elf
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 .gitignore~
 Makefile~
 README~

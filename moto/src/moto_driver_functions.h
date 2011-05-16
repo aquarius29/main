@@ -2,9 +2,12 @@
  * Module:       motor_control.h
  * Author(s):    Kristofer Hansson Aspman
 <<<<<<< HEAD
+<<<<<<< HEAD
  *               Magnus Bergqvist
 =======
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
  *
  * Description:  The typedef of the bitfield struct and
  *               all the prototypes for the functions used
@@ -13,16 +16,23 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef ARDUINO_DBG
     #define ARDUINO
 #endif
 =======
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+#ifdef ARDUINO_DBG
+    #define ARDUINO
+#endif
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 #ifdef ARDUINO
    #include "WProgram.h"
 #elif defined PC
    #include <stdio.h>
 #endif
+<<<<<<< HEAD
 <<<<<<< HEAD
 #include <stdint.h>
 
@@ -60,6 +70,19 @@
 #define HOVER_PULSE_LEFT 1400
 #define HOVER_PULSE_FRONT 1400
 #define HOVER_PULSE_REAR 1400
+=======
+#include <stdint.h>
+
+#define NORMAL_INCREMENT 2
+#define PANIC_INCREMENT 4
+#define NORMAL_DECREMENT -2
+#define PANIC_DECREMENT -4
+/* defines which "pin" in the arduino, to be changed further on */
+#define LEFT_MOTOR 6
+#define RIGHT_MOTOR 3
+#define FRONT_MOTOR 4
+#define REAR_MOTOR 5
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 
 extern uint16_t rightPulse;
 extern uint16_t leftPulse;
@@ -104,6 +127,7 @@ void moto_decreaseRearPanic(void);
 
 void printMotorStatus(void);
 
+<<<<<<< HEAD
 void moto_left_motor(unsigned char,unsigned char);
 void moto_right_motor(unsigned char,unsigned char);
 void moto_front_motor(unsigned char,unsigned char);
@@ -118,12 +142,15 @@ uint16_t frontMotorLimitDecrease(uint16_t currentPulse, uint16_t decrement);
 uint16_t rearMotorLimitIncrease(uint16_t currentPulse, uint16_t increment);
 uint16_t rearMotorLimitDecrease(uint16_t currentPulse, uint16_t decrement);
 
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 struct pulses{
     uint16_t right;
     uint16_t left;
     uint16_t front;
     uint16_t rear;
 };
+<<<<<<< HEAD
 =======
 
 #define NORMAL_INCREMENT 2
@@ -165,3 +192,5 @@ void _moto_decreaseRearPanic(void);
 
 void printMotorStatus(void);
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16

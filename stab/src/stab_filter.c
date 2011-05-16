@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 /*************************************************************************
  * @file filter.c
  * @brief combines the data from the sensors (gyroscope/accelerometer)
@@ -10,6 +13,7 @@
  *    06/04/2011: Added description and comments
  *    18/04/2011: Updated code to reflect coding standards
  **************************************************************************/
+<<<<<<< HEAD
 =======
 /******************************************************************************
   File: filter.c
@@ -22,6 +26,8 @@
      06/04/2011: Added description and comments
 *******************************************************************************/
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -30,12 +36,16 @@
 
 /************************************************************
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
  * Gyro macros related to the complimentary filter:
  *   hpfc: high pass filter coefficient
  *   lpfc: low pass filter coefficient
  *   dt: rate of how often the data is read from the sensors
  *   SSF: Sensitivity scale factor
  *************************************************************/
+<<<<<<< HEAD
 =======
  Gyro macros related to the complimentary filter:
     hpfc: high pass filter coefficient
@@ -44,6 +54,8 @@
     SSF: Sensitivity scale factor
 *************************************************************/
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 #define hpfc 0.98 //To be changed 
 #define lpfc 0.02 //To be changed 
 #define time_constant 3 // To be changed
@@ -53,10 +65,18 @@
 
 /************************************************************
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
  * Functions prototypes
  ************************************************************/
 void init_filter(void);
 float comp_filter(float acc_scal, float gyro_scal, float old_est);
+<<<<<<< HEAD
+=======
+void convert_acce_raw_to_deg(float acc_x, float acc_y, float acc_z);
+
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 
 /************************************************************
  * Global variables used to save input/output of the algorithm:
@@ -64,6 +84,7 @@ float comp_filter(float acc_scal, float gyro_scal, float old_est);
  *    gyro_vector: Holds the values of the gyroscope output (x, y, z)
  *    filter_est: Output of the algorithm with (estimated vector) 
  ************************************************************/
+<<<<<<< HEAD
 =======
   Functions prototypes
 ************************************************************/
@@ -80,12 +101,15 @@ float convert_gyro_raw_to_deg_s(float a);
      filter_est: Output of the algorithm with (estimated vector) 
 ************************************************************/
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 float acc_vector[2];
 float gyro_vector[2];
 float filter_est[2];
 
 
 /************************************************************
+<<<<<<< HEAD
 <<<<<<< HEAD
  * This is where the algorithm calculates the best estimate by combining 
  * the data from the accelerometer and gyroscope together. The noise and 
@@ -151,6 +175,11 @@ float filter_est[2];
   the data from the accelerometer and gyroscope together. The noise and drift 
   from the sensors is eliminated here. 
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+ * This is where the algorithm calculates the best estimate by combining 
+ * the data from the accelerometer and gyroscope together. The noise and 
+ * drift from the sensors is eliminated here. 
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
  ************************************************************/
 float comp_filter(float acc_scal, float gyro_scal, float old_est)
 {
@@ -164,6 +193,7 @@ float comp_filter(float acc_scal, float gyro_scal, float old_est)
 
 /************************************************************
 <<<<<<< HEAD
+<<<<<<< HEAD
  * This method initializes the filter and sensors data before the algorithm
  * starts running
  ************************************************************/
@@ -172,6 +202,11 @@ float comp_filter(float acc_scal, float gyro_scal, float old_est)
   starts running
 ************************************************************/
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+ * This method initializes the filter and sensors data before the algorithm
+ * starts running
+ ************************************************************/
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 void init_filter()
 {
   int i;
@@ -184,6 +219,7 @@ void init_filter()
 }
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 
@@ -202,6 +238,11 @@ float convert_gyro_raw_to_deg_s(float a)
 /************************************************************
   Converts the raw data from the accelerometer to the scaled value 
   in degrees
+=======
+/************************************************************
+* Converts the raw data from the accelerometer to the scaled value
+* in degrees
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 ************************************************************/
 void convert_acce_raw_to_deg(float acc_x, float acc_y, float acc_z)
 {
@@ -210,4 +251,10 @@ void convert_acce_raw_to_deg(float acc_x, float acc_y, float acc_z)
   acc_vector[1] = acos(acc_y/R);
   acc_vector[2] = acos(acc_z/R);
 }
+<<<<<<< HEAD
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+
+
+
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16

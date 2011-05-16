@@ -4,10 +4,13 @@
 */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <stdint.h>
 
 =======
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 //Dont put any lines of code before this line
 #ifndef _STATE_DEFINITIONS_H_
 #define _STATE_DEFINITIONS_H_
@@ -33,6 +36,7 @@
 # define CONTROL_ID 0x02 //this was added
 # define SPECIAL_COMMAND_ID 0x03 //this was added
 <<<<<<< HEAD
+<<<<<<< HEAD
 # define HOVER 0xFF
 # define BAD_MESSAGE 0xf //this was added, when bits are not within the 0-255 range
 # define NOTHING 0xB
@@ -46,6 +50,11 @@
 # define BAD_MESSAGE 0xf //this was added, when bits are not within the 0-255 range
 
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+
+# define BAD_MESSAGE 0xf //this was added, when bits are not within the 0-255 range
+
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 
 # define  INCREASE_REAR_MOTOR 0xA1
 # define  DECREASE_REAR_MOTOR 0x81
@@ -85,6 +94,7 @@
 struct bits_type
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 	uint8_t ID :2;
 	uint8_t INCREASE :1;
 	uint8_t PANIC :1;
@@ -93,6 +103,8 @@ struct bits_type
 	uint8_t FRONT :1;
 	uint8_t REAR :1;
 =======
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 	unsigned char ID :2;
 	unsigned char INCREASE :1;
 	unsigned char PANIC :1;
@@ -100,7 +112,10 @@ struct bits_type
 	unsigned char LEFT :1;
 	unsigned char FRONT :1;
 	unsigned char REAR :1;
+<<<<<<< HEAD
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 };
 
 // Dont put any code after this line

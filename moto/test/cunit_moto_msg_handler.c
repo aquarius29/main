@@ -6,6 +6,7 @@
 */
 
 #include <stdio.h>
+<<<<<<< HEAD
 #include <stdint.h>
 #include "CUnit/CUnit.h"
 #include "cunit_moto_msg_handler.h"
@@ -31,11 +32,24 @@ void test_moto_examineID(void){
     msg binary;
     uint8_t a = 0xa3;
     binary = INT_TO_BITFIELD(&a);
+=======
+#include "CUnit/CUnit.h"
+#include "../src/moto_msg_manipulation.h"
+/*Holds the definition of the type msg and the macros INT_TO_BITFIELD(a)
+and BITFIELD_TO_CHAR(a)*/
+#include "../src/moto_msg_handler.h"
+/*Includes the tested functions examineID, ...*/
+
+/*test_examineID checks so that the function returns 1 when  spectra*/
+void test_moto_examineID(void){
+    msg binary = INT_TO_BITFIELD(0xa3);
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
     msg_pointer mp = &binary;
     
     CU_ASSERT(examineID(mp)==0);
 }
 
+<<<<<<< HEAD
 
 /*test_examineID_bad_msg checks so that the function returns 1 when the bad*/
 /* message (0xF) is sent in as argument to the function */
@@ -127,6 +141,15 @@ void test_moto_specialMotorCommand(void){
  */
 
 #ifndef MASTER_TEST_SUITE
+=======
+void test_moto_examineID_bad_msg(void){
+    msg binary = INT_TO_BITFIELD(0xf);
+    msg_pointer mp = &binary;
+    
+    CU_ASSERT(examineID(mp)==1);
+}
+
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 /*check_add_ok() gives a print_out on the screen when a test suite or a test
 has been created, the char** passed to this function should always be in the 
 style:
@@ -142,6 +165,10 @@ void check_add_ok(char* msg){
     }
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 int main(int argc){
 /***************************************************************************/
     CU_ErrorCode ec = CU_initialize_registry();    
@@ -165,14 +192,22 @@ int main(int argc){
     CU_add_test(msg_handler, "test_moto_examineID_bad_msg",
         test_moto_examineID_bad_msg);
     check_add_ok("test test_moto_examineID_bad_msg");
+<<<<<<< HEAD
 
     CU_add_test(msg_handler, "test_moto_controlMotors", test_moto_controlMotors);
     check_add_ok("test test_moto_controlMotors");
 
     CU_add_test(msg_handler, "test_moto_specialMotorCommand", test_moto_specialMotorCommand);
     check_add_ok("test test_moto_specialMotorCommand");    
+=======
+    
+
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 
     CU_console_run_tests();
     CU_cleanup_registry();
 }
+<<<<<<< HEAD
 #endif
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16

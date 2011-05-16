@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # File:		Makefile
 # Brief:		makefile
 # Author:	Alina Butko
@@ -50,3 +51,23 @@ testsuite: $(SRCOBJS) testsuite.o
 
 clean:
 	rm -f testsuite testsuite.exe testsuite.o *.gcov *.gcda *.gcno
+=======
+SRCPATH = ../../ca
+SRCOBJS = $(wildcard $(SRCPATH)/*.o)
+TESTSRCS = $(wildcard *.c)
+
+unit: testsuite
+	@echo Running tests...
+	./testsuite
+
+testsuite.o: $(TESTSRCS)
+	gcc -c unitmain.c -o testsuite.o $(ECTRAGCCFLAGS)
+
+testsuite: $(SRCOBJS) testsuite.o
+	gcc $(SRCOBJS) testsuite.o -o testsuite $(EXTRAGCCFLAGS) -lcunit
+
+
+clean:
+	rm -f testsuite testsuite.exe testsuite.o
+
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16

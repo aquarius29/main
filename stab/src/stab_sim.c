@@ -14,7 +14,10 @@
  *                a bug before. //Adam
  *    11/04/2011: Renamed file to stab_sim (was stab_gyro_sim) // Adam
  *    18/04/2011: Updated code to reflect coding standards
+<<<<<<< HEAD
  *    11/05/2011: //My
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
  *************************************************************************/
 #ifdef PC
 #include <stdio.h>
@@ -26,6 +29,7 @@
 /* 
  * Function prototype
  */
+<<<<<<< HEAD
 float gen_float(float a, float b);
 long gen_long(long a, long b);
 int gen_int(int a, int b);
@@ -132,4 +136,44 @@ long gen_long(long start, long end) {
     return start + (int)(end * rand() / (RAND_MAX + 1.0));
 }
 
+=======
+float gen_val(float a, float b);
+struct vector init_sim(void);
+
+
+/*
+ * A vector struct that is returned by the simulator when invoked
+ */
+struct vector
+{
+  float x;
+  float y;
+  float z;
+};
+
+
+/*
+ * Function to be called by other c files when a vector needs 
+ * to be generated
+ */
+struct vector init_sim(void)
+{
+  struct vector vect;
+  srand(time(NULL));
+  vect.x = gen_val(-180.0, 360.0);
+  vect.y = gen_val(-180.0, 360.0);
+  vect.z = gen_val(-180.0, 360.0);
+
+  return vect;
+}
+
+
+/*
+ * Function that generates the actual random float
+ */
+float gen_val(float start, float end)
+{ 
+  return start + (int)( end * rand() / ( RAND_MAX + 1.0 ) );
+}
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 #endif

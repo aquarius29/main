@@ -81,12 +81,17 @@ uno: clean install
 pc: clean
 	gcc -DPC $(SRC) -o bin/$(PROG).x
 
+<<<<<<< HEAD
 pc_debug: clean
 	gcc -DPC $(SRC) -o bin/$(PROG).x
 
 clean:
 	@ cd bin && rm -f *.o *.rom *.elf *.map *~ *.lst *.x
 	@ cd src && rm -f *.o *.rom *.elf *.map *~ *.lst *.x
+=======
+clean:
+	@ cd bin && rm -f *.o *.rom *.elf *.map *~ *.lst *.x
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 	@ echo "Project cleaned"
 	
 version:

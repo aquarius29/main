@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*!@author Kristofer Hansson Aspman & Magnus Bergqvist
  * @file moto_msg_manipulation.c
  * @version v0.03
@@ -77,6 +78,8 @@ void printMsg(msg_pointer mp){
     PRINT_NEW_LINE;
 
 =======
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 /**
  * Module:       message.c
  * Author(s):    Kristofer Hansson Aspman
@@ -85,6 +88,12 @@ void printMsg(msg_pointer mp){
  *               for handling the messages.
  *
  */
+<<<<<<< HEAD
+=======
+ #ifdef ARDUINO_DBG
+	#define ARDUINO
+#endif
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 
 #ifdef ARDUINO
    #include "WProgram.h"
@@ -95,7 +104,11 @@ void printMsg(msg_pointer mp){
 #include "moto_msg_manipulation.h"
 
 void printMsg(msg_pointer mp){
+<<<<<<< HEAD
 #ifdef ARDUINO
+=======
+#ifdef ARDUINO_DBG
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
   Serial.println("***********************************\n");
   Serial.println("         Message Information\n");
   Serial.println("\nBits are:\n");
@@ -124,7 +137,11 @@ void printMsg(msg_pointer mp){
 
   Serial.println("***********************************");
 
+<<<<<<< HEAD
 #elif defined PC //PC Code
+=======
+#elif defined PC//PC Code
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
   printf("***********************************\n");
   printf("         Message Information\n");
   printf("\nBits are:\n-ID: %d\n-Incr: %d\n-Panic: %d\n",
@@ -142,5 +159,8 @@ void printMsg(msg_pointer mp){
   printf("***********************************\n");
 
 #endif
+<<<<<<< HEAD
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 }

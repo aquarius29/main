@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*
  * file:         ca_main.c
  * brief:        main file for collsion avoidance
@@ -18,4 +19,14 @@ int main(int argc, char *argv[])
 	ca_init();
 	ca_run();
 	return 0;
+=======
+#include "ca_interface.h"
+#include <stdlib.h>
+#include <stdio.h>
+
+int main(int argc, char *argv[])
+{
+  ca_run();
+  return 0;
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 }

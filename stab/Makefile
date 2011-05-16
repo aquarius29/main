@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 # #######################################################################
 # Makefile for inclusion by other projects
 #   heavily copied from original libarduino sources
@@ -17,10 +20,16 @@
 # Hint:
 #    Launch the Arduino program to see what your USB device 
 #    is called (look under the port settings)
+<<<<<<< HEAD
 
 #USB_PORT=$(MYUSB)
 #/dev/ttyACM2
 USB_PORT=/dev/ttyACM0
+=======
+                                                                                  
+USB_PORT=/dev/ttyACM0
+#USB_PORT=/dev/tty.usbmodem411
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 
 #########################################################################
 #########################################################################
@@ -55,26 +64,47 @@ test: EXT=x
 # -Wstrict-prototypes
 #-Wa,-ahlms=$(PROG).lst
 $(OBJ): $(SRC)
+<<<<<<< HEAD
 	@ cd src && \
 	avr-g++ -c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -mmcu=$(MMCU) -DARDUINO=22 -DF_CPU=$(F_CPU) -DARDUINO=22 -I../../include ../$(SRC)
 	@ echo "Object files created"
 
 compile:
 	@ avr-gcc $(OBJ) -Os -Wl,--gc-sections -mmcu=$(MMCU) -o src/$(PROG).$(EXT) -l$(LIB) -Llib -lm
+=======
+
+	@ cd bin && \
+	avr-g++ -c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -mmcu=$(MMCU) -DARDUINO_DBG=22 -DF_CPU=$(F_CPU) -DARDUINO_DBG=22 -I../../include ../$(SRC)
+	@ echo "Object files created"
+
+compile:
+	@ avr-gcc $(OBJ) -Os -Wl,--gc-sections -mmcu=$(MMCU) -o bin/$(PROG).$(EXT) -l$(LIB) -Llib -lm
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 	@ echo "Project compiled"
 
 #-DENABLE_PWM
 # avr-gcc $(OBJ) -Os -Wl,-Map=$(PROG).map,--cref -mmcu=$(MMCU) -DARDUINO=22 -l$(LIB) -Llib -lm \
+<<<<<<< HEAD
 #		-fno-exceptions  -ffunction-sections -fdata-sections -o src/$(PROG).x
+=======
+#		-fno-exceptions  -ffunction-sections -fdata-sections -o bin/$(PROG).x
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 
 test: clean $(OBJ) compile
 	@ echo "Test passed"
 
 install: $(OBJ) compile
+<<<<<<< HEAD
 	@ cd src && avr-objcopy -O srec $(PROG).elf $(PROG).rom
 #	checksize $(PROG).elf
 	@ avrdude -p $(MMCU) -P $(USB_PORT) -c $(STK) -b $(BAUD) -F -u -U flash:w:src/$(PROG).rom
 #	@ avrdude -p $(MMCU) -c $(STK) -b $(BAUD) -F -u -U flash:w:src/$(PROG).rom	
+=======
+	@ cd bin && avr-objcopy -O srec $(PROG).elf $(PROG).rom
+#	checksize $(PROG).elf
+	@ avrdude -p $(MMCU) -P $(USB_PORT) -c $(STK) -b $(BAUD) -F -u -U flash:w:bin/$(PROG).rom
+
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 
 mega: clean install
 
@@ -87,7 +117,11 @@ pc: clean
 clean:
 	@ cd src && rm -f *.o *.rom *.elf *.map *~ *.lst *.x
 	@ echo "Project cleaned"
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 version:
 	@ echo $(VERS)
 
@@ -99,6 +133,7 @@ help:
 #	avrdude -p atmega168 -c stk200 -U lfuse:w:0x62:m
 
 .PHONY : clean compile test uno mega pc install help version
+<<<<<<< HEAD
 =======
 PROG=stab
 SRC=stab_main.c stab_rg.c stab_ra.c stab_gyro_sim.c stab_filter.c stab.h stab_sched.h main.c
@@ -114,3 +149,5 @@ pc-debug:
 clean:
 	rm -f $(PROG) $(PROG).o *.lst *.o
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16

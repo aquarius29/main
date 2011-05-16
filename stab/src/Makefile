@@ -1,7 +1,13 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ########################### Added by Adam 09/05/11 #########################
 
 LIB_SRC=read_mg.c stab_filter.c stab_main.c stab_ra.c stab_rb.c stab_rg.c stab_sim.c
+=======
+########################### Added by jogr 110413 #########################
+
+LIB_SRC=stab_main.c stab_filter.c stab_ra.c stab_rg.c stab_sim.c
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 
 LIB_OBJ = $(LIB_SRC:.c=.o)
 
@@ -10,6 +16,7 @@ LIB_OBJ = $(LIB_SRC:.c=.o)
 
 lib-pc: $(LIB_OBJ)
 	ar rvs ../lib/libstab.a $(LIB_OBJ)
+<<<<<<< HEAD
 
 lib-mega: $(LIB_OBJ)
 	@echo Objects: $(LIB_OBJ)
@@ -18,6 +25,16 @@ lib-mega: $(LIB_OBJ)
 clean:
 	rm -f *.o
 
+=======
+	
+lib-mega: $(LIB_OBJ)
+	@echo Objects: $(LIB_OBJ)
+	avr-ar rvs ../lib/libstab.a $(LIB_OBJ)
+	
+clean:
+	rm -f *.o
+	
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 ##########################################################################
 
 
@@ -25,6 +42,10 @@ clean:
 
 
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 # #######################################################################
 # Makefile for inclusion by other projects
 #   heavily copied from original libarduino sources
@@ -49,7 +70,11 @@ clean:
 # Hint:
 #    Launch the Arduino program to see what your USB device 
 #    is called (look under the port settings)
+<<<<<<< HEAD
 
+=======
+                                                                                  
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 #USB_PORT=/dev/ttyACM0
 USB_PORT=/dev/tty.usbmodem411
 
@@ -109,13 +134,18 @@ USB_PORT=/dev/tty.usbmodem411
 #clean:
 #	@ cd bin && rm -f *.o *.rom *.elf *.map *~ *.lst *.x
 #	@ echo "Project cleaned"
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 #help:
 #	@ echo "Check your code includes 'WProgram.h' \nCheck you call 'init()'"
 
 ## reprogram the fuses for the right clock source
 ##fuse:
 ##	avrdude -p atmega168 -c stk200 -U lfuse:w:0x62:m
+<<<<<<< HEAD
 
 .PHONY : clean uno due mega install help lib
 
@@ -160,3 +190,7 @@ ardu:
 clean:
 	rm -f $(PROG) $(PROG).exe *.o *.lst
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+	
+.PHONY : clean uno due mega install help lib
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16

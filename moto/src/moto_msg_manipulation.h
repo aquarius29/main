@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*!@author Kristofer Hansson Aspman
  * @file moto_msg_manipulation.h
  * @version v0.02
@@ -23,12 +24,18 @@
 #endif
 =======
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+#ifdef ARDUINO_DBG
+    #define ARDUINO
+#endif
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 #ifdef ARDUINO
    #include "WProgram.h"
 #elif defined PC
    #include <stdio.h>
 #endif
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /* Casts a uint8_t into a pointer of type msg_pointer */
 #define INT_TO_BITFIELD(a) *(msg_pointer)a
@@ -73,6 +80,8 @@ typedef struct control_message{
  * for the compilation (ARDUINO_DBG or PC respectively).
  */
 =======
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 #define INT_TO_BITFIELD(a) *(msg_pointer)a
 #define BITFIELD_TO_CHAR(a) *(unsigned char*)a
 
@@ -102,5 +111,8 @@ typedef struct control_message{
 
 /* } msg; */
 
+<<<<<<< HEAD
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 void printMsg(msg_pointer mp);

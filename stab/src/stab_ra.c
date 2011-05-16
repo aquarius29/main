@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 /***************************************************************************
  * @file stab_ra.c
  * @brief Takes care of the communication with the accelerometer
@@ -13,6 +16,7 @@
 #include <Wire.h>
 #include "WProgram.h"
 
+<<<<<<< HEAD
 struct vector
 {
   float x;
@@ -20,6 +24,8 @@ struct vector
   float z;
 };
 
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 /* 
  *address of the accelerometer on the board 
  */
@@ -28,6 +34,7 @@ struct vector
 /*
  *Function prototypes
  */
+<<<<<<< HEAD
 struct vector readAccel();
 
 void init_accel();
@@ -41,10 +48,44 @@ struct vector readAccel()
   
   Wire.beginTransmission(ADDRESS);
   Wire.send(0x02); /*start of x LSB for reading data*/
+=======
+void init_accel();
+void readAccel();
+
+
+
+/*int main()*/
+/*//void setup()*/
+/*{*/
+/*  init();*/
+/*  Wire.begin();*/
+/*  Serial.begin(9600);*/
+/*// initBMA180() should be done once, it will write appropriate adjustments for range and mode. */
+/*//  init_accel();*/
+/*//  delay(2000);*/
+/*	while(1){*/
+/*  readAccel();*/
+/*  delay(300);*/
+/*	}*/
+/*  return 0;*/
+/*}*/
+
+
+/*Read data from accelerometer memory*/
+void readAccel()
+{
+    unsigned int result;
+    int x,y,z;
+    int temp;
+
+  Wire.beginTransmission(ADDRESS);
+  Wire.send(0x02);  							/*start of x LSB for reading data*/
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
   Wire.endTransmission();
   Wire.requestFrom((int)ADDRESS, 7);
   
   if(Wire.available()==7)
+<<<<<<< HEAD
     {
       int lsb = Wire.receive()>>2;
       int msb = Wire.receive();
@@ -69,6 +110,34 @@ struct vector readAccel()
   vect.y = y;
   vect.z = z;   
   return vect;
+=======
+  {
+    int lsb = Wire.receive()>>2;
+    int msb = Wire.receive();
+    x=(msb<<6)+lsb; 
+    if (x&0x2000) x|=0xc000;
+/* shift 2 unused bits */
+    lsb = Wire.receive()>>2;
+    msb = Wire.receive();
+    y=(msb<<6)+lsb;
+    if (y&0x2000) y|=0xc000;
+    lsb = Wire.receive()>>2;
+    msb = Wire.receive();
+    z=(msb<<6)+lsb;
+    if (z&0x2000) z|=0xc000;
+    temp = Wire.receive();
+    if (temp&0x80) temp|=0xff00;
+  }
+/*  result = Wire.endTransmission();*/
+/*  Serial.print("raw data: ");*/
+/*  Serial.print("X=");*/
+/*  Serial.print(x);*/
+/*  Serial.print(" Y=");*/
+/*  Serial.print(y);*/
+/*  Serial.print(" Z=");*/
+/*  Serial.print(z);*/
+/*  Serial.println();*/
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 }
 
 /*
@@ -116,6 +185,7 @@ void init_accel()
 
 #endif
 
+<<<<<<< HEAD
 =======
 #include "stab.h"
 
@@ -133,3 +203,5 @@ float read_accel()
 
 }
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16

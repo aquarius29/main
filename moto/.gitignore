@@ -17,11 +17,18 @@ README~
 *.c~
 *.c#
 *.map
+<<<<<<< HEAD
 test/*.x
 *.h~
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 
 # Directories
 #################
 bin/
 ../bin/
 doc/
+<<<<<<< HEAD
+=======
+
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16

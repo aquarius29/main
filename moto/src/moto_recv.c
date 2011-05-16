@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*!@author Kristofer Hansson Aspman
  * @file moto_recv.c
  * @version v0.02
@@ -28,3 +29,17 @@ msg_pointer moto_recvMsg(void){
 
 }
 
+=======
+/*! @author Kristofer Hansson Aspman
+ * @file moto_recv.c
+ * @version v0.01
+ * @date 2011-04-14
+ * @brief Intended to pick up the message held by the protocol
+ */
+
+int moto_recvMsg(void){
+
+/* get message from protocol group and return it */
+
+}
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16

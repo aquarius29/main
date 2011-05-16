@@ -1,2 +1,6 @@
+<<<<<<< HEAD
 Scheduler contains two implementations: NAIVE & BATMAN
 each set with the name as a define flag to choose implementation
+=======
+It was an empty README!
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16

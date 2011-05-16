@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 Stab group README:
 
 The code is structered so that it can be compiled for both the 
@@ -11,6 +14,9 @@ The code can be compiled with the following taregets:
 *) make mega/ make uno: compiles the code for arduino and flashes it to the board. Real data is read from the sensors.
 
 
+<<<<<<< HEAD
 =======
 Stabilization group folder
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16

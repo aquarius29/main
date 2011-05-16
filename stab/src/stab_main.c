@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 /*************************************************************************
  * @file stab_main.c 
  * @brief This is the main file that contains the init and run 
@@ -11,12 +14,15 @@
  *    06/04/2011: Added description and comments //Adam
  *    18/04/2011: Updated the ifdef to reflect new scheduler code //Adam
  *                Updated code to reflect coding standards
+<<<<<<< HEAD
  *    26/04/2011: Magn and accel is now read from here / integrated //Adam
  *    27/04/2011: Barometer code included //Adam
  *    08/05/2011: Removed some stuff and while loop //Adam
  *    09/05/2011: Completed message passing to protocol, 
  *                fixed some coding standards //My
  *    12/05/2011: Tiny changes..movement group wants raw data from Gyrosensor instead of Accelerometer //Yuwen
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
  **************************************************************************/
 #ifdef PC 
 #include <stdio.h>
@@ -24,9 +30,12 @@
 #include <stdint.h>
 #include "stab_interface.h"
 #include "stab.h"
+<<<<<<< HEAD
 #include "math.h"
 //#include <proto_lib.h>
 
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 #elif defined ARDUINO 
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,8 +44,11 @@
 #include "stab.h"
 #include <Wire.h>
 #include <WProgram.h>
+<<<<<<< HEAD
 #include "math.h"
 /*#include <proto_lib.h>*/
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 #endif 
 /************************************************************
  * Global variables used to save input/output of the algorithm:
@@ -46,6 +58,7 @@
  ************************************************************/
 struct vector
 {
+<<<<<<< HEAD
     float x;
     float y;
     float z;
@@ -77,10 +90,16 @@ struct vector
   float y;
   float z;
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+  float x;
+  float y;
+  float z;
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 };
 
 struct vector gyro_vect;
 struct vector accel_vect;
+<<<<<<< HEAD
 <<<<<<< HEAD
 struct vector magn_vect;
 struct baro_data baro;
@@ -89,6 +108,9 @@ float heading; // heading from magnetometer
 void convert_accel_raw_to_deg();
 float data(float x, float y, float z);
 
+=======
+struct vector filter_vect;
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 
 /*
  * Inits the main hardware components of the shield
@@ -98,6 +120,7 @@ int16_t stab_init(void)
 {
   // code to init the hardware goes in here as well
 #if defined PC 
+<<<<<<< HEAD
     //init_filter();
 #elif defined ARDUINO
     init();
@@ -109,18 +132,32 @@ int16_t stab_init(void)
     init_baro_hardware();
 #endif
     return 0; 
+=======
+  init_filter();
+#elif defined ARDUINO
+  init();
+  Serial.begin(9600);
+  Wire.begin();
+  init_gyro_hardware();
+#endif
+  return 0; 
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 
 }
 
 /*
  *  Runs the code when the scheduler calls it
+<<<<<<< HEAD
  *  The PC version uses a simulator that only includes 
  *  the gyroscope and accelerometer so the output
  *  is less accurate than the actual IMU hardware
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
  */
 int16_t stab_run(void)
 {
 #ifdef PC
+<<<<<<< HEAD
     gyro_vect = sim_vector();
     accel_vect = sim_vector();
     heading = sim_heading();
@@ -231,6 +268,8 @@ int16_t stab_init(void)
 
 int16_t stab_run(void)
 {
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
   gyro_vect = init_sim();
   accel_vect = init_sim();
   
@@ -239,6 +278,7 @@ int16_t stab_run(void)
   //filter_est[2] = comp_filter(acc_vector[2], gyro_vect[2], filter_est[2]);
   filter_vect.z = gyro_vect.z;
   
+<<<<<<< HEAD
   //#ifdef DEBUG 
   printf("*** Inside the actual stab_run in stan_main.c\n");
   printf("ESTIMATED X %f\n", filter_vect.x);
@@ -248,4 +288,19 @@ int16_t stab_run(void)
   
   return 0;
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+  printf("ESTIMATED X %f\n", filter_vect.x);
+  printf("ESTMIATED Y %f\n", filter_vect.y);
+  printf("ESTMIATED Z %f\n", filter_vect.z);
+  
+#elif defined ARDUINO
+  gyro_vect =  read_gyro_data();
+  Serial.println(gyro_vect.x);
+  Serial.println(gyro_vect.y);
+  Serial.println(gyro_vect.z);
+  readAccel();
+#endif
+  
+  return 0;
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 }

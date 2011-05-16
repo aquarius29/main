@@ -2,6 +2,7 @@ To get all this shit to compile outside the scheduler context create a main.c an
 
 /* main.c */
 #include "moto_interface.h"
+<<<<<<< HEAD
 #include "move_stub.h"
 
 #ifdef ARDUINO_DBG
@@ -21,4 +22,12 @@ int main(void){
         move_run();
         moto_run();
     }
+=======
+
+int main(void){
+
+  moto_init();
+  moto_run();
+
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 }

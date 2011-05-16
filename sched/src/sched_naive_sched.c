@@ -17,6 +17,10 @@
  *  proided by other modules and just loops over these.
  */
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 #include <stdlib.h>
 #include <stdint.h>
 
@@ -26,6 +30,7 @@
 #include "mov_interface.h"
 #include "sched_stubs.h"
 
+<<<<<<< HEAD
 #include "sched_stubs.h"
 
 #ifdef PC
@@ -34,6 +39,17 @@
 #elif ARDUINO
 /* arduino includes */
 #endif /* PC ARDUINO */
+=======
+#ifdef PC
+/* non-arduino includes */
+#include <stdio.h>
+
+#endif /* PC */
+
+#ifdef ARDUINO
+
+#endif /* ARDUINO */
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 
 #include "sched_naive_sched.h"
 
@@ -53,7 +69,10 @@ void sched_naive_init(void){
                             &moto_init };
     
     /* function pointers to modules run functions */
+<<<<<<< HEAD
 
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
     sched_Fun_t funArrRun[] = {   
                             &protoRun,
                             &mov_run,
@@ -100,6 +119,10 @@ int16_t system_init(sched_Fun_t *funArrInit){
         #endif /* DEBUG */
         #endif /* PC */
     }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
     return 1;
 }
 
@@ -135,5 +158,9 @@ int16_t time(void){
     #endif /* ARDUINO */
     
     return currentTime;
+<<<<<<< HEAD
 }
 
+=======
+}
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16

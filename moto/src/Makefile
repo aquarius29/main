@@ -1,8 +1,15 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 ########################### Added by jogr 110413 #########################
 
 LIB_SRC=*.c#moto_driver_functions.c moto_interface.c moto_msg_handler.c moto_msg_manipulation moto_stubs.c 
+=======
+
+########################### Added by jogr 110413 #########################
+
+LIB_SRC=moto_driver_functions.c moto_interface.c moto_msg_handler.c moto_msg_manipulation.c
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 
 LIB_OBJ = $(LIB_SRC:.c=.o)
 
@@ -119,6 +126,7 @@ USB_PORT=/dev/tty.usbmodem411
 ##	avrdude -p atmega168 -c stk200 -U lfuse:w:0x62:m
 	
 .PHONY : clean uno due mega install help lib
+<<<<<<< HEAD
 =======
 # CC and CFLAGS are defined in higher level Makefile
 
@@ -158,3 +166,5 @@ ardu:
 clean:
 	rm -f $(PROG) $(PROG).exe *.o *.lst
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16

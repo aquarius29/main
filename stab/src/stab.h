@@ -1,5 +1,8 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
  * @brief Interface for the stabilization code. It allows the \n 
  * different files to communicate with each other. \n
  * THIS IS NOT TO BE USED BY OTHER GROUPS 
@@ -17,6 +20,7 @@ float comp_filter(float acc_scal, float gyro_scal, float old_est);
 float read_gyro();
 float read_accel();
 struct vector init_sim(void);
+<<<<<<< HEAD
 struct attitude sim_attitude(void);
 struct vector sim_vector(void);
 int sim_heading();
@@ -70,3 +74,13 @@ void init_filter();
 struct vector init_sim(void);
 
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+#elif ARDUINO
+void init_gyro_hardware();
+struct vector read_gyro_data();
+void readAccel();
+void read_stream(byte addr, int bytes_to_read, byte buffer[]);
+#endif	
+
+
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
