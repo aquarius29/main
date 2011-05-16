@@ -141,6 +141,8 @@ void *startConnectivityListener(void *ptr)
 		newMoveCheck = nav_newMovement;
 	    result = pthread_mutex_unlock(&newMovementMutex);
 	
+		printf("newMoveCheck is %d", newMoveCheck);
+		
 		if(newMoveCheck == 1)
 		{
 			printf("New Move requested for sending\n");
