@@ -19,12 +19,14 @@ void setup_gps(char *dev,int baud)
 {
 	good_data = 0;
 
+//	flying = GROUND;
+
 	GPSLocation *curr_position_UI = NULL;
 
 	currentOutdoorPosition.latitude = 0;
 	currentOutdoorPosition.longitude = 0;
 
-	int fd = 0;
+	int32_t fd = 0;
 	char buf [256];
 
 	fd = dev_init(dev,baud);
@@ -93,7 +95,7 @@ void gps_navigation(GPSLocation* Destination)
 
 	struct trac *path = calc_path(pts,destination); 	
 
-	GPSLocation **path_UI = path_for_UI(path,pts);	// Path to UI 
+	GPSLocation **path_UI = path_for_UI(path,pts,destination);	// Path to UI 
 
 /*	printf("UI:  %f,%f\n",path_UI[0]->latitude,path_UI[0]->longitude);
 	printf("UI:  %f,%f\n",path_UI[1]->latitude,path_UI[1]->longitude);
@@ -107,36 +109,44 @@ void gps_navigation(GPSLocation* Destination)
 
 	/* 
 	//send UI the path 
-
+	
 	nav_sendOutdoorPathToGui(GPSLocation path_UI);
 	*/
 	
 	struct trac *next_Node = path;
-
-	int angle = 0;
-
-	int distance_to_nextNode = 0; 
-
+	
+	int32_t angle = 0;
+	
+	int32_t distance_to_nextNode = 0; 
+	
 	while(GPSNAV_ON_OFF)
 	{
 		next_Node = update_path(curr,destination,pts,next_Node);
-
+	
 		angle = give_angle(curr,destination,pts,next_Node);
-
+	
 		distance_to_nextNode = give_distance(curr,destination,pts,next_Node);
-
+	
 		printf("angle : %d  distance : %d\n",angle,distance_to_nextNode);
-
+	
 	/*
         send movement command here.
+	void sendautomovementcommand(uint8_t order , int16_t height, uint16_t distance, int16_t yaw)
+
+//	Order where 
+//	0 = hover
+//	1 = moving
+//	2 = landing
+//	3 = lift off
+
 
 	if(sendMovement == 1){
 
-	if( angle == -2 )
+	if( angle == -2 )//arriving
 	{                                 // sendautomovementcommand(char order , int height, int distance, int yaw)	
 		sendautomovementcommand(1,2,1,0);  // auto, landing, 1m, 0 degree.	
 	}
-	else if( angle == -1)
+	else if( angle == -1)//hovering
 	{
 		sendautomovementcommand(1,0,0,0);  // auto, hovering, 0m, 0 degree.
 	}
@@ -146,7 +156,7 @@ void gps_navigation(GPSLocation* Destination)
 	}
 
 
-	set_MovementCommand_False();
+	sendMovement = 0;
 
 	}//sendMovement=1
 	*/
@@ -162,14 +172,14 @@ void gps_navigation(GPSLocation* Destination)
 
 /*
         -2: arrive the destination
-	-1: waiting
-     0-359: moveing there	
+	-1: hovering/waiting
+     0-359: moveing	
 */
 int give_angle(struct point currp,struct point dest,struct point *pts,struct trac *next_Node)
 {
 	struct point next_Point = {0,0,0};
 
-	int angle = -1;
+	int32_t angle = -1;
 			
 	if(next_Node->p == -2)
 	{	
@@ -198,9 +208,9 @@ int give_distance(struct point currp,struct point dest,struct point *pts,struct 
 {
 	struct point next_Point = {0,0,0};
 
-	int distance = 11;
+	int32_t distance = 11;
 
-	if(next_Node->p = -2)
+	if(next_Node->p == -2)
 	{
 		next_Point = dest;
 		distance = calc_dist(currp,next_Point);
@@ -257,8 +267,8 @@ struct trac* update_path(struct point currp,struct point dest,struct point *pts,
 void get_startp(struct point *pt)
 {
 	pt->name = -1;
-	pt->lat = currentOutdoorPosition.latitude;
-	pt->lon = currentOutdoorPosition.longitude;
+	pt->lat = curr.lat;
+	pt->lon = curr.lon;
 }
 
 
@@ -377,10 +387,10 @@ return path;
 
 
 /* check that the output of gps is available */
-int check_gps_output(char buf [])
+int32_t check_gps_output(char buf [])
 {
-	int i = 0;
-	int num = 0;
+	int32_t i = 0;
+	int32_t num = 0;
 
 	while(buf [i] != 10)
 	{
@@ -397,7 +407,7 @@ int check_gps_output(char buf [])
 
 
 
-int get_goodData()
+int32_t get_goodData()
 {
 	return good_data;
 }
@@ -406,7 +416,7 @@ int get_goodData()
 
 
 /* generate the path what's gonna be sent to UI */
-GPSLocation **path_for_UI(struct trac* path,struct point* pts)
+GPSLocation **path_for_UI(struct trac* path,struct point* pts,struct point destination)
 {
 	struct trac *currp = path;
 
@@ -414,7 +424,7 @@ GPSLocation **path_for_UI(struct trac* path,struct point* pts)
 
 	GPSLocation *node = NULL;
 
-	int i = 0;
+	int32_t i = 0;
 
 	Route = malloc(sizeof(GPSLocation*));
 
@@ -443,6 +453,11 @@ GPSLocation **path_for_UI(struct trac* path,struct point* pts)
 		i++;		
 	}
 	
+	/* add destination */
+	Route [i-1]->latitude = destination.lat;
+	Route [i-1]->longitude = destination.lon;		
+
+
 	return Route;
 }
 

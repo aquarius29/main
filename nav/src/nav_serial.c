@@ -82,13 +82,15 @@ int serial_init(const char* port, int baud)
     switch(baud) {
     case 4800:   brate=B4800;   break;
     case 9600:   brate=B9600;   break;
+/*
 #ifdef B14400
     case 14400:  brate=B14400;  break;
 #endif
-    case 19200:  brate=B19200;  break;
+   case 19200:  brate=B19200;  break;
 #ifdef B28800
-    case 28800:  brate=B28800;  break;
+   case 28800:  brate=B28800;  break;
 #endif
+*/
     case 38400:  brate=B38400;  break;
     case 57600:  brate=B57600;  break;
     case 115200: brate=B115200; break;
@@ -112,9 +114,10 @@ int serial_init(const char* port, int baud)
  *@param int file_id
  *@return void
  */
-void serial_kill(int fd){
+void serial_kill(int fd)
+{
     close(fd);
-    }
+}
 
 
 
