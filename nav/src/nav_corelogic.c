@@ -802,6 +802,7 @@ void nav_setMovementIdentifier(int id)
 	
     result = pthread_mutex_lock(&movementIdMutex);
     nav_movementId = id;
+	printf("nav_movementId is %d\n", nav_movementId);
     result = pthread_mutex_unlock(&movementIdMutex);
 	
 	result = pthread_mutex_lock(&newMovementMutex);
