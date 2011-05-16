@@ -143,7 +143,7 @@ void *startConnectivityListener(void *ptr)
 	
 		if(newMoveCheck == 1)
 		{
-			printf("New Move requested for sending\n")
+			printf("New Move requested for sending\n");
 			int tempId;
 			int result; /* Use for testing */
 			
