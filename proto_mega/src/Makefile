@@ -21,8 +21,8 @@ lib-mega: $(LIB_OBJ)
 	@echo Objects: $(LIB_OBJ)
 	avr-ar rvs ../lib/libproto.a $(LIB_OBJ)
 	
-clean:
-	rm -f *.o
+clean: 
+	 -f *.o
 	
 ##########################################################################
 
