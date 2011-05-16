@@ -797,10 +797,10 @@ void nav_setOutdoorData(double destinationX, double destinationY)
 void nav_sendCurrentIndoorPositionToGui(roomPosition *currentPosition)
 {
 
-	*currPosition = *currentPosition;
-
-    printf("Drone is aproximately at X: %f    Y: %f\n", currentPosition->lon,
-    currentPosition->lat);
+	// *currPosition = *currentPosition;
+	// 
+	//     printf("Drone is aproximately at X: %f    Y: %f\n", currentPosition->lon,
+	//     currentPosition->lat);
 
 	/* Save the current position before sending it */
 	/* currPosition = currentPosition */
