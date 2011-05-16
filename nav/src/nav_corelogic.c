@@ -143,6 +143,7 @@ void *startConnectivityListener(void *ptr)
 	
 		if(newMoveCheck == 1)
 		{
+			printf("New Move requested for sending\n")
 			int tempId;
 			int result; /* Use for testing */
 			
@@ -150,13 +151,18 @@ void *startConnectivityListener(void *ptr)
 			result = pthread_mutex_lock(&movementIdMutex);
 		    tempId = nav_movementId;
 		    result = pthread_mutex_unlock(&movementIdMutex);
-		
+			
+			printf("The movement id fetched by connectivity listener thread is : %d", tempId);
+			
 			/* Add function to send movement command to manual movement handler. */
 			
 			/* set it back to 0 */
 			result = pthread_mutex_lock(&newMovementMutex);
 			nav_newMovement = 0;
 		    result = pthread_mutex_unlock(&newMovementMutex);
+			
+			if(nav_newMovement == 0)
+				printf("Waiting for next movement command\n");
 		}
 		
 		/* Check if indoor system start request has been made */
@@ -786,6 +792,8 @@ void nav_sendManualMovementCommand(struct movCommand *move)
 /* Function for connectivity to call to pass on a movement command */
 void nav_setMovementIdentifier(int id)
 {
+	printf("Received movement id:%d from connectivity\n", id);
+	
 	int result; /* Use the result for testing */
 	
     result = pthread_mutex_lock(&movementIdMutex);
