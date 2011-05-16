@@ -10,11 +10,10 @@
  *  @history    2011-04-13 - adding nav functions
  *  
  */
-
-
-
 #include "conn_ui_mask.h"
 #include "conn_tcpserver.h"
+#include "nav_corelogic.h"
+
 /*
 to nav
 nav_SetMovmentIdentifier(int id); - send movment command from mask
@@ -39,47 +38,47 @@ void controll_movement(int identifier){
 
   case FORWARD:
   DEBUG("Going forward\n")
-  // nav_SetMovmentIdentifier(FORWARD);
+  nav_setMovementIdentifier(FORWARD);
   break;
   
 case BACK:
   DEBUG("Going back\n")
-  // nav_SetMovmentIdentifier(BACK);
+  nav_setMovementIdentifier(BACK);
   break;
   
 case LEFT:
   DEBUG("Going left\n")
- // nav_SetMovmentIdentifier(LEFT);
+  nav_setMovementIdentifier(LEFT);
   break;
   
 case RIGHT:
   DEBUG("Going right\n")
-// nav_SetMovmentIdentifier(RIGHT);
+  nav_setMovementIdentifier(RIGHT);
   break;
   
 case UP:
   DEBUG("Going up\n")
-// nav_SetMovmentIdentifier(UP);
+  nav_setMovementIdentifier(UP);
   break;
   
 case DOWN:
   DEBUG("Going down\n")
-// nav_SetMovmentIdentifier(DOWN);
+  nav_setMovementIdentifier(DOWN);
   break;
   
 case LAND:
   DEBUG("land\n")
-// nav_SetMovmentIdentifier(LAND);
+  nav_setMovementIdentifier(LAND);
   break;
   
 case TAKE_OFF:
   DEBUG("taking off\n")
-// nav_SetMovmentIdentifier(TAKE_OFF);
+  nav_setMovementIdentifier(TAKE_OFF);
   break;
 
 case KILL_INDOOR:
   DEBUG("kill indoor\n")
-  // nav_killGPSSystem();
+  //nav_killGPSSystem();
   break;
   
 case KILL_GPS:

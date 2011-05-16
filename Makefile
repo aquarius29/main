@@ -79,11 +79,12 @@ BASIC_INCLUDES=-I../../stab/src -I../../moto/src -I../../mov/src -I../../ca/src 
 
 ##  Libraries to include when building the panda system, 
 ##  only include libs that work for all targets for that system here!
-PANDA_LIBS= -Lpsched/lib -Lnav/lib -Lconn/lib -Lcam/lib -Llib -lnav -lpsched -lconn -lcam -lm -lxml2 -lm -lpthread 
+PANDA_LIBS= -Lpsched/lib -Lnav/lib -Lconn/lib -Lcam/lib -Llib -lconn -lpsched -lnav -lcam -lm -lxml2 -lm -lpthread  -lconn -lpsched -lnav
+
 #-Lpsched/lib -Lnav/lib -Lconn/lib -Lcam/lib -Lproto_panda/lib -Llib -lnav -lpsched -lconn -lcam -lprotopanda -lm -lxml2 -lm -lpthread 
 
 ##  Set paths to headers used by code on the panda system
-PANDA_INCLUDES=-Ipsched/src -Ipsched/lib/ -I./include -Inav/src -Icam/src -Iconn/src  -I/usr/include/libxml2
+PANDA_INCLUDES=-I../../psched/src -I../../psched/lib/ -I./include -I../../nav/src -I../../cam/src -I../..conn/src -I../..nav/src -I/usr/include/libxml2
 #-Iproto_panda/src -Ipsched/src -Ipsched/lib/ -I./include -Inav/src -Icam/src -Iconn/src  -I/usr/include/libxml2
 
 ##  Set scheduler implementation (-DBATMAN |-DNAIVE)
@@ -219,7 +220,7 @@ panda:
 	cd conn/src && $(MAKE) lib-panda
 	cd serial_comm/src && $(MAKE) lib-panda
 	#cd proto_panda/src && $(MAKE) lib-panda
-	$(GLOBAL_CC) -c panda_main.c  $(PANDA_INCLUDES)
+	$(GLOBAL_CC) -c panda_main.c  $(PANDA_INCLUDES) -Ipsched/src -Inav/src -Icam/src -Iconn/src
 	$(GLOBAL_CC) -o $(PROG) panda_main.o $(PANDA_LIBS)
 
 
@@ -233,7 +234,7 @@ panda-dbg:
 	cd conn/src && $(MAKE) lib-panda
 	cd serial_comm/src && $(MAKE) lib-panda
 	cd proto_panda/src && $(MAKE) lib-panda
-	$(GLOBAL_CC) -c panda_main.c -Ipsched/src
+	$(GLOBAL_CC) -c panda_main.c -Ipsched/src 
 	$(GLOBAL_CC) -o $(PROG) panda_main.o $(PANDA_LIBS)
 
 ## n900-targets #############################################################

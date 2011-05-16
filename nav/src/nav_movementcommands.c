@@ -41,7 +41,7 @@ void sendautomovementcommand(uint8_t order , int16_t height, uint16_t distance, 
 		printf("Sending Auto Movement Command\n");
 		nav_sendAutoMovementCommand(move);
 		
-		free(move);
+		//free(move);
 	}
 }
 
@@ -52,8 +52,9 @@ void sendautomovementcommand(uint8_t order , int16_t height, uint16_t distance, 
 *
 *	@param identifier The id to identify the command requested
 */
-void processMovementCommand(int identifier)
-{
+
+
+void sendManualMovementCommand(int16_t height, int16_t distance, int16_t yaw, uint8_t order) {
 	struct movCommand *move = malloc(sizeof(struct movCommand));
 	if (move == NULL)
 	{
@@ -61,60 +62,15 @@ void processMovementCommand(int identifier)
 	}
 	else 
 	{
-		move->type = (((uint8_t)MANUAL));
+		move->type = MANUAL;
+		move->order = order;
+		move->height = height;
+		move->distance = distance;
+		move->yaw = yaw;
 		
-		switch (identifier)
-		{
-			case FORWARD: 
-				move->order = 1;
-				move->height = 0;
-				move->distance = 10;
-				move->yaw = 0;
-				break;	
-			/*
-			case BACK:
-				move->order = BACKWARD_COMMAND;
-				move->height = (((int16_t)the value here));
-				move->distance = MOVE_BACKWARD_COMMAND_VALUE;
-				move->yaw = MOVE_BACKWARD_COMMAND_DIRECTION;
-				break;
-			*/
-			case LEFT:
-				move->order = 0;
-				move->height = 0;
-				move->distance = 0;
-				move->yaw = -10;
-				break;
-			case RIGHT:
-				move->order = 0;
-				move->height = 0;
-				move->distance = 0;
-				move->yaw = 10;
-				break;
-			case UP: /* Modify the height here */
-				move->order = 0;
-				move->height = 10;
-				move->distance = 0;
-				move->yaw = 0;
-				break;
-			case DOWN: /* Modify the height here */
-				move->order = 0;
-				move->height = -10;
-				move->distance = 0;
-				move->yaw = 0;
-				break;
-			case LAND:
-				move->order = 2;
-				move->height = 0;
-				move->distance = 0;
-				move->yaw = 0;
-				break;
-			case TAKE_OFF:
-				move->order = 0;
-				move->height = 50;
-				move->distance = 0;
-				move->yaw = 0;
-				break;		
-		}
+        // printf("Sending Manual Movement Command\n");
+		nav_sendManualMovementCommand(move);
+		
+		free(move);		
 	}
 }
