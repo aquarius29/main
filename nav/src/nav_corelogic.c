@@ -143,6 +143,10 @@ void *startConnectivityListener(void *ptr)
 		printf("newMoveCheck in mutex lock is:%d\n", newMoveCheck);
 	    result = pthread_mutex_unlock(&newMovementMutex);
 	
+		result = pthread_mutex_lock(&movementIdMutex);
+		printf("nav_movementId in thread is %d\n", nav_movementId);
+	    result = pthread_mutex_unlock(&movementIdMutex);
+	
 		printf("newMoveCheck is %d\n", newMoveCheck);
 		sleep(1);
 		
