@@ -139,6 +139,7 @@ void *startConnectivityListener(void *ptr)
 		/* check if a new movement command waits */
 		result = pthread_mutex_lock(&newMovementMutex);
 		newMoveCheck = nav_newMovement;
+		printf("nav new movement is :%d", nav_newMovement);
 	    result = pthread_mutex_unlock(&newMovementMutex);
 	
 		printf("newMoveCheck is %d\n", newMoveCheck);
