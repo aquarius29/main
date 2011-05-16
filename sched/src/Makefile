@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 LIB_SRC=*.c *.h
 
 ##LIB_SRC=sched_naive_sched.c sched_stubs.c sched_stubs.h sched_batman_main.c ##sched_batman_main.h sched_batman_scheduler.c sched_batman_scheduler.h sched_profiler.h ##sched_profiler.c
@@ -17,6 +18,9 @@ LIB_SRC=*.c *.h
 
 ##LIB_SRC=sched_naive_sched.c sched_stubs.c sched_stubs.h sched_batman_main.c ##sched_batman_main.h sched_batman_scheduler.c sched_batman_scheduler.h sched_profiler.h ##sched_profiler.c
 >>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
+=======
+LIB_SRC=*.c
+>>>>>>> 0563398e31de42544502a0eaec1d08e9dc22c8e2
 
 LIB_OBJ = $(LIB_SRC:.c=.o)
 

@@ -46,6 +46,18 @@
 ##				 uploading to the mega-board now works. Also merged the
 ##				 makefile that worked with PC targets. Added "Usage" part
 ##				 in comments. - Joakim
+<<<<<<< HEAD
+=======
+##
+##  2011-04-20 - Fixed problems with linking so correct math lib is used.
+##				 Order matters among the link-flags! - Joakim
+##
+##  2011-04-27 - re-structured and merged scheduler implementations and added
+##				 SCHED_FLAG to define implementation. - Anders
+##  2011-05-05 - Fixed some things related to the mega - Anders
+##
+##  2011-05-11 - changed Mega protocol paths from proto/src to proto_mega/src
+>>>>>>> 0563398e31de42544502a0eaec1d08e9dc22c8e2
 ##
 ##  2011-04-20 - Fixed problems with linking so correct math lib is used.
 ##				 Order matters among the link-flags! - Joakim
@@ -77,6 +89,21 @@ BASIC_LIBS=-Lstab/lib -Lsched/lib -Lmoto/lib -Lmov/lib -Lca/lib -Lproto_mega/lib
 
 ##  Set paths to headers used by code on the basic system
 BASIC_INCLUDES=-I../../stab/src -I../../moto/src -I../../mov/src -I../../ca/src -I../../proto_mega/src -I../../include
+<<<<<<< HEAD
+=======
+
+##  Set scheduler implementation (-DBATMAN |-DNAIVE)
+SCHED_FLAG=-DBATMAN
+
+##  Free of charge
+EXTRA_FLAGS=
+
+##  Name of micro controller
+MMCU=atmega2560
+
+##  Specify what "corelib" to be linked, "coremega" or "coreuno" depending on board
+CORE_LIB=coremega
+>>>>>>> 0563398e31de42544502a0eaec1d08e9dc22c8e2
 
 ##  Libraries to include when building the panda system, 
 ##  only include libs that work for all targets for that system here!
@@ -181,6 +208,9 @@ pc-dbg:
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 0563398e31de42544502a0eaec1d08e9dc22c8e2
 	cd proto_mega/src && $(MAKE) lib-mega
 	avr-ranlib proto_mega/lib/libproto.a	
 
@@ -289,6 +319,7 @@ clean:
 	cd ca/lib && rm -f *.a
 
 	cd proto_mega/src && $(MAKE) clean
+<<<<<<< HEAD
 	cd proto_mega/lib && rm -f *.a
 
 	cd nav/src && $(MAKE) clean
@@ -305,6 +336,11 @@ clean:
 =======
 	cd stab/src && $(MAKE) clean
 >>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
+=======
+	cd proto_mega/lib && rm *.a
+
+	rm -f $(PROG) $(PROG).exe $(PROG).elf $(PROG).rom *.o *.map
+>>>>>>> 0563398e31de42544502a0eaec1d08e9dc22c8e2
 
 
 .PHONY: lib

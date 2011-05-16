@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 Scheduler contains two implementations: NAIVE & BATMAN
 each set with the name as a define flag to choose implementation
 =======
@@ -13,3 +14,6 @@ It was an empty README!
 Scheduler contains two implementations: NAIVE & BATMAN
 each set with the name as a define flag to choose implementation
 >>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
+=======
+It was an empty README!
+>>>>>>> 0563398e31de42544502a0eaec1d08e9dc22c8e2

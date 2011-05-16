@@ -1,6 +1,10 @@
 ########################### Added by jogr 110413 #########################
 
+<<<<<<< HEAD
 LIB_SRC=mov_stubs.c
+=======
+LIB_SRC=*.c
+>>>>>>> 0563398e31de42544502a0eaec1d08e9dc22c8e2
 
 LIB_OBJ = $(LIB_SRC:.c=.o)
 

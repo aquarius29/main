@@ -46,8 +46,7 @@ void loop() {
 #endif
 }
 
-int main(void)
-{
+int main(void){
 
 #ifdef ARDUINO // Arduino code
   init(); // init the Arduino hardware
@@ -55,7 +54,7 @@ int main(void)
 
   setup();
 
-  for (;;)
+  for(;;)
     loop();
 
   return 0;

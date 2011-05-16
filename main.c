@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /*!
  *  @file main.c
  *
@@ -42,5 +43,10 @@ int sched_main(void)
 int main(void)
 {
     sched_main();
+=======
+
+int main(void)
+{
+>>>>>>> 0563398e31de42544502a0eaec1d08e9dc22c8e2
     return 0;
 }

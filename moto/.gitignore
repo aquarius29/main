@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # The files and file extensions mentioned within this file
 # will be ignored by git
 
@@ -39,3 +40,37 @@ doc/
 =======
 
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+# The files and file extensions mentioned within this file
+# will be ignored by git
+
+# Specific files
+#################
+src/main.c
+.gitignore~
+Makefile~
+README~
+../Makefile
+../Makefile-template
+../src/blink.c
+
+# File types
+#################
+*.o
+*.c~
+*.c#
+*.map
+*.gcov
+*.gcno
+*.gcda
+test/*.x
+*.h~
+../proto_mega/src/*.o
+
+# Directories
+#################
+bin/
+../bin/
+doc/
+gcov_out/
+>>>>>>> 0563398e31de42544502a0eaec1d08e9dc22c8e2
