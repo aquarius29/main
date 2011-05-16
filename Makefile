@@ -217,6 +217,7 @@ panda:
 	cd nav/src && $(MAKE) lib-panda
 	cd cam/src && $(MAKE) lib-panda
 	cd conn/src && $(MAKE) lib-panda
+	cd serial_comm/src && $(MAKE) lib-panda
 	#cd proto_panda/src && $(MAKE) lib-panda
 	$(GLOBAL_CC) -c panda_main.c  $(PANDA_INCLUDES)
 	$(GLOBAL_CC) -o $(PROG) panda_main.o $(PANDA_LIBS)
@@ -230,6 +231,7 @@ panda-dbg:
 	cd nav/src && $(MAKE) lib-panda
 	cd cam/src && $(MAKE) lib-panda
 	cd conn/src && $(MAKE) lib-panda
+	cd serial_comm/src && $(MAKE) lib-panda
 	cd proto_panda/src && $(MAKE) lib-panda
 	$(GLOBAL_CC) -c panda_main.c -Ipsched/src
 	$(GLOBAL_CC) -o $(PROG) panda_main.o $(PANDA_LIBS)
@@ -282,6 +284,9 @@ clean:
 
 	cd conn/src && $(MAKE) clean
 	cd conn/lib && rm -f *.a
+
+	cd serial_comm/src && $(MAKE) clean
+	cd serial_comm/lib && rm -f *.a
 
 	rm -f $(PROG) $(PROG).exe $(PROG).elf $(PROG).rom *.o *.map
 

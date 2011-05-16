@@ -39,15 +39,20 @@ LIB_OBJ_UNO = $(LIB_SRC_UNO:.c=.o)
 
 lib-pc: $(LIB_OBJ_PC)
 	@echo Objects: $(LIB_OBJ_PC)
-	ar rvs ../lib/libtest.a $(LIB_OBJ_PC)
+	ar rvs ../lib/libserial.a $(LIB_OBJ_PC)
+	
+## panda targets use the same files and flags as the pc target	
+lib-panda: $(LIB_OBJ_PC)
+	@echo Objects: $(LIB_OBJ_PC)
+	ar rvs ../lib/libserial.a $(LIB_OBJ_PC)	
 	
 lib-mega: $(LIB_OBJ_MEGA)
 	@echo Objects: $(LIB_OBJ_MEGA)
-	avr-ar rvs ../lib/libtest.a $(LIB_OBJ_MEGA)
+	avr-ar rvs ../lib/libserial.a $(LIB_OBJ_MEGA)
 	
 lib-uno: $(LIB_OBJ_UNO)
 	@echo Objects: $(LIB_OBJ_UNO)
-	avr-ar rvs ../lib/libtest.a $(LIB_OBJ_UNO)
+	avr-ar rvs ../lib/libserial.a $(LIB_OBJ_UNO)
 
 clean:
 	rm -f *.o
