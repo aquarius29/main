@@ -276,6 +276,9 @@ clean:
 	cd proto_mega/src && $(MAKE) clean
 	cd proto_mega/lib && rm -f *.a
 
+	cd proto_panda/src && $(MAKE) clean
+	cd proto_panda/lib && rm -f *.a
+
 	cd nav/src && $(MAKE) clean
 	cd nav/lib && rm -f *.a
 
