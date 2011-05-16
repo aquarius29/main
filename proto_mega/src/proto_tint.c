@@ -1,36 +1,31 @@
-/*****************************************************************************
-* Product: 
-* Version: 
-* Released: April 28 2011
-* Updated: April 28 2011
-*
-* Copyright (C) 2011 Petre Mihail Anton
-*
-* <IT University of Goteborg>
-*****************************************************************************/
+/*!
+* @file proto_mov_motor.c
+* @brief Message queue for Quickcheck integration
+* @author Mihail Anton
+*/
 #ifdef PC
 
 #include <stdlib.h>
 #include <stdio.h>
 #include "proto_lib.h"
 
+struct Message * mPtr, * mTailPtr;
 
-struct Message * mPtr;
-
-
-void storeForTint(int operation, int source, int meaning, double value)
+void storeForTint(int16_t operation, int16_t source, int16_t meaning, double value)
 {	
-	struct Message * curPtr;
+    struct Message * curPtr;
 	curPtr = (struct Message *) malloc(sizeof(struct Message));
 	curPtr->operation = operation;
 	curPtr->source = source;
 	curPtr->meaning = meaning;
 	curPtr->value = value;
 	curPtr->next = NULL;
-	if (mPtr == NULL)
+	if (mPtr == NULL){
 		mPtr = curPtr;
-	else
-		mPtr->next = curPtr;
+    } else {
+    	mTailPtr->next = curPtr;
+    }
+	mTailPtr = curPtr;
 }
 
 struct Message * retrieve(void)
@@ -38,14 +33,17 @@ struct Message * retrieve(void)
 	return mPtr;
 }
 
-void flush(void)
+void flush_messages(void)
 {
 	struct Message * buff;
+	int i = 0;
 	while(mPtr != NULL)
 	{
+	    i++;
 		buff = mPtr;	
 		mPtr = mPtr->next;
 		free(buff);
 	}
+	printf("cleared %d\n", i);
 }
 #endif

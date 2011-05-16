@@ -302,7 +302,7 @@ void send_dir_to_ca(uint8_t dir){
 void read_sensorCommand(void){
 
 #ifndef TEST
-    struct stab_gyroscope *stabCommand = (struct stab_gyroscope *)proto_stabReadAttitude();
+    struct  stab_attitude *stabCommand = (struct  stab_attitude *)proto_stabReadAttitude();
     pSensorC -> pitch = stabCommand -> pitch;
     pSensorC -> roll = stabCommand -> roll;
     pSensorC -> yaw = stabCommand -> yaw;
