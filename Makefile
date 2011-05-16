@@ -83,7 +83,7 @@ PANDA_LIBS= -Lpsched/lib -Lnav/lib -Lconn/lib -Lcam/lib -Llib -lnav -lpsched -lc
 #-Lpsched/lib -Lnav/lib -Lconn/lib -Lcam/lib -Lproto_panda/lib -Llib -lnav -lpsched -lconn -lcam -lprotopanda -lm -lxml2 -lm -lpthread 
 
 ##  Set paths to headers used by code on the panda system
-PANDA_INCLUDES=-Ipsched/src -Ipsched/lib/ -I./include -Inav/src -Icam/src -Iconn/src  -I/usr/include/libxml2
+PANDA_INCLUDES=-I../..psched/src -I../../psched/lib/ -I./include -I../../nav/src -I../..cam/src -I../..conn/src  -I/usr/include/libxml2
 #-Iproto_panda/src -Ipsched/src -Ipsched/lib/ -I./include -Inav/src -Icam/src -Iconn/src  -I/usr/include/libxml2
 
 ##  Set scheduler implementation (-DBATMAN |-DNAIVE)
@@ -217,6 +217,7 @@ panda:
 	cd nav/src && $(MAKE) lib-panda
 	cd cam/src && $(MAKE) lib-panda
 	cd conn/src && $(MAKE) lib-panda
+	cd serial_comm/src && $(MAKE) lib-panda
 	#cd proto_panda/src && $(MAKE) lib-panda
 	$(GLOBAL_CC) -c panda_main.c  $(PANDA_INCLUDES)
 	$(GLOBAL_CC) -o $(PROG) panda_main.o $(PANDA_LIBS)
