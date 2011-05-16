@@ -16,6 +16,7 @@
 #define CENTIMETRES_PER_TILE 108
 #define TILE_CENTER (CENTIMETRES_PER_TILE/2)
 #define TRUE_NORTH 10 + 90
+#define AVOID_DISTANCE 100
 
 typedef struct {
     double lon;

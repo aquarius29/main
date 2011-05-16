@@ -12,5 +12,6 @@ typedef struct manualCommand {
 void receiveManualMovementCommand(uint8_t command);
 void initManualToAuto(tile *end);
 void initManualStart(tile *start);
+void collisionOverManual(int32_t angle);
 
 #endif /* NAV_HANDLEMANUALCOMMANDS_H */
