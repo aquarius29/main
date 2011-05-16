@@ -22,6 +22,7 @@
 #include "nav_gps_nav.h"
 #include "nav_tilemap.h"
 #include "nav_indoorstructure.h"
+#include "nav_handlemanualcommands.h"
 
 static tile roomPositionToTile(roomPosition *current);
 
@@ -516,13 +517,57 @@ void *startIndoorNavigationSystem(void *ptr)
     //     struct thread_data *data = (struct thread_data*) ptr;
     
 	struct thread_data *data = malloc(sizeof(struct thread_data));
-	data->starttile.x = 1;
+    // data->starttile.x = 1;
+    // data->starttile.y = 1;
+    // data->destinationtile.x = 9;
+    // data->destinationtile.y = 5;
+    // data->message = "Indoor system started";
+    // 
+    //     initPath(&data->starttile, &data->destinationtile);
+    
+    
+    data->starttile.x = 1;
 	data->starttile.y = 1;
-	data->destinationtile.x = 9;
-	data->destinationtile.y = 5;
+    data->destinationtile.x = 9;
+    data->destinationtile.y = 5;
 	data->message = "Indoor system started";
 	
-    initPath(&data->starttile, &data->destinationtile);
+	initManualStart(&data->starttile);
+	receiveManualMovementCommand(3);
+    receiveManualMovementCommand(3);
+    receiveManualMovementCommand(3);
+    receiveManualMovementCommand(3);
+    receiveManualMovementCommand(3);
+    receiveManualMovementCommand(3);
+    receiveManualMovementCommand(3);
+    receiveManualMovementCommand(3);
+    receiveManualMovementCommand(3);
+    receiveManualMovementCommand(3);
+    receiveManualMovementCommand(3);
+    receiveManualMovementCommand(3);
+	receiveManualMovementCommand(6);
+	receiveManualMovementCommand(6);
+	receiveManualMovementCommand(6);
+	receiveManualMovementCommand(6);
+	receiveManualMovementCommand(6);
+	receiveManualMovementCommand(6);
+	receiveManualMovementCommand(6);
+	receiveManualMovementCommand(6);
+	receiveManualMovementCommand(6);
+	receiveManualMovementCommand(7);
+	receiveManualMovementCommand(3);
+    receiveManualMovementCommand(3);
+    receiveManualMovementCommand(3);
+    receiveManualMovementCommand(3);
+    receiveManualMovementCommand(3);
+    receiveManualMovementCommand(3);
+    receiveManualMovementCommand(3);
+    receiveManualMovementCommand(3);
+    receiveManualMovementCommand(3);
+    receiveManualMovementCommand(3);
+    
+    
+    initManualToAuto(&data->destinationtile);
     
     int result;
     result = pthread_mutex_lock(&indoorNavigationRunningMutex);
@@ -794,16 +839,10 @@ void nav_setOutdoorData(double destinationX, double destinationY)
 }
 
 /* Begin interface:out functions for connectivity group */
-void nav_sendCurrentIndoorPositionToGui(roomPosition *currentPosition)
-{
-
-	// *currPosition = *currentPosition;
-	// 
-	//     printf("Drone is aproximately at X: %f    Y: %f\n", currentPosition->lon,
-	//     currentPosition->lat);
-
+void nav_sendCurrentIndoorPositionToGui(roomPosition *currentPosition) {
+    printf("Drone is approximately at X: %f    Y: %f\n", currentPosition->lon,
+    currentPosition->lat);
 	/* Save the current position before sending it */
-	/* currPosition = currentPosition */
 	/* Put connectivity library function here*/
 }
 
@@ -856,12 +895,14 @@ int main(int argc, char **argv) {
 	//runProtocolThread();
 	
     // tile a, b;
-    //            a.x = 1;
-    //            a.y = 1;
-    //            b.x = 9;
-    //            b.y = 5;
+    // a.x = 1;
+    // a.y = 1;
+    // b.x = 9;
+    // b.y = 5;
     // 
-    //     nav_runIndoorSystem(a.x, a.y, b.x, b.y);
+    // nav_runIndoorSystem(a.x, a.y, b.x, b.y);
+	
+	
 	
 
     return 0;

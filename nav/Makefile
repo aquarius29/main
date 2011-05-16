@@ -6,13 +6,13 @@
 #  
 
 default:
-	@echo "make indoor      produces binary in bin/"
+	@echo "make simulation  produces binary in bin/"
 	@echo "make clean       recursively clean up subdirs"
 	@echo "make unit        run unit tests"
 	@echo "make valg        run unit tests with valgrind"
 
-indoor: 
-	cd bin && $(MAKE) indoor
+simulation: 
+	cd bin && $(MAKE) simulation
 
 clean:
 	cd bin && $(MAKE) clean
