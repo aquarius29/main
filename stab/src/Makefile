@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ########################### Added by Adam 09/05/11 #########################
 
 LIB_SRC=read_mg.c stab_filter.c stab_main.c stab_ra.c stab_rb.c stab_rg.c stab_sim.c
@@ -14,6 +15,11 @@ LIB_SRC=stab_main.c stab_filter.c stab_ra.c stab_rg.c stab_sim.c
 
 LIB_SRC=stab_main.c stab_filter.c stab_ra.c stab_rg.c stab_sim.c
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+########################### Added by Adam 09/05/11 #########################
+
+LIB_SRC=read_mg.c stab_filter.c stab_main.c stab_ra.c stab_rb.c stab_rg.c stab_sim.c
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 
 LIB_OBJ = $(LIB_SRC:.c=.o)
 
@@ -24,6 +30,9 @@ lib-pc: $(LIB_OBJ)
 	ar rvs ../lib/libstab.a $(LIB_OBJ)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 
 lib-mega: $(LIB_OBJ)
 	@echo Objects: $(LIB_OBJ)
@@ -32,6 +41,7 @@ lib-mega: $(LIB_OBJ)
 clean:
 	rm -f *.o
 
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
@@ -47,6 +57,8 @@ clean:
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 ##########################################################################
 
 
@@ -56,12 +68,15 @@ clean:
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 =======
 
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 # #######################################################################
 # Makefile for inclusion by other projects
 #   heavily copied from original libarduino sources
@@ -88,6 +103,7 @@ clean:
 #    is called (look under the port settings)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
                                                                                   
@@ -95,6 +111,9 @@ clean:
 =======
                                                                                   
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 #USB_PORT=/dev/ttyACM0
 USB_PORT=/dev/tty.usbmodem411
 
@@ -156,6 +175,7 @@ USB_PORT=/dev/tty.usbmodem411
 #	@ echo "Project cleaned"
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 	
@@ -163,12 +183,16 @@ USB_PORT=/dev/tty.usbmodem411
 =======
 	
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 #help:
 #	@ echo "Check your code includes 'WProgram.h' \nCheck you call 'init()'"
 
 ## reprogram the fuses for the right clock source
 ##fuse:
 ##	avrdude -p atmega168 -c stk200 -U lfuse:w:0x62:m
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -223,3 +247,8 @@ clean:
 	
 .PHONY : clean uno due mega install help lib
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+
+.PHONY : clean uno due mega install help lib
+
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93

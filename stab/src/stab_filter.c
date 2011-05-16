@@ -89,6 +89,7 @@ void init_filter(void);
 float comp_filter(float acc_scal, float gyro_scal, float old_est);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 void convert_acce_raw_to_deg(float acc_x, float acc_y, float acc_z);
 
@@ -97,6 +98,8 @@ void convert_acce_raw_to_deg(float acc_x, float acc_y, float acc_z);
 void convert_acce_raw_to_deg(float acc_x, float acc_y, float acc_z);
 
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 
 /************************************************************
  * Global variables used to save input/output of the algorithm:
@@ -257,6 +260,7 @@ void init_filter()
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 
@@ -301,6 +305,8 @@ void convert_acce_raw_to_deg(float acc_x, float acc_y, float acc_z)
 
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 =======
+=======
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 
 
 

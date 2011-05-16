@@ -25,10 +25,14 @@ float read_accel();
 struct vector init_sim(void);
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 struct attitude sim_attitude(void);
 struct vector sim_vector(void);
 int sim_heading();
 struct baro_data sim_baro(); 
+<<<<<<< HEAD
 #elif ARDUINO
 float comp_filter(float acc_scal, float gyro_scal, float old_est);
 void init_filter();
@@ -81,11 +85,20 @@ struct vector init_sim(void);
 =======
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 #elif ARDUINO
+float comp_filter(float acc_scal, float gyro_scal, float old_est);
+void init_filter();
 void init_gyro_hardware();
+void init_magn_hardware();
 struct vector read_gyro_data();
-void readAccel();
+struct vector readAccel();
+struct vector read_magn_data();
 void read_stream(byte addr, int bytes_to_read, byte buffer[]);
+void write_data(byte addr, byte value, byte sensor_addr);
+void init_baro_hardware();
+struct baro_data read_baro_data();
 #endif	
 
 

@@ -25,6 +25,7 @@
 #    is called (look under the port settings)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 #USB_PORT=$(MYUSB)
 #/dev/ttyACM2
@@ -39,6 +40,12 @@ USB_PORT=/dev/ttyACM0
 USB_PORT=/dev/ttyACM0
 #USB_PORT=/dev/tty.usbmodem411
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+
+#USB_PORT=$(MYUSB)
+#/dev/ttyACM2
+USB_PORT=/dev/ttyACM0
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 
 #########################################################################
 #########################################################################
@@ -119,6 +126,7 @@ install: $(OBJ) compile
 #	checksize $(PROG).elf
 	@ avrdude -p $(MMCU) -P $(USB_PORT) -c $(STK) -b $(BAUD) -F -u -U flash:w:src/$(PROG).rom
 #	@ avrdude -p $(MMCU) -c $(STK) -b $(BAUD) -F -u -U flash:w:src/$(PROG).rom	
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
@@ -130,6 +138,8 @@ install: $(OBJ) compile
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 
 mega: clean install
 
@@ -137,7 +147,6 @@ uno: clean install
 
 pc: clean
 	gcc -lm -DPC $(SRC) -o src/$(PROG).x
-
 
 clean:
 	@ cd src && rm -f *.o *.rom *.elf *.map *~ *.lst *.x

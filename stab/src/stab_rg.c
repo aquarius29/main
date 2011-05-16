@@ -16,11 +16,15 @@
  *    18/04/2011: Code now reflects coding standards
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
  *    26/04/2011: Changed buffer type from byte to char //Adam
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+ *    26/04/2011: Changed buffer type from byte to char //Adam
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
  ****************************************************************************/
 #ifdef ARDUINO
 #include <Wire.h>
@@ -58,6 +62,7 @@ float convert_gyro_raw_to_deg_s(float a);
  */
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 void write_data(byte addr, byte value, byte sensor_addr)
 {
   Wire.beginTransmission(sensor_addr);
@@ -71,6 +76,11 @@ void write_data(byte addr, byte value)
 {
   Wire.beginTransmission(GYRO_ADDRESS);
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+void write_data(byte addr, byte value, byte sensor_addr)
+{
+  Wire.beginTransmission(sensor_addr);
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
   Wire.send(addr);
   Wire.send(value);
   Wire.endTransmission();
@@ -85,10 +95,14 @@ void init_gyro_hardware()
 {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
   write_data(PWR_M, 0x00, GYRO_ADDRESS);
   write_data(SMPL, 0x07, GYRO_ADDRESS);
   write_data(DLPF, 0x1E, GYRO_ADDRESS);
   write_data(INT_C, 0x00, GYRO_ADDRESS);  
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
@@ -100,6 +114,8 @@ void init_gyro_hardware()
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 }
 
 /*
@@ -128,6 +144,7 @@ struct vector read_gyro_data()
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   //Serial.println("READ DATA");
 =======
   //Serial.println(x);
@@ -135,6 +152,9 @@ struct vector read_gyro_data()
 =======
   //Serial.println(x);
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+  //Serial.println("READ DATA");
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
   //Serial.println(y);
   //Serial.println(z);
 

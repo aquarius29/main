@@ -21,6 +21,9 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 struct vector
 {
   float x;
@@ -28,10 +31,13 @@ struct vector
   float z;
 };
 
+<<<<<<< HEAD
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 /* 
  *address of the accelerometer on the board 
  */
@@ -40,6 +46,7 @@ struct vector
 /*
  *Function prototypes
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 struct vector readAccel();
@@ -78,27 +85,38 @@ void readAccel();
 /*	}*/
 /*  return 0;*/
 /*}*/
+=======
+struct vector readAccel();
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 
+void init_accel();
 
 /*Read data from accelerometer memory*/
-void readAccel()
+struct vector readAccel()
 {
-    unsigned int result;
-    int x,y,z;
-    int temp;
-
+  struct vector vect;
+  int x,y,z;
+  int temp;
+  
   Wire.beginTransmission(ADDRESS);
+<<<<<<< HEAD
   Wire.send(0x02);  							/*start of x LSB for reading data*/
 <<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+  Wire.send(0x02); /*start of x LSB for reading data*/
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
   Wire.endTransmission();
   Wire.requestFrom((int)ADDRESS, 7);
   
   if(Wire.available()==7)
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
     {
       int lsb = Wire.receive()>>2;
       int msb = Wire.receive();
@@ -123,6 +141,7 @@ void readAccel()
   vect.y = y;
   vect.z = z;   
   return vect;
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
@@ -156,6 +175,8 @@ void readAccel()
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+>>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 }
 
 /*
