@@ -9,6 +9,8 @@ typedef struct manualCommand {
     struct manualCommand *next;
 } manualCommand;
 
+/*Keep the thread running until it is killed externally*/
+void initManualNavigation(void);
 void receiveManualMovementCommand(uint8_t command);
 void initManualToAuto(tile *end);
 void initManualStart(tile *start);
