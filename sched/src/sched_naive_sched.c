@@ -19,12 +19,15 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 =======
 
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 #include <stdlib.h>
 #include <stdint.h>
 
@@ -34,6 +37,7 @@
 #include "mov_interface.h"
 #include "sched_stubs.h"
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 #include "sched_stubs.h"
@@ -60,6 +64,16 @@
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+#include "sched_stubs.h"
+
+#ifdef PC
+/* non-arduino includes */
+#include <stdio.h>
+#elif ARDUINO
+/* arduino includes */
+#endif /* PC ARDUINO */
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 
 #include "sched_naive_sched.h"
 
@@ -81,11 +95,15 @@ void sched_naive_init(void){
     /* function pointers to modules run functions */
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
     sched_Fun_t funArrRun[] = {   
                             &protoRun,
                             &mov_run,
@@ -134,12 +152,15 @@ int16_t system_init(sched_Fun_t *funArrInit){
     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 =======
     
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
     return 1;
 }
 
@@ -177,6 +198,7 @@ int16_t time(void){
     return currentTime;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 
 =======
@@ -185,3 +207,7 @@ int16_t time(void){
 =======
 }
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+}
+
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04

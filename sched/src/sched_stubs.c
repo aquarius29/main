@@ -7,6 +7,7 @@
  *  @author Joakim
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
  *  @author Anders
  *  @date 2011-04-16
  *  @history    2011-04-10 - wrote original code
@@ -17,22 +18,32 @@
 =======
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+ *  @author Anders
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
  *  @date 2011-04-16
  *  @history    2011-04-10 - wrote original code
  *              2011-04-14 - added Doxygen comments
+ *              2011-04-20 - Updated stubs to fake execution(Anders)
  */
 
+<<<<<<< HEAD
 #include <stdio.h>
 <<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 #include <stdint.h>
 
 #include "sched_stubs.h"
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 #ifdef PC
 #include <stdio.h>
 
@@ -43,6 +54,7 @@
 #endif /* WIN */
 #endif /* PC */
 
+<<<<<<< HEAD
 int16_t caRun(void) {
 	#ifdef PC
     #ifdef DEBUG
@@ -57,14 +69,26 @@ int16_t caRun(void) {
 =======
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 int16_t caRun(void) {
-	#ifdef DEBUG
+	#ifdef PC
+    #ifdef DEBUG
 	    printf("inside caRun\n");
 	#endif /* DEBUG */
+<<<<<<< HEAD
 <<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+        #ifdef WINDOWS
+        Sleep(10);
+        #else
+        usleep(10);
+        #endif /* WINDOWS */
+    #endif
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 	
 	return 0;
 }
@@ -72,6 +96,7 @@ int16_t caRun(void) {
 int16_t stabRun(void) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	#ifdef PC
     #ifdef DEBUG
 	    printf("inside stabRun\n");
@@ -92,6 +117,18 @@ int16_t stabRun(void) {
 	    printf("inside stabRun\n");
 	#endif /* DEBUG */
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+	#ifdef PC
+    #ifdef DEBUG
+	    printf("inside stabRun\n");
+	#endif /* DEBUG */
+        #ifdef WINDOWS
+        Sleep(10);
+        #else
+        usleep(10);
+        #endif /* WINDOWS */
+    #endif
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 	
 	return 0;
 }
@@ -99,6 +136,7 @@ int16_t stabRun(void) {
 int16_t moveRun(void) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	#ifdef PC
     #ifdef DEBUG
 	    printf("inside moveRun\n");
@@ -119,6 +157,18 @@ int16_t moveRun(void) {
 	    printf("inside moveRun\n");
 	#endif /* DEBUG */
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+	#ifdef PC
+    #ifdef DEBUG
+	    printf("inside moveRun\n");
+	#endif /* DEBUG */
+        #ifdef WINDOWS
+        Sleep(10);
+        #else
+        usleep(10);
+        #endif /* WINDOWS */
+    #endif
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 	
 	return 0;
 }
@@ -126,6 +176,7 @@ int16_t moveRun(void) {
 int16_t motoRun(void) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	#ifdef PC
     #ifdef DEBUG
 	    printf("inside motoRun\n");
@@ -146,6 +197,18 @@ int16_t motoRun(void) {
 	    printf("inside motoRun\n");
 	#endif /* DEBUG */
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+	#ifdef PC
+    #ifdef DEBUG
+	    printf("inside motoRun\n");
+	#endif /* DEBUG */
+        #ifdef WINDOWS
+        Sleep(10);
+        #else
+        usleep(10);
+        #endif /* WINDOWS */
+    #endif
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 	
 	return 0;
 }
@@ -153,6 +216,7 @@ int16_t motoRun(void) {
 int16_t protoRun(void) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	#ifdef PC
     #ifdef DEBUG
 	    printf("inside protoRun\n");
@@ -173,16 +237,32 @@ int16_t protoRun(void) {
 	    printf("inside protoRun\n");
 	#endif /* DEBUG */
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+	#ifdef PC
+    #ifdef DEBUG
+	    printf("inside protoRun\n");
+	#endif /* DEBUG */
+        #ifdef WINDOWS
+        Sleep(10);
+        #else
+        usleep(10);
+        #endif /* WINDOWS */
+    #endif
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 	
 	return 0;
 }
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 int16_t connRun(void) {
 	#ifdef PC
     #ifdef DEBUG
 	    printf("inside connRun\n");
+<<<<<<< HEAD
 	#endif /* DEBUG */
         #ifdef WINDOWS
         Sleep(10);
@@ -201,6 +281,15 @@ int16_t filterRun(void) {
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+	#endif /* DEBUG */
+        #ifdef WINDOWS
+        Sleep(10);
+        #else
+        usleep(10);
+        #endif /* WINDOWS */
+    #endif
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 	
 	return 0;
 }
@@ -208,6 +297,7 @@ int16_t filterRun(void) {
 int16_t caInit(void) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	#ifdef PC
     #ifdef DEBUG
 	    printf("inside caInit\n");
@@ -223,6 +313,13 @@ int16_t caInit(void) {
 	    printf("inside caInit\n");
 	#endif /* DEBUG */
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+	#ifdef PC
+    #ifdef DEBUG
+	    printf("inside caInit\n");
+	#endif /* DEBUG */
+    #endif
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 	
 	return 0;
 }
@@ -230,6 +327,7 @@ int16_t caInit(void) {
 int16_t stabInit(void) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	#ifdef PC
     #ifdef DEBUG
 	    printf("inside stabInit\n");
@@ -245,6 +343,13 @@ int16_t stabInit(void) {
 	    printf("inside stabInit\n");
 	#endif /* DEBUG */
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+	#ifdef PC
+    #ifdef DEBUG
+	    printf("inside stabInit\n");
+	#endif /* DEBUG */
+    #endif
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 	
 	return 0;
 }
@@ -252,6 +357,7 @@ int16_t stabInit(void) {
 int16_t moveInit(void) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	#ifdef PC
     #ifdef DEBUG
 	    printf("inside moveInit\n");
@@ -267,11 +373,19 @@ int16_t moveInit(void) {
 	    printf("inside moveInit\n");
 	#endif /* DEBUG */
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+	#ifdef PC
+    #ifdef DEBUG
+	    printf("inside moveInit\n");
+	#endif /* DEBUG */
+    #endif
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 	
 	return 0;
 }
 
 int16_t motoInit(void) {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 	#ifdef PC
@@ -291,12 +405,21 @@ int16_t motoInit(void) {
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+	#ifdef PC
+    #ifdef DEBUG
+	    printf("inside motoInit\n");
+	#endif /* DEBUG */
+	#endif
+
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 	return 0;
 }
 
 int16_t protoInit(void) {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 	#ifdef PC
     #ifdef DEBUG
 	    printf("inside protoInit\n");
@@ -312,17 +435,28 @@ int16_t protoInit(void) {
 	    printf("inside protoInit\n");
 	#endif /* DEBUG */
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+	#ifdef PC
+    #ifdef DEBUG
+	    printf("inside protoInit\n");
+	#endif /* DEBUG */
+    #endif
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 	
 	return 0;
 }
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 int16_t connInit(void) {
 	#ifdef PC
     #ifdef DEBUG
 	    printf("inside connInit\n");
     #endif
+<<<<<<< HEAD
 =======
 int16_t filterInit(void) {
 	#ifdef DEBUG
@@ -333,6 +467,8 @@ int16_t filterInit(void) {
 	#ifdef DEBUG
 	    printf("inside filterInit\n");
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 	#endif /* DEBUG */
 	
 	return 0;

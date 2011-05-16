@@ -12,6 +12,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifndef _SCHED_STUBS_H
 #define _SCHED_STUBS_H
 =======
@@ -22,12 +23,19 @@
 #ifndef SCHED_STUBS_H
 #define SCHED_STUBS_H
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+#ifndef _SCHED_STUBS_H
+#define _SCHED_STUBS_H
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 
 #include <stdint.h>
 
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 #ifdef CA
 /* stabilization groups header here */
 /* #include "../../ca/src/ca_sched.h" */
@@ -40,6 +48,7 @@ int16_t caInit(void);
 int16_t caRun(void);
 
 #endif /* CA */
+<<<<<<< HEAD
 =======
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
@@ -59,6 +68,8 @@ int16_t caRun(void);
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 
 
 #ifdef MOVE
@@ -76,6 +87,9 @@ int16_t moveRun(void);
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 #ifdef STAB
 /* stabilization groups header here */
 /* #include "../../ca/src/ca_sched.h" */
@@ -89,10 +103,13 @@ int16_t stabRun(void);
 
 #endif /* STAB */
 
+<<<<<<< HEAD
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 
 #ifdef MOTO
 /* stabilization groups header here */
@@ -124,6 +141,7 @@ int16_t protoRun(void);
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONN
 =======
 #ifdef FILTER
@@ -131,12 +149,16 @@ int16_t protoRun(void);
 =======
 #ifdef FILTER
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+#ifdef CONN
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 /* stabilization groups header here */
 /* #include "../../ca/src/ca_sched.h" */
 
 #else
 
 /* dummy interface for stabilization code */
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 int16_t connInit(void);
@@ -148,13 +170,20 @@ int16_t connRun(void);
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 int16_t filterInit(void);
+=======
+int16_t connInit(void);
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 /* dummy interface for stabilization code */
-int16_t filterRun(void);
+int16_t connRun(void);
 
+<<<<<<< HEAD
 #endif /* FILTER */
 <<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
 =======
 >>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+=======
+#endif /* CONN */
+>>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 
 #endif /* SCHED_STUBS_H */
