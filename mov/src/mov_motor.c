@@ -45,7 +45,7 @@ void start_motors(void){
 #ifdef PC
     printf("start motors\n");
 #elif defined ARDUINO
-	Serial.println("start motors\n");
+	Serial.println("start motors 01000000\n");
 #endif
 #endif
 	pWrite(msg);
@@ -63,7 +63,7 @@ void stop_motors(void){
 #ifdef PC
     printf("stop motors\n");
 #elif defined ARDUINO
-	Serial.println("stop motors\n");
+	Serial.println("stop motors 00000000\n");
 #endif
 #endif
 	pWrite(msg);
@@ -81,7 +81,7 @@ void increase_rear_motor(void){
 #ifdef PC
     printf("increase rear motor\n");
 #elif defined ARDUINO
-	Serial.println("increase rear motor\n");
+	Serial.println("increase rear motor 10100001\n");
 #endif
 #endif
 	pWrite(msg);
@@ -99,7 +99,7 @@ void decrease_rear_motor(void){
 #ifdef PC
     printf("decrease rear motors\n");
 #elif defined ARDUINO
-	Serial.println("decrease rear motors\n");
+	Serial.println("decrease rear motors 10000001\n");
 #endif
 #endif
 	pWrite(msg);
@@ -117,7 +117,7 @@ void increase_front_motor(void){
 #ifdef PC
     printf("increase front motor\n");
 #elif defined ARDUINO
-	Serial.println("increase front motor\n");
+	Serial.println("increase front motor 10100010\n");
 #endif
 #endif
 	pWrite(msg);
@@ -135,7 +135,7 @@ void decrease_front_motor(void){
 #ifdef PC
     printf("decrease front motor\n");
 #elif defined ARDUINO
-	Serial.println("decrease front motor\n");
+	Serial.println("decrease front motor 10000010\n");
 #endif
 #endif
 	pWrite(msg);
@@ -153,7 +153,7 @@ void increase_left_motor(void){
 #ifdef PC
     printf("increase left motor\n");
 #elif defined ARDUINO
-	Serial.println("increase left motor\n");
+	Serial.println("increase left motor 10100100\n");
 #endif
 #endif
 	pWrite(msg);
@@ -173,7 +173,7 @@ void decrease_left_motor(void){
 #ifdef PC
     printf("decrease left motor\n");
 #elif defined ARDUINO
-	Serial.println("decrease left motor\n");
+	Serial.println("decrease left motor 10000100\n");
 #endif
 #endif
 	pWrite(msg);
@@ -192,7 +192,7 @@ void increase_right_motor(void){
 #ifdef PC
     printf("increase right motor\n");
 #elif defined ARDUINO
-	Serial.println("increase right motor\n");
+	Serial.println("increase right motor 10101000\n");
 #endif
 #endif
 	pWrite(msg);
@@ -211,7 +211,7 @@ void decrease_right_motor(void){
 #ifdef PC
     printf("decrease right motor\n");
 #elif defined ARDUINO
-	Serial.println("decrease right motor\n");
+	Serial.println("decrease right motor 10001000\n");
 #endif
 #endif
 	pWrite(msg);
@@ -231,7 +231,7 @@ void increase_rear_decrease_front(void){
 #ifdef PC
     printf("increase rear decrease front\n");
 #elif defined ARDUINO
-	Serial.println("increase rear decrease front\n");
+	Serial.println("increase rear decrease front 11100011\n");
 #endif
 #endif
     pWrite(msg);
@@ -250,7 +250,7 @@ void increase_front_decrease_rear(void){
 #ifdef PC
     printf("increase front decrease rear\n");
 #elif defined ARDUINO
-	Serial.println("increase front decrease rear\n");
+	Serial.println("increase front decrease rear  11000011\n");
 #endif
 #endif
     pWrite(msg);
@@ -269,7 +269,7 @@ void increase_left_decrease_right(void){
 #ifdef PC
     printf("increase left decrease right\n");
 #elif defined ARDUINO
-	Serial.println("increase left decrease right\n");
+	Serial.println("increase left decrease right 11101100\n");
 #endif
 #endif
     pWrite(msg);
@@ -287,7 +287,7 @@ void increase_right_decrease_left(void){
 #ifdef PC
     printf("increase right decrease left\n");
 #elif defined ARDUINO
-	Serial.println("increase right decrease left\n");
+	Serial.println("increase right decrease left 11001100\n");
 #endif
 #endif
     pWrite(msg);
@@ -305,7 +305,7 @@ void increase_all(void){
 #ifdef PC
     printf("increase all motors\n");
 #elif defined ARDUINO
-	Serial.println("increase all motors\n");
+	Serial.println("increase all motors 10101111\n");
 #endif
 #endif
 	pWrite(msg);
@@ -324,7 +324,7 @@ void decrease_all(void){
 #ifdef PC
     printf("decrease all motors\n");
 #elif defined ARDUINO
-	Serial.println("decrease all motors\n");
+	Serial.println("decrease all motors 10001111\n");
 #endif
 #endif
     pWrite(msg);
@@ -343,7 +343,7 @@ void go_forwards(void){
 #ifdef PC
     printf("go forward\n");
 #elif defined ARDUINO
-	Serial.println("go forward\n");
+	Serial.println("go forward 11000010\n");
 #endif
 #endif
 	pWrite(msg);
@@ -361,7 +361,7 @@ void go_backwards(void){
 #ifdef PC
     printf("go backward\n");
 #elif defined ARDUINO
-	Serial.println("go backward\n");
+	Serial.println("go backward 11000001 \n");
 #endif
 #endif
 	pWrite(msg);
@@ -379,7 +379,7 @@ void strafe_left(void)
 #ifdef PC
     printf("scrafe left\n");
 #elif defined ARDUINO
-	Serial.println("scrafe left\n");
+	Serial.println("scrafe left  11100100\n");
 #endif
 #endif
 	pWrite(msg);
@@ -398,7 +398,7 @@ void strafe_right(void)
 #ifdef PC
     printf("scrafe right\n");
 #elif defined ARDUINO
-	Serial.println("scrafe right\n");
+	Serial.println("scrafe right 11001000\n");
 #endif
 #endif
 	pWrite(msg);
@@ -416,7 +416,7 @@ void turn_left(void){
 #ifdef PC
     printf("turn left\n");
 #elif defined ARDUINO
-	Serial.println("turn left\n");
+	Serial.println("turn left 11101100\n");
 #endif
 #endif
     pWrite(msg);
@@ -434,7 +434,7 @@ void turn_right(void)
 #ifdef PC
     printf("turn right\n");
 #elif defined ARDUINO
-	Serial.println("turn right\n");
+	Serial.println("turn right 11001100\n");
 #endif
 #endif
     pWrite(msg);
@@ -452,7 +452,7 @@ void hover(void)
 #ifdef PC
     printf("hover\n");
 #elif defined ARDUINO
-	Serial.println("hover\n");
+	Serial.println("hover  11111111\n");
 #endif
 #endif
 	pWrite(msg);
@@ -562,7 +562,7 @@ void pWrite(uint8_t msg)
 #ifdef PC
     printf("\nProtocol has this written to it: ");
 #elif defined ARDUINO
-	Serial.println("\nProtocol has this written to it: ");
+	Serial.print("\nProtocol has this written to it: ");
 #endif
 	print_uint8_t_to_Binary(msg);
 #endif

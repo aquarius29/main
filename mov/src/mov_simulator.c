@@ -121,6 +121,9 @@ int16_t do_sensor_simulation(int16_t currentSensorValue, uint8_t command)
     int8_t i = (rand() % (6 - 0 + 1) + 0);  
 
     int16_t new;
+#ifdef ARDUINO
+	Serial.println("################SoSoS##############");
+#endif
 
     switch (command) {
     case 1:

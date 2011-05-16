@@ -17,9 +17,9 @@
 
 #include "mov_interface.h"
 
-#define BUFF_YAW 1
-#define BUFF_DISTSNCE 1
-#define BUFF_PR 1
+#define BUFF_YAW 15
+#define BUFF_DISTSNCE 10
+#define BUFF_PR 10
 #define SPEED 100
 #define DEFAULT_CA_DISTANCE 100
 
@@ -41,6 +41,7 @@ extern double duration;
 extern struct nav navCommand;
 extern struct nav *p;
 extern struct sensor sensorCommand;
+extern struct sensor *pSensorC;
 extern struct sensor oldSensorCommand;
 
 
@@ -125,7 +126,7 @@ void landCommand(void){
 	/*Order is invalid. Land! */
 	else { 
 		land(); 
-		sensorCommand.height = do_sensor_simulation(sensorCommand.height, DECREASING);
+		pSensorC->height = do_sensor_simulation(sensorCommand.height, DECREASING);
 	} 
 }
 
@@ -138,25 +139,25 @@ void landCommand(void){
 void doCa(void){
 	extern int8_t caDir;
 	if(caDir>0){
-		navCommand.order = 1;
+		p->order = 1;
 		yawArrived = 0;
 		distanceToTravel = DEFAULT_CA_DISTANCE;
 
 		if(caDir == 1){ /*FORWARDS ..add no sensor data */
-			navCommand.yaw = sensorCommand.yaw;
+			p->yaw = sensorCommand.yaw;
 		}
 		else if(caDir == 2){ /* BACKWARDS .. add 180 degrees to sensor data */
-			navCommand.yaw = sensorCommand.yaw + 180;
+			p->yaw = sensorCommand.yaw + 180;
 		}
 		else if(caDir == 3){ /*GO LEFT... add -90 degrees to sensor data  */
-			navCommand.yaw = sensorCommand.yaw - 90;
+			p->yaw = sensorCommand.yaw - 90;
 		}
 		else if(caDir == 4){ /*GO RIGHT ... add 90 degrees to sensor data */
-			navCommand.yaw = sensorCommand.yaw + 90;
+			p->yaw = sensorCommand.yaw + 90;
 		}
 	}
 	else if(caDir==0){
-		navCommand.order = 0;
+		p->order = 0;
 		yawArrived = 0;
 		distanceToTravel =0;
 	}
@@ -200,7 +201,7 @@ void check_height(void)
 		    hover();	
 		    decrease_all();
 		}
-		sensorCommand.height = do_sensor_simulation(sensorCommand.height, DECREASING);
+		pSensorC->height = do_sensor_simulation(sensorCommand.height, DECREASING);
     }
 
 	/*lower than it supposed to be, increase all motors*/
@@ -209,7 +210,7 @@ void check_height(void)
 			hover();
 			increase_all();
 		}			
-		sensorCommand.height = do_sensor_simulation(sensorCommand.height, INCREASING);
+		pSensorC->height = do_sensor_simulation(sensorCommand.height, INCREASING);
     }
 	/*it's under the perfect height*/
     else{
@@ -237,23 +238,23 @@ void check_heading(void)
 
    int16_t heading_desire=navCommand.yaw;
    int16_t heading_current=sensorCommand.yaw;
-   int16_t difference = heading_current-heading_desire;
+   int16_t difference = abs(heading_current-heading_desire);
 
     if(heading_current>heading_desire+BUFF_YAW && difference>180){
 		turn_right();
-		sensorCommand.yaw = do_sensor_simulation(sensorCommand.yaw, INCREASING);
+		pSensorC->yaw = do_sensor_simulation(sensorCommand.yaw, INCREASING);
     }
 	else if(heading_current>heading_desire+BUFF_YAW && difference<180){
 		turn_left();
-		sensorCommand.yaw = do_sensor_simulation(sensorCommand.yaw, DECREASING);
+		pSensorC->yaw = do_sensor_simulation(sensorCommand.yaw, DECREASING);
     }
     else if(heading_current<heading_desire-BUFF_YAW && difference>180){
 		turn_left();
-		sensorCommand.yaw = do_sensor_simulation(sensorCommand.yaw, DECREASING);
+		pSensorC->yaw = do_sensor_simulation(sensorCommand.yaw, DECREASING);
     }
     else if(heading_current<heading_desire-BUFF_YAW && difference<180){
 		turn_right();
-		sensorCommand.yaw = do_sensor_simulation(sensorCommand.yaw, INCREASING);
+		pSensorC->yaw = do_sensor_simulation(sensorCommand.yaw, INCREASING);
     }
     else{
 		hover();
@@ -293,13 +294,13 @@ void check_pitch_roll(uint8_t isHovering) {
 		increase_left_decrease_right();
 		
 		/* simulated */
-		sensorCommand.pitch = do_sensor_simulation(sensorCommand.pitch, DECREASING);
+		pSensorC->pitch = do_sensor_simulation(sensorCommand.pitch, DECREASING);
     }
     else if(pitch_current<pitch_desire-BUFF_PR){
 		increase_right_decrease_left();
 
 		/* simulated */
-		sensorCommand.pitch = do_sensor_simulation(sensorCommand.pitch, INCREASING);
+		pSensorC->pitch = do_sensor_simulation(sensorCommand.pitch, INCREASING);
     }
     else{
 		//great
@@ -310,14 +311,14 @@ void check_pitch_roll(uint8_t isHovering) {
 		increase_front_decrease_rear();
 
 		/* simulated */
-		sensorCommand.roll = do_sensor_simulation(sensorCommand.roll, DECREASING);
+		pSensorC->roll = do_sensor_simulation(sensorCommand.roll, DECREASING);
     }
     else if(roll_current<roll_desire-BUFF_PR){
 		increase_rear_decrease_front();
 
 
 		/* simulated */
-		sensorCommand.roll = do_sensor_simulation(sensorCommand.roll, INCREASING);
+		pSensorC->roll = do_sensor_simulation(sensorCommand.roll, INCREASING);
     }
     else{
 		//great
@@ -347,16 +348,16 @@ void printOrientation(void)
 		   sensorCommand.pitch, sensorCommand.roll,sensorCommand.yaw,
 		   sensorCommand.height, distanceToTravel );
 #elif defined ARDUINO
-	Serial.println("PITCH:");
-	Serial.print(sensorCommand.pitch);
-	Serial.println(" ROLL:");
-	Serial.print(sensorCommand.roll);
-	Serial.println(" YAW:");
-	Serial.print(sensorCommand.yaw);
-	Serial.println(" HEIGHT:");
-	Serial.print(sensorCommand.height);
-	Serial.println(" DISTANCE TO TRAVEL:");
-	Serial.print(distanceToTravel);
+	Serial.print("PITCH:");
+	Serial.println(sensorCommand.pitch);
+	Serial.print(" ROLL:");
+	Serial.println(sensorCommand.roll);
+	Serial.print(" YAW:");
+	Serial.println(sensorCommand.yaw);
+	Serial.print(" HEIGHT:");
+	Serial.println(sensorCommand.height);
+	Serial.print(" DISTANCE TO TRAVEL:");
+	Serial.println(distanceToTravel);
 #endif
 #endif
 }

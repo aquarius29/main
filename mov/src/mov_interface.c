@@ -23,7 +23,7 @@
 #endif 
 #include "mov_interface.h"
 
-#define SONAR_PIN 5
+#define SONAR_PIN 12
 
 /* global variables*/
 #ifdef PC
@@ -94,7 +94,7 @@ int16_t mov_run()
 	read_sensorCommand();
 
 #ifdef DEBUG
-	Serial.println("\n*************LOOOOOOOP**************\n");
+	Serial.println("\n*************LOOOOOOOP**************");
 #endif
 	read_caCommand();
 
@@ -276,6 +276,19 @@ void read_navCommand(void) {
 	printf("@@@@@@TO DO :{type: %d order: %d, height: %d distance: %d yaw: %d}@@@@@@\n",
 		   navCommand.type, navCommand.order,navCommand.height,
 		   navCommand.distance, navCommand.yaw);
+#elif defined ARDUINO
+	Serial.println("@@@@@@@@@@@@@@@ NEW NAV COMMAND @@@@@@@@@@@@@@@ ");
+	Serial.print("TYPE:");
+	Serial.println(navCommand.type);
+	Serial.print(" ORDER:");
+	Serial.println(navCommand.order);
+	Serial.print(" HEIGHT:");
+	Serial.println(navCommand.height);
+	Serial.print(" distance:");
+	Serial.println(navCommand.distance);
+	Serial.print(" YAW:");
+	Serial.println(navCommand.yaw);
+	Serial.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ ");
 #endif
 #endif
 #endif
@@ -313,13 +326,13 @@ void read_sensorCommand(void){
 	printf("@@@@@@@ YAW    @@@@@@@@@@@@@@@@@ %d  @@@@@@@@@@@@@@@@@@@@\n",sensorCommand.yaw);
 	printf("@@@@@@@ HEIGHT @@@@@@@@@@@@@@@@@ %d  @@@@@@@@@@@@@@@@@@@@\n",sensorCommand.height);
 #elif defined ARDUINO
-	Serial.println("@@@@@@@@@@SENSOECOMMAND  PITCH@@@@@@@@@");
-	Serial.print(sensorCommand.pitch);
-	Serial.println("@@@@@@@@@@SENSOECOMMAND  ROLL@@@@@@@@@");
-	Serial.print(sensorCommand.roll);
-	Serial.println("@@@@@@@@@@SENSOECOMMAND  YAW@@@@@@@@@");
+	Serial.print("@@@@@@@@@@SENSOECOMMAND  PITCH@@@@@@@@@");
+	Serial.println(sensorCommand.pitch);
+	Serial.print("@@@@@@@@@@SENSOECOMMAND  ROLL@@@@@@@@@");
+	Serial.println(sensorCommand.roll);
+	Serial.print("@@@@@@@@@@SENSOECOMMAND  YAW@@@@@@@@@");
 	Serial.println(sensorCommand.yaw);
-	Serial.println("@@@@@@@@@@SENSOECOMMAND  HEIGHT@@@@@@@@@");
+	Serial.print("@@@@@@@@@@SENSOECOMMAND  HEIGHT@@@@@@@@@");
 	Serial.println(sensorCommand.height);
 #endif
 #endif
