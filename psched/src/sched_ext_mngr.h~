@@ -34,31 +34,33 @@ struct proc_pool{
   int shmid; /* shared memoy id */
 };
 
-/** creates a process.
+// creates a process by passing a function pointer.
+
+/* creates a process.
    return: a process struct member with it's type, init function and run function set.
  */
 struct extsched_proc create_proc(enum proc_type type, int16_t (*init_fun)(), int16_t (*run_fun)());
 
-/** initializes a process and adds it to the poll */
+/* initializes a process and adds it to the poll */
 void init_proc(struct extsched_proc *);
 
-/** initializes a process poll */
+/* initializes a process poll */
 void init_pool(struct proc_pool **);
 
-/** frees the poll */
+/* frees the poll */
 void free_pool(struct proc_pool *);
 
-/** runs the processes in the poll passed */
+/* runs the processes in the poll passed */
 void run_pool(struct proc_pool *);
 
 // message queue related functions
 
-/** receive a meessage related to the process type id.
+/* receive a meessage related to the process type id.
    return: length of data read.
  */
 size_t proc_recv(enum proc_type, char *);
 
-/** sends a meessage to the message \n
+/* sends a meessage to the message \n
    queue assigned to a specific process.
    return: length of data written.
  */
@@ -66,13 +68,13 @@ size_t proc_send(enum proc_type, enum proc_type, char *);
 
 // Shared memory related functions. 
 
-/** reads the process' state from the shared memory
+/* reads the process' state from the shared memory
  * allocated and stores it in a buffer. 
  * return: length of data read.
  */
 int proc_read_state(enum proc_type, void *);
 
-/** writes the buffer to the shared memory
+/* writes the buffer to the shared memory
  * located to a specific process
  * return: length of data written.
  */

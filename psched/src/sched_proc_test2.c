@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "sched_types.h"
+
 #define SLEEPT 500*1000
 
 

@@ -3,9 +3,9 @@
 #include <string.h>
 #include <sys/stat.h>
 #include <stdlib.h>
-#include <mq.h>
+#include <psched_mq.h>
 
-#define KEY_DIR "/Users/smokiee/mq_test1"
+#define KEY_DIR "/tmp"
 #define PERM_FLAGS (IPC_CREAT|S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH)
 
 int mq_init(key_t key){

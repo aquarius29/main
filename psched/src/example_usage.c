@@ -6,6 +6,7 @@
  */ 
 
 #include <stdio.h>
+#include "psched_mq.h"
 #include "sched_ext_mngr.h"
 #include <string.h>
 
