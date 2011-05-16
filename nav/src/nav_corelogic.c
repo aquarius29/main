@@ -126,9 +126,9 @@ void *startConnectivityListener(void *ptr)
 	/* Declare safety variables because segments cant be locked/unlocked 
 	*  using mutexes if they are checking in statement such as if and while.
 	*/
-	int newMoveCheck;
-	int startIndoorCheck;
-	int startOutdoorCheck;
+	int newMoveCheck = 0;
+	int startIndoorCheck = 0;
+	int startOutdoorCheck = 0;
 	
 	int listening = 1;
 	
@@ -803,6 +803,7 @@ void nav_setMovementIdentifier(int id)
 	result = pthread_mutex_lock(&newMovementMutex);
     nav_newMovement = 1;
     result = pthread_mutex_unlock(&newMovementMutex);
+	printf("\n");
 }
 
 void nav_setIndoorData(double startX, double startY, double destinationX, double destinationY)
@@ -892,34 +893,34 @@ static tile roomPositionToTile(roomPosition *current)
     return temp;
 }
 
-int main(int argc, char **argv) {
-
-
-/*
- 	GPSLocation *Destination = malloc(sizeof(GPSLocation));
- 	Destination->latitude = 57.7053;
- 	Destination->longitude = 11.9340;
-
-	nav_runGpsSystem(Destination->latitude, Destination->longitude);
-*/
-	nav_init();
-	nav_run();
-
-	//runProtocolThread();
-	
-    // tile a, b;
-    // a.x = 1;
-    // a.y = 1;
-    // b.x = 9;
-    // b.y = 5;
-    // 
-    // nav_runIndoorSystem(a.x, a.y, b.x, b.y);
-	
-	
-	
-
-    return 0;
-}
+// int main(int argc, char **argv) {
+// 
+// 
+// /*
+//  	GPSLocation *Destination = malloc(sizeof(GPSLocation));
+//  	Destination->latitude = 57.7053;
+//  	Destination->longitude = 11.9340;
+// 
+// 	nav_runGpsSystem(Destination->latitude, Destination->longitude);
+// */
+// 	nav_init();
+// 	nav_run();
+// 
+// 	//runProtocolThread();
+// 	
+//     // tile a, b;
+//     // a.x = 1;
+//     // a.y = 1;
+//     // b.x = 9;
+//     // b.y = 5;
+//     // 
+//     // nav_runIndoorSystem(a.x, a.y, b.x, b.y);
+// 	
+// 	
+// 	
+// 
+//     return 0;
+// }
 
 int16_t nav_init(void)
 {
