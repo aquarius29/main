@@ -26,6 +26,12 @@ static progressiveNode *first;
 static progressiveNode *current;
 static tile destinationTile;
 
+/*Keep the thread running until it is killed externally*/
+void initIndoorNavigation(void) {
+    for(;;) {
+        ;
+    }
+}
 static void insertCurrentDestinationNode(void) {
     current->next = calloc(1, sizeof(progressiveNode));
     current->next->p = route.list[count];
@@ -167,14 +173,12 @@ static void setDestinationTile(tile *end) {
     destinationTile.y = end->y;
 }
 
-tile * getDestinationTile(void) {
+tile *getDestinationTile(void) {
     return &destinationTile;
 }
-
 int8_t getRunning(void) {
     return running;
 }
-
 //Send start and end point received from corelogic
 //to path calculation.
 void initPath(tile *start, tile *end) {

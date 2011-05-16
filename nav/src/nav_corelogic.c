@@ -839,17 +839,10 @@ void nav_setOutdoorData(double destinationX, double destinationY)
 }
 
 /* Begin interface:out functions for connectivity group */
-void nav_sendCurrentIndoorPositionToGui(roomPosition *currentPosition)
-{
-
-
-	// *currPosition = *currentPosition;
-	// 
-	//     printf("Drone is aproximately at X: %f    Y: %f\n", currentPosition->lon,
-	//     currentPosition->lat);
-
+void nav_sendCurrentIndoorPositionToGui(roomPosition *currentPosition) {
+    printf("Drone is approximately at X: %f    Y: %f\n", currentPosition->lon,
+    currentPosition->lat);
 	/* Save the current position before sending it */
-	/* currPosition = currentPosition */
 	/* Put connectivity library function here*/
 }
 
