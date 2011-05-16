@@ -98,22 +98,32 @@ static void calculateNewCommand(void) {
     }
 }
 
+static void calculateNewPosition(int32_t angle, int32_t distance) {
+    checkpoint.lon += distance * cos(angle);
+    checkpoint.lat += distance * sin(angle);
+}
 
-static void setManualPosition(void) {    
+static void updateManualPosition(void) {    
 
     checkpoint.angle += newCommand[2] * (M_PI / 180);
     checkpoint.distance = newCommand[1];
     
     printf("Current angle and distance: %f\t %f\n", checkpoint.angle, checkpoint.distance);
     
-    double changeX = checkpoint.distance * cos(checkpoint.angle);
-    double changeY = checkpoint.distance * sin(checkpoint.angle);
-    
-    checkpoint.lon += changeX;
-    checkpoint.lat += changeY;
+    calculateNewPosition(checkpoint.angle, checkpoint.distance);
     
     printf("Current position: lon %f\t lat %f\n\n", checkpoint.lon, checkpoint.lat);
     
+}
+
+void collisionOverManual(int32_t angle) {
+    // Abort all manual commands from user
+    freeManualCommandList();
+    
+    checkpoint.angle = (angle - TRUE_NORTH) * (M_PI / 180);
+    checkpoint.distance = AVOID_DISTANCE;
+    
+    calculateNewPosition(checkpoint.angle, checkpoint.distance);
 }
 
 void initManualStart(tile *start) {
@@ -203,7 +213,7 @@ void receiveManualMovementCommand(uint8_t command) {
                 // printf("Height %d\t Distance %d\t Angle %d\n", newCommand[0], newCommand[1], newCommand[2]);
                 sendManualMovementCommand(newCommand[0], newCommand[1], newCommand[2], newCommand[3]);
                 
-                setManualPosition();
+                updateManualPosition();
                 
                 // resume auto
                 if (destinationSet == 1) {

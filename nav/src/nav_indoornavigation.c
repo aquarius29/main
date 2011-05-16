@@ -10,10 +10,12 @@
 #include "nav_indoorstructure.h"
 #include "nav_corelogic.h"
 
+// #include "nav_handlemanualcommands.h" 
+//already included from corelogic
+
 #define PRECISION 5
 #define SLEEP_DURATION (0.05 * 1000000000)
 #define ALGORITHM 0
-#define AVOID_DISTANCE 100
 #define CENTIMETRES_PER_SECOND 100
 #define SAFE_HEIGHT 200 //200 cm
 
@@ -239,12 +241,17 @@ static void recalc(void) {
     sendCommand();
 }
 void collisionAvoided(int32_t direction) {
-    running = 0;
-    compareTile();
-    current->next->p.angle = (direction - TRUE_NORTH) * (M_PI / 180);
-    updatePosition();
-    compareTile();
-    recalc();
+    if (running == 0) {
+        collisionOverManual(direction);
+    }
+    else {
+        running = 0;
+        compareTile();
+        current->next->p.angle = (direction - TRUE_NORTH) * (M_PI / 180);
+        updatePosition();
+        compareTile();
+        recalc();
+    }
 }
 
 static int32_t check(roomPosition a, roomPosition b){

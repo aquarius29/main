@@ -49,7 +49,7 @@ static pthread_mutex_t gpsRunningMutex = PTHREAD_MUTEX_INITIALIZER;
 int gpsRunning = 0;
 
 static pthread_mutex_t indoorNavigationRunningMutex = PTHREAD_MUTEX_INITIALIZER;
-int indoorSystemRunning = 0;
+int indoorSystemRunning = 1;
 
 static pthread_mutex_t movementIdMutex = PTHREAD_MUTEX_INITIALIZER;
 int nav_movementId;
@@ -511,6 +511,8 @@ void *startIndoorNavigationSystem(void *ptr)
     message = (char *) ptr;
     printf("%s\n", message);
 
+	
+
     // printf("Started the indoor navigation tread\n");
     //     struct thread_data *data = (struct thread_data*) ptr;
     
@@ -768,9 +770,7 @@ void killProtocolReadThread()
 /* Begin functions that are using the protocol */
 void nav_sendAutoMovementCommand(struct movCommand *move)
 {
-	printf("in nav core logic send auto movement command\n");
-    /* Add protocol functions to send to movement */
-	
+    /* Add protocol functions to send to movement */	
 }
 
 void nav_sendManualMovementCommand(struct movCommand *move)
@@ -938,10 +938,7 @@ int16_t nav_run(void)
 	char *message2 = "Indoor Thread Started";
     indoorThreadResult = 
         pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void*) message2);
-	
-	/* Wait for the thread to finish */
-	pthread_join(protocolReadThread, NULL);
-   		
+		
 	//nav_setIndoorData(1, 1, 9, 5);	
 	
 	/* duplicate the mutex variable for lock/unlock in while loop */
@@ -992,9 +989,10 @@ int16_t nav_run(void)
 		
 	}
 	
+	/* Wait for the threads to finish */
 	pthread_join(connectivityListenerThread, NULL);
 	pthread_join(indoorNavigationThread, NULL);
-   	printf("indoor navigation system shut down\n");
-
+	pthread_join(protocolReadThread, NULL);
+ 
     return 0;
 }
