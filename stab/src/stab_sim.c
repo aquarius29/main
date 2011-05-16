@@ -14,6 +14,8 @@
  *                a bug before. //Adam
  *    11/04/2011: Renamed file to stab_sim (was stab_gyro_sim) // Adam
  *    18/04/2011: Updated code to reflect coding standards
+ *    11/05/2011: //My
+ *    15/05/2011: Fixed a small integer overflow error //Adam
  *************************************************************************/
 #ifdef PC
 #include <stdio.h>
@@ -25,42 +27,110 @@
 /* 
  * Function prototype
  */
-float gen_val(float a, float b);
-struct vector init_sim(void);
-
+float gen_float(float a, float b);
+long gen_long(long a, long b);
+int gen_int(int a, int b);
 
 /*
- * A vector struct that is returned by the simulator when invoked
+ * A struct that is returned by the simulator when simulated
+ * attitude data is requested.
  */
-struct vector
-{
-  float x;
-  float y;
-  float z;
+struct attitude {
+  float pitch;
+  float roll;
+  int heading;
 };
 
+struct vector {
+    float x;
+    float y;
+    float z;
+};
 
+struct baro_data {
+    int temp;
+    long pressure;
+    float height;
+};
+
+//=========================================================
 /*
- * Function to be called by other c files when a vector needs 
- * to be generated
+ * Generates random attitude data. 
+ * For testing purposes only.
+ * New version of messages. 
  */
-struct vector init_sim(void)
-{
-  struct vector vect;
-  srand(time(NULL));
-  vect.x = gen_val(-180.0, 360.0);
-  vect.y = gen_val(-180.0, 360.0);
-  vect.z = gen_val(-180.0, 360.0);
+struct attitude sim_attitude(void) {
+    struct attitude att;
+    srand(time(NULL));
+    att.pitch = gen_float(-180.0, 90.0);
+    att.roll = gen_float(-180.0, 90.0);
+    att.heading = gen_int(0, 360);
 
-  return vect;
+    return att;
 }
 
+/*
+ * Generates random vector with degrees. 
+ * For testing purposes only.
+ */
+struct vector sim_vector(void) {
+    struct vector vect;
+    srand(time(NULL));
+    vect.x = gen_float(-180.0, 90.0);
+    vect.y = gen_float(-180.0, 90.0);
+    vect.z = gen_float(-180.0, 90.0);
+
+    return vect;
+}
 
 /*
- * Function that generates the actual random float
+ * Generates random heading (angle, type:int). 
+ * For testing purposes only.
  */
-float gen_val(float start, float end)
-{ 
-  return start + (int)( end * rand() / ( RAND_MAX + 1.0 ) );
+int sim_heading() {
+    //generate a heading between 0 and 360 degrees
+        //0/360 = North
+        //90 =    East
+        //180 =   South
+        //270 =   West
+    return gen_int(0, 360);
 }
+
+/*
+ * Generates random barometer data. 
+ * For testing purposes only.
+ */
+struct baro_data sim_baro() {
+    //generate a height above sea level between 0 and 100 meters
+    struct baro_data baro;
+    srand(time(NULL));
+    baro.temp = gen_int(-20,100);
+    baro.pressure = gen_long(100000.0,101000.0);
+    baro.height = gen_float(1.0,100.0);
+
+    return baro;
+}
+
+//===HELPER=FUNCTIONS=======================================
+/*
+ * Function that generates random float
+ */
+float gen_float(float start, float end) { 
+    return start + (int)(end * rand() / (RAND_MAX + 1.0));
+}
+
+/*
+ * Function that generates random int
+ */
+int gen_int(int start, int end) { 
+    return start + (int)(end * rand() / (RAND_MAX + 1.0));
+}
+
+/*
+ * Function that generates random long
+ */
+long gen_long(long start, long end) { 
+    return start + (int)(end * rand() / (RAND_MAX + 1.0));
+}
+
 #endif

@@ -130,7 +130,7 @@ int16_t do_sensor_simulation(int16_t currentSensorValue, uint8_t command)
 		new = currentSensorValue - i;
 		break;
     }
-    return new;
+     return new;
 #else
     return currentSensorValue;
 #endif

@@ -185,9 +185,9 @@ void check_height(void)
 {
 #ifdef DEBUG
 #ifdef PC
-    printf("!!!!!!!!!!!!!check height: \n");
+    printf("@@@@@@@check height: \n");
 #elif defined ARDUINO
-	Serial.println("!!!!!!!!!!!!!check height:");
+	Serial.println("@@@@@@@@check height:");
 #endif
 #endif
 
@@ -229,9 +229,9 @@ void check_heading(void)
 {
 #ifdef DEBUG
 #ifdef PC
-    printf("!!!!!!!!!!!!!check heading: \n");
+    printf("@@@@@@@@check heading: \n");
 #elif defined ARDUINO
-	Serial.println("!!!!!!!!!!!!!check heading:");
+	Serial.println("@@@@@@@check heading:");
 #endif
 #endif
 
@@ -269,9 +269,9 @@ void check_pitch_roll(uint8_t isHovering) {
 
 #ifdef DEBUG
 #ifdef PC
-    printf("!!!!!!!!!!!!!check pitch and roll: \n");
+    printf("@@@@@@@@check pitch and roll: \n");
 #elif defined ARDUINO
-	Serial.println("!!!!!!!!!!!!!check pitch and roll:");
+	Serial.println("@@@@@@@check pitch and roll:");
 #endif
 #endif
 
@@ -343,7 +343,7 @@ void printOrientation(void)
 {
 #ifdef DEBUG
 #ifdef PC
-	printf("\n {pitch: %d roll: %d, yaw: %d height: %d distance left: %d}\n", 
+	printf("\n {pitch: %d roll: %d, yaw: %d height: %d distance left: %d}\n",
 		   sensorCommand.pitch, sensorCommand.roll,sensorCommand.yaw,
 		   sensorCommand.height, distanceToTravel );
 #elif defined ARDUINO

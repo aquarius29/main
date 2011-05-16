@@ -17,18 +17,19 @@
 #include <stdio.h>
 #endif
 
+#include <stdint.h>
 #ifndef TEST
 #include "proto_lib.h"
 #endif 
-
 #include "mov_interface.h"
-#include <stdint.h>
 
 #define SONAR_PIN 5
 
 /* global variables*/
+#ifdef PC
 #ifdef SIMULATOR
 FILE *file;
+#endif
 #endif
 
 int16_t distanceToTravel;
@@ -125,10 +126,8 @@ int16_t mov_run()
 	write_array();
 	return 0;
 }
-#endif
 
-
-#ifdef PC
+#elif defined PC
 /*
  * PC
  * all the movement preparations
@@ -222,8 +221,7 @@ void write_to_nav_ca(int8_t direction) {
 void write_array(){
 #ifndef TEST
     proto_write_motor2(msg1,msg2,msg3,msg4,msg5,msg6,msg7,msg8);
-	#ifdef DEBUG
-	printf("@@@@@@@@@@@@@@SEND MESSAGE@@@@@@@@@@@@@@@\n");
+#ifdef DEBUG
 	print_uint8_t_to_Binary(msg1);
 	print_uint8_t_to_Binary(msg2);
 	print_uint8_t_to_Binary(msg3);
@@ -232,8 +230,7 @@ void write_array(){
 	print_uint8_t_to_Binary(msg6);
 	print_uint8_t_to_Binary(msg7);
 	print_uint8_t_to_Binary(msg8);
-	printf("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n");
-	#endif
+#endif
 #endif
 }
 
@@ -274,11 +271,13 @@ void read_navCommand(void) {
 		p -> distance = 0;
 		p -> yaw = 0;
 	}
-	//#ifdef DEBUG
-	printf("@@@@@@TO DO :{type: %d order: %d, height: %d distance: %d yaw: %d}@@@@@@\n", 
+#ifdef DEBUG
+#ifdef PC
+	printf("@@@@@@TO DO :{type: %d order: %d, height: %d distance: %d yaw: %d}@@@@@@\n",
 		   navCommand.type, navCommand.order,navCommand.height,
 		   navCommand.distance, navCommand.yaw);
-	//#endif
+#endif
+#endif
 #endif
 }
 
@@ -307,7 +306,7 @@ void read_sensorCommand(void){
     pSensorC -> roll = stabCommand -> roll;
     pSensorC -> yaw = stabCommand -> yaw;
     pSensorC -> height = (uint16_t) sonar_distance(SONAR_PIN);
-	#ifdef DEBUG
+#ifdef DEBUG
 #ifdef PC
 	printf("@@@@@@@ PITCH  @@@@@@@@@@@@@@@@@ %d  @@@@@@@@@@@@@@@@@@@@\n",sensorCommand.pitch);
 	printf("@@@@@@@ ROLL   @@@@@@@@@@@@@@@@@ %d  @@@@@@@@@@@@@@@@@@@@\n",sensorCommand.roll);
@@ -322,7 +321,7 @@ void read_sensorCommand(void){
 	Serial.println(sensorCommand.yaw);
 	Serial.println("@@@@@@@@@@SENSOECOMMAND  HEIGHT@@@@@@@@@");
 	Serial.println(sensorCommand.height);
-	#endif
+#endif
 #endif
 #endif
 }

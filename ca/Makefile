@@ -17,7 +17,7 @@
 #    Launch the Arduino program to see what your USB device 
 #    is called (look under the port settings)
                                                                                   
-USB_PORT=/dev/cu.usbmodemfd121
+USB_PORT=/dev/cu.usbmodemfa131
 #USB_PORT=/dev/tty.usbmodem411
 
 #########################################################################
@@ -71,7 +71,7 @@ test: clean $(OBJ) compile
 install: $(OBJ) compile
 	@ cd bin && avr-objcopy -O srec $(PROG).elf $(PROG).rom
 #	checksize $(PROG).elf
-	# @ avrdude -p $(MMCU) -P $(USB_PORT) -c $(STK) -b $(BAUD) -F -u -U flash:w:bin/$(PROG).rom
+	 @ avrdude -p $(MMCU) -P $(USB_PORT) -c $(STK) -b $(BAUD) -F -u -U flash:w:bin/$(PROG).rom
 
 
 mega: clean install

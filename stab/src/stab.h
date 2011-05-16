@@ -16,6 +16,10 @@ float comp_filter(float acc_scal, float gyro_scal, float old_est);
 float read_gyro();
 float read_accel();
 struct vector init_sim(void);
+struct attitude sim_attitude(void);
+struct vector sim_vector(void);
+int sim_heading();
+struct baro_data sim_baro(); 
 #elif ARDUINO
 float comp_filter(float acc_scal, float gyro_scal, float old_est);
 void init_filter();

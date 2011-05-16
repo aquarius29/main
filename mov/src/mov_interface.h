@@ -8,6 +8,8 @@
  *
  * @detail:
  */
+#ifndef MOV_INTERFACE_H
+#define MOV_INTERFACE_H
 
 #include <stdint.h>
 
@@ -70,6 +72,7 @@ void land(void);
 
 uint8_t to_MotorMessage(uint8_t ID0, uint8_t ID1, uint8_t increasing,uint8_t panicMode, 
 						uint8_t motor1,uint8_t motor2, uint8_t motor3, uint8_t motor4);
+
 void pWrite(uint8_t msg);
 void print_uint8_t_to_Binary(uint8_t bin);
 
@@ -95,3 +98,5 @@ void write_array(void);
 
 /*mov_sensor.c*/
 uint16_t sonar_distance(uint8_t sonarPin);
+
+#endif
