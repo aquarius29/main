@@ -20,6 +20,12 @@ static roomPosition checkpoint;
 
 uint8_t ch;
 
+/*Keep the thread running until it is killed externally*/
+void initManualNavigation(void) {
+    for(;;) {
+        ;
+    }
+}
 static void queueManualCommand(int16_t n) {
     manualCommand  *temp;
 

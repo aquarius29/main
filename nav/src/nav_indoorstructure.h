@@ -49,10 +49,10 @@ typedef struct {
 
 positionList indoorDijkstra(const tile *start, const tile *end);
 positionList indoorAstar(const tile *start, const tile *end);
+void initIndoorNavigation(void);
 void initPath(tile *start, tile *end);
 void stopIndoorNavigation(void);
 void collisionAvoided(int32_t direction);
-
 roomPosition getCurrentPosition(void);
 tile * getDestinationTile(void);
 int8_t getRunning();
