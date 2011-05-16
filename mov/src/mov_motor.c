@@ -41,14 +41,14 @@ void start_motors(void){
 
 	uint8_t msg = to_MotorMessage(0,1,0,0,0,0,0,0);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("start motors\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("start motors\n"); */
-/* #endif */
-/* #endif */
-	/* pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("start motors\n");
+#elif defined ARDUINO
+	Serial.println("start motors\n");
+#endif
+#endif
+	pWrite(msg);
 	write_to_motor(msg);
 }
 
@@ -59,14 +59,14 @@ void stop_motors(void){
 
 	uint8_t msg = to_MotorMessage(0,0,0,0,0,0,0,0);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("stop motors\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("stop motors\n"); */
-/* #endif */
-/* #endif */
-	/* pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("stop motors\n");
+#elif defined ARDUINO
+	Serial.println("stop motors\n");
+#endif
+#endif
+	pWrite(msg);
 	write_to_motor(msg);
 }
 
@@ -77,14 +77,14 @@ void increase_rear_motor(void){
 
 	uint8_t msg = to_MotorMessage(1,0,1,0,0,0,0,1);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("increase rear motor\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("increase rear motor\n"); */
-/* #endif */
-/* #endif */
-	/* pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("increase rear motor\n");
+#elif defined ARDUINO
+	Serial.println("increase rear motor\n");
+#endif
+#endif
+	pWrite(msg);
 	write_to_motor(msg);
 }
 
@@ -95,14 +95,14 @@ void decrease_rear_motor(void){
 
 	uint8_t msg = to_MotorMessage(1,0,0,0,0,0,0,1);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("decrease rear motors\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("decrease rear motors\n"); */
-/* #endif */
-/* #endif */
-	/* pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("decrease rear motors\n");
+#elif defined ARDUINO
+	Serial.println("decrease rear motors\n");
+#endif
+#endif
+	pWrite(msg);
 	write_to_motor(msg);
 }
 
@@ -113,14 +113,14 @@ void increase_front_motor(void){
 
 	uint8_t msg = to_MotorMessage(1,0,1,0,0,0,1,0);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("increase front motor\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("increase front motor\n"); */
-/* #endif */
-/* #endif */
-	/* pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("increase front motor\n");
+#elif defined ARDUINO
+	Serial.println("increase front motor\n");
+#endif
+#endif
+	pWrite(msg);
 	write_to_motor(msg);
 }
 
@@ -131,14 +131,14 @@ void decrease_front_motor(void){
 
 	uint8_t msg = to_MotorMessage(1,0,0,0,0,0,1,0);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("decrease front motor\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("decrease front motor\n"); */
-/* #endif */
-/* #endif */
-	/* pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("decrease front motor\n");
+#elif defined ARDUINO
+	Serial.println("decrease front motor\n");
+#endif
+#endif
+	pWrite(msg);
 	write_to_motor(msg);
 }
 
@@ -149,14 +149,14 @@ void increase_left_motor(void){
 
 	uint8_t msg = to_MotorMessage(1,0,1,0,0,1,0,0);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("increase left motor\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("increase left motor\n"); */
-/* #endif */
-/* #endif */
-	/* pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("increase left motor\n");
+#elif defined ARDUINO
+	Serial.println("increase left motor\n");
+#endif
+#endif
+	pWrite(msg);
 	write_to_motor(msg);
 
 }
@@ -169,14 +169,14 @@ void decrease_left_motor(void){
 
 	uint8_t msg = to_MotorMessage(1,0,0,0,0,1,0,0);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("decrease left motor\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("decrease left motor\n"); */
-/* #endif */
-/* #endif */
-/* 	pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("decrease left motor\n");
+#elif defined ARDUINO
+	Serial.println("decrease left motor\n");
+#endif
+#endif
+	pWrite(msg);
 	write_to_motor(msg);
 }
 
@@ -188,14 +188,14 @@ void increase_right_motor(void){
 
 	uint8_t msg = to_MotorMessage(1,0,1,0,1,0,0,0);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("increase right motor\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("increase right motor\n"); */
-/* #endif */
-/* #endif */
-/* 	pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("increase right motor\n");
+#elif defined ARDUINO
+	Serial.println("increase right motor\n");
+#endif
+#endif
+	pWrite(msg);
 	write_to_motor(msg);
 }
 
@@ -207,14 +207,14 @@ void decrease_right_motor(void){
 
 	uint8_t msg = to_MotorMessage(1,0,0,0,1,0,0,0);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("decrease right motor\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("decrease right motor\n"); */
-/* #endif */
-/* #endif */
-/* 	pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("decrease right motor\n");
+#elif defined ARDUINO
+	Serial.println("decrease right motor\n");
+#endif
+#endif
+	pWrite(msg);
 	write_to_motor(msg);
 
 }
@@ -227,14 +227,14 @@ void increase_rear_decrease_front(void){
    
     uint8_t msg = to_MotorMessage(1,1,1,0,0,0,1,1);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("increase rear decrease front\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("increase rear decrease front\n"); */
-/* #endif */
-/* #endif */
-/*     pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("increase rear decrease front\n");
+#elif defined ARDUINO
+	Serial.println("increase rear decrease front\n");
+#endif
+#endif
+    pWrite(msg);
 	write_to_motor(msg);
 }
 
@@ -246,14 +246,14 @@ void increase_front_decrease_rear(void){
    
     uint8_t msg = to_MotorMessage(1,1,0,0,0,0,1,1);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("increase front decrease rear\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("increase front decrease rear\n"); */
-/* #endif */
-/* #endif */
-/*     pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("increase front decrease rear\n");
+#elif defined ARDUINO
+	Serial.println("increase front decrease rear\n");
+#endif
+#endif
+    pWrite(msg);
 	write_to_motor(msg);
 
 }
@@ -265,14 +265,14 @@ void increase_left_decrease_right(void){
    
     uint8_t msg = to_MotorMessage(1,1,1,0,1,1,0,0);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("increase left decrease right\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("increase left decrease right\n"); */
-/* #endif */
-/* #endif */
-/*     pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("increase left decrease right\n");
+#elif defined ARDUINO
+	Serial.println("increase left decrease right\n");
+#endif
+#endif
+    pWrite(msg);
 	write_to_motor(msg);
 }
 
@@ -283,14 +283,14 @@ void increase_right_decrease_left(void){
 
     uint8_t msg = to_MotorMessage(1,1,0,0,1,1,0,0);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("increase right decrease left\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("increase right decrease left\n"); */
-/* #endif */
-/* #endif */
-/*     pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("increase right decrease left\n");
+#elif defined ARDUINO
+	Serial.println("increase right decrease left\n");
+#endif
+#endif
+    pWrite(msg);
 	write_to_motor(msg);
 }
 
@@ -301,14 +301,14 @@ void increase_all(void){
 
 	uint8_t msg = to_MotorMessage(1,0,1,0,1,1,1,1);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("increase all motors\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("increase all motors\n"); */
-/* #endif */
-/* #endif */
-/* 	pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("increase all motors\n");
+#elif defined ARDUINO
+	Serial.println("increase all motors\n");
+#endif
+#endif
+	pWrite(msg);
 	write_to_motor(msg);
 
 }
@@ -320,14 +320,14 @@ void decrease_all(void){
 
     uint8_t msg = to_MotorMessage(1,0,0,0,1,1,1,1);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("decrease all motors\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("decrease all motors\n"); */
-/* #endif */
-/* #endif */
-/*     pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("decrease all motors\n");
+#elif defined ARDUINO
+	Serial.println("decrease all motors\n");
+#endif
+#endif
+    pWrite(msg);
 	write_to_motor(msg);
 }
 
@@ -339,14 +339,14 @@ void go_forwards(void){
 
 	uint8_t msg = to_MotorMessage(1,1,0,0,0,0,1,0);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("go forward\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("go forward\n"); */
-/* #endif */
-/* #endif */
-/* 	pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("go forward\n");
+#elif defined ARDUINO
+	Serial.println("go forward\n");
+#endif
+#endif
+	pWrite(msg);
 	write_to_motor(msg);
 }
 
@@ -357,14 +357,14 @@ void go_backwards(void){
 
 	uint8_t msg = to_MotorMessage(1,1,0,0,0,0,0,1);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("go backward\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("go backward\n"); */
-/* #endif */
-/* #endif */
-/* 	pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("go backward\n");
+#elif defined ARDUINO
+	Serial.println("go backward\n");
+#endif
+#endif
+	pWrite(msg);
 	write_to_motor(msg);
 }
 
@@ -375,14 +375,14 @@ void strafe_left(void)
 {
 	uint8_t msg = to_MotorMessage(1,1,1,0,0,1,0,0);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("scrafe left\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("scrafe left\n"); */
-/* #endif */
-/* #endif */
-/* 	pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("scrafe left\n");
+#elif defined ARDUINO
+	Serial.println("scrafe left\n");
+#endif
+#endif
+	pWrite(msg);
 	write_to_motor(msg);
 }
 
@@ -394,14 +394,14 @@ void strafe_right(void)
 {
 	uint8_t msg = to_MotorMessage(1,1,0,0,1,0,0,0);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("scrafe right\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("scrafe right\n"); */
-/* #endif */
-/* #endif */
-/* 	pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("scrafe right\n");
+#elif defined ARDUINO
+	Serial.println("scrafe right\n");
+#endif
+#endif
+	pWrite(msg);
 	write_to_motor(msg);
 }
 
@@ -412,14 +412,14 @@ void turn_left(void){
   
     uint8_t msg = to_MotorMessage(1,1,1,0,1,1,0,0);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("turn left\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("turn left\n"); */
-/* #endif */
-/* #endif */
-/*     pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("turn left\n");
+#elif defined ARDUINO
+	Serial.println("turn left\n");
+#endif
+#endif
+    pWrite(msg);
 	write_to_motor(msg);
 }
 
@@ -430,14 +430,14 @@ void turn_right(void)
 {
     uint8_t msg = to_MotorMessage(1,1,0,0,1,1,0,0);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("turn right\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("turn right\n"); */
-/* #endif */
-/* #endif */
-/*     pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("turn right\n");
+#elif defined ARDUINO
+	Serial.println("turn right\n");
+#endif
+#endif
+    pWrite(msg);
 	write_to_motor(msg);
 }
 
@@ -448,14 +448,14 @@ void hover(void)
 {
 	uint8_t msg =to_MotorMessage(1,1,1,1,1,1,1,1);
 
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("hover\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("hover\n"); */
-/* #endif */
-/* #endif */
-/* 	pWrite(msg); */
+#ifdef DEBUG
+#ifdef PC
+    printf("hover\n");
+#elif defined ARDUINO
+	Serial.println("hover\n");
+#endif
+#endif
+	pWrite(msg);
 	write_to_motor(msg);
 }
 
@@ -465,13 +465,13 @@ void hover(void)
 void land(void){
 	hover();
 	decrease_all();
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("land\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("land\n"); */
-/* #endif */
-/* #endif */
+#ifdef DEBUG
+#ifdef PC
+    printf("land\n");
+#elif defined ARDUINO
+	Serial.println("land\n");
+#endif
+#endif
 }
 
 
@@ -558,51 +558,51 @@ uint8_t to_MotorMessage(uint8_t ID0, uint8_t ID1, uint8_t increasing, uint8_t pa
  */
 void pWrite(uint8_t msg)
 {
-/* #ifdef DEBUG */
-/* #ifdef PC */
-/*     printf("\nProtocol has this written to it: "); */
-/* #elif defined ARDUINO */
-/* 	Serial.println("\nProtocol has this written to it: "); */
-/* #endif */
-/* 	print_uint8_t_to_Binary(msg); */
-/* #endif */
+#ifdef DEBUG
+#ifdef PC
+    printf("\nProtocol has this written to it: ");
+#elif defined ARDUINO
+	Serial.println("\nProtocol has this written to it: ");
+#endif
+	print_uint8_t_to_Binary(msg);
+#endif
 }
 
 
 /*
  *  
  */
-/* void print_uint8_t_to_Binary(uint8_t bin) */
-/* { */
-/* 	uint8_t temp,bit; */
-/* 	int8_t counter; */
+void print_uint8_t_to_Binary(uint8_t bin)
+{
+	uint8_t temp,bit;
+	int8_t counter;
 
-/* 	counter =sizeof(bin) * 8; */
+	counter =sizeof(bin) * 8;
 
-/* 	for(counter = counter - 1; counter >= 0; counter--){ */
-/* 		temp = 1 << counter; */
-/* 		bit = temp & bin; */
+	for(counter = counter - 1; counter >= 0; counter--){
+		temp = 1 << counter;
+		bit = temp & bin;
 
-/* 		if( bit == 0){ */
-/* #ifdef PC */
-/* 			printf("0"); */
-/* #elif defined ARDUINO */
-/* 			Serial.print("0"); */
-/* #endif */
-/* 		} */
+		if( bit == 0){
+#ifdef PC
+			printf("0");
+#elif defined ARDUINO
+			Serial.print("0");
+#endif
+		}
 
-/* 		else{ */
-/* #ifdef PC */
-/* 			printf("1"); */
-/* #elif defined ARDUINO */
-/* 			Serial.print("1"); */
-/* #endif				 */
-/* 		} */
-/* 	} */
+		else{
+#ifdef PC
+			printf("1");
+#elif defined ARDUINO
+			Serial.print("1");
+#endif
+		}
+	}
 
-/* #ifdef PC */
-/* 	printf("\n"); */
-/* #elif defined ARDUINO */
-/* 	Serial.println(); */
-/* #endif	 */
-/* } */
+#ifdef PC
+	printf("\n");
+#elif defined ARDUINO
+	Serial.println();
+#endif
+}
