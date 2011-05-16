@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*!
  * @File:		unitmain.c
  * @Brief:	main file of the CUnit testing
@@ -45,6 +46,8 @@ int main(void) {
   return CU_get_error();
 }
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #include "CUnit/Basic.h"
 
 #include "test_logic.c"
@@ -96,4 +99,7 @@ int main(void) {
   CU_cleanup_registry();
   return CU_get_error();
 }
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

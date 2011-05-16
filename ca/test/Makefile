@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # File:		Makefile
 # Brief:		makefile
 # Author:	Alina Butko
@@ -52,6 +53,8 @@ testsuite: $(SRCOBJS) testsuite.o
 clean:
 	rm -f testsuite testsuite.exe testsuite.o *.gcov *.gcda *.gcno
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 SRCPATH = ../../ca
 SRCOBJS = $(wildcard $(SRCPATH)/*.o)
 TESTSRCS = $(wildcard *.c)
@@ -70,4 +73,7 @@ testsuite: $(SRCOBJS) testsuite.o
 clean:
 	rm -f testsuite testsuite.exe testsuite.o
 
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

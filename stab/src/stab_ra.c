@@ -1,7 +1,10 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /***************************************************************************
  * @file stab_ra.c
  * @brief Takes care of the communication with the accelerometer
@@ -17,6 +20,7 @@
 #include "WProgram.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct vector
 {
   float x;
@@ -26,6 +30,8 @@ struct vector
 
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /* 
  *address of the accelerometer on the board 
  */
@@ -34,6 +40,7 @@ struct vector
 /*
  *Function prototypes
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 struct vector readAccel();
 
@@ -49,6 +56,8 @@ struct vector readAccel()
   Wire.beginTransmission(ADDRESS);
   Wire.send(0x02); /*start of x LSB for reading data*/
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 void init_accel();
 void readAccel();
 
@@ -80,11 +89,15 @@ void readAccel()
 
   Wire.beginTransmission(ADDRESS);
   Wire.send(0x02);  							/*start of x LSB for reading data*/
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   Wire.endTransmission();
   Wire.requestFrom((int)ADDRESS, 7);
   
   if(Wire.available()==7)
+<<<<<<< HEAD
 <<<<<<< HEAD
     {
       int lsb = Wire.receive()>>2;
@@ -111,6 +124,8 @@ void readAccel()
   vect.z = z;   
   return vect;
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   {
     int lsb = Wire.receive()>>2;
     int msb = Wire.receive();
@@ -137,7 +152,10 @@ void readAccel()
 /*  Serial.print(" Z=");*/
 /*  Serial.print(z);*/
 /*  Serial.println();*/
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 /*
@@ -186,6 +204,7 @@ void init_accel()
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 #include "stab.h"
 
@@ -205,3 +224,5 @@ float read_accel()
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

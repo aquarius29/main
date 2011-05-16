@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * file:         ca_interface.c
  * brief:
@@ -10,6 +11,8 @@
  */
 
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /*****************************************************************************
  * Product: movementInterface.c
  * Version: 0.1
@@ -20,12 +23,16 @@
  * Movement/CA Group
  *****************************************************************************/
 #include "ca_interface.h"
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #include <stdlib.h>
 #include <stdio.h>
 
 #ifdef ARDUINO
 #include <WProgram.h>
+<<<<<<< HEAD
 <<<<<<< HEAD
 #endif
 
@@ -61,6 +68,8 @@ int ca_run(void)
 
 	return 0;
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 //************************************************************
 // ARDUINO
@@ -93,11 +102,15 @@ int ca_run(void)
 
   return 1;
 
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 
 #elif defined PC
+<<<<<<< HEAD
 <<<<<<< HEAD
 /*
  * PC
@@ -156,6 +169,8 @@ void write_to_move(int direction){
 	//	write(direction)
 }
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 //************************************************************
 // PC
 //  All movement preperation goes here.
@@ -191,4 +206,7 @@ int ca_run(void)
 
 
 #endif
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

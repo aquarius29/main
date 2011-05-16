@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * file:         ca_sensor.c
  * brief:        Read IR sensor data
@@ -27,6 +28,8 @@ int ir_distance(int irpin)
 	int distance = 65*pow(value*0.0048828125, -1.10);
 	return distance; 
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   /*****************************************************************************
   * Product: collision_sensor.c
   * Version: 0.1
@@ -77,6 +80,9 @@ int ir_distance(int irpin)
 
   /* return distance; */
   return 1;
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 #endif

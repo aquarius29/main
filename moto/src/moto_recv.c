@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*!@author Kristofer Hansson Aspman
  * @file moto_recv.c
  * @version v0.02
@@ -30,6 +31,8 @@ msg_pointer moto_recvMsg(void){
 }
 
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /*! @author Kristofer Hansson Aspman
  * @file moto_recv.c
  * @version v0.01
@@ -42,4 +45,7 @@ int moto_recvMsg(void){
 /* get message from protocol group and return it */
 
 }
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

@@ -1,6 +1,10 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 This file is needed to push folder to GitHub.
 =======
 This file is needed to push /bin folder to GitHub.
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+This file is needed to push /bin folder to GitHub.
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 Ignore it.

@@ -15,9 +15,12 @@
  *    11/04/2011: Renamed file to stab_sim (was stab_gyro_sim) // Adam
  *    18/04/2011: Updated code to reflect coding standards
 <<<<<<< HEAD
+<<<<<<< HEAD
  *    11/05/2011: //My
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
  *************************************************************************/
 #ifdef PC
 #include <stdio.h>
@@ -29,6 +32,7 @@
 /* 
  * Function prototype
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 float gen_float(float a, float b);
 long gen_long(long a, long b);
@@ -137,6 +141,8 @@ long gen_long(long start, long end) {
 }
 
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 float gen_val(float a, float b);
 struct vector init_sim(void);
 
@@ -175,5 +181,8 @@ float gen_val(float start, float end)
 { 
   return start + (int)( end * rand() / ( RAND_MAX + 1.0 ) );
 }
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #endif

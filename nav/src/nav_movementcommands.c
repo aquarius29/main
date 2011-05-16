@@ -41,7 +41,11 @@ void sendautomovementcommand(uint8_t order , int16_t height, uint16_t distance, 
 		printf("Sending Auto Movement Command\n");
 		nav_sendAutoMovementCommand(move);
 		
+<<<<<<< HEAD
 		free(move);
+=======
+		//free(move);
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	}
 }
 
@@ -52,8 +56,14 @@ void sendautomovementcommand(uint8_t order , int16_t height, uint16_t distance, 
 *
 *	@param identifier The id to identify the command requested
 */
+<<<<<<< HEAD
 void processMovementCommand(int identifier)
 {
+=======
+
+
+void sendManualMovementCommand(int16_t height, int16_t distance, int16_t yaw, uint8_t order) {
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	struct movCommand *move = malloc(sizeof(struct movCommand));
 	if (move == NULL)
 	{
@@ -61,6 +71,7 @@ void processMovementCommand(int identifier)
 	}
 	else 
 	{
+<<<<<<< HEAD
 		move->type = (((uint8_t)MANUAL));
 		
 		switch (identifier)
@@ -116,5 +127,17 @@ void processMovementCommand(int identifier)
 				move->yaw = 0;
 				break;		
 		}
+=======
+		move->type = MANUAL;
+		move->order = order;
+		move->height = height;
+		move->distance = distance;
+		move->yaw = yaw;
+		
+        // printf("Sending Manual Movement Command\n");
+		nav_sendManualMovementCommand(move);
+		
+		free(move);		
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	}
 }

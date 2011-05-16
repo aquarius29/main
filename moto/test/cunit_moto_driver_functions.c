@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*!
  * @file cunit_moto_driver_functions.c
  * @brief cunit tests for moto_driver_functions.c
@@ -800,6 +801,8 @@ void test_moto_rotateRight(void){
  *    test "test name"
  */
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /*Created by Magnus Bergqvist*/
 /* compile with something like this:
     gcc cunit_moto_driver_functions.c ../src/moto_driver_functions.c -DPC 
@@ -837,7 +840,10 @@ has been created, the char** passed to this function should always be in the
 style:
     suite "suite name"
     test "test name"*/
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 void check_add_ok(char* msg){
 
     if(CU_get_error() == CUE_SUCCESS){
@@ -848,6 +854,7 @@ void check_add_ok(char* msg){
     }
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /*
  * main() is where the test suites are set up and the tests are added to them
@@ -873,6 +880,8 @@ int main(int argc){
 
     /* Add appropriate test functions to the start_stop suite */
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 int main(int argc){
 /***************************************************************************/
@@ -891,7 +900,10 @@ int main(int argc){
     CU_pSuite start_stop = CU_add_suite("start_stop_motors",NULL,NULL);    
     check_add_ok("suite start_stop_motors");
 
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     CU_add_test(start_stop, "test_moto_startMotors", test_moto_startMotors);
     check_add_ok("test test_moto_startMotors");
     
@@ -899,6 +911,7 @@ int main(int argc){
         test_moto_stopMotors);
     check_add_ok("test test_moto_stopMotors");
     
+<<<<<<< HEAD
 <<<<<<< HEAD
     /*--------------------------------------------------------------------*/
     
@@ -969,9 +982,14 @@ int main(int argc){
 }
 #endif /* #ifndef MASTER_TEST_SUITE */
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 
     CU_console_run_tests();
     CU_cleanup_registry();
 }
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

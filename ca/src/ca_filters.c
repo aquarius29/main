@@ -1,5 +1,6 @@
 /*
 <<<<<<< HEAD
+<<<<<<< HEAD
  * file:         ca_filters.c
  * brief:
  * author:       Yanling Jin, Amber Olsson
@@ -17,6 +18,8 @@
 /*
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   .     IR1(FRONT)
 
   IR3(LEFT)   IR4(RIGHT)
@@ -27,7 +30,10 @@
 
 */
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   /*****************************************************************************
   * Product: collision_logic.c
   * Version: 0.1
@@ -41,7 +47,10 @@
   *
   * Movement/CA Group
   *****************************************************************************/
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -49,20 +58,28 @@
 #include "ca_interface.h"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* the speed control variables */
 =======
 //the speed control variables
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+//the speed control variables
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #define HOVERSPEED 5
 #define SLOWSPEED 25
 #define MEDIUMSPEED 50
 #define FASTSPEED 75
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* the dangerzone varibales according to the speed */
 =======
 //the dangerzone varibales according to the speed
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+//the dangerzone varibales according to the speed
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #define HOVERZONE 20
 #define SLOWZONE 50
 #define MEDIUMZONE 75
@@ -70,10 +87,14 @@
 #define MADZONE 150
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 /* the current flying directions */
 =======
 //the current flying directions
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+//the current flying directions
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #define FRONT 1
 #define BACK 2
 #define LEFT 3
@@ -87,6 +108,7 @@
  */
 int speed_filter(int speed)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
     int dangerzone;
 
@@ -104,6 +126,8 @@ int speed_filter(int speed)
 
     return dangerzone;
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   int dangerzone;
 
   if(speed<HOVERSPEED)
@@ -118,7 +142,10 @@ int speed_filter(int speed)
     dangerzone = MADZONE;
   
   return dangerzone;
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 
@@ -128,6 +155,7 @@ int speed_filter(int speed)
  * return 0 if the ir is NOT triggered, 1 as triggered
  * return an array of irs.
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 unsigned char *distance_filter(int dangerzone, int ir1, int ir2, int ir3, int ir4)
 {
@@ -163,6 +191,8 @@ unsigned char *distance_filter(int dangerzone, int ir1, int ir2, int ir3, int ir
     /* returns the unsigned char array of 0 or 1 for each IR sensor */
 	return irBooleans;
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 unsigned char* distance_filter(int dangerzone,int ir1, int ir2, int ir3,int ir4)
 {
 
@@ -192,7 +222,10 @@ unsigned char* distance_filter(int dangerzone,int ir1, int ir2, int ir3,int ir4)
     
   //returns the unsigned char array of 0 or 1 for each IR sensor
   return irBooleans;
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 
@@ -201,6 +234,7 @@ unsigned char* distance_filter(int dangerzone,int ir1, int ir2, int ir3,int ir4)
  * according to the boolean value of four irs
  * return the boolean value of 5 directions (front, back, left, right, hover)
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 unsigned char *ir_filter(unsigned char *irBooleans)
 {
@@ -239,6 +273,8 @@ unsigned char *ir_filter(unsigned char *irBooleans)
 
 	return directions;
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 unsigned char* ir_filter(unsigned char *irBooleans)
 {
   unsigned char front = 1;
@@ -271,7 +307,10 @@ unsigned char* ir_filter(unsigned char *irBooleans)
   *(directions+4)=hover;
 
   return directions;
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 
@@ -280,6 +319,7 @@ unsigned char* ir_filter(unsigned char *irBooleans)
  *According to the direction the quadrocopter is flying towards
  *return the boolean value of 5 directions (front, back, left, right, hover)
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 unsigned char *currentDirection_filter(int currentDirection, unsigned char *directions)
 {
@@ -297,6 +337,8 @@ unsigned char *currentDirection_filter(int currentDirection, unsigned char *dire
     }
     return directions;
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 unsigned char *currentDirection_filter(int currentDirection,unsigned char *directions)
 {
   //face to sensor 1
@@ -313,7 +355,10 @@ unsigned char *currentDirection_filter(int currentDirection,unsigned char *direc
     *(directions+2) = 0;//left
 
   return directions;
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 /*
@@ -321,6 +366,7 @@ unsigned char *currentDirection_filter(int currentDirection,unsigned char *direc
  *According to the objects which is moving towards
  *return the boolean value of 5 directions (front, back, left, right, hover)
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 unsigned char *moving_closer_filter(unsigned char *is_moving, unsigned char *directions)
 {
@@ -346,6 +392,8 @@ unsigned char *moving_closer_filter(unsigned char *is_moving, unsigned char *dir
     }
     return directions;
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 unsigned char *moving_closer_filter(unsigned char *is_moving, unsigned char*directions)
 {
 
@@ -371,7 +419,10 @@ unsigned char *moving_closer_filter(unsigned char *is_moving, unsigned char*dire
     }
 
  return directions;
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 /*
@@ -381,6 +432,7 @@ unsigned char *moving_closer_filter(unsigned char *is_moving, unsigned char*dire
  */
 int final_direction(int currentDir, unsigned char *directions)
 {
+<<<<<<< HEAD
 <<<<<<< HEAD
     int i;
     int dir = 6;
@@ -402,6 +454,8 @@ int final_direction(int currentDir, unsigned char *directions)
     }
     return dir;
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   int i;
   int dir=6;
 
@@ -514,5 +568,8 @@ void print_result(unsigned char *result)
       if (i==4)
 	printf("Hover is %s\n", answer);
     }
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }

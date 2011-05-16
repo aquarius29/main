@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * file:         ca_logic.c
  * brief:
@@ -138,6 +139,8 @@ int direction_filter(void)
 
     return finalDir;
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /*****************************************************************************
  * Product: collision_main.c
  * Version: 0.1
@@ -259,12 +262,16 @@ int direction_filter(void)
   outputdirection(finalDir);
 
   return finalDir;
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 
 #elif defined PC
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /*
  * PC
@@ -365,6 +372,8 @@ int direction_filter(int ir1, int ir2, int ir3, int ir4)
 
 #endif
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 //**********************************************************
 // filter the direction according to the collision logic
 // return the direction to go
@@ -476,4 +485,7 @@ int get_dir(void)
 {
   return 2;
 }
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

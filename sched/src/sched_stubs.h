@@ -11,16 +11,22 @@
  */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifndef _SCHED_STUBS_H
 #define _SCHED_STUBS_H
 =======
 #ifndef SCHED_STUBS_H
 #define SCHED_STUBS_H
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+#ifndef SCHED_STUBS_H
+#define SCHED_STUBS_H
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 #include <stdint.h>
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #ifdef CA
 /* stabilization groups header here */
@@ -35,6 +41,8 @@ int16_t caRun(void);
 
 #endif /* CA */
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 // #ifdef CA
 // /* stabilization groups header here */
 // /* #include "../../ca/src/ca_sched.h" */
@@ -47,7 +55,10 @@ int16_t caRun(void);
 // int16_t caRun(void);
 // 
 // #endif /* CA */
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 
 #ifdef MOVE
@@ -64,6 +75,7 @@ int16_t moveRun(void);
 #endif /* MOVE */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef STAB
 /* stabilization groups header here */
 /* #include "../../ca/src/ca_sched.h" */
@@ -79,6 +91,8 @@ int16_t stabRun(void);
 
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 #ifdef MOTO
 /* stabilization groups header here */
@@ -109,10 +123,14 @@ int16_t protoRun(void);
 
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef CONN
 =======
 #ifdef FILTER
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+#ifdef FILTER
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /* stabilization groups header here */
 /* #include "../../ca/src/ca_sched.h" */
 
@@ -120,17 +138,23 @@ int16_t protoRun(void);
 
 /* dummy interface for stabilization code */
 <<<<<<< HEAD
+<<<<<<< HEAD
 int16_t connInit(void);
 /* dummy interface for stabilization code */
 int16_t connRun(void);
 
 #endif /* CONN */
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 int16_t filterInit(void);
 /* dummy interface for stabilization code */
 int16_t filterRun(void);
 
 #endif /* FILTER */
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 #endif /* SCHED_STUBS_H */

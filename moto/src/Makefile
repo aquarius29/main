@@ -1,15 +1,21 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 ########################### Added by jogr 110413 #########################
 
 LIB_SRC=*.c#moto_driver_functions.c moto_interface.c moto_msg_handler.c moto_msg_manipulation moto_stubs.c 
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 ########################### Added by jogr 110413 #########################
 
 LIB_SRC=moto_driver_functions.c moto_interface.c moto_msg_handler.c moto_msg_manipulation.c
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 LIB_OBJ = $(LIB_SRC:.c=.o)
 
@@ -127,6 +133,7 @@ USB_PORT=/dev/tty.usbmodem411
 	
 .PHONY : clean uno due mega install help lib
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 # CC and CFLAGS are defined in higher level Makefile
 
@@ -168,3 +175,5 @@ clean:
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <stdint.h>
 #include "CUnit/CUnit.h"
 #include "cunit_moto_msg_handler.h"
@@ -33,6 +34,8 @@ void test_moto_examineID(void){
     uint8_t a = 0xa3;
     binary = INT_TO_BITFIELD(&a);
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #include "CUnit/CUnit.h"
 #include "../src/moto_msg_manipulation.h"
 /*Holds the definition of the type msg and the macros INT_TO_BITFIELD(a)
@@ -43,12 +46,16 @@ and BITFIELD_TO_CHAR(a)*/
 /*test_examineID checks so that the function returns 1 when  spectra*/
 void test_moto_examineID(void){
     msg binary = INT_TO_BITFIELD(0xa3);
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     msg_pointer mp = &binary;
     
     CU_ASSERT(examineID(mp)==0);
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 /*test_examineID_bad_msg checks so that the function returns 1 when the bad*/
@@ -142,6 +149,8 @@ void test_moto_specialMotorCommand(void){
 
 #ifndef MASTER_TEST_SUITE
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 void test_moto_examineID_bad_msg(void){
     msg binary = INT_TO_BITFIELD(0xf);
     msg_pointer mp = &binary;
@@ -149,7 +158,10 @@ void test_moto_examineID_bad_msg(void){
     CU_ASSERT(examineID(mp)==1);
 }
 
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /*check_add_ok() gives a print_out on the screen when a test suite or a test
 has been created, the char** passed to this function should always be in the 
 style:
@@ -166,9 +178,13 @@ void check_add_ok(char* msg){
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 int main(int argc){
 /***************************************************************************/
     CU_ErrorCode ec = CU_initialize_registry();    
@@ -193,6 +209,7 @@ int main(int argc){
         test_moto_examineID_bad_msg);
     check_add_ok("test test_moto_examineID_bad_msg");
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     CU_add_test(msg_handler, "test_moto_controlMotors", test_moto_controlMotors);
     check_add_ok("test test_moto_controlMotors");
@@ -203,11 +220,18 @@ int main(int argc){
     
 
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+    
+
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
     CU_console_run_tests();
     CU_cleanup_registry();
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 #endif
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

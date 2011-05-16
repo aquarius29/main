@@ -1,7 +1,10 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /*! @author Kristofer Hansson Aspman, Reza Moussavi
  * @file moto_msg_handler.c
  * @version v0.01
@@ -11,6 +14,7 @@
  *        different motors.
  */
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 #include <stdint.h>
 =======
@@ -29,6 +33,11 @@
 	#define ARDUINO
 #endif
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+#ifdef ARDUINO_DBG
+	#define ARDUINO
+#endif
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 #ifdef ARDUINO
    #include "WProgram.h"
@@ -37,15 +46,19 @@
 #endif
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #include "moto_interface.h"
 #include "moto_msg_manipulation.h"
 #include "moto_msg_handler.h"
 #include "moto_driver_functions.h"
 #include "moto_state_definitions.h"
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 #ifdef ARDUINO_DBG
@@ -238,6 +251,8 @@ void specialMotorCommand(msg_pointer mp){
 =======
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /* //These definitions will go into a separate file later on. */
 /* #define STOP 0x00 */
 /* #define STOP_ID 0x00 */
@@ -250,53 +265,74 @@ void specialMotorCommand(msg_pointer mp){
 /* #define GO_BACKWARD 0xc3 // 1100 0011 */
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void examineID(msg_pointer mp){
 #ifdef ARDUINO
 =======
 int examineID(msg_pointer mp){
 #ifdef ARDUINO_DBG
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+int examineID(msg_pointer mp){
+#ifdef ARDUINO_DBG
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   Serial.print("ID is ");
   Serial.println(mp->ID, DEC);
   if (BITFIELD_TO_CHAR(mp) == BAD_MESSAGE){
     Serial.println("Bad message!");
 <<<<<<< HEAD
+<<<<<<< HEAD
     return;
 =======
     return 1;
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+    return 1;
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   }
 #elif defined PC
   printf("ID is %d\n", mp->ID);
   if (BITFIELD_TO_CHAR(mp) == BAD_MESSAGE){
     printf("Bad message!\n");
 <<<<<<< HEAD
+<<<<<<< HEAD
     return;
   }
 #endif
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     return 1;
   }
 #endif
   if (BITFIELD_TO_CHAR(mp) == BAD_MESSAGE){
     return 1;
   }
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
   switch(mp->ID){
 
   case START_ID:
+<<<<<<< HEAD
 <<<<<<< HEAD
     _moto_startMotors();
     break;
   case STOP_ID:
     _moto_stopMotors();
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     moto_startMotors();
     break;
   case STOP_ID:
     moto_stopMotors();
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     break;
   case CONTROL_ID:
     controlMotors(mp);
@@ -307,6 +343,7 @@ int examineID(msg_pointer mp){
   }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   return;
 }
 
@@ -315,6 +352,8 @@ void controlMotors(msg_pointer mp){
   Serial.print("Standard Motor Control Message!\n");
 #elif defined PC  
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   return 0;
 }
 
@@ -322,7 +361,10 @@ void controlMotors(msg_pointer mp){
 #ifdef ARDUINO_DBG
   Serial.print("Standard Motor Control Message!\n");
 #elif defined PC 
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   printf("Standard Motor Control Message!\n");
 #endif
 
@@ -330,6 +372,7 @@ void controlMotors(msg_pointer mp){
   //i.e. panic mode not set.
   if (mp->increase == 1 && mp->panic == 0){
     if(mp->left == 1)
+<<<<<<< HEAD
 <<<<<<< HEAD
       _moto_increaseLeftNormal();
     if(mp->right == 1)
@@ -339,6 +382,8 @@ void controlMotors(msg_pointer mp){
     if(mp->rear == 1)
       _moto_increaseRearNormal();
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
       moto_increaseLeftNormal();
     if(mp->right == 1)
       moto_increaseRightNormal();
@@ -346,13 +391,17 @@ void controlMotors(msg_pointer mp){
       moto_increaseFrontNormal();
     if(mp->rear == 1)
       moto_increaseRearNormal();
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   }
 
   //Panic increase of the motors
   //i.e. panic mode set.
   if (mp->increase == 1 && mp->panic == 1){
     if(mp->left == 1)
+<<<<<<< HEAD
 <<<<<<< HEAD
       _moto_increaseLeftPanic();
     if(mp->right == 1)
@@ -362,6 +411,8 @@ void controlMotors(msg_pointer mp){
     if(mp->rear == 1)
       _moto_increaseRearPanic();
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
       moto_increaseLeftPanic();
     if(mp->right == 1)
       moto_increaseRightPanic();
@@ -369,13 +420,17 @@ void controlMotors(msg_pointer mp){
       moto_increaseFrontPanic();
     if(mp->rear == 1)
       moto_increaseRearPanic();
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   }
   
   //Normal decrease of the motors
   //i.e. panic mode not set.
   if (mp->increase == 0 && mp->panic == 0){
     if(mp->left == 1)
+<<<<<<< HEAD
 <<<<<<< HEAD
       _moto_decreaseLeftNormal();
     if(mp->right == 1)
@@ -385,6 +440,8 @@ void controlMotors(msg_pointer mp){
     if(mp->rear == 1)
       _moto_decreaseRearNormal();
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
       moto_decreaseLeftNormal();
     if(mp->right == 1)
       moto_decreaseRightNormal();
@@ -392,13 +449,17 @@ void controlMotors(msg_pointer mp){
       moto_decreaseFrontNormal();
     if(mp->rear == 1)
       moto_decreaseRearNormal();
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   }
   
   //Panic decrease of the motors
   //i.e. panic mode set.
   if (mp->increase == 0 && mp->panic == 1){
     if(mp->left == 1)
+<<<<<<< HEAD
 <<<<<<< HEAD
       _moto_decreaseLeftPanic();
     if(mp->right == 1)
@@ -408,6 +469,8 @@ void controlMotors(msg_pointer mp){
     if(mp->rear == 1)
       _moto_decreaseRearPanic();
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
       moto_decreaseLeftPanic();
     if(mp->right == 1)
       moto_decreaseRightPanic();
@@ -415,17 +478,24 @@ void controlMotors(msg_pointer mp){
       moto_decreaseFrontPanic();
     if(mp->rear == 1)
       moto_decreaseRearPanic();
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   }
   return;
 }
 
 void specialMotorCommand(msg_pointer mp){
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef ARDUINO
 =======
 #ifdef ARDUINO_DBG
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+#ifdef ARDUINO_DBG
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   Serial.print("Special Motor Control Message!\n");
 #elif defined PC
   printf("Special Motor Control Message!\n");
@@ -434,16 +504,22 @@ void specialMotorCommand(msg_pointer mp){
   switch(BITFIELD_TO_CHAR(mp)){
   case FORWARD:
 <<<<<<< HEAD
+<<<<<<< HEAD
     _moto_goForward();
     break;
   case BACKWARD:
     _moto_goBackward();
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     moto_goForward();
     break;
   case BACKWARD:
     moto_goBackward();
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     break;
   case TURN_LEFT:
     break;
@@ -451,16 +527,22 @@ void specialMotorCommand(msg_pointer mp){
     break;
   case STRAFE_LEFT:
 <<<<<<< HEAD
+<<<<<<< HEAD
     _moto_strafeLeft();
     break;
   case STRAFE_RIGHT:
     _moto_strafeRight();
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     moto_strafeLeft();
     break;
   case STRAFE_RIGHT:
     moto_strafeRight();
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     break;
   }
 
@@ -485,10 +567,14 @@ void specialMotorCommand(msg_pointer mp){
 msg scanHexMsgSTDIN(void){
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef ARDUINO
 =======
 #ifdef ARDUINO_DBG
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+#ifdef ARDUINO_DBG
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     unsigned char input;
     Serial.println("Enter the message in hexadecimal!");
   
@@ -527,11 +613,15 @@ msg scanHexMsgSTDIN(void){
  * http://www.arduino.cc/cgi-bin/yabb2/YaBB.pl?num=1191880368
  */
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 #ifdef ARDUINO
 =======
 #ifdef ARDUINO_DBG
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+#ifdef ARDUINO_DBG
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 unsigned char serReadUnsignedChar(void)
 {
   int i, numberOfAvailableInputs;
@@ -557,6 +647,9 @@ unsigned char serReadUnsignedChar(void)
 }
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

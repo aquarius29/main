@@ -1,5 +1,6 @@
 /***************************************************************************
 <<<<<<< HEAD
+<<<<<<< HEAD
  * @file stab_rb.c
  * @brief Takes care of the communication with the barometer
  * @author Siyang Suo
@@ -18,6 +19,8 @@
 #include "WProgram.h"
 #include "stab.h"
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 * @file read_rg.c
 * @brief Takes care of the communication with the barometer
 * @author Siyang Suo
@@ -30,7 +33,10 @@
 #include <inttypes.h>
 #include <Wire.h>
 #include "WProgram.h"
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 /* From the datasheet the BMP module address LSB distinguishes
  * between read (1) and write (0) operations, corresponding to 
@@ -42,6 +48,7 @@
 #define TO_READ 22
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 struct baro_data
 {
   int temp;
@@ -51,11 +58,14 @@ struct baro_data
 
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /*sensor registers from the BOSCH BMP085 datasheet*/
 int ac1, ac2, ac3, b1, b2, mb, mc, md;
 unsigned int ac4, ac5, ac6; 
 
 /*oversampling for measurement*/
+<<<<<<< HEAD
 <<<<<<< HEAD
 const uint8_t osrs = 3;
 /*delays for oversampling settings 0, 1, 2 and 3*/
@@ -65,11 +75,17 @@ uint8_t osrs = 3;
 /*delays for oversampling settings 0, 1, 2 and 3*/
 uint8_t pwait_time[4] = { 5, 8, 14, 26 };
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+uint8_t osrs = 3;
+/*delays for oversampling settings 0, 1, 2 and 3*/
+uint8_t pwait_time[4] = { 5, 8, 14, 26 };
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 /*function prototype*/
 long read_press();
 unsigned int read_temp();
 void calculate();
+<<<<<<< HEAD
 <<<<<<< HEAD
 void write_register(unsigned char r, unsigned char v);
 char read_register(unsigned char r);
@@ -87,6 +103,8 @@ float Height = 0;
 void init_baro_hardware() {
   
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 void read_data();
 void baro_init();
 void write_register(unsigned char r, unsigned char v);
@@ -104,13 +122,17 @@ long Press = 0;
 */
 void baro_init() {
 
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   byte buff[TO_READ];
   int i=0;
   
   Wire.beginTransmission(BARO_ADDRESS);
   Wire.send(0xAA);
   Wire.endTransmission();
+<<<<<<< HEAD
 <<<<<<< HEAD
   
   Wire.beginTransmission(BARO_ADDRESS);
@@ -121,6 +143,8 @@ void baro_init() {
   }
   
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
   Wire.beginTransmission(BARO_ADDRESS);
   Wire.requestFrom(BARO_ADDRESS, TO_READ);
@@ -129,7 +153,10 @@ void baro_init() {
       i++;
   }
 
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   ac1 = (buff[0]<<8) | buff[1];
   ac2 = (buff[2]<<8) | buff[3];
   ac3 = (buff[4]<<8) | buff[5];
@@ -141,6 +168,7 @@ void baro_init() {
   mb = (buff[16]<<8) | buff[17];
   mc = (buff[18]<<8) | buff[19];
   md = (buff[20]<<8) | buff[21];
+<<<<<<< HEAD
 <<<<<<< HEAD
 }
 
@@ -161,6 +189,8 @@ struct baro_data read_baro_data() {
  *write register
  */
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
   Serial.println("Reading calibrating data: ");
   Serial.println(ac1);
@@ -190,13 +220,17 @@ void read_baro_data() {
 /*
 *write register
 */
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 void write_register(unsigned char r, unsigned char v) {
   Wire.beginTransmission(BARO_ADDRESS);
   Wire.send(r);
   Wire.send(v);
   Wire.endTransmission();
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 /*
@@ -207,15 +241,24 @@ void write_register(unsigned char r, unsigned char v) {
 *read uncompensated temperature value
 */ 
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+/*
+*read uncompensated temperature value
+*/ 
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 unsigned int read_temp() {
   
   write_register(0xF4,0x2E);
   delay(5);
 <<<<<<< HEAD
+<<<<<<< HEAD
   
 =======
 
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   unsigned char T_msb, T_lsb;
   Wire.beginTransmission(BARO_ADDRESS);
   /*register to read*/
@@ -231,6 +274,7 @@ unsigned int read_temp() {
   T_lsb = Wire.receive();
   return (((int)T_msb<<8) | ((int)T_lsb));
 <<<<<<< HEAD
+<<<<<<< HEAD
   
 }
 
@@ -238,31 +282,44 @@ unsigned int read_temp() {
  *read uncompensated pressure value
  */
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 }
 /*
 *read uncompensated pressure value
 */
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 long read_press() {
   write_register(0xF4,0x34+(osrs<<6));
   delay(pwait_time[osrs]);
   
   unsigned char P_msb, P_lsb, P_xlsb;
 <<<<<<< HEAD
-  
-=======
-
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-  Wire.beginTransmission(BARO_ADDRESS);
-  /*register to read*/
-  Wire.send(0xF6);
-  Wire.endTransmission();
 <<<<<<< HEAD
   
 =======
 
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
+  Wire.beginTransmission(BARO_ADDRESS);
+  /*register to read*/
+  Wire.send(0xF6);
+  Wire.endTransmission();
+<<<<<<< HEAD
+<<<<<<< HEAD
+  
+=======
+
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   /*request 3 bytes*/
   Wire.requestFrom(BARO_ADDRESS, 3);
   /*wait until data available*/
@@ -274,6 +331,7 @@ long read_press() {
   P_xlsb = Wire.receive();
   return (((long)P_msb<<16) | ((long)P_lsb<<8) | ((long)P_xlsb))>>(8-osrs);
 }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 /*
@@ -288,6 +346,8 @@ void calculate() {
   const float p0 = 101325; 
   
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /*
 *calculate the both true values of temp and press
 */
@@ -295,28 +355,38 @@ void calculate() {
   long x1, x2, x3, b3, b5, b6, p;
   unsigned long b4, b7;
 
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   int UT = read_temp();
   long UP = read_press();
   
   /*calculate the true temperature value*/
+<<<<<<< HEAD
 <<<<<<< HEAD
   x1 = ((unsigned long)UT - ac6) * ac5 >> 15;
   x2 = ((long)mc << 11) / (x1 + md);
   b5 = x1 + x2;
   Temp = (b5 + 8) >> 4;  /*unit in 0.1 ℃*/
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   x1 = ((long)UT - ac6) * ac5 >> 15;
   x2 = ((long)mc << 11) / (x1 + md);
   b5 = x1 + x2;
   Temp = (b5 + 8) >> 4;
 
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   /*calculate the true pressure value*/
   b6 = b5 - 4000;
   x1 = (b2 * (b6 * b6 >> 12)) >> 11;
   x2 = ac2 * b6 >> 11;
   x3 = x1 + x2;
+<<<<<<< HEAD
 <<<<<<< HEAD
   
   if (osrs == 3) {
@@ -335,6 +405,9 @@ void calculate() {
 =======
   b3 = (((int32_t) ac1 * 4 + x3) << osrs + 2) >> 2;
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+  b3 = (((int32_t) ac1 * 4 + x3) << osrs + 2) >> 2;
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   x1 = ac3 * b6 >> 13;
   x2 = (b1 * (b6 *b6 >> 12)) >> 16;
   x3 = ((x1 + x2) + 2) >> 2;
@@ -350,6 +423,7 @@ void calculate() {
   x1 = (x1 * 3038) >> 16;
   x2 = (-7357 * p) >> 16;
 <<<<<<< HEAD
+<<<<<<< HEAD
   Press = p + ((x1 + x2 + 3791) >> 4);  /*unit in Pa*/
   
   /*Calculate the absolute height by read pressure */
@@ -358,6 +432,8 @@ void calculate() {
 }
 #endif
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   Press = p + ((x1 + x2 + 3791) >> 4);
 
 }
@@ -380,4 +456,7 @@ int main(void) {
 #endif
 
     
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

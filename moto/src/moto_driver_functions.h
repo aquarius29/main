@@ -3,11 +3,14 @@
  * Author(s):    Kristofer Hansson Aspman
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
  *               Magnus Bergqvist
 =======
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
  *
  * Description:  The typedef of the bitfield struct and
  *               all the prototypes for the functions used
@@ -17,6 +20,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #ifdef ARDUINO_DBG
     #define ARDUINO
 #endif
@@ -27,11 +31,17 @@
     #define ARDUINO
 #endif
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+#ifdef ARDUINO_DBG
+    #define ARDUINO
+#endif
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #ifdef ARDUINO
    #include "WProgram.h"
 #elif defined PC
    #include <stdio.h>
 #endif
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 #include <stdint.h>
@@ -71,6 +81,8 @@
 #define HOVER_PULSE_FRONT 1400
 #define HOVER_PULSE_REAR 1400
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #include <stdint.h>
 
 #define NORMAL_INCREMENT 2
@@ -82,7 +94,10 @@
 #define RIGHT_MOTOR 3
 #define FRONT_MOTOR 4
 #define REAR_MOTOR 5
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 extern uint16_t rightPulse;
 extern uint16_t leftPulse;
@@ -128,6 +143,7 @@ void moto_decreaseRearPanic(void);
 void printMotorStatus(void);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 void moto_left_motor(unsigned char,unsigned char);
 void moto_right_motor(unsigned char,unsigned char);
 void moto_front_motor(unsigned char,unsigned char);
@@ -144,12 +160,15 @@ uint16_t rearMotorLimitDecrease(uint16_t currentPulse, uint16_t decrement);
 
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 struct pulses{
     uint16_t right;
     uint16_t left;
     uint16_t front;
     uint16_t rear;
 };
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 
@@ -194,3 +213,5 @@ void printMotorStatus(void);
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

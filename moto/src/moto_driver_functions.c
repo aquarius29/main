@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
  /*!@author Kristofer Hansson Aspman,
  *          Björn Eriksson,
  *          Magnus Bergqvist
@@ -26,6 +27,8 @@
 #ifdef ARDUINO_DBG
 	#define ARDUINO
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /** 
  * Module:       motor_controls.c
  * Author(s):    Kristofer Hansson Aspman,
@@ -39,11 +42,15 @@
  
  #ifdef ARDUINO_DBG
 	#define ARDUNO
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #endif
 
 #ifdef ARDUINO
     #include "WProgram.h"
+<<<<<<< HEAD
 <<<<<<< HEAD
     #include "../include/Servo.h"
 #elif defined PC
@@ -52,6 +59,8 @@
 #endif
 
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #elif defined PC
     #include <stdio.h>
 #endif
@@ -59,7 +68,10 @@
 #include "moto_driver_functions.h"
 #include <stdint.h>
 
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /* These are the variables keeping track of the  */
 /* current state (pulse width) of each motor. */
 uint16_t rightPulse;
@@ -67,6 +79,7 @@ uint16_t leftPulse;
 uint16_t frontPulse;
 uint16_t rearPulse;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 /*
@@ -137,10 +150,13 @@ void moto_rear_motor(unsigned char increase,unsigned char panic){
 
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /**
  * Function:    void moto_startMotors()
  * Author(s):   Kristofer Hansson Aspman,
  *              Björn Eriksson
+<<<<<<< HEAD
 <<<<<<< HEAD
  *              Magnus Bergqvist
 =======
@@ -175,12 +191,15 @@ unsigned char rearMotor;
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
  *
  * Description: Sets the pulse width to a state where
  *              all motors starts spinning but the
  *              drone does not lift off.
  *
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 void moto_startMotors(void){
@@ -195,6 +214,8 @@ void moto_startMotors(void){
     escRear.writeMicroseconds(rearPulse);
 #elif defined PC
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 void moto_startMotors(void){
     leftPulse = 40;
     rightPulse = 40;
@@ -207,23 +228,30 @@ void moto_startMotors(void){
 #endif 
 
 #ifdef ARDUINO
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     analogWrite(RIGHT_MOTOR, rightPulse);
     analogWrite(LEFT_MOTOR, leftPulse);
     analogWrite(FRONT_MOTOR, frontPulse);
     analogWrite(REAR_MOTOR, rearPulse);
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
     PRINT_STRING("Starting all motors");
     PRINT_NEW_LINE;
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 /**
  * Function:    void moto_stopMotors()
  * Author(s):   Kristofer Hansson Aspman,
  *              Björn Eriksson
+<<<<<<< HEAD
 <<<<<<< HEAD
  *              Magnus Bergqvist
 =======
@@ -245,11 +273,14 @@ void _moto_startMotors(void){
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
  *
  * Description: Stops all motors, i.e. sets the
  *              pulse width to zero.
  *
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 void moto_stopMotors(void){
@@ -265,6 +296,8 @@ void moto_stopMotors(void){
 #elif defined PC
     analogWrite(RIGHT_MOTOR, rightPulse);
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 void moto_stopMotors(void){
     rightPulse = 0;
     leftPulse = 0;
@@ -278,31 +311,41 @@ void moto_stopMotors(void){
 
 #ifdef ARDUINO
 analogWrite(RIGHT_MOTOR, rightPulse);
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     analogWrite(LEFT_MOTOR, leftPulse);
     analogWrite(FRONT_MOTOR, frontPulse);
     analogWrite(REAR_MOTOR, rearPulse);
 #endif
 <<<<<<< HEAD
+<<<<<<< HEAD
     PRINT_STRING("Stopping all motors");
     PRINT_NEW_LINE;
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 /**
  * Function:    void moto_hover()
  * Author(s):   Kristofer Hansson Aspman,
  *              Björn Eriksson
 <<<<<<< HEAD
+<<<<<<< HEAD
  *              Magnus Bergqvist
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
  *
  * Description: Sets all motors to the same pulse width
  *              where to drone shall stay in hover state
  *
  */
 void moto_hover(void){
+<<<<<<< HEAD
 <<<<<<< HEAD
     rightPulse = HOVER_PULSE_RIGHT;
     leftPulse = HOVER_PULSE_LEFT;
@@ -315,17 +358,23 @@ void moto_hover(void){
     escRear.writeMicroseconds(rearPulse);
 #elif defined PC
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     rightPulse =90;
     leftPulse = 90;
     frontPulse = 90;
     rearPulse = 90;
 
 #ifdef ARDUINO
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     analogWrite(RIGHT_MOTOR, rightPulse);
     analogWrite(LEFT_MOTOR, leftPulse);
     analogWrite(FRONT_MOTOR, frontPulse);
     analogWrite(REAR_MOTOR, rearPulse);
+<<<<<<< HEAD
 <<<<<<< HEAD
 #endif
     PRINT_STRING("Hovering");
@@ -335,6 +384,11 @@ void moto_hover(void){
     printf("Hovering\n");
 #endif    
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+#elif defined PC
+    printf("Hovering\n");
+#endif    
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 
@@ -344,6 +398,7 @@ void moto_hover(void){
  * Function:    void moto_goForward()
  * Author(s):   Kristofer Hansson Aspman,
  *              Björn Eriksson
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 void _moto_stopMotors(void){
@@ -365,6 +420,8 @@ void _moto_stopMotors(void){
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
  *
  * Description: Increases the pulse width of
  *              of the rear motor and decreases
@@ -375,12 +432,16 @@ void _moto_stopMotors(void){
  */
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 void moto_goForward(void){
     moto_increaseRearNormal();
     moto_decreaseFrontNormal();
     return;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 void _moto_goForward(void){
@@ -390,10 +451,13 @@ void _moto_goForward(void){
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 }
 
 /**
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
  * Function:    void moto_goBackward()
@@ -408,6 +472,11 @@ void _moto_goForward(void){
  * Author(s):   Kristofer Hansson Aspman,
  *              Björn Eriksson
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+ * Function:    void moto_goBackward()
+ * Author(s):   Kristofer Hansson Aspman,
+ *              Björn Eriksson
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
  *
  * Description: Decreases the pulse width of
  *              of the rear motor and increases
@@ -418,8 +487,11 @@ void _moto_goForward(void){
  */
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 void moto_goBackward(void){
     moto_decreaseRearNormal();
     moto_increaseFrontNormal();
@@ -432,6 +504,7 @@ void moto_goBackward(void){
  *
  * Author(s):   Kristofer Hansson Aspman,
  *              Björn Eriksson
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 void _moto_goBackward(void){
@@ -449,6 +522,8 @@ void _moto_goBackward(void){
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
  *
  * Description: Increases either right or
  *              left motor and decreases
@@ -459,8 +534,11 @@ void _moto_goBackward(void){
  */
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 void moto_strafeRight(void){
     moto_decreaseRightNormal();
     moto_increaseLeftNormal();
@@ -509,6 +587,7 @@ void moto_rotateRight(void){
  * Author(s):   Kristofer Hansson Aspman,
  *              Björn Eriksson
 <<<<<<< HEAD
+<<<<<<< HEAD
  *              Magnus Bergqvist
  *
  * Description: Increases the pulse width of
@@ -546,12 +625,18 @@ void _moto_strafeLeft(void){
  * Description: Increases the pulse width of
  *              all the motors.
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+ *
+ * Description: Increases the pulse width of
+ *              all the motors.
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
  *              Pulse width increases either
  *              by the predefined normal
  *              increment or by the predefined
  *              panic increment.
  *
  */
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -567,6 +652,8 @@ void moto_increaseAllNormal(void){
     escRear.writeMicroseconds(rearPulse);
 #elif defined PC
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 void moto_increaseAllNormal(void){
     rightPulse += NORMAL_INCREMENT;
@@ -575,11 +662,15 @@ void moto_increaseAllNormal(void){
     rearPulse += NORMAL_INCREMENT;
 
 #ifdef ARDUINO
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     analogWrite(RIGHT_MOTOR, rightPulse);
     analogWrite(LEFT_MOTOR, leftPulse);
     analogWrite(FRONT_MOTOR, frontPulse);
     analogWrite(REAR_MOTOR, rearPulse);
+<<<<<<< HEAD
 <<<<<<< HEAD
 #endif
     PRINT_STRING("increases all motors");
@@ -598,6 +689,8 @@ void moto_increaseAllPanic(void){
     escRear.writeMicroseconds(rearPulse);
 #elif defined PC
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #elif defined PC
     printf("increases all motors\n");
 #endif
@@ -610,11 +703,15 @@ void moto_increaseAllPanic(void){
     rearPulse += PANIC_INCREMENT;
 
 #ifdef ARDUINO
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     analogWrite(RIGHT_MOTOR, rightPulse);
     analogWrite(LEFT_MOTOR, leftPulse);
     analogWrite(FRONT_MOTOR, frontPulse);
     analogWrite(REAR_MOTOR, rearPulse);
+<<<<<<< HEAD
 <<<<<<< HEAD
 #endif
     PRINT_STRING("increases all motors");
@@ -624,6 +721,11 @@ void moto_increaseAllPanic(void){
     printf("increases all motors\n");
 #endif
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+#elif defined PC
+    printf("increases all motors\n");
+#endif
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 /**
  * Functions:   moto_decreaseAll()
@@ -631,9 +733,12 @@ void moto_increaseAllPanic(void){
  * Author(s):   Kristofer Hansson Aspman,
  *              Björn Eriksson
 <<<<<<< HEAD
+<<<<<<< HEAD
  *              Magnus Bergqvist
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
  *
  * Description: Decreases the pulse width of
  *              all the motors.
@@ -646,6 +751,7 @@ void moto_increaseAllPanic(void){
 
 void moto_decreaseAllNormal(void){
 <<<<<<< HEAD
+<<<<<<< HEAD
     rightPulse = rightMotorLimitDecrease(rightPulse, NORMAL_STEP);
     leftPulse = leftMotorLimitDecrease(leftPulse, NORMAL_STEP);
     frontPulse = frontMotorLimitDecrease(frontPulse, NORMAL_STEP);
@@ -657,17 +763,23 @@ void moto_decreaseAllNormal(void){
     escRear.writeMicroseconds(rearPulse);
 #elif defined PC
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     rightPulse += NORMAL_DECREMENT;
     leftPulse += NORMAL_DECREMENT;
     frontPulse += NORMAL_DECREMENT;
     rearPulse += NORMAL_DECREMENT;
 
 #ifdef ARDUINO
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     analogWrite(RIGHT_MOTOR, rightPulse);
     analogWrite(LEFT_MOTOR, leftPulse);
     analogWrite(FRONT_MOTOR, frontPulse);
     analogWrite(REAR_MOTOR, rearPulse);
+<<<<<<< HEAD
 <<<<<<< HEAD
 #endif
     PRINT_STRING("decreases all motors\n");
@@ -686,6 +798,8 @@ void moto_decreaseAllPanic(void){
     escRear.writeMicroseconds(rearPulse);
 #elif defined PC
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #elif defined PC
     printf("increases all motors\n");
 #endif
@@ -698,11 +812,15 @@ void moto_decreaseAllPanic(void){
     rearPulse += PANIC_DECREMENT;
 
 #ifdef ARDUINO
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     analogWrite(RIGHT_MOTOR, rightPulse);
     analogWrite(LEFT_MOTOR, leftPulse);
     analogWrite(FRONT_MOTOR, frontPulse);
     analogWrite(REAR_MOTOR, rearPulse);
+<<<<<<< HEAD
 <<<<<<< HEAD
 #endif
     PRINT_STRING("decreases all motors");
@@ -712,6 +830,11 @@ void moto_decreaseAllPanic(void){
     printf("increases all motors\n");
 #endif
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+#elif defined PC
+    printf("increases all motors\n");
+#endif
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 /**
  * Functions:   moto_increaseRightNormal()
@@ -725,15 +848,19 @@ void moto_decreaseAllPanic(void){
  * Author(s):   Kristofer Hansson Aspman,
  *              Björn Eriksson
 <<<<<<< HEAD
+<<<<<<< HEAD
  *              Magnus Bergqvist
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
  *
  * Description: Increases the pulse width of
  *              the corresponding motor.
  *              Pulse width increases either
  *              by the predefined normal
  *              increment or by the predefined
+<<<<<<< HEAD
 <<<<<<< HEAD
  *              panic increment. Every motor
  *              can have individual max & min
@@ -828,6 +955,8 @@ void moto_increaseRearPanic(void){
     PRINT_STRING("Increasing rear motor pulse in PANIC!");
     PRINT_NEW_LINE;
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
  *              panic increment.
  *
  */
@@ -905,7 +1034,10 @@ void moto_increaseRearPanic(void){
 #elif defined PC
     printf("Increasing rear motor pulse in PANIC!\n");
 #endif
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 /**
@@ -919,6 +1051,7 @@ void moto_increaseRearPanic(void){
  *              moto_decreaseRearPanic()
  * Author(s):   Kristofer Hansson Aspman,
  *              Björn Eriksson
+<<<<<<< HEAD
 <<<<<<< HEAD
  *              Magnus Bergqvist
 =======
@@ -1001,6 +1134,8 @@ void _moto_increaseRearPanic(void){
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
  *
  * Description: Decreases the pulse width of
  *              the corresponding motor.
@@ -1011,6 +1146,7 @@ void _moto_increaseRearPanic(void){
  *
  */
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 void moto_decreaseRightNormal(void){
@@ -1164,6 +1300,8 @@ void _moto_decreaseRearPanic(void){
 #endif
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 void moto_decreaseRightNormal(void){
     rightPulse += NORMAL_DECREMENT;
 #ifdef ARDUINO 
@@ -1234,12 +1372,16 @@ void moto_decreaseRearPanic(void){
 #elif defined PC
     printf("Decreasing rear motor pulse in PANIC!\n");
 #endif
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 
 /**
  * Function:     printMotorStatus()
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
  * Author(s):    Kristofer Hansson Aspman,
@@ -1250,6 +1392,9 @@ void moto_decreaseRearPanic(void){
 =======
  * Author(s):    Kristofer Hansson Aspman
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+ * Author(s):    Kristofer Hansson Aspman
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
  *
  * Description:  Prints out the status of the
  *               motors to either the terminal
@@ -1260,6 +1405,7 @@ void moto_decreaseRearPanic(void){
  */
 
 void printMotorStatus(void){
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     PRINT_STRING("****************************");
@@ -1281,6 +1427,8 @@ void printMotorStatus(void){
     PRINT_STRING("****************************");
     PRINT_NEW_LINE;
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #ifdef ARDUINO_DBG
     /* Arduino code begin*/
     Serial.println("****************************");
@@ -1304,7 +1452,10 @@ void printMotorStatus(void){
     printf("****************************\n");
     /* PC code end */
 #endif
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 void sendMsg(void){
@@ -1313,6 +1464,7 @@ void sendMsg(void){
     /* send(currentPulse);  not sure how the send funcrion till look like */
 }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /**
  * Functions:    rightMotorLimitIncrease()
@@ -1493,3 +1645,5 @@ uint16_t map(uint16_t actual, uint16_t out_boundary1, uint16_t out_boundary2){
 }
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

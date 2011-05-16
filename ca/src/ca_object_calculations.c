@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * file:         ca_object_calculation.c
  * brief:        calculations involved with objects movements detected.
@@ -10,6 +11,8 @@
  * detail:       
  */
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 /*****************************************************************************
  * Product: object_calculations.c
@@ -22,7 +25,10 @@
  * Description: calculations involved with objects movements detected.
  * Movement/CA Group
  *****************************************************************************/
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #include <stdlib.h>
 #include <stdio.h>
 #include "ca_interface.h"
@@ -31,6 +37,7 @@
 
 
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /*
  * Receives array of differences where values are [Value2 - Value1, Value2 - Value1, Value2 - Value1]
@@ -56,6 +63,8 @@ unsigned char* moving_closer (int* irDistances)
 
 	return movements;
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 //******************************************************************
 // Receives array of differences where values are [Value2 - Value1, Value2 - Value1, Value2 - Value1]
 // where value1 is the first measurement and value2 is the second measurement. 
@@ -79,5 +88,8 @@ unsigned char* moving_closer (int* irDistances)
     }
 
   return movements;
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }

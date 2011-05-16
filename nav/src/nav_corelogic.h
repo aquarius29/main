@@ -10,12 +10,20 @@
 #ifndef CORELOGIC_H
 #define CORELOGIC_H
 
+<<<<<<< HEAD
+=======
+//#define CENTIMETRES_PER_TILE 
+
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 int GPSIO_ON_OFF;
 int GPSNAV_ON_OFF;
 int sendMovement;
 
+<<<<<<< HEAD
 roomPosition *currPosition;
 
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 typedef struct
 {
     double latitude;
@@ -44,7 +52,13 @@ struct thread_data
     char *message;
 };
 
+<<<<<<< HEAD
 GPSLocation currentOutdoorPosition;
+=======
+GPSLocation *destination;
+GPSLocation currentOutdoorPosition;
+roomPosition *currPosition;
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 void nav_sendCurrentIndoorPositionToGui(roomPosition *currentPosition);
 
@@ -95,6 +109,21 @@ void killGPSIO();
 /* Set a new destination for the gps */
 void nav_setGPSDestination(GPSLocation *destination); 
 
+<<<<<<< HEAD
+=======
+/* Used by connectivity to send movement commands using an identifier int */
+void nav_setMovementIdentifier(int id);
+
+/* Start the conectivity Listener thread system */
+void startConnectivityListenerThreads();
+
+/* start and monitor the protocol read thread */
+void *protocolReadWatchdog(void *ptr);
+
+void nav_setIndoorData(double startX, double startY, double destinationX, double destinationY);
+void nav_setOutdoorData(double destinationX, double destinationY);
+
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 void killThread();
 void dealloc();
 
@@ -103,7 +132,15 @@ void *setupgps(void *ptr);
 void *setupgpsnavigation(void *ptr);
 void *startgpswatchdog(void *ptr);
 void *startIndoorNavigationSystem(void *ptr);
+<<<<<<< HEAD
 void *readProtocol(void *ptr);
+=======
+void *startIndoorWatchdogThread(void *ptr);
+void *readProtocol(void *ptr);
+void *protocolReadWatchdog(void *ptr);
+void *startConnectivityListener(void *ptr);
+void *startConnectivityListenerWatchdog(void *ptr);
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 int16_t nav_init(void);
 int16_t nav_run(void);

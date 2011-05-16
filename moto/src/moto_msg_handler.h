@@ -9,6 +9,7 @@
  */
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <stdint.h>
 
 #ifdef ARDUINO_DBG
@@ -22,6 +23,11 @@
     #define ARDUINO
 #endif
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+#ifdef ARDUINO_DBG
+    #define ARDUINO
+#endif
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #ifdef ARDUINO
    #include "WProgram.h"
 #elif defined PC
@@ -29,6 +35,7 @@
 #endif
 
 //Parser functions
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 int examineID(msg_pointer mp);
@@ -48,6 +55,8 @@ unsigned char serReadUnsignedChar(void);
 #endif
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 int examineID(msg_pointer mp);
 void controlMotors(msg_pointer mp);
 void specialMotorCommand(msg_pointer mp);
@@ -55,4 +64,7 @@ msg scanHexMsgSTDIN(void);
 #ifdef ARDUINO_DBG
 unsigned char serReadUnsignedChar(void);
 #endif
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

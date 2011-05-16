@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*! @author Kristofer Hansson Aspman, Björn Eriksson, Magnus Bergqvist
  * @file moto_interface.c
  * @version v0.02
@@ -32,6 +33,8 @@
 
 msg_pointer mp;
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /*! @author Kristofer Hansson Aspman
  * @file moto_interface.c
  * @version v0.01
@@ -60,11 +63,15 @@ msg_pointer mp;
 msg binary;
 msg_pointer mp;
 unsigned char inputFromProto; 
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 #ifdef ARDUINO
 /* Pins for testing */
 int ledPin = 13;
+<<<<<<< HEAD
 <<<<<<< HEAD
 /* Servo "objects" definitions for the ESCs */
 Servo escRight;
@@ -78,18 +85,24 @@ Servo escRear;
           called when the drone boots up.
  * @version v0.02
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #endif
 
 /*! @author Kristofer Hansson Aspman
  * @brief The init function requested by the CFG. It is
           called when the drone boots up.
  * @version v0.01
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
  * @date 2011-04-10
  * @param none
  * @return int (0 if correctly carried out)
  */
 int moto_init(void){
+<<<<<<< HEAD
 <<<<<<< HEAD
 #ifdef ARDUINO
     Serial.begin(9600); 
@@ -105,6 +118,8 @@ int moto_init(void){
 #endif
   moto_cyclesSinceLastMsg = 0;
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   moto_cyclesSinceLastMsg = 0;
   mp = &binary;
 #ifdef ARDUINO
@@ -113,7 +128,10 @@ int moto_init(void){
 #elif defined PC
         //------------------------------------------------------missing
 #endif
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   return 0;
 }
 
@@ -128,15 +146,21 @@ int moto_init(void){
 int moto_run(void){
     moto_cyclesSinceLastMsg++;
 <<<<<<< HEAD
+<<<<<<< HEAD
     mp = moto_recvMsg();
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     inputFromProto = read_motor();
     binary = INT_TO_BITFIELD(&inputFromProto);
 
 #if defined ARDUINO_DBG
     binary = scanHexMsgSTDIN();
 #endif
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
     if(BITFIELD_TO_CHAR(mp) == 0xf1)
     {
@@ -147,6 +171,7 @@ int moto_run(void){
 #endif
       return 0;
     }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
     if(BITFIELD_TO_CHAR(mp) == 0xf)
@@ -164,6 +189,10 @@ int moto_run(void){
     moto_cyclesSinceLastMsg = 0;
 
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+    moto_cyclesSinceLastMsg = 0;
+
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     examineID(mp);
 
 #ifdef ARDUINO_DBG
@@ -171,20 +200,27 @@ int moto_run(void){
   printMotorStatus();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   /* if(leftPulse > 0 && rightPulse > 0 && frontPulse > 0 && rearPulse > 0){ */
   /*   digitalWrite(13, HIGH);   */
   /* } */
   /* else */
   /*   digitalWrite(13, LOW); */
 
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #elif defined PC
     printMsg(mp);
     printMotorStatus();
     
 #endif
     return 0;
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 #ifdef ARDUINO
@@ -253,4 +289,6 @@ int moto_run(void){
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }

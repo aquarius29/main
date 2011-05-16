@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 /*
  * file:         ca_interface.h
  * brief:
@@ -39,6 +40,8 @@ int final_direction(int currentDir, unsigned char *directions);
 
  /* ca_prints.c */ 
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /*****************************************************************************
  * Product: ca_interface.h
  * Version: 0.1
@@ -95,12 +98,16 @@ unsigned char *moving_closer_filter(unsigned char *is_moving, unsigned char*dire
 int final_direction(int currentDir, unsigned char *directions);
 
 // for print the data
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 char * translate(int i);
 void outputIR(unsigned char *result);
 void outputdirection(int direction);
 void print_result(unsigned char *result);
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 /* ca_object_calculations.c */
 unsigned char* moving_closer (int * irDistances);
@@ -110,6 +117,8 @@ unsigned char* moving_closer (int * irDistances);
 int ir_distance(int irpin);
 #endif
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /*
  * ca_logic.c
  */
@@ -151,4 +160,7 @@ int ca_init(void);
 int ca_run(void);
 #endif 
 
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

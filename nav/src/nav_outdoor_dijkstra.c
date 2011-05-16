@@ -289,7 +289,10 @@ struct trac* get_path(struct link* collection,char startp,char endp)
 {
     struct link* col = collection;
     struct link* curr = collection->last;
+<<<<<<< HEAD
     struct link* head = NULL;
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
     struct trac *path = NULL;
     struct trac *head_ = NULL;

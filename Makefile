@@ -1,7 +1,10 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #############################################################################
 ##  Description:
 ##  Makefile for use in the project root directory.
@@ -60,10 +63,13 @@
 ##  2011-05-11 - changed Mega protocol paths from proto/src to proto_mega/src
 ##
 <<<<<<< HEAD
+<<<<<<< HEAD
 ##  2011-05-11 - Added everything related to the panda target. Compiling all the
 ##               groups code for the board is now possible - Adam
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 ##  Notes:
 ##  Missing instructions in targets not related to basic system. 
 ##  By no means done and decided with regards to what flags are set and
@@ -85,6 +91,7 @@ BASIC_LIBS=-Lstab/lib -Lsched/lib -Lmoto/lib -Lmov/lib -Lca/lib -Lproto_mega/lib
 BASIC_INCLUDES=-I../../stab/src -I../../moto/src -I../../mov/src -I../../ca/src -I../../proto_mega/src -I../../include
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ##  Libraries to include when building the panda system, 
 ##  only include libs that work for all targets for that system here!
 PANDA_LIBS= -Lpsched/lib -Lnav/lib -Lconn/lib -Lcam/lib -Llib -lnav -lpsched -lconn -lcam -lm -lxml2 -lm -lpthread 
@@ -96,6 +103,8 @@ PANDA_INCLUDES=-Ipsched/src -Ipsched/lib/ -I./include -Inav/src -Icam/src -Iconn
 
 =======
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 ##  Set scheduler implementation (-DBATMAN |-DNAIVE)
 SCHED_FLAG=-DBATMAN
 
@@ -150,10 +159,14 @@ pc:
 	$(GLOBAL_CC) -c main.c $(SCHED_FLAG) -Isched/src
 	$(GLOBAL_CC) -o $(PROG) main.o $(BASIC_LIBS)
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 	
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+	
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 pc-dbg: GLOBAL_CC=gcc
 pc-dbg: GLOBAL_CFLAGS+=$(SCHED_FLAG) $(PC_FLAGS) $(EXTRA_FLAGS) $(DEBUG_FLAGS_PC) $(BASIC_INCLUDES)
@@ -176,6 +189,7 @@ mega:
 	cd sched/src && $(MAKE) lib-mega
 	avr-ranlib sched/lib/libsched.a
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	cd stab/src && $(MAKE) lib-mega
 	avr-ranlib stab/lib/libstab.a
@@ -184,6 +198,8 @@ mega:
 	avr-ranlib moto/lib/libmoto.a	
 
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	
 	cd stab/src && $(MAKE) lib-mega
 	avr-ranlib stab/lib/libstab.a
@@ -191,7 +207,10 @@ mega:
 	cd moto/src && $(MAKE) lib-mega
 	avr-ranlib moto/lib/libmoto.a	
 	
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	cd mov/src && $(MAKE) lib-mega
 	avr-ranlib mov/lib/libmov.a	
 
@@ -213,6 +232,7 @@ mega-dbg:
 	cd sched/src && $(MAKE) lib-mega
 	avr-ranlib sched/lib/libsched.a
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	cd stab/src && $(MAKE) lib-mega
 	avr-ranlib stab/lib/libstab.a
@@ -221,6 +241,8 @@ mega-dbg:
 	avr-ranlib moto/lib/libmoto.a	
 
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	
 	cd stab/src && $(MAKE) lib-mega
 	avr-ranlib stab/lib/libstab.a
@@ -228,7 +250,10 @@ mega-dbg:
 	cd moto/src && $(MAKE) lib-mega
 	avr-ranlib moto/lib/libmoto.a	
 	
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	cd mov/src && $(MAKE) lib-mega
 	avr-ranlib mov/lib/libmov.a	
 
@@ -241,6 +266,7 @@ mega-dbg:
 	$(GLOBAL_CC) -c main.c $(SCHED_FLAG) -Isched/src
 	$(GLOBAL_CC) main.o  $(BASIC_LIBS) $(LDFLAGS_ARDUINO) -o $(PROG).elf
 	avr-objcopy -O srec $(PROG).elf $(PROG).rom
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 
@@ -271,6 +297,8 @@ panda-dbg:
 	$(GLOBAL_CC) -c panda_main.c -Ipsched/src
 	$(GLOBAL_CC) -o $(PROG) panda_main.o $(PANDA_LIBS)
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	
 	
 ## panda-targets ############################################################
@@ -278,7 +306,10 @@ panda:
 
 panda-dbg:
 
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 ## n900-targets #############################################################
 n900:
@@ -300,6 +331,7 @@ flash:
 ## clean-target #############################################################
 clean:
 	cd sched/src && $(MAKE) clean
+<<<<<<< HEAD
 <<<<<<< HEAD
 	cd sched/lib && rm  -f *.a
 
@@ -408,6 +440,8 @@ clean:
 .PHONY: lib
 >>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	cd sched/lib && rm *.a
 
 	cd stab/src && $(MAKE) clean
@@ -429,5 +463,9 @@ clean:
 
 	
 
+<<<<<<< HEAD
 .PHONY: pc pc-dbg mega mega-dbg panda panda-dbg n900 n900-dbg ui ui-dbg flash clean
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+.PHONY: pc pc-dbg mega mega-dbg panda panda-dbg n900 n900-dbg ui ui-dbg flash clean
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

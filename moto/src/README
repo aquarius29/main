@@ -3,6 +3,7 @@ To get all this shit to compile outside the scheduler context create a main.c an
 /* main.c */
 #include "moto_interface.h"
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include "move_stub.h"
 
 #ifdef ARDUINO_DBG
@@ -23,11 +24,16 @@ int main(void){
         moto_run();
     }
 =======
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 int main(void){
 
   moto_init();
   moto_run();
 
+<<<<<<< HEAD
 >>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
