@@ -82,6 +82,7 @@ static pthread_mutex_t startOutdoorMutex = PTHREAD_MUTEX_INITIALIZER;
 int nav_startOutdoor;
 
 
+
 // void startConnectivityListenerThreads()
 // {
 // 	
@@ -840,7 +841,10 @@ void nav_setOutdoorData(double destinationX, double destinationY)
 
 /* Begin interface:out functions for connectivity group */
 void nav_sendCurrentIndoorPositionToGui(roomPosition *currentPosition) {
-    printf("Drone is approximately at X: %f    Y: %f\n", currentPosition->lon,
+    
+	*currPosition = *currentPosition; 
+
+	printf("Drone is approximately at X: %f    Y: %f\n", currentPosition->lon,
     currentPosition->lat);
 	/* Save the current position before sending it */
 	/* Put connectivity library function here*/
@@ -890,6 +894,7 @@ int main(int argc, char **argv) {
 
 	nav_runGpsSystem(Destination->latitude, Destination->longitude);
 */
+	nav_init();
 	nav_run();
 
 	//runProtocolThread();
@@ -910,6 +915,7 @@ int main(int argc, char **argv) {
 
 int16_t nav_init(void)
 {
+	currPosition = malloc(sizeof(roomPosition));
     return 0;
 }
 
@@ -923,7 +929,6 @@ int16_t nav_init(void)
 */
 int16_t nav_run(void)
 {
-	
 	int conListenerThreadResult;
 	char *message = "Connectivity Listener Started";
 	conListenerThreadResult = 
@@ -958,7 +963,7 @@ int16_t nav_run(void)
 		
 		/* Monitor the indoor system */
 		//if (duplicateRunning == 1 && pthread_kill(indoorNavigationThread, 0) != 0)
-		if (pthread_kill(indoorNavigationThread, 0) != 0)
+		if (indoorSystemRunning == 1 && pthread_kill(indoorNavigationThread, 0) != 0)
         {
             
             printf("Indoor System quite unexpectedly\nRestarting...\n");
@@ -986,13 +991,17 @@ int16_t nav_run(void)
 		result = pthread_mutex_lock(&indoorNavigationRunningMutex);
         duplicateRunning = indoorSystemRunning;
         result = pthread_mutex_unlock(&indoorNavigationRunningMutex);
-		
 	}
 	
 	/* Wait for the threads to finish */
 	pthread_join(connectivityListenerThread, NULL);
 	pthread_join(indoorNavigationThread, NULL);
 	pthread_join(protocolReadThread, NULL);
- 
+	
+	/* Destory the mutex variables */
+	pthread_mutex_destroy(&watchdogMutex);
+	pthread_mutex_destroy(&gpsDestinationYMutex);
+ 	
+
     return 0;
 }

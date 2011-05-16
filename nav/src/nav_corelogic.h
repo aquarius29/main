@@ -16,8 +16,6 @@ int GPSIO_ON_OFF;
 int GPSNAV_ON_OFF;
 int sendMovement;
 
-roomPosition *currPosition;
-
 typedef struct
 {
     double latitude;
@@ -48,6 +46,7 @@ struct thread_data
 
 GPSLocation *destination;
 GPSLocation currentOutdoorPosition;
+roomPosition *currPosition;
 
 void nav_sendCurrentIndoorPositionToGui(roomPosition *currentPosition);
 
