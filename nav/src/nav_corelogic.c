@@ -52,10 +52,10 @@ static pthread_mutex_t indoorNavigationRunningMutex = PTHREAD_MUTEX_INITIALIZER;
 int indoorSystemRunning = 1;
 
 static pthread_mutex_t movementIdMutex = PTHREAD_MUTEX_INITIALIZER;
-int nav_movementId = 0;
+static int nav_movementId = 0;
 
 static pthread_mutex_t newMovementMutex = PTHREAD_MUTEX_INITIALIZER;
-int nav_newMovement = 0;
+static int nav_newMovement = 0;
 
 static pthread_mutex_t gpsDestinationXMutex = PTHREAD_MUTEX_INITIALIZER;
 double nav_runGPSDestinationX;
