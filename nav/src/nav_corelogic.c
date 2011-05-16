@@ -142,6 +142,7 @@ void *startConnectivityListener(void *ptr)
 	    result = pthread_mutex_unlock(&newMovementMutex);
 	
 		printf("newMoveCheck is %d\n", newMoveCheck);
+		sleep(1);
 		
 		if(newMoveCheck == 1)
 		{
