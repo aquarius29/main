@@ -22,7 +22,7 @@ lib-mega: $(LIB_OBJ)
 	avr-ar rvs ../lib/libproto.a $(LIB_OBJ)
 	
 clean: 
-	 -f *.o
+	rm -f *.o
 	
 ##########################################################################
 
@@ -124,7 +124,7 @@ USB_PORT=/dev/tty.usbmodem411
 ##	avrdude -p atmega168 -c stk200 -U lfuse:w:0x62:m
 	
 .PHONY : clean uno due mega install help lib
-=======
+
 	ar rvs ../lib/libnav.a $(LIB_OBJ)
 
 lib-panda: $(LIB_OBJ)
@@ -138,5 +138,3 @@ clean:
 	rm -f *.o
 
 ##########################################################################
->>>>>>> main/adam
-
