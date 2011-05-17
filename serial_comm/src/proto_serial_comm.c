@@ -153,14 +153,14 @@ uint8_t proto_serialSendMovConfirmMsg(uint8_t msg){
     return 1;
 }
 
-static uint8_t proto_serialSendToPanda(uint8_t *data){
+static uint8_t proto_serialSendToPanda(uint8_t *serialData){
     /* 
      * call the usart_isr_mega code here to send data over Tx 
      * This should be changed to instead notifying the proto_run code
      * that a message needs to be sent and then let that code send it
      * when proto is scheduled
     */
-    proto_usartTransmit(data);
+    proto_usartTransmit(serialData);
     
     return 1;
 }
