@@ -4,8 +4,8 @@
 ## -------------------------------------------------------------------------------
 ## Authors: Eugene Groshev, Nikita Englund
 ## Change history:
-##		 2011-05-16, Nikita:
-##				 - comment code, removing un-used code.
+##     2011-05-16, Nikita:
+##         - comment code, removing un-used code.
 ##     2011-05-12, Eugene:
 ##         - fixed REPOS array initialization and traversing problems (works!)
 ##         - added 3rd runtime parameter, allowing to skip pulling code from GitHub
