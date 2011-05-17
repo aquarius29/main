@@ -1,6 +1,6 @@
 #############################################################################
 ## Makefile for source level to be used by root level makefile.
-###
+##
 ## Variables GLOBAL_CC and GLOBAL_CFLAGS are defined in root level makefile
 ## and must not be changed in this file.
 ##
