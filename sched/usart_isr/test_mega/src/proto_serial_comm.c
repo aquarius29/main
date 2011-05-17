@@ -36,13 +36,15 @@
 
 static uint8_t dataBuffer[PROTO_MAX_MSG_LEN];
 
-
+/* PC specific static function prototypes */
 #ifdef PC
 
 static uint8_t proto_serialSendToMega(int32_t portHandle, uint8_t *data);
+static uint8_t *proto_serialReceiveFromMega(int32_t portHandle);
 
 #endif /* PC */
 
+/* Arduino specific static function prototypes */
 #ifdef ARDUINO
 
 static uint8_t proto_serialSendToPanda(uint8_t *data);
@@ -52,44 +54,24 @@ static uint8_t proto_serialSendToPanda(uint8_t *data);
 
 #ifdef PC
 
-uint8_t *proto_readMovConfirmMsg(int32_t portHandle){
+uint8_t proto_readMovConfirmMsg(int32_t portHandle, uint8_t *targetStorage){
     /* return the specific confirm message from movement */
     uint8_t *serialData;
     
     serialData = proto_serialReceiveFromMega(portHandle);
+    proto_reConstructMovConfirmMsg(serialData, targetStorage);
     
-    return serialData;
-    
-    //returnMsg = a port read function
-    //proto_serialReceiveFromMega(portHandle, serialData);
-    
-    //return returnMsg;
+    return 1;
 }
 
-uint8_t *proto_serialReceiveFromMega(int32_t portHandle){
+static uint8_t *proto_serialReceiveFromMega(int32_t portHandle){
     uint8_t byte;
     uint8_t i = 0;
     uint8_t done = FALSE;
     uint8_t msgLength = 0;
     
     do {
-        // if (read(portHandle, dataBuffer, sizeof(dataBuffer)) == 0) {
-        //     done = TRUE;
-        //     printf("return value of read was zero\n");
-        // }
-        // else {    
-        //     printf("databuffer[%d] = %d\n", i, dataBuffer[i]);
-        //     msgLength = dataBuffer[0];
-        //     printf("message length: %d\n", msgLength);
-        // 
-        //     i++;
-        // 
-        //     if (i >= msgLength || i == sizeof(dataBuffer)) {
-        //         done = TRUE;
-        //     }
-        // }
         read(portHandle, &dataBuffer[i], 1);
-        printf("i is %d, dataBuffer[%d] is %d\n", i, i, dataBuffer[i]);
         if (i == 0) {
             msgLength = dataBuffer[0];
         }
@@ -118,10 +100,6 @@ uint8_t proto_serialSendNavMsg(int32_t portHandle, struct navData *data){
     
     return 1;
 }
-
-/*****************************************
- *  proto_serialReadMovMsg goes here
- ****************************************/
 
 /*
  *  Function for sending serial data on serial port
@@ -160,22 +138,13 @@ struct navData *proto_serialReadNavMsg(void){
 uint8_t proto_serialSendMovConfirmMsg(uint8_t msg){
     uint8_t serialData[MOV_CONFIRM_MSG_LEN];
     
-    proto_serializeMovConfirmMsg(msg, serialData);
-    
-    // if (serialData[2] == 101) {
-    //     digitalWrite(12, HIGH);
-    // }
-    
+    proto_serializeMovConfirmMsg(msg, serialData);    
     proto_serialSendToPanda(serialData);
  
     return 1;
 }
 
 static uint8_t proto_serialSendToPanda(uint8_t *data){
-    // if (data[0] == 3) {
-    //     digitalWrite(12, HIGH);
-    // }
-    
     /* call the usart_isr_mega code here to send data over Tx 
      * This should be changed to instead notifying the proto_run code
      * that a message needs to be sent and then let that code send it
