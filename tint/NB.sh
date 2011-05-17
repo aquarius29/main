@@ -295,14 +295,6 @@ git_pull()
 
 PROJECT_CHANGED=0 # variable to store the change state of the project
 
-<<<<<<< HEAD
-# Setting build directory for server mode
-if [ $1 = "server" ]
-then
-    BUILD_DIR=${HOME}/emb-test
-    LOG_DIR=${HOME}/log
-fi
-=======
 # loop through local repos and pull from remotes
 #for REPO in ca cam conn moto nav proto sched stab ui
 for REPO in ${REPOS[@]}
@@ -324,7 +316,6 @@ do
     fi
     cd .. # cd back to ${BUILD_DIR}
 done
->>>>>>> d4c6d132d92fb9328a668a65dfdcec01bbd4fa95
 
 #echo $PROJECT_CHANGED
 
