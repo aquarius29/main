@@ -57,7 +57,7 @@
 ##
 ##  2011-05-11 - Added everything related to the panda target. Compiling all the
 ##               groups code for the board is now possible - Adam
-##  2011-05-17 - added clean up of 'test' folders to 'clean' target
+##  2011-05-17 - added clean up of 'test' folders and main 'doc' folder to 'clean' target
 ##
 ##  Notes:
 ##  Missing instructions in targets not related to basic system. 
@@ -302,6 +302,8 @@ clean:
 	cd serial_comm/src && $(MAKE) clean
 	cd serial_comm/lib && rm -f *.a
 	cd serial_comm/test && rm -f *.o testsuite
+
+	cd doc && rm -rf html
 
 	rm -f $(PROG) $(PROG).exe $(PROG).elf $(PROG).rom *.o *.map
 
