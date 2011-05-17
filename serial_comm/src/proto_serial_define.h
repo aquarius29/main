@@ -22,8 +22,7 @@
 /* Length defines for messages passed */
 #define DATA_BUFFER_LEN 100
 #define NAV_MSG_LEN 10
-#define MOV_CONFIRM_MSG_LEN 5 //test! originally 3
-// #define MOV_CONFIRM_MSG_LEN 3
+#define MOV_CONFIRM_MSG_LEN 3
 
 
 /* array index that holds message length */
@@ -47,12 +46,8 @@
 #define MSG_ID_NAV 1
 
 /* movement confirm array indexes*/
-// #define MOV_CONFIRM_VAL_INDEX 2
-// #define MOV_CONFIRM_NULL_INDEX 3
 #define MOV_CONFIRM_VAL_INDEX 2
-#define TEST1 3
-#define TEST2 4
-#define MOV_CONFIRM_NULL_INDEX 5
+#define MOV_CONFIRM_NULL_INDEX 3
 
 /* message ID for movements confirmation message */
 #define MSG_ID_MOV_CONFIRM 2
