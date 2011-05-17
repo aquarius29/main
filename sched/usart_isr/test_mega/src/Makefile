@@ -28,7 +28,13 @@ LIB_SRC_PC=		port_test.c 				\
 				proto_serializer.c 			\
 				proto_deserializer.c
 
-LIB_SRC_UNO=
+LIB_SRC_UNO=	sched_stub.c 				\
+				group_stub.c 				\
+				proto_usart_isr_mega.c 		\
+				proto_stub.c 				\
+				proto_serial_comm.c 		\
+				proto_serializer.c 			\
+				proto_deserializer.c 
 
 LIB_OBJ_MEGA = $(LIB_SRC_MEGA:.c=.o)
 LIB_OBJ_PC = $(LIB_SRC_PC:.c=.o)
