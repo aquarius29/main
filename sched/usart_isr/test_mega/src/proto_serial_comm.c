@@ -59,7 +59,7 @@ static uint8_t proto_serialSendToPanda(uint8_t *data);
 
 #endif /* ARDUINO */
 
-
+/* PC specific function implementations ********************************** */
 #ifdef PC
 
 uint8_t proto_readMovConfirmMsg(int32_t portHandle, uint8_t *targetStorage){
@@ -129,6 +129,7 @@ static uint8_t proto_serialSendToMega(int32_t portHandle, uint8_t *data){
 
 #endif /* PC */
 
+/* ARDUINO specific function implementations ***************************** */
 #ifdef ARDUINO
 
 struct navData *proto_serialReadNavMsg(void){
@@ -153,7 +154,8 @@ uint8_t proto_serialSendMovConfirmMsg(uint8_t msg){
 }
 
 static uint8_t proto_serialSendToPanda(uint8_t *data){
-    /* call the usart_isr_mega code here to send data over Tx 
+    /* 
+     * call the usart_isr_mega code here to send data over Tx 
      * This should be changed to instead notifying the proto_run code
      * that a message needs to be sent and then let that code send it
      * when proto is scheduled
