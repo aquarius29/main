@@ -136,6 +136,7 @@ pc:
 	cd moto/src && $(MAKE) lib-pc
 	cd mov/src && $(MAKE) lib-pc
 	cd ca/src && $(MAKE) lib-pc
+	cd serial_comm/src && $(MAKE) lib-pc
 	cd proto_mega/src && $(MAKE) lib-pc
 	$(GLOBAL_CC) -c main.c $(SCHED_FLAG) -Isched/src
 	$(GLOBAL_CC) -o $(PROG) main.o $(BASIC_LIBS)
@@ -149,6 +150,7 @@ pc-dbg:
 	cd moto/src && $(MAKE) lib-pc
 	cd mov/src && $(MAKE) lib-pc
 	cd ca/src && $(MAKE) lib-pc
+	cd serial_comm/src && $(MAKE) lib-pc
 	cd proto_mega/src && $(MAKE) lib-pc
 	$(GLOBAL_CC) -c main.c $(SCHED_FLAG) -Isched/src
 	$(GLOBAL_CC) -o $(PROG) main.o $(BASIC_LIBS)
@@ -173,6 +175,9 @@ mega:
 
 	cd ca/src && $(MAKE) lib-mega
 	avr-ranlib ca/lib/libca.a	
+
+	cd serial_comm/src && $(MAKE) lib-mega
+	avr-ranlib serial_comm/lib/libserial.a
 
 	cd proto_mega/src && $(MAKE) lib-mega
 	avr-ranlib proto_mega/lib/libproto.a	
@@ -200,6 +205,9 @@ mega-dbg:
 
 	cd ca/src && $(MAKE) lib-mega
 	avr-ranlib ca/lib/libca.a	
+
+	cd serial_comm/src && $(MAKE) lib-mega
+	avr-ranlib serial_comm/lib/libserial.a
 
 	cd proto_mega/src && $(MAKE) lib-mega
 	avr-ranlib proto_mega/lib/libproto.a	
