@@ -16,7 +16,15 @@
 #include "proto_deserializer.h"
 #include "proto_msg_structs.h"
 
-uint8_t proto_reConstructMsgNav(uint8_t *serialData, struct navData *dataStruct){
+uint8_t proto_reConstructMsgUICommand(uint8_t *serialData, 
+                                        uint8_t *uiCommand){
+    *uiCommand = serialData[UI_COMMAND_VAL_INDEX];
+    
+    return 1;
+}
+
+uint8_t proto_reConstructMsgNav(uint8_t *serialData, 
+                                struct navData *dataStruct){
     dataStruct->type = serialData[NAV_TYPE_INDEX];
     dataStruct->order = serialData[NAV_ORDER_INDEX];
     
