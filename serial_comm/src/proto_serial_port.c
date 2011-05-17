@@ -69,16 +69,9 @@ int32_t proto_serialOpen(void){
     options.c_cflag |= CREAD;
     options.c_cflag |= CS8;
  
-    // options.c_iflag |= IGNPAR;
- 
-    // options.c_cflag |= (ICANON | ECHO | ECHOE | ISIG);
     options.c_oflag &= ~OPOST;
-    // options.c_oflag = 0;
-
-    // options.c_iflag &= ~(IXON | IXOFF | IXANY);
 
     tcsetattr(portHandle, TCSANOW, &options);
-    // tcsetattr(portHandle, TCSAFLUSH, &options);
 
     /* delay is to make sure the port has time to initialize */
     sleep(1);

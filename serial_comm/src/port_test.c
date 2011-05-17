@@ -26,6 +26,7 @@ void port_test(void){
     int32_t portHandle;
     uint8_t serialData[PROTO_MAX_MSG_LEN];
     uint8_t *p_serialData = NULL;
+    uint8_t movConfirmMsg;
     
     p_serialData = serialData;
 
@@ -38,8 +39,12 @@ void port_test(void){
             printf("sending data1\n");
             proto_serialSendNavMsg(portHandle, &navMsg);
             
-            p_serialData = proto_serialReceiveFromMega(portHandle);
-            printf("we received %d\n", *p_serialData);
+            // p_serialData = proto_serialReceiveFromMega(portHandle);
+            // printf("we received %d\n", *p_serialData);
+            
+            /* put movement confirmation in local storage */
+            proto_readMovConfirmMsg(portHandle, &movConfirmMsg);
+            printf("we received movement confirmation: %d\n", movConfirmMsg);
         }
         
         if (x == 1) {
@@ -48,8 +53,12 @@ void port_test(void){
             printf("sending data2\n");
             proto_serialSendNavMsg(portHandle, &navMsg);
         
-            p_serialData = proto_serialReceiveFromMega(portHandle);
-            printf("we received %d\n", *p_serialData);
+            // p_serialData = proto_serialReceiveFromMega(portHandle);
+            // printf("we received %d\n", *p_serialData);
+
+            /* put movement confirmation in local storage */
+            proto_readMovConfirmMsg(portHandle, &movConfirmMsg);
+            printf("we received movement confirmation: %d\n", movConfirmMsg);
         }
         x++;
     }

@@ -13,8 +13,8 @@
 #include <stdint.h>
 #include "proto_msg_structs.h" 
  
-uint8_t proto_init(void);
-uint8_t proto_run(void);
+uint8_t proto_setupPort(void);
+uint8_t proto_processMessages(void);
 uint8_t proto_isNewNavMsg(void);
 struct navData *proto_readNavMsg(void);
 
