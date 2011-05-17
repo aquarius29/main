@@ -2,6 +2,12 @@
 ###################
 *.o
 *.a
+*.elf
+*.rom
+testuite
+mov/src/m
+mov/src/p
+nav/src/logic
 !lib/libcoremega.a  # do not ignore precompiled
 !lib/libcoreuno.a   # Arduino libraries
 

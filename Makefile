@@ -57,6 +57,8 @@
 ##
 ##  2011-05-11 - Added everything related to the panda target. Compiling all the
 ##               groups code for the board is now possible - Adam
+##  2011-05-17 - added clean up of 'test' folders to 'clean' target
+##
 ##  Notes:
 ##  Missing instructions in targets not related to basic system. 
 ##  By no means done and decided with regards to what flags are set and
@@ -219,7 +221,7 @@ panda:
 	cd cam/src && $(MAKE) lib-panda
 	cd conn/src && $(MAKE) lib-panda
 	cd serial_comm/src && $(MAKE) lib-panda
-	#cd proto_panda/src && $(MAKE) lib-panda
+##	cd proto_panda/src && $(MAKE) lib-panda
 	$(GLOBAL_CC) -c panda_main.c  $(PANDA_INCLUDES) -Ipsched/src -Inav/src -Icam/src -Iconn/src
 	$(GLOBAL_CC) -o $(PROG) panda_main.o $(PANDA_LIBS)
 
@@ -233,7 +235,7 @@ panda-dbg:
 	cd cam/src && $(MAKE) lib-panda
 	cd conn/src && $(MAKE) lib-panda
 	cd serial_comm/src && $(MAKE) lib-panda
-	cd proto_panda/src && $(MAKE) lib-panda
+##	cd proto_panda/src && $(MAKE) lib-panda
 	$(GLOBAL_CC) -c panda_main.c -Ipsched/src 
 	$(GLOBAL_CC) -o $(PROG) panda_main.o $(PANDA_LIBS)
 
@@ -258,39 +260,51 @@ flash:
 clean:
 	cd sched/src && $(MAKE) clean
 	cd sched/lib && rm  -f *.a
+	cd sched/test && rm -f *.o testsuite
 
 	cd stab/src && $(MAKE) clean
-	cd stab/lib && rm -f *.a
+	cd stab/lib && rm -f *.a 
+	cd stab/test && rm -f *.o testsuite
 
 	cd moto/src && $(MAKE) clean
 	cd moto/lib && rm -f *.a
+	cd moto/test && rm -f *.o testsuite
 
 	cd psched/src && $(MAKE) clean
 	cd psched/lib && rm -f *.a
+	cd psched/test && rm -f *.o testsuite
 
 	cd mov/src && $(MAKE) clean
 	cd mov/lib && rm -f *.a
+	cd mov/test && rm -f *.o testsuite
 
 	cd ca/src && $(MAKE) clean
 	cd ca/lib && rm -f *.a
+	cd ca/test && rm -f *.o testsuite
 
 	cd proto_mega/src && $(MAKE) clean
 	cd proto_mega/lib && rm -f *.a
+	cd proto_mega/test && rm -f *.o testsuite
 
 	cd proto_panda/src && $(MAKE) clean
 	cd proto_panda/lib && rm -f *.a
+	cd proto_panda/test && rm -f *.o testsuite
 
 	cd nav/src && $(MAKE) clean
 	cd nav/lib && rm -f *.a
+	cd nav/test && rm -f *.o testsuite
 
 	cd cam/src && $(MAKE) clean
 	cd cam/lib && rm -f *.a
+	cd cam/test && rm -f *.o testsuite
 
 	cd conn/src && $(MAKE) clean
 	cd conn/lib && rm -f *.a
+	cd conn/test && rm -f *.o testsuite
 
 	cd serial_comm/src && $(MAKE) clean
 	cd serial_comm/lib && rm -f *.a
+	cd serial_comm/test && rm -f *.o testsuite
 
 	rm -f $(PROG) $(PROG).exe $(PROG).elf $(PROG).rom *.o *.map
 
