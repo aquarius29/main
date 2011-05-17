@@ -16,6 +16,7 @@
  *  should be on integration. It only uses the init and run functions
  *  proided by other modules and just loops over these.
  */
+#ifdef NAIVE
 
 #include <stdlib.h>
 #include <stdint.h>
@@ -136,3 +137,5 @@ int16_t time(void){
     
     return currentTime;
 }
+
+#endif

@@ -2,6 +2,9 @@
 *  Author:  Rahwa Bahta, Reza moussavi
 *  
 */
+#ifndef MOTO_STATE_DEFINITIONS_H
+#define MOTO_STATE_DEFINITIONS_H
+#include <stdint.h>
 
 //Dont put any lines of code before this line
 #ifndef _STATE_DEFINITIONS_H_
@@ -27,9 +30,13 @@
 # define STOP_ID 0x00 //this was added
 # define CONTROL_ID 0x02 //this was added
 # define SPECIAL_COMMAND_ID 0x03 //this was added
-
+# define HOVER 0xFF
 # define BAD_MESSAGE 0xf //this was added, when bits are not within the 0-255 range
 
+# define INCREASE_ALL_NORMAL 0xEF
+# define DECREASE_ALL_NORMAL 0xCF
+# define INCREASE_ALL_PANIC 0xF0
+# define DECREASE_ALL_PANIC 0xD0
 
 # define  INCREASE_REAR_MOTOR 0xA1
 # define  DECREASE_REAR_MOTOR 0x81
@@ -68,14 +75,15 @@
 
 struct bits_type
 {
-	unsigned char ID :2;
-	unsigned char INCREASE :1;
-	unsigned char PANIC :1;
-	unsigned char RIGHT :1;
-	unsigned char LEFT :1;
-	unsigned char FRONT :1;
-	unsigned char REAR :1;
+	uint8_t ID :2;
+	uint8_t INCREASE :1;
+	uint8_t PANIC :1;
+	uint8_t RIGHT :1;
+	uint8_t LEFT :1;
+	uint8_t FRONT :1;
+	uint8_t REAR :1;
 };
 
 // Dont put any code after this line
+#endif
 #endif

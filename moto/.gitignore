@@ -17,10 +17,12 @@ README~
 *.c~
 *.c#
 *.map
+test/*.x
+*.h~
+../proto_mega/src/*.o
 
 # Directories
 #################
 bin/
 ../bin/
 doc/
-

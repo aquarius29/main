@@ -1,0 +1,47 @@
+Camera group folder
+*********************************************************************************************
+
+/*-------------------------------------------------------------------------------------------------------
+
+**	Authors: Henry Ikuh, Abdirashid Jama
+*-------------------------------------------------------------------------------------------------------*/
+Prerequisites: 	Opencv-2.1.0 or higher
+				ffmpeg
+				mplayer(optional).
+
+The video capture programe was written in C using the OpenCV computer vision library.
+The video is captured and send to client as grayscale, while a copy is been saved in the directory
+of the programe source files in the server side. 
+
+The saved video is compressed using DIVX codec and the output video stream is mpeg4, when ever the programe 
+starts it will over write the previous saved out.avi file so we can retrive this file afer flight. we can as 
+well have the file change name with same extension so that when even the program runs a new video file is 
+saved but this will take up space over a period of time.
+
+For the sending of video streams to the client, was succefull but could not send to other computer on same 
+network, this could probarbly be an issue with the NOMAD firewall.
+
+Compression was a big problem, thus we could get a work around solution by striping the colors of the raw 
+video to 1=channel, in that way frames can be reduced and sent to the client side. 
+
+We are still trying to optimize this solution so we can get a colored video in the client and also the UI 
+might decide to save video while recieving frames.
+
+At this stage full testing of the program in CUNIT has not been done, but will be done soon.
+
+----------------------------------------------------------------------------------------------------------
+TO COMPLETE THE PROGRAM:
+* Sending video to client on another machine
+* Playing video on UI using any video player
+* decode back to the original raw color in the client side (not sure how.)
+
+
+
+
+----------------------------------------------------------------------------------------------------------
+
+Henry Ikuh
+Abdirashid Jama.
+
+
+

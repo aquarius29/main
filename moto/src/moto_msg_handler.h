@@ -7,6 +7,10 @@
  *               by tools.c, motor_control.c and parser.c.
  *
  */
+#ifndef MOTO_MSG_HANDLER_H
+    #define MOTO_MSGHANDLER_H
+#include <stdint.h>
+
 #ifdef ARDUINO_DBG
     #define ARDUINO
 #endif
@@ -20,7 +24,8 @@
 int examineID(msg_pointer mp);
 void controlMotors(msg_pointer mp);
 void specialMotorCommand(msg_pointer mp);
-msg scanHexMsgSTDIN(void);
-#ifdef ARDUINO_DBG
-unsigned char serReadUnsignedChar(void);
+//msg scanHexMsgSTDIN(void);
+//#ifdef ARDUINO_DBG
+//uint8_t serReadUnsignedChar(void);
+//#endif
 #endif

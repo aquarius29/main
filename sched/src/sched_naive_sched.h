@@ -11,9 +11,10 @@
  *              2011-04-21 - changed typedef to conform to coding
  *                           standard - Joakim
  */
+#ifdef NAIVE
 
-#ifndef SCHED_NAIVE_SCHED_H
-#define SCHED_NAIVE_SCHED_H
+#ifndef _SCHED_NAIVE_SCHED_H
+#define _SCHED_NAIVE_SCHED_H
 
 #include <stdint.h>
 
@@ -23,3 +24,5 @@ typedef int16_t(*sched_Fun_t)(void);
 void sched_naive_init(void);
 
 #endif /* SCHED_NAIVE_SCHED_H */
+
+#endif

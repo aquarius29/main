@@ -10,8 +10,8 @@
  *              2011-04-14 - added Doxygen comments
  */
 
-#ifndef SCHED_STUBS_H
-#define SCHED_STUBS_H
+#ifndef _SCHED_STUBS_H
+#define _SCHED_STUBS_H
 
 #include <stdint.h>
 

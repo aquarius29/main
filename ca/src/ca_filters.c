@@ -1,4 +1,19 @@
 /*
+ * file:         ca_filters.c
+ * brief:
+ * author:       Yanling Jin, Amber Olsson
+ * date:         2011-04-26
+ * version:      0.1
+ * history       2011-03-29  Jin - create the file\n
+ *               2011-03-30  Amber - Changed int types to unsigned char for booleans.
+ *                                   Changed to bitwise operation for changing values
+ *                           Jin - Add method to get the final destination
+ *               2011-03-31  Jin - Add moving_closer_filter mothod
+ * detail:
+ */
+
+
+/*
   .     IR1(FRONT)
 
   IR3(LEFT)   IR4(RIGHT)
@@ -8,39 +23,27 @@
   {front, back, left, right,hover}
 
 */
-  /*****************************************************************************
-  * Product: collision_logic.c
-  * Version: 0.1
-  * Creators: Jin, Amber
-  * Created: March 29 2011
-  * History:
-  * March 30th, 2011 - Amber: Changed int types to unsigned char for booleans.
-  *                           Changed to bitwise operation for changing values
-  *                      Jin: Add method to get the final destination
-  * March 31st, 2011 -   Jin: Add moving_closer_filter mothod
-  *
-  * Movement/CA Group
-  *****************************************************************************/
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdint.h>
 
 #include "ca_interface.h"
 
-//the speed control variables
+/* the speed control variables */
 #define HOVERSPEED 5
-#define SLOWSPEED 25
-#define MEDIUMSPEED 50
-#define FASTSPEED 75
+#define SLOWSPEED 50
+#define MEDIUMSPEED 100
+#define FASTSPEED 150
 
-//the dangerzone varibales according to the speed
-#define HOVERZONE 20
+/* the dangerzone varibales according to the speed */
+#define HOVERZONE 25
 #define SLOWZONE 50
 #define MEDIUMZONE 75
 #define FASTZONE 100
-#define MADZONE 150
+#define MADZONE 130
 
-//the current flying directions
+/* the current flying directions */
 #define FRONT 1
 #define BACK 2
 #define LEFT 3
@@ -52,22 +55,23 @@
  * filter the dangerous zone for the quadrocopter to react according to the speed
  * return the dangerous zone in "cm"
  */
-int speed_filter(int speed)
+uint16_t speed_filter(uint16_t speed)
 {
-  int dangerzone;
+    int dangerzone;
 
-  if(speed<HOVERSPEED)
-    dangerzone=HOVERZONE;
-  else if(speed<SLOWSPEED && speed>=HOVERSPEED)
-    dangerzone=SLOWZONE;
-  else if(speed<MEDIUMSPEED&&speed>=SLOWSPEED)
-    dangerzone=MEDIUMZONE;
-  else if(speed<FASTSPEED&&speed>=MEDIUMSPEED)
-    dangerzone=FASTZONE;
-  else
-    dangerzone = MADZONE;
-  
-  return dangerzone;
+    if (speed < HOVERSPEED) {
+		dangerzone = HOVERZONE;
+    } else if (speed < SLOWSPEED && speed >= HOVERSPEED) {
+		dangerzone = SLOWZONE;
+    } else if (speed < MEDIUMSPEED && speed >= SLOWSPEED) {
+		dangerzone = MEDIUMZONE;
+    } else if (speed < FASTSPEED && speed >= MEDIUMSPEED) {
+		dangerzone = FASTZONE;
+    } else {
+		dangerzone = MADZONE;
+    }
+
+    return dangerzone;
 }
 
 
@@ -77,35 +81,41 @@ int speed_filter(int speed)
  * return 0 if the ir is NOT triggered, 1 as triggered
  * return an array of irs.
  */
-unsigned char* distance_filter(int dangerzone,int ir1, int ir2, int ir3,int ir4)
+uint8_t * distance_filter( uint16_t dangerzone,
+						   uint16_t ir1, uint16_t ir2,
+						   uint16_t ir3, uint16_t ir4)
 {
 
-  unsigned char irBoolean1 = 1;
-  unsigned char irBoolean2 = 1;
-  unsigned char irBoolean3 = 1;
-  unsigned char irBoolean4 = 1;
+    unsigned char irBoolean1 = 1;
+    unsigned char irBoolean2 = 1;
+    unsigned char irBoolean3 = 1;
+    unsigned char irBoolean4 = 1;
 
-  if(ir1>dangerzone)
-    irBoolean1 = 0;
+    if (ir1 > dangerzone) {
+		irBoolean1 = 0;
+	}
 
-  if(ir2>dangerzone)
-    irBoolean2 = 0;
+    if (ir2 > dangerzone) {
+		irBoolean2 = 0;
+	}
 
-  if(ir3>dangerzone)
-    irBoolean3 = 0;
+    if (ir3 > dangerzone) {
+		irBoolean3 = 0;
+	}
 
-  if(ir4>dangerzone)
-    irBoolean4 = 0;
+    if (ir4 > dangerzone) {
+		irBoolean4 = 0;
+	}
 
-  //Allocates an array of 4 unsigned characters
-  unsigned char *irBooleans= (unsigned char *)calloc(4, sizeof(unsigned char)) ;
-  *irBooleans=irBoolean1;
-  *(irBooleans+1)=irBoolean2;
-  *(irBooleans+2)=irBoolean3;
-  *(irBooleans+3)=irBoolean4;
-    
-  //returns the unsigned char array of 0 or 1 for each IR sensor
-  return irBooleans;
+    /* Allocates an array of 4 unsigned characters */
+    uint8_t *irBooleans = (uint8_t *) calloc(4, sizeof(uint8_t));
+    *irBooleans = irBoolean1;
+    *(irBooleans + 1) = irBoolean2;
+    *(irBooleans + 2) = irBoolean3;
+    *(irBooleans + 3) = irBoolean4;
+
+    /* returns the unsigned char array of 0 or 1 for each IR sensor */
+	return irBooleans;
 }
 
 
@@ -114,38 +124,42 @@ unsigned char* distance_filter(int dangerzone,int ir1, int ir2, int ir3,int ir4)
  * according to the boolean value of four irs
  * return the boolean value of 5 directions (front, back, left, right, hover)
  */
-unsigned char* ir_filter(unsigned char *irBooleans)
+uint8_t *ir_filter(uint8_t *irBooleans)
 {
-  unsigned char front = 1;
-  unsigned char back = 1;
-  unsigned char left = 1;
-  unsigned char right = 1;
-  unsigned char hover = 1;
- 
-  //ir1 detects collision
-  if (*irBooleans==1)
-    front = 0;
+	uint8_t front = 1;
+	uint8_t back = 1;
+	uint8_t left = 1;
+	uint8_t right = 1;
+	uint8_t hover = 1;
 
-  //ir2 detects collision
-  if(*(irBooleans+1)==1)
-    back =0;
+	/* ir1 detects collision */
+	if (*irBooleans == 1) {
+		front = 0;
+	}
 
-  //ir3 detects collision
-  if(*(irBooleans+2)==1)
-    left =0;
+	/* ir2 detects collision */
+	if (*(irBooleans + 1) == 1) {
+		back = 0;
+	}
 
-  //ir4 detects collsion
-  if(*(irBooleans+3)==1)
-    right =0;
+	/* ir3 detects collision */
+	if (*(irBooleans + 2) == 1) {
+		left = 0;
+	}
 
-  unsigned char *directions=(unsigned char *) calloc(5, sizeof(unsigned char)) ;
-  *directions=front;
-  *(directions+1)=back;
-  *(directions+2)=left;
-  *(directions+3)=right;
-  *(directions+4)=hover;
+	/* ir4 detects collsion */
+	if (*(irBooleans + 3) == 1) {
+		right = 0;
+	}
 
-  return directions;
+	uint8_t *directions = (uint8_t *) calloc(5, sizeof(uint8_t));
+	*directions = front;
+	*(directions + 1) = back;
+	*(directions + 2) = left;
+	*(directions + 3) = right;
+	*(directions + 4) = hover;
+
+	return directions;
 }
 
 
@@ -154,22 +168,21 @@ unsigned char* ir_filter(unsigned char *irBooleans)
  *According to the direction the quadrocopter is flying towards
  *return the boolean value of 5 directions (front, back, left, right, hover)
  */
-unsigned char *currentDirection_filter(int currentDirection,unsigned char *directions)
+uint8_t *currentDirection_filter(uint8_t currentDirection, uint8_t *directions)
 {
-  //face to sensor 1
-  if(currentDirection==FRONT)
-    *(directions+1)= 0;//back
-
-  if(currentDirection==BACK)
-    *(directions) = 0;//front
-
-  if(currentDirection==LEFT)
-    *(directions+3) = 0;//right
-
-  if(currentDirection==RIGHT)
-    *(directions+2) = 0;//left
-
-  return directions;
+    if (currentDirection == FRONT) {
+		*(directions + 1) = 0;
+    }
+    if (currentDirection == BACK) {
+		*(directions) = 0;
+    }
+    if (currentDirection == LEFT) {
+		*(directions + 3) = 0;
+    }
+    if (currentDirection == RIGHT) {
+		*(directions + 2) = 0;
+    }
+    return directions;
 }
 
 /*
@@ -177,31 +190,29 @@ unsigned char *currentDirection_filter(int currentDirection,unsigned char *direc
  *According to the objects which is moving towards
  *return the boolean value of 5 directions (front, back, left, right, hover)
  */
-unsigned char *moving_closer_filter(unsigned char *is_moving, unsigned char*directions)
+uint8_t *moving_closer_filter(uint8_t *is_moving, uint8_t *directions)
 {
-
-  if(*is_moving==1)//moving towards front
-    {
-      *(directions) = 0;//can't go front
-      *(directions+4) = 0;//can't hover
+    /* moving towards front */
+    if (*is_moving == 1) {
+		*(directions) = 0;
+		*(directions + 4) = 0;
     }
-  if(*(is_moving+1)==1)//moving towards back
-    {
-      *(directions+1) = 0;//can't go back
-      *(directions+4) = 0;//can't hover
+    /* moving towards back */
+	if (*(is_moving + 1) == 1) {
+		*(directions + 1) = 0;
+		*(directions + 4) = 0;
     }
-  if(*(is_moving+2)==1)//moving towards left
-    {
-      *(directions+2) = 0;//can't go left
-      *(directions+4) = 0;//can't hover
+    /* moving towards left */
+	if (*(is_moving + 2) == 1) {
+		*(directions + 2) = 0;
+		*(directions + 4) = 0;
     }
-  if(*(is_moving+3)==1)//moving towards right
-    {
-      *(directions+3) = 0;//can't go right
-      *(directions+4) = 0;//can't hover
+    /* moving towards right */
+	if (*(is_moving + 3) == 1) {
+		*(directions + 3) = 0;
+		*(directions + 4) = 0;
     }
-
- return directions;
+    return directions;
 }
 
 /*
@@ -209,118 +220,25 @@ unsigned char *moving_closer_filter(unsigned char *is_moving, unsigned char*dire
  * return the first available direction in the list
  * return the integer, 1 front 2 back 3 left 4 right 0 hover
  */
-int final_direction(int currentDir, unsigned char *directions)
+uint8_t final_direction(uint8_t currentDir, uint8_t *directions)
 {
-  int i;
-  int dir=6;
+    uint8_t i;
+    uint8_t dir = 6;
 
-  for (i=0;i<5;i++)
-    {
-      //return the first one which fullfill the requirement 
-      if(*(directions+i)==1){
-	if(i==4)
-	  {
-	    dir= 0;
-	  }
-	else
-	  {
-	    dir=i+1;
-	  }	
-	break;
-      }	
+    for (i = 0; i < 5; i++) {
+		/* return the first one which fullfill the requirement */
+	    if (*(directions + i) == 1) {
+			if (i == 4) {
+				dir = 0;
+			} else {
+				dir = i + 1;
+			}
+			break;
+		}
     }
 
-  if(*(directions+currentDir-1)==1)
-    {
-      dir=currentDir;
+    if (*(directions + currentDir - 1) == 1) {
+		dir = currentDir;
     }
-
-  return dir;
-}
-
-
-/*
- * translate the 0 and 1
- * return 0 as not ok, 1 as ok
- */
-char * translate(int i)
-{
-  char *result;
-  if (i==0)
-    result ="not ok";
-  else
-    result ="ok";
-
-  return result;
-}
-
-/*translate the output of IR*/
-void outputIR(unsigned char *result)
-{
-  printf("\n detects an object at ");
-  if(*result == 1)
-    printf("\n Front ");
-
-  if(*(result + 1) == 1)
-    printf("\n Back ");
-
-  if(*(result + 2) == 1)
-    printf("\n Left ");
-
-  if(*(result + 3) == 1)
-    printf("\n Right ");
-}
-
-/*translate the current direction*/
-void outputdirection(int direction)
-{
-  // {front, back, left, right,hover}
-  switch (direction)
-    {
-    case 0:
-      printf("Hover \n");
-      break;
-    case 1:
-      printf("Front \n");
-      break;
-    case 2:
-      printf("Back \n ");
-      break;
-    case 3:
-      printf("Left \n ");
-      break;
-    case 4:
-      printf("Right \n");
-      break;
-    default:
-      printf("NO PLACE TO GO\n");
-    }
-}
-
-
-/*translate the result of the directions options*/
-void print_result(unsigned char *result)
-{
-  int i;
-  char *answer;
-
-  for (i=0;i<5;i++)
-    {
-      answer=translate ( *(result+i));
-
-      if (i==0)
-	printf("Front is %s\n",answer);
-      
-      if (i==1)
-	printf("Back is %s\n",answer);
-      
-      if (i==2)
-	printf("Left is %s\n", answer);
-      
-      if (i==3)
-	printf("Right is %s\n",answer);
-      
-      if (i==4)
-	printf("Hover is %s\n", answer);
-    }
+    return dir;
 }

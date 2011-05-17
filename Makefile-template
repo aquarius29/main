@@ -3,6 +3,13 @@
 #   heavily copied from original libarduino sources
 #   (c) 2009, for all changes belong to Henrik Sandklef
 #	which lead to the current version
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #   (c) 2011, for all changes belong to Petre Mihail Anton
 #######################################################################
 
@@ -42,6 +49,37 @@ USB_PORT=/dev/ttyACM0
 
 # *** DO NOT EDIT TEXT BELOW! ***
 # *** IF YOU NEED TO ADD YOUR OWN RULES, GO TO THE END OF THE FILE! ***
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+#	(c) 2011, for all changes belong to Petre Mihail Anton
+#######################################################################
+
+#     Change device names to corespond to your system
+#  Description
+#  =============
+#    DUE_USB_DEV - used for Arduino DueMillaNove
+#    UNO_USB_DEV - used for Arduino Uno
+#
+# here are various USB device names for various operating system and Arduinos:
+# if you're using GNU/Linux (Ubuntu/Debian/Fedora.....):
+#	DUE_USB_DEV=/dev/ttyUSB0
+#	UNO_USB_DEV=/dev/ttyACM0
+# if you're using Mac:
+#	DUE_USB_DEV=
+#	UNO_USB_DEV=/dev/tty.usbmodemfa141 (check name!)
+# Hint:
+#    Launch the Arduino program to see what your USB device 
+#    is called (look under the port settings)
+                                                                                  
+#USB_PORT=/dev/ttyACM0
+USB_PORT=/dev/tty.usbmodem411
+
+>>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #########################################################################
 #########################################################################
 #########################################################################
@@ -50,8 +88,21 @@ USB_PORT=/dev/ttyACM0
 F_CPU=16000000
 #F_CPU=8000000
 
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 VERS="Arduino Portable Makefile [APM] version 1.2, dated 10-04-2011"
 
+=======
+>>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+VERS="Arduino Portable Makefile [APM] version 1.2, dated 10-04-2011"
+
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+VERS="Arduino Portable Makefile [APM] version 1.2, dated 10-04-2011"
+
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 PROG=test
 SRC=src/*.c
 OBJ=bin/*.o
@@ -60,12 +111,30 @@ mega: MMCU=atmega2560
 mega: STK=stk500v2
 mega: BAUD=115200
 mega: LIB=coremega
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 mega: EXT=elf
+=======
+>>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+mega: EXT=elf
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+mega: EXT=elf
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 uno: MMCU=atmega328p
 uno: STK=stk500v1
 uno: BAUD=115200
 uno: LIB=coreuno
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 uno: EXT=elf
 
 test: MMCU=atmega328p
@@ -94,6 +163,38 @@ install: $(OBJ) compile
 	@ cd bin && avr-objcopy -O srec $(PROG).elf $(PROG).rom
 #	checksize $(PROG).elf
 	@ avrdude -p $(MMCU) -P $(USB_PORT) -c $(STK) -b $(BAUD) -F -u -U flash:w:bin/$(PROG).rom
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+
+#	echo '#include "WProgram.h"' > $(TARGET).c
+#	cat $(PROG).c >> $(TARGET).c
+
+$(OBJ): $(SRC)
+	cd bin && \
+	avr-gcc -c -g -Os -ffunction-sections -fdata-sections -mmcu=$(MMCU) -DARDUINO=22 -DF_CPU=$(F_CPU) -Wall -Wstrict-prototypes \
+		-Wa,-ahlms=$(PROG).lst -fno-exceptions -I../include ../$(SRC)
+
+#-DENABLE_PWM
+
+$(PROG): MMCU=atmega328p
+$(PROG): LIB=coreuno
+$(PROG): $(OBJ)
+	avr-gcc $(OBJ) lib/lib$(LIB).a -Wl,-Map=$(PROG).map,--cref -mmcu=$(MMCU) -DARDUINO=22 -Iinclude -lm -Llib \
+		-fno-exceptions  -ffunction-sections -fdata-sections -l$(LIB) -o bin/$(PROG).x
+	@ echo "Test passed"
+
+install: $(OBJ)
+	avr-gcc $(OBJ) lib/lib$(LIB).a -Wl,-Map=$(PROG).map,--cref -mmcu=$(MMCU) -Iinclude -lm -Llib \
+		-fno-exceptions  -ffunction-sections -fdata-sections -l$(LIB) -o bin/$(PROG).elf
+	cd bin && avr-objcopy -O srec $(PROG).elf $(PROG).rom
+#	checksize $(PROG).elf
+	avrdude -p $(MMCU) -P $(USB_PORT) -c $(STK) -b $(BAUD) -F -u -U flash:w:bin/$(PROG).rom
+>>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 
 mega: clean install
@@ -107,14 +208,43 @@ clean:
 	@ cd bin && rm -f *.o *.rom *.elf *.map *~ *.lst *.x
 	@ echo "Project cleaned"
 	
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 version:
 	@ echo $(VERS)
 
 help:
 	@ echo "Check: \n	- the declared usb port\n	- if all required folders exist\n	- if your code includes 'WProgram.h'\n	- if you call 'init()'\n	- try removing '@' from this makefile to get more output"
+<<<<<<< HEAD
+<<<<<<< HEAD
+=======
+help:
+	@ echo "Check your code includes 'WProgram.h' \nCheck you call 'init()'"
+>>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 # reprogram the fuses for the right clock source
 #fuse:
 #	avrdude -p atmega168 -c stk200 -U lfuse:w:0x62:m
 	
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
 .PHONY : clean compile test uno mega pc install help version
+=======
+.PHONY : clean uno due mega install help
+>>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
+=======
+.PHONY : clean compile test uno mega pc install help version
+>>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
+=======
+.PHONY : clean compile test uno mega pc install help version
+>>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

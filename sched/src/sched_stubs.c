@@ -10,165 +10,132 @@
  *  @history    2011-04-10 - wrote original code
  *              2011-04-14 - added Doxygen comments
  *              2011-04-20 - Updated stubs to fake execution(Anders)
+ *              2011-05-10 - Updated with arduino related debugging(Anders)
  */
 
-#include <stdio.h>
 #include <stdint.h>
 
 #include "sched_stubs.h"
 
+#ifdef PC
+#include <stdio.h>
+
 #ifdef WINDOWS
 #include <Windows.h> /* for windows timing functions */
+#define SLEEP(a) Sleep(a)
 #else
 #include <unistd.h>
-#endif
+#define SLEEP(a) usleep(a)
+#endif /* WIN */
+
+#define DEBUG_MSG(msg) printf(msg)
+
+#elif ARDUINO
+#include "WProgram.h"
+
+#define SLEEP(a) delay(a)
+#define DEBUG_MSG(msg) Serial.println(msg)
+#endif /* PC ARDUINO */
 
 int16_t caRun(void) {
-	#ifdef PC
-    #ifdef DEBUG
-	    printf("inside caRun\n");
-	#endif /* DEBUG */
-        #ifdef WINDOWS
-        Sleep(10);
-        #else
-        usleep(10);
-        #endif /* WINDOWS */
-    #endif
+#ifdef DEBUG
+    DEBUG_MSG("inside caRun\n");
+#endif /* DEBUG */
+    SLEEP(10);
 	
 	return 0;
 }
 
 int16_t stabRun(void) {
-	#ifdef PC
-    #ifdef DEBUG
-	    printf("inside stabRun\n");
-	#endif /* DEBUG */
-        #ifdef WINDOWS
-        Sleep(10);
-        #else
-        usleep(10);
-        #endif /* WINDOWS */
-    #endif
+#ifdef DEBUG
+	DEBUG_MSG("inside stabRun\n");
+#endif /* DEBUG */
+    SLEEP(10);
+
 	
 	return 0;
 }
 
 int16_t moveRun(void) {
-	#ifdef PC
-    #ifdef DEBUG
-	    printf("inside moveRun\n");
-	#endif /* DEBUG */
-        #ifdef WINDOWS
-        Sleep(10);
-        #else
-        usleep(10);
-        #endif /* WINDOWS */
-    #endif
+#ifdef DEBUG
+	DEBUG_MSG("inside moveRun\n");
+#endif /* DEBUG */
+    SLEEP(10);
 	
 	return 0;
 }
 
 int16_t motoRun(void) {
-	#ifdef PC
-    #ifdef DEBUG
-	    printf("inside motoRun\n");
-	#endif /* DEBUG */
-        #ifdef WINDOWS
-        Sleep(10);
-        #else
-        usleep(10);
-        #endif /* WINDOWS */
-    #endif
+/*
+#ifdef DEBUG
+    DEBUG_MSG("inside motoRun");
+#endif /* DEBUG */
 	
 	return 0;
 }
 
 int16_t protoRun(void) {
-	#ifdef PC
-    #ifdef DEBUG
-	    printf("inside protoRun\n");
-	#endif /* DEBUG */
-        #ifdef WINDOWS
-        Sleep(10);
-        #else
-        usleep(10);
-        #endif /* WINDOWS */
-    #endif
+#ifdef DEBUG
+	DEBUG_MSG("inside protoRun\n");
+#endif /* DEBUG */
+    SLEEP(10);
 	
 	return 0;
 }
 
 int16_t connRun(void) {
-	#ifdef PC
-    #ifdef DEBUG
-	    printf("inside connRun\n");
-	#endif /* DEBUG */
-        #ifdef WINDOWS
-        Sleep(10);
-        #else
-        usleep(10);
-        #endif /* WINDOWS */
-    #endif
+#ifdef DEBUG
+	DEBUG_MSG("inside connRun\n");
+#endif /* DEBUG */
+    SLEEP(10);
 	
 	return 0;
 }
 
 int16_t caInit(void) {
-	#ifdef PC
-    #ifdef DEBUG
-	    printf("inside caInit\n");
-	#endif /* DEBUG */
-    #endif
+#ifdef DEBUG
+	DEBUG_MSG("inside caInit\n");
+#endif /* DEBUG */
 	
 	return 0;
 }
 
 int16_t stabInit(void) {
-	#ifdef PC
-    #ifdef DEBUG
-	    printf("inside stabInit\n");
-	#endif /* DEBUG */
-    #endif
+#ifdef DEBUG
+	DEBUG_MSG("inside stabInit\n");
+#endif /* DEBUG */
 	
 	return 0;
 }
 
 int16_t moveInit(void) {
-	#ifdef PC
-    #ifdef DEBUG
-	    printf("inside moveInit\n");
-	#endif /* DEBUG */
-    #endif
+#ifdef DEBUG
+	DEBUG_MSG("inside moveInit\n");
+#endif /* DEBUG */
 	
 	return 0;
 }
 
 int16_t motoInit(void) {
-	#ifdef PC
-    #ifdef DEBUG
-	    printf("inside motoInit\n");
-	#endif /* DEBUG */
-	#endif
+#ifdef DEBUG
+	DEBUG_MSG("inside motoInit");
+#endif /* DEBUG */
 
 	return 0;
 }
 
 int16_t protoInit(void) {
-	#ifdef PC
-    #ifdef DEBUG
-	    printf("inside protoInit\n");
-	#endif /* DEBUG */
-    #endif
+#ifdef DEBUG
+	DEBUG_MSG("inside protoInit\n");
+#endif /* DEBUG */
 	
 	return 0;
 }
 
 int16_t connInit(void) {
-	#ifdef PC
-    #ifdef DEBUG
-	    printf("inside connInit\n");
-    #endif
-	#endif /* DEBUG */
+#ifdef DEBUG
+	DEBUG_MSG("inside connInit\n");
+#endif /* DEBUG */
 	
 	return 0;
 }
