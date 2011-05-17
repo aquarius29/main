@@ -13,6 +13,13 @@
  *                           Previous code versions made the user serialize
  *                           the data first, this is now done 
  *                           automatically. - Joakim
+ *              2011-05-17 - Added more functions for receiving and sending
+ *                           specific messages. Changed interface functions
+ *                           to take a pointer to the data storage where
+ *                           the message will be stored by the caller.
+ *                           This is to reduce the need of having proto-code
+ *                           responsible for keeping groups data in scope 
+ *                           and available. - Joakim
  *
  *  @details
  */
@@ -48,6 +55,7 @@ static uint8_t *proto_serialReceiveFromMega(int32_t portHandle);
 #ifdef ARDUINO
 
 static uint8_t proto_serialSendToPanda(uint8_t *data);
+/* receiving from panda is done in proto_usart_isr module */
 
 #endif /* ARDUINO */
 
