@@ -15,6 +15,14 @@
 #define TRUE 1
 #define FALSE 0
 
+#define UP 1
+#define DOWN 2
+#define BACK 3
+#define FORWARD 4
+#define LEFT 5
+#define RIGHT 6
+#define HOVER 7 
+#define LAND 8
 
 void group_run(void){
     struct navData *navMsg = NULL;
@@ -26,12 +34,28 @@ void group_run(void){
     uiCommand = proto_serialReadUICommandMsg();
     
     if (uiCommand != 0) {
-        if (uiCommand == 1) {
-            digitalWrite(12, HIGH);
-            proto_serialSendMovConfirmMsg(101);
-        }
-        else {
-            digitalWrite(13, HIGH);
+        switch (uiCommand) {
+            case UP :
+                digitalWrite(13, HIGH);
+            case DOWN :
+                digitalWrite(12, HIGH);
+            case BACK :
+                digitalWrite(11, HIGH);
+            case FORWARD :
+                digitalWrite(10, HIGH);
+            case LEFT :
+                digitalWrite(9, HIGH);
+            case RIGHT :
+                digitalWrite(8, HIGH);
+            case HOVER :
+                digitalWrite(7, HIGH);
+            case LAND :
+                digitalWrite(13, LOW);
+                digitalWrite(12, LOW);
+                digitalWrite(11, LOW);
+                digitalWrite(10, LOW);
+                digitalWrite(9, LOW);
+                digitalWrite(8, LOW);
         }
     }
 
