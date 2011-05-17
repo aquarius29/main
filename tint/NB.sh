@@ -4,6 +4,8 @@
 ## -------------------------------------------------------------------------------
 ## Authors: Eugene Groshev, Nikita Englund
 ## Change history:
+##     2011-05-17, Eugene:
+##         - added copying of IGNORE.txt from root to all subfolders (to preserve directory structure)
 ##     2011-05-16, Nikita:
 ##         - comment code, removing un-used code.
 ##     2011-05-12, Eugene:
@@ -461,6 +463,13 @@ do
             cp -p ${MOV_BRANCH}/ca/Makefile main/ca
             cp -p ${MOV_BRANCH}/ca/README main/ca
             cp -p ${MOV_BRANCH}/ca/README.txt main/ca
+            # IGNORE.txt
+            cp -p INGNORE.txt main/ca/bin
+            cp -p INGNORE.txt main/ca/doc
+            cp -p INGNORE.txt main/ca/include
+            cp -p INGNORE.txt main/ca/lib
+            cp -p INGNORE.txt main/ca/src            
+            cp -p INGNORE.txt main/ca/test
             
             # copy Movement code 
             # /src
@@ -487,6 +496,13 @@ do
             cp -p ${MOV_BRANCH}/mov/Makefile main/mov
             cp -p ${MOV_BRANCH}/mov/README main/mov
             cp -p ${MOV_BRANCH}/mov/README.txt main/mov
+            # IGNORE.txt
+            cp -p INGNORE.txt main/mov/bin
+            cp -p INGNORE.txt main/mov/doc
+            cp -p INGNORE.txt main/mov/include
+            cp -p INGNORE.txt main/mov/lib
+            cp -p INGNORE.txt main/mov/src   
+            cp -p INGNORE.txt main/mov/test
             ;;
             
         proto)  # 'proto' repo have code for both Arduino and Panda
@@ -515,7 +531,14 @@ do
             cp -p ${REPO}/proto_mega/Makefile main/proto_mega
             cp -p ${REPO}/proto_mega/README main/proto_mega
             cp -p ${REPO}/proto_mega/README.txt main/proto_mega
-             
+            # IGNORE.txt
+            cp -p INGNORE.txt main/proto_mega/bin
+            cp -p INGNORE.txt main/proto_mega/doc
+            cp -p INGNORE.txt main/proto_mega/include
+            cp -p INGNORE.txt main/proto_mega/lib
+            cp -p INGNORE.txt main/proto_mega/src   
+            cp -p INGNORE.txt main/proto_mega/test
+                         
             # copy Panda code:
             # /src
             cp -p ${REPO}/proto_panda/src/*.c main/proto_panda/src
@@ -541,6 +564,13 @@ do
             cp -p ${REPO}/proto_panda/Makefile main/proto_panda
             cp -p ${REPO}/proto_panda/README main/proto_panda
             cp -p ${REPO}/proto_panda/README.txt main/proto_panda
+            # IGNORE.txt
+            cp -p INGNORE.txt main/proto_panda/bin
+            cp -p INGNORE.txt main/proto_panda/doc
+            cp -p INGNORE.txt main/proto_panda/include
+            cp -p INGNORE.txt main/proto_panda/lib
+            cp -p INGNORE.txt main/proto_panda/src   
+            cp -p INGNORE.txt main/proto_panda/test
             ;;
         
         sched)  # 'sched' repo have code for both Arduino and Panda
@@ -569,6 +599,13 @@ do
             cp -p ${REPO}/sched/Makefile main/sched
             cp -p ${REPO}/sched/README main/sched
             cp -p ${REPO}/sched/README.txt main/sched
+            # IGNORE.txt
+            cp -p INGNORE.txt main/sched/bin
+            cp -p INGNORE.txt main/sched/doc
+            cp -p INGNORE.txt main/sched/include
+            cp -p INGNORE.txt main/sched/lib
+            cp -p INGNORE.txt main/sched/src   
+            cp -p INGNORE.txt main/sched/test
              
             # copy Panda code:
             # /src
@@ -595,6 +632,14 @@ do
             cp -p ${REPO}/psched/Makefile main/psched
             cp -p ${REPO}/psched/README main/psched
             cp -p ${REPO}/psched/README.txt main/psched
+            # IGNORE.txt
+            cp -p INGNORE.txt main/psched/bin
+            cp -p INGNORE.txt main/psched/doc
+            cp -p INGNORE.txt main/psched/include
+            cp -p INGNORE.txt main/psched/lib
+            cp -p INGNORE.txt main/psched/src   
+            cp -p INGNORE.txt main/psched/test
+
             ;;
                 
         *)  # all other repos have only one folder of original code 
@@ -622,6 +667,13 @@ do
             cp -p ${REPO}/${REPO}/Makefile main/${REPO}
             cp -p ${REPO}/${REPO}/README main/${REPO}
             cp -p ${REPO}/${REPO}/README.txt main/${REPO}
+            # IGNORE.txt
+            cp -p INGNORE.txt main/${REPO}/bin
+            cp -p INGNORE.txt main/${REPO}/doc
+            cp -p INGNORE.txt main/${REPO}/include
+            cp -p INGNORE.txt main/${REPO}/lib
+            cp -p INGNORE.txt main/${REPO}/src   
+            cp -p INGNORE.txt main/${REPO}/test
             ;;
     esac
 
