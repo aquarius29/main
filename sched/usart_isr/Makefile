@@ -66,11 +66,11 @@ PROG=prog
 
 ##  Libraries to include when building the basic system, 
 ##  only include libs that work for all targets for that system here!
-BASIC_LIBS=-Ltest_mega/lib -Llib -ltest -lm
+BASIC_LIBS=-Ltest_mega/lib -Llib -lserial -lm
 
 ##  Libraries to include when building the extended system, 
 ##  only include libs that work for all targets for that system here!
-PANDA_LIBS=-Ltest_mega/lib -Llib -ltest -lm
+PANDA_LIBS=-Ltest_mega/lib -Llib -lserial -lm
 
 ##  Set paths to headers used by code on the basic system
 BASIC_INCLUDES=-I../../include
@@ -141,7 +141,7 @@ mega: GLOBAL_CC=avr-g++
 mega: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS_MEGA) $(EXTRA_FLAGS) $(BASIC_INCLUDES)
 mega:
 	cd test_mega/src && $(MAKE) lib-mega
-	avr-ranlib test_mega/lib/libtest.a
+	avr-ranlib test_mega/lib/libserial.a
 
 	$(GLOBAL_CC) -c mega_main.c -Itest_mega/src
 	$(GLOBAL_CC) mega_main.o $(BASIC_LIBS) $(LDFLAGS_ARDUINO_MEGA) -o $(PROG).elf
@@ -153,7 +153,7 @@ mega-dbg: GLOBAL_CC=avr-g++
 mega-dbg: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS_MEGA) $(EXTRA_FLAGS) $(BASIC_INCLUDES) $(DEBUG_FLAGS_ARDUINO)
 mega-dbg:
 	cd test_mega/src && $(MAKE) lib-mega
-	avr-ranlib test_mega/lib/libtest.a
+	avr-ranlib test_mega/lib/libserial.a
 	
 	$(GLOBAL_CC) -c mega_main.c -Itest_mega/src
 	$(GLOBAL_CC) mega_main.o $(BASIC_LIBS) $(LDFLAGS_ARDUINO_MEGA) -o $(PROG).elf
@@ -167,7 +167,7 @@ uno: GLOBAL_CC=avr-g++
 uno: GLOBAL_CFLAGS+=$(ARDUINO_FLAGS_UNO) $(EXTRA_FLAGS) $(BASIC_INCLUDES)
 uno:
 	cd test/src && $(MAKE) lib-uno
-	avr-ranlib test/lib/libtest.a
+	avr-ranlib test/lib/libserial.a
 
 	$(GLOBAL_CC) -c uno_main.c -Itest/src
 	$(GLOBAL_CC) uno_main.o $(BASIC_LIBS) $(LDFLAGS_ARDUINO_UNO) -o $(PROG).elf
