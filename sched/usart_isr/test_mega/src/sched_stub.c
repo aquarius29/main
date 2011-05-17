@@ -14,7 +14,7 @@
 #include "WProgram.h"
 
 #include "sched_stub.h"
-#include "proto_stub.h"
+#include "serial_interface.h"
 #include "group_stub.h"
 
 #define TRUE 1
@@ -54,10 +54,10 @@ void andersWait(uint32_t time){
 void doSomeScheduling(void){
     setupMega();
 
-    proto_init();
+    serial_init();
     
     while (1) {
-        proto_run();
+        serial_run();
         group_run();
         // put some home made delay here
         myDelayMs(5000000);

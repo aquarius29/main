@@ -16,6 +16,7 @@
 
 LIB_SRC_MEGA=	sched_stub.c 				\
 				group_stub.c 				\
+				serial_interface.c			\
 				proto_usart_isr_mega.c 		\
 				proto_stub.c 				\
 				proto_serial_comm.c 		\

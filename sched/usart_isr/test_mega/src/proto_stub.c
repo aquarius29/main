@@ -15,11 +15,11 @@ static uint8_t copyBuf(volatile uint8_t *source, uint8_t *target);
 static uint8_t deSerializeMsg(uint8_t *serialMsg);
 
 
-uint8_t proto_init(void){
+uint8_t proto_setupPort(void){
     proto_usartInitMega();
 }
 
-uint8_t proto_run(void){
+uint8_t proto_processMessages(void){
     uint8_t serialMsg[PROTO_MAX_MSG_LEN];
     
     /* there is an unread message */
