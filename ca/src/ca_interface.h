@@ -1,47 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-/*
- * file:         ca_interface.h
- * brief:
- * author:       Yanling Jin, Amber Olsson
- * date:         2011-04-26
- * version:      0.1
- * history       2011-03-30 create the file
- * detail:
- */
-
-/* ca_interface.c */
-#ifdef ARDUINO
-int ca_init(void);
-int ca_run(void);
-#elif defined PC
-int ca_init(void);
-int ca_run(void);
-#endif 
-
-int get_speed(void);
-int get_dir(void);
-void write_to_move(int direction);
-
-/* ca_logic.c */
-#ifdef ARDUINO
-int direction_filter(void);
-#elif defined PC
-int direction_filter(int ir1, int ir2, int ir3, int ir4);
-#endif 
-
- /* ca_filters.c */ 
-int speed_filter(int speed);
-unsigned char* distance_filter(int dangerzone,int ir1, int ir2, int ir3,int ir4);
-unsigned char* ir_filter(unsigned char *irs);
-unsigned char *currentDirection_filter(int currentDirection,unsigned char *directions);
-unsigned char *moving_closer_filter(unsigned char *is_moving, unsigned char*directions);
-int final_direction(int currentDir, unsigned char *directions);
-
- /* ca_prints.c */ 
-=======
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /*****************************************************************************
  * Product: ca_interface.h
  * Version: 0.1
@@ -98,27 +54,11 @@ unsigned char *moving_closer_filter(unsigned char *is_moving, unsigned char*dire
 int final_direction(int currentDir, unsigned char *directions);
 
 // for print the data
-<<<<<<< HEAD
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 char * translate(int i);
 void outputIR(unsigned char *result);
 void outputdirection(int direction);
 void print_result(unsigned char *result);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* ca_object_calculations.c */
-unsigned char* moving_closer (int * irDistances);
-
-/* ca_sensors.c */ 
-#ifdef ARDUINO
-int ir_distance(int irpin);
-#endif
-=======
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /*
  * ca_logic.c
  */
@@ -160,7 +100,3 @@ int ca_init(void);
 int ca_run(void);
 #endif 
 
-<<<<<<< HEAD
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

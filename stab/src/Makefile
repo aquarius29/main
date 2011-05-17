@@ -1,31 +1,6 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 ########################### Added by Adam 09/05/11 #########################
 
 LIB_SRC=read_mg.c stab_filter.c stab_main.c stab_ra.c stab_rb.c stab_rg.c stab_sim.c
-=======
-########################### Added by jogr 110413 #########################
-
-LIB_SRC=stab_main.c stab_filter.c stab_ra.c stab_rg.c stab_sim.c
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
-########################### Added by jogr 110413 #########################
-
-LIB_SRC=stab_main.c stab_filter.c stab_ra.c stab_rg.c stab_sim.c
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
-=======
-########################### Added by Adam 09/05/11 #########################
-
-LIB_SRC=read_mg.c stab_filter.c stab_main.c stab_ra.c stab_rb.c stab_rg.c stab_sim.c
->>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
-=======
-########################### Added by jogr 110413 #########################
-
-LIB_SRC=*.c
->>>>>>> 0563398e31de42544502a0eaec1d08e9dc22c8e2
 
 LIB_OBJ = $(LIB_SRC:.c=.o)
 
@@ -34,12 +9,6 @@ LIB_OBJ = $(LIB_SRC:.c=.o)
 
 lib-pc: $(LIB_OBJ)
 	ar rvs ../lib/libstab.a $(LIB_OBJ)
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 
 lib-mega: $(LIB_OBJ)
 	@echo Objects: $(LIB_OBJ)
@@ -48,29 +17,6 @@ lib-mega: $(LIB_OBJ)
 clean:
 	rm -f *.o
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
-=======
->>>>>>> 0563398e31de42544502a0eaec1d08e9dc22c8e2
-	
-lib-mega: $(LIB_OBJ)
-	@echo Objects: $(LIB_OBJ)
-	avr-ar rvs ../lib/libstab.a $(LIB_OBJ)
-	
-clean:
-	rm -f *.o
-	
-<<<<<<< HEAD
-<<<<<<< HEAD
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
-=======
->>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
-=======
->>>>>>> 0563398e31de42544502a0eaec1d08e9dc22c8e2
 ##########################################################################
 
 
@@ -78,20 +24,6 @@ clean:
 
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
-
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
-=======
->>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
-=======
->>>>>>> 0563398e31de42544502a0eaec1d08e9dc22c8e2
 # #######################################################################
 # Makefile for inclusion by other projects
 #   heavily copied from original libarduino sources
@@ -116,23 +48,7 @@ clean:
 # Hint:
 #    Launch the Arduino program to see what your USB device 
 #    is called (look under the port settings)
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-                                                                                  
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
-                                                                                  
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
-=======
-
->>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
-=======
-                                                                                  
->>>>>>> 0563398e31de42544502a0eaec1d08e9dc22c8e2
 #USB_PORT=/dev/ttyACM0
 USB_PORT=/dev/tty.usbmodem411
 
@@ -192,92 +108,13 @@ USB_PORT=/dev/tty.usbmodem411
 #clean:
 #	@ cd bin && rm -f *.o *.rom *.elf *.map *~ *.lst *.x
 #	@ echo "Project cleaned"
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
-	
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
-=======
-
->>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
-=======
-	
->>>>>>> 0563398e31de42544502a0eaec1d08e9dc22c8e2
 #help:
 #	@ echo "Check your code includes 'WProgram.h' \nCheck you call 'init()'"
 
 ## reprogram the fuses for the right clock source
 ##fuse:
 ##	avrdude -p atmega168 -c stk200 -U lfuse:w:0x62:m
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 .PHONY : clean uno due mega install help lib
 
-=======
-# CC and CFLAGS are defined in higher level Makefile
-
-PROG=stab
-SRC=stab_main.c stab_filter.c stab_gyro_sim.c stab_ra.c stab_rg.c
-
-stab_main.c: stab.h stab_sched.h
-stab_filter.c: stab.h
-stab_gyro_sim.c: stab.h
-stab_ra.c: stab.h
-stab_rg.c: stab.h
-
-
-$(PROG): $(SRC)
-
-OBJ = $(SRC:.c=.o)
-
-%.o: %.c
-	$(CC) -c -I. $*.c $(CFLAGS)
-
-
-lib: $(OBJ)
-	ar rvs ../lib/libstab.a $(OBJ)
-
-
-pc: $(OBJ)
-	@echo OBJ: $(OBJ)
-	#$(CC) $(SRC) -o $(PROG) $(CFLAGS)
-
-pc-debug:
-	$(CC) $(SRC) -o $(PROG) $(CFLAGS)
-
-
-# "ardu" will compile for the Arduino boards
-ardu:
-	$(CC) $(SRC) -o $(PROG) $(CFLAGS)
-
-    
-clean:
-	rm -f $(PROG) $(PROG).exe *.o *.lst
->>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
-=======
-	
-.PHONY : clean uno due mega install help lib
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
-	
-.PHONY : clean uno due mega install help lib
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
-=======
-
-.PHONY : clean uno due mega install help lib
-
->>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
-=======
-	
-.PHONY : clean uno due mega install help lib
-
->>>>>>> 0563398e31de42544502a0eaec1d08e9dc22c8e2

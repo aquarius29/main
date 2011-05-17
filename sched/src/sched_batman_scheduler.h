@@ -19,9 +19,9 @@
 #define __SCHED_BATMAN_SCHEDULER_H_
 
 #include <stdint.h>
-#define TOTAL_NO_PROCESSES 4 /* Total number of processes */
-#define MAX_PROC_ITER 30 /* maximum number of processes per iteration*/
-#define TIMEFRAME_MS 50 /* The timeframe amount in milliseconds */
+#define TOTAL_NO_PROCESSES 3 /* Total number of processes */
+#define MAX_PROC_ITER 100 /* maximum number of processes per iteration*/
+#define TIMEFRAME_MS 100 /* The timeframe amount in milliseconds */
 
 /* Defines all Process ID's */
 #define MOTOR_PID 1
@@ -30,12 +30,6 @@
 #define STAB_PID 4
 #define CONN_PID 5
 
-static const char MOTOR_TASK_1[] = "runMotor";
-static const char COLLISION_TASK_1[] = "runCA";
-static const char MOVE_TASK_1[]  = "runMove";
-static const char STAB_TASK_1[] = "runStab";
-static const char CONN_TASK_1[] = "runConn";
-
 /* type Fun_t is type "function that 
 * returns int16_t and takes no arguments */
 typedef int16_t(*sched_Fun_t)(void);
@@ -43,8 +37,6 @@ typedef int16_t(*sched_Fun_t)(void);
 /* struct Task points to function which perfoms given task 
 * Is tasks are linked in a linked list structure */
 typedef struct tagTask {
-    /* Readable name of the task */
-	const char *name;
     /* The time it takes to execute the function pointed to */
 	int16_t executionTime;
     /* Pointer to function */
@@ -79,7 +71,8 @@ typedef struct tagProcessData {
 }ProcessData;
 
 /* Functions that handle a process */
-int16_t process_setup(ProcessData *pProcessData, sched_Fun_t funArrRun[TOTAL_NO_PROCESSES]);
+int16_t process_setup(ProcessData *pProcessData, 
+    sched_Fun_t funArrRun[TOTAL_NO_PROCESSES]);
 Process* create_process(int8_t pid);
 void end_process(Process *process);
 void enqueue_task(Process *process, Task *task);
@@ -87,9 +80,7 @@ void runIdle_task(Process *process);
 Task* peek_process(Process *process, int16_t layer);
 
 /* Functions that handle a task */
-Task* create_task(const char *name, 
-                    sched_Fun_t functionPointer, 
-                        int16_t executionTime);
+Task* create_task(sched_Fun_t functionPointer, int16_t executionTime);
 void remove_process_tasks(Task *task);
 
 /* Functions that handle the ProcessData struct */

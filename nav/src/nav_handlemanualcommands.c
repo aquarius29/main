@@ -2,31 +2,6 @@
 #include <stdio.h>
 #include <time.h>
 #include "nav_handlemanualcommands.h"
-<<<<<<< HEAD
-
-#define DISTANCE_PER_COMMAND 20
-#define ANGLE_PER_COMMAND 5
-#define HEIGHT_PER_COMMAND 5
-
-#define SLEEP_DURATION (0.1 * 1000000000)
-
-// Get these from nav_movementcommands.h
-// #define FORWARD 3
-// #define BACK 5
-// #define LEFT 7
-// #define RIGHT 9
-// #define UP 11
-// #define DOWN 13
-
-static int32_t newCommand[3];
-static manualCommand *first;
-static manualCommand *last;
-static int8_t bool;
-
-int8_t ch;
-
-static void queueManualCommand(int n) {
-=======
 #include "nav_movementcommands.h"
 
 #define DISTANCE_PER_COMMAND 10
@@ -52,7 +27,6 @@ void initManualNavigation(void) {
     }
 }
 static void queueManualCommand(int16_t n) {
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     manualCommand  *temp;
 
     temp = calloc(1, sizeof(manualCommand));
@@ -63,10 +37,7 @@ static void queueManualCommand(int16_t n) {
         newCommand[0] = 0; // Altitude
         newCommand[1] = 0; // Distance
         newCommand[2] = 0; // Angle
-<<<<<<< HEAD
-=======
         newCommand[3] = 0; // Order
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
         bool = 1;
     }
     else {
@@ -76,11 +47,7 @@ static void queueManualCommand(int16_t n) {
     temp->next = 0;
 }
 
-<<<<<<< HEAD
-void freeManualCommandList(void) {
-=======
 static void freeManualCommandList(void) {
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     manualCommand *temp = 0;
     while (first != 0) {
         temp = first->next;
@@ -89,11 +56,7 @@ static void freeManualCommandList(void) {
     }
 }
 
-<<<<<<< HEAD
-int8_t commandHandled (void) {
-=======
 uint8_t commandHandled (void) {
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     return ch;
 }
 
@@ -121,15 +84,12 @@ static void calculateNewCommand(void) {
             case DOWN:
                 newCommand[0] -= HEIGHT_PER_COMMAND;
                 break;
-<<<<<<< HEAD
-=======
             case LAND:
                 newCommand[3] = 2;
                 break;
             case TAKE_OFF:
                 newCommand[0] = 50;
                 break;    
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
             default:
                 printf("Not a valid command. \n");
                 break;
@@ -138,14 +98,6 @@ static void calculateNewCommand(void) {
     }
 }
 
-<<<<<<< HEAD
-static void trackChangedPosition(void) {
-    
-}
-
-void receiveManualMovementCommand(int32_t command) {
-    
-=======
 static void calculateNewPosition(int32_t angle, int32_t distance) {
     checkpoint.lon += distance * cos(angle);
     checkpoint.lat += distance * sin(angle);
@@ -238,20 +190,16 @@ void initManualToAuto(tile *end) {
 
 void receiveManualMovementCommand(uint8_t command) {
     ch = 0; //for testing
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     struct timespec t;
     t.tv_sec = 0;
     t.tv_nsec = SLEEP_DURATION;
     
-<<<<<<< HEAD
-=======
     if (getRunning() == 1) {
         checkpoint = getCurrentPosition();
         stopIndoorNavigation();
         destinationSet = 1;
         
     }
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     queueManualCommand(command);
     calculateNewCommand();
     
@@ -262,13 +210,6 @@ void receiveManualMovementCommand(uint8_t command) {
                 bool = 0;
             }
             else {
-<<<<<<< HEAD
-                printf("%d\t %d\t %d\n", newCommand[0], newCommand[1], newCommand[2]);
-                // nav_sendManualMovementCommand(newCommand[0], newCommand[1], newCommand[2]);
-                // track current position for indoor system
-                trackNewPosition();
-                
-=======
                 // printf("Height %d\t Distance %d\t Angle %d\n", newCommand[0], newCommand[1], newCommand[2]);
                 sendManualMovementCommand(newCommand[0], newCommand[1], newCommand[2], newCommand[3]);
                 
@@ -278,7 +219,6 @@ void receiveManualMovementCommand(uint8_t command) {
                 if (destinationSet == 1) {
                     initManualToAuto(getDestinationTile());
                 }
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
                 
                 freeManualCommandList();
                 break;
@@ -299,8 +239,4 @@ void receiveManualMovementCommand(uint8_t command) {
 //     receiveManualMovementCommand(3);
 //     receiveManualMovementCommand(5);    
 //     return 0;
-<<<<<<< HEAD
 // }
-=======
-// }
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

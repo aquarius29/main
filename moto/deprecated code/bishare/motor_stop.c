@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include <stdio.h>
 #include "motor_stop.h"
 /* stop function 
@@ -25,31 +24,3 @@ int main(){
      stop();
 return 0;
 }
-=======
-#include <stdio.h>
-#include "motor_stop.h"
-/* stop function 
- @uthor Bishare Sufi */
-/* an idea created early in the project */
-
-int stop() {
-	unsigned char input = 0; 
-
-	printf("Stop => to '0'\n");
-
-	while(input != '0'){
-		scanf("%c", &input);
-		printf("Your input is: %c\n", input);
-		printf("\n");
-}
-
-	printf("Motor stopped.\n");
-        return 1;
-}
-
-
-int main(){
-     stop();
-return 0;
-}
->>>>>>> 0563398e31de42544502a0eaec1d08e9dc22c8e2

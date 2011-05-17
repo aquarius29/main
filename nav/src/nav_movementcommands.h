@@ -39,10 +39,6 @@ struct movCommand
 
 /* Create a movement command . 0 for manual(From UI), 1 for automatic(abstract navigation). */
 void sendautomovementcommand(uint8_t order , int16_t height, uint16_t distance, int16_t yaw);
-<<<<<<< HEAD
-void processMovementCommand(int identifier);
-=======
 void sendManualMovementCommand(int16_t height, int16_t distance, int16_t yaw, uint8_t order);
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 #endif /* MOVEMENTCOMMANDS_H */

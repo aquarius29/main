@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /**************************************************************************
 * @file main.c
 * @brief Main file for all the code, used only by the stab group
@@ -30,19 +29,4 @@ int main(void)
   stab_init();
   stab_run();
   return 0;
-=======
-#include "stab.h"
-#include <stdio.h>
-
-
-
-int main(void)
-{
-  
-  stab_init();
-  stab_run();  
-  return 0;
-  
- 
->>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
 }

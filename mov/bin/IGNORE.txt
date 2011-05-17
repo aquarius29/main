@@ -1,19 +1,7 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-This file is needed to push folder to GitHub.
-Ignore it.
-=======
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 ****************
 
 MOVEMENT
 ****************
 
 
-<<<<<<< HEAD
 1. Code is not ready for testing yet, but it is ready for integration
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
-1. Code is not ready for testing yet, but it is ready for integration
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

@@ -19,21 +19,14 @@ void setup_gps(char *dev,int baud)
 {
 	good_data = 0;
 
-<<<<<<< HEAD
-=======
 //	flying = GROUND;
 
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	GPSLocation *curr_position_UI = NULL;
 
 	currentOutdoorPosition.latitude = 0;
 	currentOutdoorPosition.longitude = 0;
 
-<<<<<<< HEAD
-	int fd = 0;
-=======
 	int32_t fd = 0;
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	char buf [256];
 
 	fd = dev_init(dev,baud);
@@ -102,11 +95,7 @@ void gps_navigation(GPSLocation* Destination)
 
 	struct trac *path = calc_path(pts,destination); 	
 
-<<<<<<< HEAD
-	GPSLocation **path_UI = path_for_UI(path,pts);	// Path to UI 
-=======
 	GPSLocation **path_UI = path_for_UI(path,pts,destination);	// Path to UI 
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 /*	printf("UI:  %f,%f\n",path_UI[0]->latitude,path_UI[0]->longitude);
 	printf("UI:  %f,%f\n",path_UI[1]->latitude,path_UI[1]->longitude);
@@ -120,42 +109,11 @@ void gps_navigation(GPSLocation* Destination)
 
 	/* 
 	//send UI the path 
-<<<<<<< HEAD
-
-=======
 	
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	nav_sendOutdoorPathToGui(GPSLocation path_UI);
 	*/
 	
 	struct trac *next_Node = path;
-<<<<<<< HEAD
-
-	int angle = 0;
-
-	int distance_to_nextNode = 0; 
-
-	while(GPSNAV_ON_OFF)
-	{
-		next_Node = update_path(curr,destination,pts,next_Node);
-
-		angle = give_angle(curr,destination,pts,next_Node);
-
-		distance_to_nextNode = give_distance(curr,destination,pts,next_Node);
-
-		printf("angle : %d  distance : %d\n",angle,distance_to_nextNode);
-
-	/*
-        send movement command here.
-
-	if(sendMovement == 1){
-
-	if( angle == -2 )
-	{                                 // sendautomovementcommand(char order , int height, int distance, int yaw)	
-		sendautomovementcommand(1,2,1,0);  // auto, landing, 1m, 0 degree.	
-	}
-	else if( angle == -1)
-=======
 	
 	int32_t angle = 0;
 	
@@ -189,7 +147,6 @@ void gps_navigation(GPSLocation* Destination)
 		sendautomovementcommand(1,2,1,0);  // auto, landing, 1m, 0 degree.	
 	}
 	else if( angle == -1)//hovering
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	{
 		sendautomovementcommand(1,0,0,0);  // auto, hovering, 0m, 0 degree.
 	}
@@ -199,11 +156,7 @@ void gps_navigation(GPSLocation* Destination)
 	}
 
 
-<<<<<<< HEAD
-	set_MovementCommand_False();
-=======
 	sendMovement = 0;
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 	}//sendMovement=1
 	*/
@@ -219,23 +172,14 @@ void gps_navigation(GPSLocation* Destination)
 
 /*
         -2: arrive the destination
-<<<<<<< HEAD
-	-1: waiting
-     0-359: moveing there	
-=======
 	-1: hovering/waiting
      0-359: moveing	
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 */
 int give_angle(struct point currp,struct point dest,struct point *pts,struct trac *next_Node)
 {
 	struct point next_Point = {0,0,0};
 
-<<<<<<< HEAD
-	int angle = -1;
-=======
 	int32_t angle = -1;
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 			
 	if(next_Node->p == -2)
 	{	
@@ -264,15 +208,9 @@ int give_distance(struct point currp,struct point dest,struct point *pts,struct 
 {
 	struct point next_Point = {0,0,0};
 
-<<<<<<< HEAD
-	int distance = 11;
-
-	if(next_Node->p = -2)
-=======
 	int32_t distance = 11;
 
 	if(next_Node->p == -2)
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	{
 		next_Point = dest;
 		distance = calc_dist(currp,next_Point);
@@ -329,13 +267,8 @@ struct trac* update_path(struct point currp,struct point dest,struct point *pts,
 void get_startp(struct point *pt)
 {
 	pt->name = -1;
-<<<<<<< HEAD
-	pt->lat = currentOutdoorPosition.latitude;
-	pt->lon = currentOutdoorPosition.longitude;
-=======
 	pt->lat = curr.lat;
 	pt->lon = curr.lon;
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 
@@ -454,17 +387,10 @@ return path;
 
 
 /* check that the output of gps is available */
-<<<<<<< HEAD
-int check_gps_output(char buf [])
-{
-	int i = 0;
-	int num = 0;
-=======
 int32_t check_gps_output(char buf [])
 {
 	int32_t i = 0;
 	int32_t num = 0;
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 	while(buf [i] != 10)
 	{
@@ -481,11 +407,7 @@ int32_t check_gps_output(char buf [])
 
 
 
-<<<<<<< HEAD
-int get_goodData()
-=======
 int32_t get_goodData()
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 {
 	return good_data;
 }
@@ -494,11 +416,7 @@ int32_t get_goodData()
 
 
 /* generate the path what's gonna be sent to UI */
-<<<<<<< HEAD
-GPSLocation **path_for_UI(struct trac* path,struct point* pts)
-=======
 GPSLocation **path_for_UI(struct trac* path,struct point* pts,struct point destination)
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 {
 	struct trac *currp = path;
 
@@ -506,11 +424,7 @@ GPSLocation **path_for_UI(struct trac* path,struct point* pts,struct point desti
 
 	GPSLocation *node = NULL;
 
-<<<<<<< HEAD
-	int i = 0;
-=======
 	int32_t i = 0;
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 	Route = malloc(sizeof(GPSLocation*));
 
@@ -539,14 +453,11 @@ GPSLocation **path_for_UI(struct trac* path,struct point* pts,struct point desti
 		i++;		
 	}
 	
-<<<<<<< HEAD
-=======
 	/* add destination */
 	Route [i-1]->latitude = destination.lat;
 	Route [i-1]->longitude = destination.lon;		
 
 
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	return Route;
 }
 

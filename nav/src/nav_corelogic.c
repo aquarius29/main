@@ -22,30 +22,6 @@
 #include "nav_gps_nav.h"
 #include "nav_tilemap.h"
 #include "nav_indoorstructure.h"
-<<<<<<< HEAD
-
-static tile roomPositionToTile(roomPosition *current);
-
-pthread_t protocolReadThread;
-pthread_t gpsSetupThread;
-pthread_t gpsNavigationThread;
-pthread_t indoorNavigationThread;
-
-int protocolReading = 0;
-
-static pthread_mutex_t watchdogMutex = PTHREAD_MUTEX_INITIALIZER;
-static pthread_cond_t watchdogCond = PTHREAD_COND_INITIALIZER;
-
-int waitingForGpsSetupThread = 1;
-
-static pthread_mutex_t gpsRunningMutex = PTHREAD_MUTEX_INITIALIZER;
-
-int gpsRunning = 0;
-
-static pthread_mutex_t indoorNavigationRunningMutex = PTHREAD_MUTEX_INITIALIZER;
-
-int indoorSystemRunning = 0;
-=======
 #include "nav_handlemanualcommands.h"
 
 static tile roomPositionToTile(roomPosition *current);
@@ -293,7 +269,6 @@ void *startConnectivityListener(void *ptr)
 		}
 	}
 }
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 /* GPS System Functions start here */
 
@@ -310,11 +285,7 @@ void nav_runGpsSystem(double lat, double lon)
     
     gpsRunning = 1;
 
-<<<<<<< HEAD
-    GPSLocation *destination = malloc(sizeof(GPSLocation));	
-=======
     destination = malloc(sizeof(GPSLocation));	
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	destination->latitude = lat;
 	destination->longitude = lon;
     
@@ -351,24 +322,6 @@ void *startgpswatchdog(void *ptr)
     
 	printf("destination after watchdog receive lat : %lf\n", destination->latitude);
     printf("destination after watchdog receive lon : %lf\n", destination->longitude);
-<<<<<<< HEAD
- 
-	
-
-    //! Thread results for the GPS Threads.
-    int protocolReadThreadResult;
-    int gpsSetupThreadResult;
-    int gpsNavigationThreadResult;
-    
-    char *message = "protocol read thread started";
-    char *message2 = "gps setup thread started";
-
-    /* pthread functions return 0 when successful */
-    
-    printf("Attempting to create protocol reader thread\n");
-    protocolReadThreadResult = pthread_create(&protocolReadThread, NULL, readProtocol, (void*) message);
-    
-=======
 
     //! Thread results for the GPS Threads.
     int gpsSetupThreadResult;
@@ -377,7 +330,6 @@ void *startgpswatchdog(void *ptr)
     char *message2 = "gps setup thread started";
 
     /* pthread functions return 0 when successful */
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     printf("Attempting to create GPS setup thread\n");
     gpsSetupThreadResult = pthread_create(&gpsSetupThread, NULL, setupgps, (void*) message2);
     
@@ -412,16 +364,6 @@ void *startgpswatchdog(void *ptr)
         * sending a zero to the thread will not kill the thread
         * using the return value it can check of the thread is dead 
         */
-<<<<<<< HEAD
-        if(pthread_kill(protocolReadThread, 0) != 0)
-        {
-            printf("Protocol reader thread died\nRecreating......\n");
-            
-            protocolReadThreadResult = 
-            pthread_create(&protocolReadThread, NULL, readProtocol, (void*) message);
-        }
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
         
         if (pthread_kill(gpsSetupThread, 0) != 0)/* GPS Setup Thread is dead */
         {
@@ -464,10 +406,6 @@ void *startgpswatchdog(void *ptr)
     }
     
     /* wait for the threads to finish */
-<<<<<<< HEAD
-    pthread_join(protocolReadThread, NULL);
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     pthread_join(gpsSetupThread, NULL);
     pthread_join(gpsNavigationThread, NULL);   
 
@@ -522,17 +460,6 @@ void nav_runIndoorSystem(double startX, double startY, double destinationX, doub
         data->destinationtile.x = destinationX;
 		data->destinationtile.y = destinationY;
         data->message = "Indoor system started";
-<<<<<<< HEAD
-            
-    char *message = "protocol read thread started";
-            
-    int protocolReadThreadResult;       
-    int indoorThreadResult;
-    
-    printf("Attempting to create protocol reader thread\n");
-    protocolReadThreadResult = pthread_create(&protocolReadThread, NULL, readProtocol, (void*) message);
-    
-=======
         
 	int indoorWatchdogThreadResult;
 	
@@ -555,7 +482,6 @@ void *startIndoorWatchdogThread(void *ptr)
 	
 	int indoorThreadResult;
 		
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     printf("Attempting to create indoor nav thread\n");
     indoorThreadResult = 
         pthread_create(&indoorNavigationThread, NULL, startIndoorNavigationSystem, (void*) data);
@@ -565,17 +491,6 @@ void *startIndoorWatchdogThread(void *ptr)
     
     while(duplicateRunning == 1)
     {
-<<<<<<< HEAD
-        if(pthread_kill(protocolReadThread, 0) != 0)
-        {
-            printf("Protocol reader thread died\nRecreating......\n");
-            
-            protocolReadThreadResult = 
-            pthread_create(&protocolReadThread, NULL, readProtocol, (void*) message);
-        }
-        
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
         if (pthread_kill(indoorNavigationThread, 0) != 0)
         {
             
@@ -600,28 +515,14 @@ void *startIndoorWatchdogThread(void *ptr)
     }
    
     //initPath(&startTile, &destinationTile);
-<<<<<<< HEAD
-    //pthread_join(protocolReadThread, NULL);
-    pthread_join(indoorNavigationThread, NULL);
-    printf("indoor navigation system shut down\n");
-    free(data); /* clean up */
-}
-=======
     pthread_join(indoorNavigationThread, NULL);
     printf("indoor navigation system shut down\n");
     free(data); /* clean up */
 }	
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 /* Function to be run in a pthread for indoor navigation */
 void *startIndoorNavigationSystem(void *ptr)
 {
-<<<<<<< HEAD
-    printf("Started the indoor navigation tread\n");
-    struct thread_data *data = (struct thread_data*) ptr;
-
-    initPath(&data->starttile, &data->destinationtile);
-=======
 	char *message;
     message = (char *) ptr;
     printf("%s\n", message);
@@ -683,7 +584,6 @@ void *startIndoorNavigationSystem(void *ptr)
     
     
     initManualToAuto(&data->destinationtile);
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     
     int result;
     result = pthread_mutex_lock(&indoorNavigationRunningMutex);
@@ -750,8 +650,6 @@ void nav_createIndoorCollisionObject(int tileNumber, ThreeDWorld *world)
     }
 }
 
-<<<<<<< HEAD
-=======
 void runProtocolThread()
 {
 	printf("Starting protocol read watchdog\n");
@@ -797,7 +695,6 @@ void *protocolReadWatchdog(void *ptr)
 	pthread_join(protocolReadThread, NULL);
 }
 
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 //! Threaded function to read using protocol.
 /*! This function is used to read data using the protocol
 *   and pass on the data to the relevant functions for 
@@ -813,10 +710,7 @@ void *readProtocol(void *ptr)
     printf("%s\n", message);
 
     protocolReading = 1;
-<<<<<<< HEAD
-=======
 	
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     
     while(protocolReading == 1)
     {
@@ -835,11 +729,7 @@ void *readProtocol(void *ptr)
 /* Begin Kill functions */
 
 /* Kill the gps system */
-<<<<<<< HEAD
-void killGPSSystem()
-=======
 void nav_killGPSSystem()
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 {
     int result;
     result = pthread_mutex_lock(&watchdogMutex);
@@ -863,11 +753,7 @@ void killGPSIO()
 }
 
 // function to kill the navigation system e.g. the user wants only manual input.
-<<<<<<< HEAD
-void killIndoorNavigationSystem()
-=======
 void nav_killIndoorNavigationSystem()
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 {
 	stopIndoorNavigation();
 }
@@ -881,26 +767,18 @@ void killThread()
 
 void killProtocolReadThread()
 {
-<<<<<<< HEAD
-=======
 	monitoringProtocolThread = 0;
 	
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	int result;
 	result = pthread_cancel(protocolReadThread);
 	
 	if(result == 0)
 	{
-<<<<<<< HEAD
-		printf("Protocol read thread killed\n");
-	}
-=======
 		 /*end the protocol read monitoring loop */
 		printf("Protocol read thread killed\n");
 	}
 	else
 		printf("Failed to kill protocol read thread\n");
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 /* End kill functions */
@@ -908,11 +786,7 @@ void killProtocolReadThread()
 /* Begin functions that are using the protocol */
 void nav_sendAutoMovementCommand(struct movCommand *move)
 {
-<<<<<<< HEAD
-    /* Add protocol functions to send to movement */
-=======
     /* Add protocol functions to send to movement */	
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 void nav_sendManualMovementCommand(struct movCommand *move)
@@ -924,17 +798,6 @@ void nav_sendManualMovementCommand(struct movCommand *move)
 }
 /* End functions that are using the protocol */
 
-<<<<<<< HEAD
-
-
-/* Begin interface:out functions for connectivity group */
-void nav_sendCurrentIndoorPositionToGui(roomPosition *currentPosition)
-{
-    printf("Drone is aproximately at X: %f    Y: %f\n", currentPosition->lon,
-    currentPosition->lat);
-	/* Save the current position before sending it */
-	/* currPosition = currentPosition */
-=======
 /* Function for connectivity to call to pass on a movement command */
 void nav_setMovementIdentifier(int id)
 {
@@ -1004,7 +867,6 @@ void nav_sendCurrentIndoorPositionToGui(roomPosition *currentPosition) {
 	printf("Drone is approximately at X: %f    Y: %f\n", currentPosition->lon,
     currentPosition->lat);
 	/* Save the current position before sending it */
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	/* Put connectivity library function here*/
 }
 
@@ -1042,11 +904,6 @@ static tile roomPositionToTile(roomPosition *current)
     return temp;
 }
 
-<<<<<<< HEAD
-
-int16_t nav_init(void)
-{
-=======
 // int main(int argc, char **argv) {
 // 
 // 
@@ -1079,7 +936,6 @@ int16_t nav_init(void)
 int16_t nav_init(void)
 {
 	currPosition = malloc(sizeof(roomPosition));
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     return 0;
 }
 
@@ -1093,29 +949,6 @@ int16_t nav_init(void)
 */
 int16_t nav_run(void)
 {
-<<<<<<< HEAD
-	/*
-	int waitingForSystemStart = 1;
-	
-	while (waitingForSystemStart == 0)
-	{
-		if(read from the protocol for indoor system has arguments)
-		{
-			nav_runIndoorSystem(argument a, argument b);
-			waitingForSystemStart = 0;
-		}
-		if(read from the protocol for gps system has arguments)
-		{
-			nav_runGpsSystem(Destination argument);
-			waitingForSystemStart = 0;
-		}
-		
-	}
-	*/
-
-    return 0;
-}
-=======
 	int conListenerThreadResult;
 	char *message = "Connectivity Listener Started";
 	conListenerThreadResult = 
@@ -1192,4 +1025,3 @@ int16_t nav_run(void)
 
     return 0;
 }
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

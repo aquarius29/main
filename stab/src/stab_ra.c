@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 /***************************************************************************
  * @file stab_ra.c
  * @brief Takes care of the communication with the accelerometer
@@ -19,11 +12,6 @@
 #include <Wire.h>
 #include "WProgram.h"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 struct vector
 {
   float x;
@@ -31,13 +19,6 @@ struct vector
   float z;
 };
 
-<<<<<<< HEAD
-=======
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
-=======
->>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 /* 
  *address of the accelerometer on the board 
  */
@@ -46,9 +27,6 @@ struct vector
 /*
  *Function prototypes
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 struct vector readAccel();
 
 void init_accel();
@@ -62,61 +40,10 @@ struct vector readAccel()
   
   Wire.beginTransmission(ADDRESS);
   Wire.send(0x02); /*start of x LSB for reading data*/
-=======
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
-void init_accel();
-void readAccel();
-
-
-
-/*int main()*/
-/*//void setup()*/
-/*{*/
-/*  init();*/
-/*  Wire.begin();*/
-/*  Serial.begin(9600);*/
-/*// initBMA180() should be done once, it will write appropriate adjustments for range and mode. */
-/*//  init_accel();*/
-/*//  delay(2000);*/
-/*	while(1){*/
-/*  readAccel();*/
-/*  delay(300);*/
-/*	}*/
-/*  return 0;*/
-/*}*/
-=======
-struct vector readAccel();
->>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
-
-void init_accel();
-
-/*Read data from accelerometer memory*/
-struct vector readAccel()
-{
-  struct vector vect;
-  int x,y,z;
-  int temp;
-  
-  Wire.beginTransmission(ADDRESS);
-<<<<<<< HEAD
-  Wire.send(0x02);  							/*start of x LSB for reading data*/
-<<<<<<< HEAD
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
-=======
-  Wire.send(0x02); /*start of x LSB for reading data*/
->>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
   Wire.endTransmission();
   Wire.requestFrom((int)ADDRESS, 7);
   
   if(Wire.available()==7)
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
     {
       int lsb = Wire.receive()>>2;
       int msb = Wire.receive();
@@ -141,42 +68,6 @@ struct vector readAccel()
   vect.y = y;
   vect.z = z;   
   return vect;
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
-  {
-    int lsb = Wire.receive()>>2;
-    int msb = Wire.receive();
-    x=(msb<<6)+lsb; 
-    if (x&0x2000) x|=0xc000;
-/* shift 2 unused bits */
-    lsb = Wire.receive()>>2;
-    msb = Wire.receive();
-    y=(msb<<6)+lsb;
-    if (y&0x2000) y|=0xc000;
-    lsb = Wire.receive()>>2;
-    msb = Wire.receive();
-    z=(msb<<6)+lsb;
-    if (z&0x2000) z|=0xc000;
-    temp = Wire.receive();
-    if (temp&0x80) temp|=0xff00;
-  }
-/*  result = Wire.endTransmission();*/
-/*  Serial.print("raw data: ");*/
-/*  Serial.print("X=");*/
-/*  Serial.print(x);*/
-/*  Serial.print(" Y=");*/
-/*  Serial.print(y);*/
-/*  Serial.print(" Z=");*/
-/*  Serial.print(z);*/
-/*  Serial.println();*/
-<<<<<<< HEAD
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
-=======
->>>>>>> ed2040bde53af04e22ec8814834f2a56f8ff6a93
 }
 
 /*
@@ -224,26 +115,3 @@ void init_accel()
 
 #endif
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-#include "stab.h"
-
-
-
-
-float read_accel()
-{
-  
-  
-
-
-  
-  return 0;
-
-}
->>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
-=======
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b

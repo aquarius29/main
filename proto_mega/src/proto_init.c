@@ -4,7 +4,9 @@
 * @author Mihail
 */
 
-proto_init(){
+#include <proto_lib.h>
+
+void proto_init(void){
     createDefaultmove_to_nav();
     createDefaultmove();
     createDefaultstabatt();

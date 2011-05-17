@@ -20,7 +20,7 @@
 /**************************************************************************** 
     Definitions 
 ****************************************************************************/ 
-int heading;
+int Heading;
 float height;
 
 struct stab_attitude * attPtr;
@@ -90,18 +90,18 @@ void proto_stabWriteAttitude(float roll,float pitch,float yaw){
 /////////////////////////
 
 void proto_stabWriteHeading(int messageHeading){
-	heading=messageHeading;
+	Heading=messageHeading;
 #ifdef PC
-    storeForTint(PROTO_WRITE, PROTO_MOTOR, PROTO_UNKNOWN, heading);
+    storeForTint(PROTO_WRITE, PROTO_MOTOR, PROTO_UNKNOWN, Heading);
 	#ifdef DEBUG
-	   printf("Stab value set to: %d\n", heading);
+	   printf("Stab value set to: %d\n", Heading);
     #endif 
 #endif
 } 
    
 int proto_stabReadHeading(void){
-	int tempHeading=heading;
-	heading=0;
+	int tempHeading=Heading;
+	Heading=0;
 #ifdef PC
     storeForTint(PROTO_READ, PROTO_MOVEMENT, PROTO_UNKNOWN, tempHeading);
 	#ifdef DEBUG
@@ -138,14 +138,18 @@ float proto_stabReadHeight(void){
 //////////////
 
 void createDefaultstabgyro(){
-    gyroPtr = malloc(sizeof(struct stab_gyroscope));
+    if(gyroPtr == NULL){
+        gyroPtr = (struct stab_gyroscope *) malloc(sizeof(struct stab_gyroscope));
+    }
     gyroPtr->gyro_x = 3;
     gyroPtr->gyro_y = 4;
     gyroPtr->gyro_z = 5;
 }
 
 void createDefaultstabatt(){
-	attPtr = malloc(sizeof(struct stab_attitude));
+	if(attPtr == NULL){
+	    attPtr = (struct stab_attitude * ) malloc(sizeof(struct stab_attitude));
+    }
     attPtr->roll = 0; 
  	attPtr->pitch = 0; 
  	attPtr->yaw = 0; 

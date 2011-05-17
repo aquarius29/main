@@ -1,11 +1,11 @@
-/*!
- * @File:		test_ca_logic.c
- * @Brief:	main file of the CUnit testing
- * @Author:	Alina Butko
- * @Date:		2011-05-09
- * @Version:	0.1
- * @History:	2011-05-09 create the file
- * @Detail:
+/*
+ * File:		test_ca_logic.c
+ * Brief:	main file of the CUnit testing
+ * Author:	Alina Butko
+ * Date:		2011-05-09
+ * Version:	0.1
+ * History:	2011-05-09 create the file
+ * Detail:
  */
 
 #include "../src/ca_interface.h"

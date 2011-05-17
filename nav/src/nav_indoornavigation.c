@@ -10,37 +10,22 @@
 #include "nav_indoorstructure.h"
 #include "nav_corelogic.h"
 
-<<<<<<< HEAD
-#define PRECISION 5
-#define SLEEP_DURATION (0.05 * 1000000000)
-#define ALGORITHM 0
-#define TRUE_NORTH 10 + 90
-#define AVOID_DISTANCE 100
-=======
 // #include "nav_handlemanualcommands.h" 
 //already included from corelogic
 
 #define PRECISION 5
 #define SLEEP_DURATION (0.05 * 1000000000)
 #define ALGORITHM 0
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #define CENTIMETRES_PER_SECOND 100
 #define SAFE_HEIGHT 200 //200 cm
 
 static void navigatePath(void);
 static int32_t count;
-<<<<<<< HEAD
-static int32_t running;
-=======
 static int8_t running;
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 static positionList route;
 static struct timeval timer;
 static progressiveNode *first;
 static progressiveNode *current;
-<<<<<<< HEAD
-
-=======
 static tile destinationTile;
 
 /*Keep the thread running until it is killed externally*/
@@ -49,7 +34,6 @@ void initIndoorNavigation(void) {
         ;
     }
 }
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 static void insertCurrentDestinationNode(void) {
     current->next = calloc(1, sizeof(progressiveNode));
     current->next->p = route.list[count];
@@ -181,8 +165,6 @@ void stopIndoorNavigation(void) {
     freeProgressiveList();
     free(route.list);
 }
-<<<<<<< HEAD
-=======
 
 roomPosition getCurrentPosition(void) {
     return current->p;
@@ -199,16 +181,12 @@ tile *getDestinationTile(void) {
 int8_t getRunning(void) {
     return running;
 }
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 //Send start and end point received from corelogic
 //to path calculation.
 void initPath(tile *start, tile *end) {
     running = 1;
     count = 0;
-<<<<<<< HEAD
-=======
     setDestinationTile(end);
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
     sendautomovementcommand(0, SAFE_HEIGHT, 0, 0);
     if (ALGORITHM == 0) {
         printf("Dijkstra\n");
@@ -263,21 +241,6 @@ static void recalc(void) {
     sendCommand();
 }
 void collisionAvoided(int32_t direction) {
-<<<<<<< HEAD
-    running = 0;
-    compareTile();
-    current->next->p.angle = (direction - TRUE_NORTH) * (M_PI / 180);
-    updatePosition();
-    compareTile();
-    recalc();
-}
-// void getPositionAfterManual(int32_t direction, int32_t distance) {
-//     changeX = distance * cos(direction);
-//     changeY = distance * sin(direction);
-//     current->p.lon = current->prev->p.lon + changeX;
-//     current->p.lat = current->prev->p.lat + changeY;
-// }
-=======
     if (running == 0) {
         collisionOverManual(direction);
     }
@@ -291,7 +254,6 @@ void collisionAvoided(int32_t direction) {
     }
 }
 
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 static int32_t check(roomPosition a, roomPosition b){
     double diffX;
     double diffY;

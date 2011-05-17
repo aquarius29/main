@@ -1,18 +1,6 @@
 ########################### Added by jogr 110413 #########################
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-LIB_SRC=ca_interface.c ca_logic.c ca_main.c ca_object_calculations.c ca_sensor.c ca_filters.c ca_prints.c
-=======
-LIB_SRC=ca_interface.c ca_logic.c ca_main.c ca_object_calculations.c ca_sensor.c ca_filters.c
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
-LIB_SRC=ca_interface.c ca_logic.c ca_main.c ca_object_calculations.c ca_sensor.c ca_filters.c
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
-=======
-LIB_SRC=*.c
->>>>>>> 0563398e31de42544502a0eaec1d08e9dc22c8e2
+LIB_SRC=temp.c
 
 LIB_OBJ = $(LIB_SRC:.c=.o)
 

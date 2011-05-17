@@ -40,11 +40,7 @@ xmlXPathObjectPtr retrieveXmlnodeset (xmlDocPtr doc, xmlChar *xpath)
 	}
 	object = xmlXPathEvalExpression(xpath, context);
 	xmlXPathFreeContext(context);
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	if (object == NULL) 
 	{
 		printf("xmlXPathEvalExpression error\n");
@@ -106,12 +102,7 @@ void getMapDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
     free(mapWidth);
     free(mapHeight);
     free(tileWidth);
-<<<<<<< HEAD
-    free(tileHeight);
-    
-=======
     free(tileHeight);   
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 
@@ -130,28 +121,17 @@ void createTwoDArray(ThreeDWorld *world, int w, int h, int array[])
 	int one;
 	int two;
 	int arrayCounter = 0;
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	for(one = 0; one < h; one++)
 	{
 		for(two = 0; two < w; two++)
 		{
 			world->representation[one][two] = array[arrayCounter];
             printf("  %d", world->representation[one][two]);
-<<<<<<< HEAD
-		
-			if(two == 9)
-				printf("\n");
-					
-=======
 
 			if(two == 9)
 				printf("\n");
 
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 			arrayCounter++;
 		}
 	}
@@ -182,11 +162,7 @@ void getTileDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 	int totalTiles = 0;
 	int tileValuesArray [width * height]; 
 	int arrayCounter = 0;
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	result = retrieveXmlnodeset (doc, xpath);
 	if (result) 
 	{
@@ -194,17 +170,10 @@ void getTileDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 		for (i=0; i < nodeset->nodeNr; i++) 
 		{
 			keyword = xmlNodeListGetString(doc, nodeset->nodeTab[i]->xmlChildrenNode, 1);
-<<<<<<< HEAD
-		
-			int id = atoi(keyword);
-			int index = i;
-			
-=======
 
 			int id = atoi(keyword);
 			int index = i;
 
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 			if (id == 0)
 			{
 				tileValuesArray[arrayCounter] = 0;
@@ -217,33 +186,19 @@ void getTileDetails (xmlDocPtr doc, xmlNodePtr cur, ThreeDWorld *world)
 				arrayCounter++;
 				numCollisionTiles += 1;
 			}
-<<<<<<< HEAD
-			 		
-=======
 
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 			xmlFree(keyword);
 		}
 		xmlXPathFreeObject (result);
 	}
-<<<<<<< HEAD
-	
-	totalTiles = numMovableTiles + numCollisionTiles;
-	
-=======
 
 	totalTiles = numMovableTiles + numCollisionTiles;
 
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	printf("number of collision tiles : %d\n", numCollisionTiles);
 	printf("number of movable tiles : %d\n", numMovableTiles);
 	printf("Total tiles : %d\n", totalTiles);
 	world->numberOfTilesInMap = totalTiles;
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	createTwoDArray(world, width, height, tileValuesArray);
 	//world->height = 
 }
@@ -262,11 +217,7 @@ char* getAttributeValueForNode (xmlDocPtr doc, xmlNodePtr cur, char *node, char 
 {
 	xmlChar *attributeValue;
 	cur = cur->xmlChildrenNode;
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	while (cur != NULL)
 	{
 		if((!xmlStrcmp(cur->name, (const xmlChar *) node)))
@@ -294,22 +245,14 @@ void parseDoc(char *docname, ThreeDWorld *world)
 	xmlNodePtr cur;
 
 	doc = xmlParseFile(docname);
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	if (doc == NULL) 
 	{
 		fprintf(stderr,"Parsing was unsuccesful \n");
 		return;
 	}
 	cur = xmlDocGetRootElement(doc);
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 	if (cur == NULL) 
 	{
 		fprintf(stderr,"No XML Data\n");

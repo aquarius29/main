@@ -1,25 +1,4 @@
 /*
-<<<<<<< HEAD
-<<<<<<< HEAD
- * file:         ca_filters.c
- * brief:
- * author:       Yanling Jin, Amber Olsson
- * date:         2011-04-26
- * version:      0.1
- * history       2011-03-29  Jin - create the file\n
- *               2011-03-30  Amber - Changed int types to unsigned char for booleans.
- *                                   Changed to bitwise operation for changing values
- *                           Jin - Add method to get the final destination
- *               2011-03-31  Jin - Add moving_closer_filter mothod
- * detail:
- */
-
-
-/*
-=======
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   .     IR1(FRONT)
 
   IR3(LEFT)   IR4(RIGHT)
@@ -29,11 +8,6 @@
   {front, back, left, right,hover}
 
 */
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   /*****************************************************************************
   * Product: collision_logic.c
   * Version: 0.1
@@ -47,54 +21,26 @@
   *
   * Movement/CA Group
   *****************************************************************************/
-<<<<<<< HEAD
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 
 #include <stdlib.h>
 #include <stdio.h>
 
 #include "ca_interface.h"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* the speed control variables */
-=======
 //the speed control variables
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
-//the speed control variables
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #define HOVERSPEED 5
 #define SLOWSPEED 25
 #define MEDIUMSPEED 50
 #define FASTSPEED 75
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* the dangerzone varibales according to the speed */
-=======
 //the dangerzone varibales according to the speed
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
-//the dangerzone varibales according to the speed
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #define HOVERZONE 20
 #define SLOWZONE 50
 #define MEDIUMZONE 75
 #define FASTZONE 100
 #define MADZONE 150
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-/* the current flying directions */
-=======
 //the current flying directions
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
-//the current flying directions
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 #define FRONT 1
 #define BACK 2
 #define LEFT 3
@@ -108,26 +54,6 @@
  */
 int speed_filter(int speed)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    int dangerzone;
-
-    if (speed < HOVERSPEED) {
-		dangerzone = HOVERZONE;
-    } else if (speed < SLOWSPEED && speed >= HOVERSPEED) {
-		dangerzone = SLOWZONE;
-    } else if (speed < MEDIUMSPEED && speed >= SLOWSPEED) {
-		dangerzone = MEDIUMZONE;
-    } else if (speed < FASTSPEED && speed >= MEDIUMSPEED) {
-		dangerzone = FASTZONE;
-    } else {
-		dangerzone = MADZONE;
-    }
-
-    return dangerzone;
-=======
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   int dangerzone;
 
   if(speed<HOVERSPEED)
@@ -142,10 +68,6 @@ int speed_filter(int speed)
     dangerzone = MADZONE;
   
   return dangerzone;
-<<<<<<< HEAD
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 
@@ -155,44 +77,6 @@ int speed_filter(int speed)
  * return 0 if the ir is NOT triggered, 1 as triggered
  * return an array of irs.
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-unsigned char *distance_filter(int dangerzone, int ir1, int ir2, int ir3, int ir4)
-{
-
-    unsigned char irBoolean1 = 1;
-    unsigned char irBoolean2 = 1;
-    unsigned char irBoolean3 = 1;
-    unsigned char irBoolean4 = 1;
-
-    if (ir1 > dangerzone) {
-		irBoolean1 = 0;
-	}
-
-    if (ir2 > dangerzone) {
-		irBoolean2 = 0;
-	}
-
-    if (ir3 > dangerzone) {
-		irBoolean3 = 0;
-	}
-
-    if (ir4 > dangerzone) {
-		irBoolean4 = 0;
-	}
-
-    /* Allocates an array of 4 unsigned characters */
-    unsigned char *irBooleans = (unsigned char *) calloc(4, sizeof(unsigned char));
-    *irBooleans = irBoolean1;
-    *(irBooleans + 1) = irBoolean2;
-    *(irBooleans + 2) = irBoolean3;
-    *(irBooleans + 3) = irBoolean4;
-
-    /* returns the unsigned char array of 0 or 1 for each IR sensor */
-	return irBooleans;
-=======
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 unsigned char* distance_filter(int dangerzone,int ir1, int ir2, int ir3,int ir4)
 {
 
@@ -222,10 +106,6 @@ unsigned char* distance_filter(int dangerzone,int ir1, int ir2, int ir3,int ir4)
     
   //returns the unsigned char array of 0 or 1 for each IR sensor
   return irBooleans;
-<<<<<<< HEAD
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 
@@ -234,47 +114,6 @@ unsigned char* distance_filter(int dangerzone,int ir1, int ir2, int ir3,int ir4)
  * according to the boolean value of four irs
  * return the boolean value of 5 directions (front, back, left, right, hover)
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-unsigned char *ir_filter(unsigned char *irBooleans)
-{
-	unsigned char front = 1;
-	unsigned char back = 1;
-	unsigned char left = 1;
-	unsigned char right = 1;
-	unsigned char hover = 1;
-
-	/* ir1 detects collision */
-	if (*irBooleans == 1) {
-		front = 0;
-	}
-
-	/* ir2 detects collision */
-	if (*(irBooleans + 1) == 1) {
-		back = 0;
-	}
-
-	/* ir3 detects collision */
-	if (*(irBooleans + 2) == 1) {
-		left = 0;
-	}
-
-	/* ir4 detects collsion */
-	if (*(irBooleans + 3) == 1) {
-		right = 0;
-	}
-
-	unsigned char *directions = (unsigned char *) calloc(5, sizeof(unsigned char));
-	*directions = front;
-	*(directions + 1) = back;
-	*(directions + 2) = left;
-	*(directions + 3) = right;
-	*(directions + 4) = hover;
-
-	return directions;
-=======
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 unsigned char* ir_filter(unsigned char *irBooleans)
 {
   unsigned char front = 1;
@@ -307,10 +146,6 @@ unsigned char* ir_filter(unsigned char *irBooleans)
   *(directions+4)=hover;
 
   return directions;
-<<<<<<< HEAD
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 
@@ -319,26 +154,6 @@ unsigned char* ir_filter(unsigned char *irBooleans)
  *According to the direction the quadrocopter is flying towards
  *return the boolean value of 5 directions (front, back, left, right, hover)
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-unsigned char *currentDirection_filter(int currentDirection, unsigned char *directions)
-{
-    if (currentDirection == FRONT) {
-		*(directions + 1) = 0;
-    }
-    if (currentDirection == BACK) {
-		*(directions) = 0;
-    }
-    if (currentDirection == LEFT) {
-		*(directions + 3) = 0;
-    }
-    if (currentDirection == RIGHT) {
-		*(directions + 2) = 0;
-    }
-    return directions;
-=======
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 unsigned char *currentDirection_filter(int currentDirection,unsigned char *directions)
 {
   //face to sensor 1
@@ -355,10 +170,6 @@ unsigned char *currentDirection_filter(int currentDirection,unsigned char *direc
     *(directions+2) = 0;//left
 
   return directions;
-<<<<<<< HEAD
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 /*
@@ -366,34 +177,6 @@ unsigned char *currentDirection_filter(int currentDirection,unsigned char *direc
  *According to the objects which is moving towards
  *return the boolean value of 5 directions (front, back, left, right, hover)
  */
-<<<<<<< HEAD
-<<<<<<< HEAD
-unsigned char *moving_closer_filter(unsigned char *is_moving, unsigned char *directions)
-{
-    /* moving towards front */
-    if (*is_moving == 1) {
-		*(directions) = 0;
-		*(directions + 4) = 0;
-    }
-    /* moving towards back */
-	if (*(is_moving + 1) == 1) {
-		*(directions + 1) = 0;
-		*(directions + 4) = 0;
-    }
-    /* moving towards left */
-	if (*(is_moving + 2) == 1) {
-		*(directions + 2) = 0;
-		*(directions + 4) = 0;
-    }
-    /* moving towards right */
-	if (*(is_moving + 3) == 1) {
-		*(directions + 3) = 0;
-		*(directions + 4) = 0;
-    }
-    return directions;
-=======
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 unsigned char *moving_closer_filter(unsigned char *is_moving, unsigned char*directions)
 {
 
@@ -419,10 +202,6 @@ unsigned char *moving_closer_filter(unsigned char *is_moving, unsigned char*dire
     }
 
  return directions;
-<<<<<<< HEAD
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }
 
 /*
@@ -432,30 +211,6 @@ unsigned char *moving_closer_filter(unsigned char *is_moving, unsigned char*dire
  */
 int final_direction(int currentDir, unsigned char *directions)
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    int i;
-    int dir = 6;
-
-    for (i = 0; i < 5; i++) {
-		/* return the first one which fullfill the requirement */
-	    if (*(directions + i) == 1) {
-			if (i == 4) {
-				dir = 0;
-			} else {
-				dir = i + 1;
-			}
-			break;
-		}
-    }
-
-    if (*(directions + currentDir - 1) == 1) {
-		dir = currentDir;
-    }
-    return dir;
-=======
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
   int i;
   int dir=6;
 
@@ -568,8 +323,4 @@ void print_result(unsigned char *result)
       if (i==4)
 	printf("Hover is %s\n", answer);
     }
-<<<<<<< HEAD
->>>>>>> 040f404a80bdac3a1098d380a4f35b169d4e8e16
-=======
->>>>>>> 63448f47519691d1491cc311c9f5cb7b4f57917b
 }

@@ -1,13 +1,13 @@
-/*
- * file:         ca_prints.c
- * brief:
- * author:       Yanling Jin, Amber Olsson
- * date:         2011-04-26
- * version:      0.1
- * history       2011-04-26  Jin - move these methods from ca_filters.c
- *                                 add arduino print outs
- * 
- * detail:
+/*!
+ *  @file ca_prints.c
+ *
+ *  @brief 
+ *
+ *  @author Yanling Jin, Amber Olsson
+ *  @date 2011-04-26
+ *  @history  2011-04-26  Jin - move these methods from ca_filters.c
+ *                              add arduino print outs -Yanling Jin
+ *  @details  
  */
 
 
@@ -27,14 +27,16 @@
 #endif
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdint.h>
 
 #include "ca_interface.h"
+
 
 /*
  * translate the 0 and 1
  * return 0 as not ok, 1 as ok
  */
-char *translate(int i)
+char *translate(uint8_t i)
 {
     char *result;
     if (i == 0)
@@ -46,46 +48,229 @@ char *translate(int i)
 }
 
 
-/*translate the output of IR*/
-void outputIR(unsigned char *result)
-{
-
 #ifdef ARDUINO
+void print_speed_dangerzone(int16_t speed, uint16_t dangerzone){
+	Serial.println("================================");
+	Serial.print("Quadrocopter travels at speed ");
+	Serial.print(speed);
+	Serial.println();
+	Serial.print("Dangerous zone is ");
+	Serial.print(dangerzone);
+	Serial.println();
+}
+
+void print_dangerzone_ir(uint8_t *irBooleans){
+	Serial.println("================================");
+	Serial.print("Result for which ir is triggered:");
+	outputIR(irBooleans);
+}
+
+void print_result_after_dangerzone(uint8_t *result){
+	Serial.println("================================");
+	Serial.println("after filter the according to the ir BOOLEANS");
+	print_result(result);
+}
+
+void print_result_after_flying_dir(uint8_t dir, uint8_t*result){
+	Serial.println("================================");
+	Serial.println("Quadrocopter heading towards ");
+	outputdirection(dir);
+	Serial.println("================================");
+	Serial.println("after filter according to the heading directions");
+	print_result(result);
+}
+
+void print_movingCloser_ir(uint8_t *moving_close){
+	Serial.println("================================");
+	Serial.println("Result for which direction is moving closer");
+	outputIR(moving_close);
+}
+
+void print_result_after_movingCloser(uint8_t *result){
+Serial.println("================================");
+	Serial.println("after filter according to the moving object\n");
+	print_result(result);
+}
+
+void print_final_result(uint8_t *result){
+	Serial.println("========FINAL=============");
+	print_result(result);
+}
+
+void print_final_direction(uint8_t finalDir){
+	Serial.println("================================");
+	Serial.println("IF I HAVE TO PICK A DIRECTION\nI CHOOSE ");
+	outputdirection(finalDir);
+}
+/*translate the output of IR*/
+void outputIR(uint8_t *result)
+{
 	Serial.print("detects an object at ");
-#elif defined PC
-	printf("\n detects an object at ");
-#endif 
 
     if (*result == 1) {
-#ifdef ARDUINO
 		Serial.print("\n Front");
-#elif defined PC
-		printf("\n Front ");
-#endif 
 	}
 
     if (*(result + 1) == 1) {
-#ifdef ARDUINO
 		Serial.print("\n Back  ");
-#elif defined PC
-		printf("\n Back ");
-#endif
 	}
 
     if (*(result + 2) == 1) {
-#ifdef ARDUINO
 		Serial.print("\n Left");
+	}
+
+	if (*(result + 3) == 1){
+		Serial.print("\n Right ");
+	}
+	Serial.println();
+}
+
+/*
+ * translate the current direction
+ * {front, back, left, right, hover}
+ */
+void outputdirection(uint8_t direction)
+{
+    switch (direction) {
+
+    case 0:
+		Serial.print("Hover\n");
+		break;
+
+    case 1:
+		Serial.print("Front\n");
+		break;
+
+    case 2:
+		Serial.print("Back\n");
+		break;
+
+    case 3:
+		Serial.print("Left\n");
+		break;
+
+    case 4:
+		Serial.print("Right\n ");
+		break;
+
+	case 5:
+		Serial.print("SAME AS CURRENT DIR\n ");
+		break;
+
+    default:
+		Serial.print("NO PLACE TO GO\n");
+    }
+}
+
+
+/*translate the result of the directions options*/
+void print_result(uint8_t *result)
+{
+    uint8_t i;
+    char *answer;
+
+    for (i = 0; i < 5; i++) {
+		answer = translate(*(result + i));
+
+		if (i == 0){
+			Serial.print("Front is ");
+			Serial.println(answer);
+		}
+
+		if (i == 1){
+			Serial.print("Back is ");
+			Serial.println(answer);
+		}
+
+		if (i == 2){
+			Serial.print("Left is ");
+			Serial.println(answer);
+		}
+
+		if (i == 3){
+			Serial.print("Right is ");
+			Serial.println(answer);
+		}
+
+		if (i == 4){
+			Serial.print("Hover is ");
+			Serial.println(answer);
+		}
+    }
+}
+
+
 #elif defined PC
+
+void print_speed_dangerzone(uint16_t speed, uint16_t dangerzone){
+	printf("\n================================\n");
+	printf("Quadrocopter travels at speed %d\n", speed);
+	printf("dangerous zone is %d\n", dangerzone);
+}
+
+void print_dangerzone_ir(uint8_t *irBooleans){
+	printf("\n================================\n");
+	printf("Result for which ir is triggered: \n");
+	outputIR(irBooleans);
+}
+
+void print_result_after_dangerzone(uint8_t *result){
+	printf("\n================================\n");
+	printf ("after filter the according to the ir BOOLEANS\n\n");
+	print_result(result);
+}
+
+void print_result_after_flying_dir(uint8_t dir, uint8_t *result){
+	printf("\n================================\n");
+	printf("Quadrocopter heading towards ");
+	outputdirection(dir);
+	printf("\n================================\n");
+	printf("after filter according to the heading directions\n\n");
+	print_result(result);
+}
+
+void print_movingCloser_ir(uint8_t *moving_close){
+	printf("\n================================\n");
+	printf("Result for which direction is moving closer \n");
+	outputIR(moving_close);
+}
+
+void print_result_after_movingCloser(uint8_t *result){
+	printf("\n================================\n");
+	printf("after filter according to the moving object\n");
+	print_result(result);
+}
+
+void print_final_result(uint8_t *result){
+	printf("\n================================\n");
+	printf("\nFINAL\n\n");
+	print_result(result);
+}
+
+void print_final_direction(uint8_t finalDir){
+	printf("\n================================\n");
+	printf("\nIF I HAVE TO PICK A DIRECTION\nI CHOOSE ");
+	outputdirection(finalDir);
+}
+
+/*translate the output of IR*/
+void outputIR(uint8_t *result)
+{
+	printf("\n detects an object at ");
+
+    if (*result == 1) {
+		printf("\n Front ");
+	}
+
+    if (*(result + 1) == 1) {
+		printf("\n Back ");
+	}
+
+    if (*(result + 2) == 1) {
 		printf("\n Left ");
-#endif 
 	}
 	if (*(result + 3) == 1){
-
-#ifdef ARDUINO
-		Serial.print("\n Right ");
-#elif defined PC
 		printf("\n Right ");
-#endif 
 	}
 }
 
@@ -93,112 +278,68 @@ void outputIR(unsigned char *result)
  * translate the current direction
  * {front, back, left, right, hover}
  */
-void outputdirection(int direction)
+void outputdirection(uint8_t direction)
 {
     switch (direction) {
 
     case 0:
-#ifdef ARDUINO
-		Serial.print("Hover\n");
-#elif defined PC
 		printf("Hover\n");
-#endif 
 		break;
 
     case 1:
-#ifdef ARDUINO
-		Serial.print("Front\n");
-#elif defined PC
 		printf("Front\n ");
-#endif 
 		break;
 
     case 2:
-#ifdef ARDUINO
-		Serial.print("Back\n");
-#elif defined PC
 		printf("Back\n ");
-#endif
 		break;
 
     case 3:
-#ifdef ARDUINO
-		Serial.print("Left\n");
-#elif defined PC
 		printf("Left\n ");
-#endif 
 		break;
 
     case 4:
-#ifdef ARDUINO
-		Serial.print("Right\n ");
-#elif defined PC
 		printf("Right\n ");
-#endif 
+		break;
+
+	case 5:
+		printf("SAME AS CURRENT DIR\n ");
 		break;
 
     default:
-#ifdef ARDUINO
-		Serial.print("NO PLACE TO GO\n");
-#elif defined PC
 		printf("NO PLACE TO GO\n");
-#endif 
     }
 }
 
 
 /*translate the result of the directions options*/
-void print_result(unsigned char *result)
+void print_result(uint8_t *result)
 {
-    int i;
+    uint8_t i;
     char *answer;
 
     for (i = 0; i < 5; i++) {
 		answer = translate(*(result + i));
 
 		if (i == 0){
-#ifdef ARDUINO
-			Serial.print("Front is ");
-			Serial.println(answer);
-#elif defined PC
 			printf("Front is %s\n", answer);
-#endif 
 		}
 
 		if (i == 1){
-#ifdef ARDUINO
-			Serial.print("Back is ");
-			Serial.println(answer);
-#elif defined PC
 			printf("Back is %s\n", answer);
-#endif 
 		}
 
 		if (i == 2){
-#ifdef ARDUINO
-			Serial.print("Left is ");
-			Serial.println(answer);
-#elif defined PC
 			printf("Left is %s\n", answer);
-#endif 
 		}
 
 		if (i == 3){
-#ifdef ARDUINO
-			Serial.print("Right is ");
-			Serial.println(answer);
-#elif defined PC
 			printf("Right is %s\n", answer);
-#endif 
 		}
 
 		if (i == 4){
-#ifdef ARDUINO
-			Serial.print("Hover is ");
-			Serial.println(answer);
-#elif defined PC
 			printf("Hover is %s\n", answer);
-#endif 
 		}
     }
 }
+#endif

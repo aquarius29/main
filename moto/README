@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 Valgrind (sudo apt-get install valgrind)
 
 To run valgrind, first compile with 
@@ -9,17 +7,3 @@ make valgrind
 and then type
 valgrind --leak-check=yes bin/test.o
 in the terminal
-=======
-Protocol group folder
->>>>>>> f92a19bd9dffcb6a29ee665ad279d19a9402e881
-=======
-Valgrind (sudo apt-get install valgrind)
-
-To run valgrind, first compile with 
-
-make valgrind
-
-and then type
-valgrind --leak-check=yes bin/test.o
-in the terminal
->>>>>>> 0563398e31de42544502a0eaec1d08e9dc22c8e2

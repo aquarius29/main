@@ -54,11 +54,11 @@ test: EXT=x
 #-Wa,-ahlms=$(PROG).lst
 $(OBJ): $(SRC)
 	@ cd bin && \
-	avr-g++ -c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -mmcu=$(MMCU) -DARDUINO=22 -DF_CPU=$(F_CPU) -DARDUINO=22 -I../include ../$(SRC)
+	avr-g++ -c -g -Os -w -fno-exceptions -ffunction-sections -fdata-sections -mmcu=$(MMCU) -DARDUINO=22 -DTEST -DDEBUG -DF_CPU=$(F_CPU) -DARDUINO=22 -I../include ../$(SRC)
 	@ echo "Object files created"
 
 compile:
-	@ avr-gcc $(OBJ) -Os -Wl,--gc-sections -mmcu=$(MMCU) -o bin/$(PROG).$(EXT) -l$(LIB) -Llib -lm
+	@ avr-gcc $(OBJ) -Os -Wl,--gc-sections -mmcu=$(MMCU) -DTEST -DDEBUG -o bin/$(PROG).$(EXT) -l$(LIB) -Llib -lm
 	@ echo "Project compiled"
 
 #-DENABLE_PWM
@@ -78,8 +78,15 @@ mega: clean install
 
 uno: clean install
 
+pc-sim: clean
+	gcc -DPC -DSIMULATOR -DTEST -DDEBUG $(SRC) -lm -o bin/$(PROG).x
+
 pc: clean
-	gcc -DPC $(SRC) -o bin/$(PROG).x
+	gcc -DPC -DTEST $(SRC) -lm -o bin/$(PROG).x
+
+
+pc-dbg: clean
+	gcc -DPC -DTEST -DDEBUG $(SRC) -lm -o bin/$(PROG).x
 
 clean:
 	@ cd bin && rm -f *.o *.rom *.elf *.map *~ *.lst *.x

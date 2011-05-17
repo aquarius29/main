@@ -9,15 +9,11 @@
 #include <sys/types.h>
 #include "sched_ext_mngr.h"
 
-<<<<<<< HEAD
-
-=======
 void _psched_debug(char *msg){
 #ifdef PC
-  fprintf(strerr, "psched: %s\n", msg);
+  //fprintf(strerr, "psched: %s\n", msg);
 #endif
 }
->>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 #define NUM_PROC 2 /* number of processes */
 
 /* creates a process.
@@ -42,26 +38,6 @@ struct extsched_proc create_proc(enum proc_type type, int16_t (*init_fun)(), int
 void init_proc(struct extsched_proc *p){
 
   if (pool->num_procs >= NUM_PROC) {
-<<<<<<< HEAD
-    // todo: error handling 
-  }
-
-  int ret= (*p->init_fun)(); /* run initialization function */
-
-  //if ( ret == 1 ){
-    
-    // ** initialize message queue (disabled in ver 1.2) - 
-    // ** ipc shared memory used instead.
-    //if ((mqid= mq_init(p->type)) < 0){
-    //  /* error handling */
-    //}    
-    //p->mq_id = mqid;
-
-    pool[pool->num_procs].p = p;
-    pool[pool->num_procs-1].next_proc = &pool[pool->num_procs];
-    pool->num_procs= pool->num_procs+1;
-    //}
-=======
     _psched_debug("Maximum number of processes reached ...");
     _exit(1);
   }
@@ -72,7 +48,6 @@ void init_proc(struct extsched_proc *p){
   pool[pool->num_procs-1].next_proc = &pool[pool->num_procs];
   pool->num_procs= pool->num_procs+1;
   
->>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 }
 
 /* 
@@ -84,13 +59,8 @@ void init_pool(struct proc_pool **pool){
   *pool = malloc( sizeof(struct proc_pool) * NUM_PROC);
   
   if (*pool == NULL) {
-<<<<<<< HEAD
-    printf("Error allocating memory for poll, exiting...\n");
-    exit(-1);
-=======
     _psched_debug("Error allocating memory for poll, exiting...");
     _exit(1);
->>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
   }
   
   (*pool)->num_procs = 0;
@@ -98,12 +68,7 @@ void init_pool(struct proc_pool **pool){
 
   /* creating a shared memory space. */
   if ( ((*pool)->shmid= sm_create()) == -1){
-<<<<<<< HEAD
-    // todo: error handling
-    fprintf(stderr, "Failed to create shared memory\n");
-=======
     _psched_debug("Failed to create shared memory");
->>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
     _exit(1);
   }
 }
@@ -147,19 +112,12 @@ void run_pool(struct proc_pool *pool){
  */
 int proc_read_state(enum proc_type type, void *buff){
   if (pool->shmid == -1){
-<<<<<<< HEAD
-    /* error handling */
-=======
     _psched_debug("Shared memory id error");
->>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
     return -1;
   }
 
   if (sm_read(pool->shmid, type, buff) == -1){
-<<<<<<< HEAD
-=======
     _psched_debug("Error reading state from shared memory");
->>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
     return -1;
   }
 
@@ -177,31 +135,20 @@ int proc_write_state(enum proc_type type, void* data)
   size_t len;
   
   if (pool->shmid == -1){
-<<<<<<< HEAD
-    /* error handling */
-=======
     _psched_debug("Shared memory id error");
->>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
     return -1;
   }
   
   if ((len=sm_write(pool->shmid, type, (char*)data)) == -1){
-<<<<<<< HEAD
-=======
     _psched_debug("Error writing to shared memory");
->>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
     return -1;
   }
   
   return len;
 }
 
-
-<<<<<<< HEAD
-/*size_t proc_send(enum proc_type from, enum proc_type to, char *msg){
-=======
+/*
 size_t proc_send(enum proc_type from, enum proc_type to, char *msg){
->>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
   size_t msg_len;
   int from_mqid;
 
@@ -216,17 +163,10 @@ size_t proc_send(enum proc_type from, enum proc_type to, char *msg){
   }
   
   return msg_len;
-<<<<<<< HEAD
-}*/
-
-
-/*
-=======
 }
 
 
 
->>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 size_t proc_recv(enum proc_type own_proc, char *buff){
   size_t msg_len;
   int mqid;
@@ -242,11 +182,7 @@ size_t proc_recv(enum proc_type own_proc, char *buff){
   }
 
   return msg_len;
-}
-<<<<<<< HEAD
+  }
 */
-=======
-
->>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 
 

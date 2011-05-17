@@ -1,10 +1,6 @@
 ########################### Added by jogr 110413 #########################
 
-<<<<<<< HEAD
-LIB_SRC=mov_stubs.c
-=======
-LIB_SRC=*.c
->>>>>>> 0563398e31de42544502a0eaec1d08e9dc22c8e2
+LIB_SRC=mov_interface.c mov_logic.c mov_motor.c mov_sensor.c mov_simulator.c
 
 LIB_OBJ = $(LIB_SRC:.c=.o)
 

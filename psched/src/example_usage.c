@@ -6,10 +6,7 @@
  */ 
 
 #include <stdio.h>
-<<<<<<< HEAD
-=======
 #include "psched_mq.h"
->>>>>>> 263235128aabdf1a6d600e10d13724c473ef3e04
 #include "sched_ext_mngr.h"
 #include <string.h>
 
