@@ -23,6 +23,7 @@
 #define DATA_BUFFER_LEN 100
 #define NAV_MSG_LEN 10
 #define MOV_CONFIRM_MSG_LEN 3
+#define UI_COMMAND_MSG_LEN 3
 
 
 /* array index that holds message length */
@@ -51,5 +52,11 @@
 
 /* message ID for movements confirmation message */
 #define MSG_ID_MOV_CONFIRM 2
+
+/* UI action command message array indexes */
+#define UI_COMMAND_VAL_INDEX 2
+#define UI_COMMAND_NULL_INDEX 3
+
+#define MSG_ID_UI_COMMAND 3
 
 #endif /* PROTO_SERIALDEFINE_H */

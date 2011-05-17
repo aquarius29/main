@@ -60,7 +60,15 @@ uint8_t proto_serialSendMovConfirmMsg(uint8_t msg);
  */
 struct navData *proto_serialReadNavMsg(void);
 
+/* 
+ *  send the UI command to the mega board
+ *
+ *  Author: Joakim
+ */
+uint8_t proto_serialSendUICommandMsg(uint32_t portHandle, uint8_t command);
+
 uint8_t proto_readMovConfirmMsg(int32_t portHandle, uint8_t *targetStorage);
 
+uint8_t proto_serialReadUICommandMsg(void);
 
 #endif /* PROTO_SERIAL_COMM_H */
