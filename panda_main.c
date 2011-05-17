@@ -7,9 +7,9 @@
 #include <stdio.h>
 #include "sched_ext_mngr.h"
 #include <string.h>
-#include <conn_tcpserver_main.h>
-#include <cam_interface.h>
-#include <nav_corelogic.h>
+#include "conn_tcpserver_main.h"
+#include "cam_interface.h"
+#include "nav_corelogic.h"
 
 //#include "sched_proc_test.c" /* module 1 */
 //#include "sched_proc_test2.c" /* module 2 */
