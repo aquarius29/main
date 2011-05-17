@@ -20,12 +20,12 @@ int main(void){
   
   /* create processes */
   struct extsched_proc p1 = create_proc(PROC_CONN, &conn_init, &conn_run); 
-  struct extsched_proc p2 = create_proc(PROC_CAM, &cam_init, &cam_run);
+  //struct extsched_proc p2 = create_proc(PROC_CAM, &cam_init, &cam_run);
   struct extsched_proc p3 = create_proc(PROC_NAV, &nav_init, &nav_run);
 
   /* initializes them and adds them to the poll */
   init_proc(&p1);
-  init_proc(&p2);
+  //init_proc(&p2);
   init_proc(&p3);
   
   printf("pool holds %d processes\n", pool->num_procs);
