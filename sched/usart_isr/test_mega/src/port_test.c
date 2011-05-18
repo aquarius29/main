@@ -32,7 +32,7 @@ void port_test(void){
 
     portHandle = proto_serialOpen();
     
-    proto_serialSendUICommandMsg(portHandle, 6);
+    proto_serialSendUICommandMsg(portHandle, 7);
     proto_serialReadMovConfirmMsg(portHandle, &movConfirmMsg);
     
     printf("received confiramtion message: %d\n", movConfirmMsg);
