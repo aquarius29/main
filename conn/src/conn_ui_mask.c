@@ -14,13 +14,14 @@
  *  do a selection by using a switch.
  */
 
-
 #include "conn_ui_mask.h"
-#include "conn_tcpserver.h"
-#include "port_test.c"
 #include <stdio.h>
-#include <proto_serial_port.h>
-#include <proto_serial_comm.h>
+#include "conn_tcpserver.h"
+/*
+
+#include "port_test.c"
+#include "proto_serial_port.h"
+#include "proto_serial_comm.h"
 
 static int32_t portHandle;
 
@@ -32,50 +33,50 @@ uint8_t left  = 0x05;
 uint8_t right  = 0x06;
 uint8_t hover = 0x07;
 uint8_t land  = 0x08;
-
+*/
 
 void controll_movement(int identifier){
- portHandle = proto_serialOpen();
+  // portHandle = proto_serialOpen();
   switch(identifier){
 
   case FORWARD:
   DEBUG("Going forward\n")
-  proto_serialSendUICommandMsg(portHandle, forward);
+    // proto_serialSendUICommandMsg(portHandle, forward);
   break;
   
 case BACK:
   DEBUG("Going back\n")
-  proto_serialSendUICommandMsg(portHandle, back);
+    // proto_serialSendUICommandMsg(portHandle, back);
   break;
   
 case LEFT:
   DEBUG("Going left\n")
- proto_serialSendUICommandMsg(portHandle, left);
+    // proto_serialSendUICommandMsg(portHandle, left);
   break;
   
 case RIGHT:
   DEBUG("Going right\n")
-proto_serialSendUICommandMsg(portHandle,right);
+    //proto_serialSendUICommandMsg(portHandle,right);
   break;
   
 case UP:
   DEBUG("Going up\n")
-proto_serialSendUICommandMsg(portHandle,alt_up);
+    //proto_serialSendUICommandMsg(portHandle,alt_up);
   break;
   
 case DOWN:
   DEBUG("Going down\n")
-proto_serialSendUICommandMsg(portHandle,alt_down);
+    //proto_serialSendUICommandMsg(portHandle,alt_down);
   break;
   
 case LAND:
   DEBUG("land\n")
-proto_serialSendUICommandMsg(portHandle,land);
+    //proto_serialSendUICommandMsg(portHandle,land);
   break;
   
 case TAKE_OFF:
   DEBUG("taking off\n")
-proto_serialSendUICommandMsg(portHandle,hover);
+    //proto_serialSendUICommandMsg(portHandle,hover);
   break;
 
 case KILL_INDOOR:

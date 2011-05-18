@@ -1,5 +1,6 @@
 BIN	= bin/
 SRC	= src/
+CAM	= src/udp_cam/
 GCC 	= gcc
 RM 	= rm -f
 
@@ -8,6 +9,8 @@ default:
 	@echo "frame_dgb debug mode"
 	@echo "server to compile a server"
 	@echo "server_dbg debug mode "
+	@echo "cam_server"
+	@echo "cam_client"
 
 #complile gui with client
 .SILENT:
@@ -24,5 +27,12 @@ server_dbg: $(SRC)main.c $(SRC)conn_tcpserver_main.c $(SRC)conn_tcpserver.c $(SR
 
 server: $(SRC)main.c $(SRC)conn_tcpserver_main.c $(SRC)conn_tcpserver.c $(SRC)conn_ui_mask.c 
 	$(GCC) $(SRC)main.c $(SRC)conn_tcpserver_main.c $(SRC)conn_tcpserver.c $(SRC)conn_ui_mask.c -o $(BIN)server
+
 clean:
-	cd/bin & $(RM) *.* 
+	cd $(BIN) && $(RM) * 
+
+camera_client:
+	cd $(CAM) && $(GCC) conn_udpclient_main.c -o ../udpc
+
+camera_server: 
+	cd $(CAM) && $(GCC) conn_udpserver_main.c -o ../udps

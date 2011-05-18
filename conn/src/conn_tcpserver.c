@@ -60,6 +60,8 @@ void host_setup(void){
   gethostname(ip_buffer , IP_BUFFER_LENGTH);
   printf("%s\n", ip_buffer);
   host = ( struct hostent * )gethostbyname(ip_buffer);
+  printf("Host name : %s\n", host->h_name) ;
+  printf("Host IP Address : %s\n", inet_ntoa(*((struct in_addr *)host->h_addr))); 
 }
 
 /*Function for socket creation*/
@@ -88,7 +90,7 @@ int socket_reusing(void){
 
 /*Function for keeping socket alive*/
 int socket_keep_alive(void){
-  if(setsockopt(socket_tcp, SOL_SOCKET, SO_KEEPALIVE, &keepalive_value, &keepalive_length) < 0) {
+  if(getsockopt(socket_tcp, SOL_SOCKET, SO_KEEPALIVE, &keepalive_value, &keepalive_length) < 0) {
       DEBUG("getsockopt()")
       close(socket_tcp);
       exit(EXIT_FAILURE);
@@ -133,7 +135,8 @@ int socket_accept(void){
     exit(EXIT_FAILURE);
   }
   else{ 
-    //lol
+    printf("Client IP is %s and port is : %d \n", inet_ntoa(client.sin_addr),
+ ntohs(client.sin_port));
    }
      return 0;
 }
