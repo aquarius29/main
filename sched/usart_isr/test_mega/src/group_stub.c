@@ -49,6 +49,7 @@ void group_run(void){
                  digitalWrite(8, HIGH);
              case HOVER :
                  digitalWrite(7, HIGH);
+                 proto_serialSendMovConfirmMsg(data);
              case LAND :
                  digitalWrite(13, LOW);
                  digitalWrite(12, LOW);
