@@ -32,36 +32,40 @@ void port_test(void){
 
     portHandle = proto_serialOpen();
     
-    while (x < ITERATIONS) {
-    // while (1) {
-        if (x == 0) { 
-            navMsgFill1(x);
-            printf("sending data1\n");
-            proto_serialSendNavMsg(portHandle, &navMsg);
-            
-            // p_serialData = proto_serialReceiveFromMega(portHandle);
-            // printf("we received %d\n", *p_serialData);
-            
-            /* put movement confirmation in local storage */
-            proto_readMovConfirmMsg(portHandle, &movConfirmMsg);
-            printf("we received movement confirmation: %d\n", movConfirmMsg);
-        }
-        
-        if (x == 1) {
-            navMsgFill2();
-            // navMsgFill1(x);
-            printf("sending data2\n");
-            proto_serialSendNavMsg(portHandle, &navMsg);
-        
-            // p_serialData = proto_serialReceiveFromMega(portHandle);
-            // printf("we received %d\n", *p_serialData);
-
-            /* put movement confirmation in local storage */
-            proto_readMovConfirmMsg(portHandle, &movConfirmMsg);
-            printf("we received movement confirmation: %d\n", movConfirmMsg);
-        }
-        x++;
-    }
+    proto_serialSendUICommandMsg(portHandle, 1);
+    proto_readMovConfirmMsg(portHandle, &movConfirmMsg);
+    
+    printf("received confiramtion message: %d\n", movConfirmMsg);
+    // while (x < ITERATIONS) {
+    // // while (1) {
+    //     if (x == 0) { 
+    //         navMsgFill1(x);
+    //         printf("sending data1\n");
+    //         proto_serialSendNavMsg(portHandle, &navMsg);
+    //         
+    //         // p_serialData = proto_serialReceiveFromMega(portHandle);
+    //         // printf("we received %d\n", *p_serialData);
+    //         
+    //         /* put movement confirmation in local storage */
+    //         proto_readMovConfirmMsg(portHandle, &movConfirmMsg);
+    //         printf("we received movement confirmation: %d\n", movConfirmMsg);
+    //     }
+    //     
+    //     if (x == 1) {
+    //         navMsgFill2();
+    //         // navMsgFill1(x);
+    //         printf("sending data2\n");
+    //         proto_serialSendNavMsg(portHandle, &navMsg);
+    //     
+    //         // p_serialData = proto_serialReceiveFromMega(portHandle);
+    //         // printf("we received %d\n", *p_serialData);
+    // 
+    //         /* put movement confirmation in local storage */
+    //         proto_readMovConfirmMsg(portHandle, &movConfirmMsg);
+    //         printf("we received movement confirmation: %d\n", movConfirmMsg);
+    //     }
+    //     x++;
+    // }
     sleep(1);
     
     proto_serialClose(portHandle);

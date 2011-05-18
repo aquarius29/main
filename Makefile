@@ -79,8 +79,9 @@ BASIC_INCLUDES= -I../../stab/src -I../../moto/src -I../../mov/src -I../../ca/src
 
 ##  Libraries to include when building the panda system, 
 ##  only include libs that work for all targets for that system here!
-PANDA_LIBS= -Lpsched/lib -Lnav/lib -Lconn/lib -Lserial_comm/lib  -Lcam/lib -Llib -lserial -lnav -lpsched -lconn -lcam -lm -lxml2 -lm -lpthread -Lpsched/lib 
-#-Lpsched/lib -Lnav/lib -Lconn/lib -Lcam/lib -Lproto_panda/lib -Llib -lnav -lpsched -lconn -lcam -lprotopanda -lm -lxml2 -lm -lpthread 
+##  The -lxxx lines has been added twice to avoid linking order problems 
+PANDA_LIBS= -Lpsched/lib -Lnav/lib -Lserial_comm/lib -Lconn/lib -Lcam/lib -Llib  -lserial -lnav -lpsched -lconn -lcam -lm -lxml2 -lm -lpthread -Lpsched/lib  -lserial -lnav -lpsched -lconn -lcam -lm -lxml2 -lm -lpthread -Lpsched/lib 
+
 
 ##  Set paths to headers used by code on the panda system
 PANDA_INCLUDES= -Ipsched/lib -I../../psched/src -I../../psched/lib/ -I./include -I../../nav/src -I../../nav/lib/ -I../../cam/src -I../../conn/src  -I../../serial_comm/src  -I/usr/include/libxml2 -Ipsched/src -Inav/src -Iconn/src -Icam/src
@@ -222,10 +223,10 @@ panda: GLOBAL_CC= gcc `pkg-config --cflags --libs opencv`
 panda: GLOBAL_CFLAGS+= $(PC_FLAGS) $(EXTRA_FLAGS) $(PANDA_INCLUDES)
 panda: 
 	cd psched/src && $(MAKE) lib-panda
+	cd serial_comm/src && $(MAKE) lib-panda
 	cd nav/src && $(MAKE) lib-panda
 	cd cam/src && $(MAKE) lib-panda
 	cd conn/src && $(MAKE) lib-panda
-	cd serial_comm/src && $(MAKE) lib-panda
 	$(GLOBAL_CC) -c panda_main.c  $(PANDA_INCLUDES) 
 	$(GLOBAL_CC) -o $(PROG) panda_main.o $(PANDA_LIBS)
 

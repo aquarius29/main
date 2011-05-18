@@ -10,6 +10,9 @@
  *              2011-04-20 - adding host_setup() function
  *              2011-05-07 - uppdating  conn_tcpserver_main.c to new standard
  *              2011-05-11 - updating for keepalive
+ *
+ *  Description:
+ *  Main file with initization and run.
  */
 
 
@@ -29,10 +32,12 @@ int conn_init(void){
   socket_keep_alive();
   socket_binding();
   socket_listening();
+ 
   return 0;
 
  }
 
+/*Run function*/
 int conn_run(void){
 
   data_passing();

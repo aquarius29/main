@@ -17,16 +17,12 @@
 #define CLOSE_SOCKET_TCP close(socket_tcp)
 #define DEBUG(x) printf("%s",x);
 
-
-struct hostent * host ;
-
 void host_setup(void);
 int socket_create(void);
 int socket_reusing(void);
 int socket_keep_alive(void);
 int socket_binding(void);
 int socket_listening(void);
-int socket_accept(void);
 int socket_accept(void);
 int data_passing(void);
 void message_handling(int new_socket,int parrent_pid);

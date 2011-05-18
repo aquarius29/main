@@ -9,7 +9,10 @@
 #include "proto_serial_define.h"
 
 static struct navData navMsg;
+static uint8_t uiCommand;
 static uint8_t isNewNavMsg = FALSE;
+static uint8_t isNewUICommandMsg = FALSE;
+
 
 static uint8_t copyBuf(volatile uint8_t *source, uint8_t *target);
 static uint8_t deSerializeMsg(uint8_t *serialMsg);
@@ -32,7 +35,6 @@ uint8_t proto_processMessages(void){
          *  de-serialize data and re-construct the received struct
          */
         deSerializeMsg(serialMsg);
-        isNewNavMsg = TRUE;
         // if (navMsg.type == 10) {
         //     digitalWrite(12, HIGH);
         // }
@@ -43,6 +45,15 @@ uint8_t proto_processMessages(void){
     else {
         return 0;
     }
+}
+
+uint8_t proto_isNewUICommandMsg(void){
+    return isNewUICommandMsg;
+}
+
+uint8_t proto_readUICommandMsg(void){
+    isNewUICommandMsg = FALSE;
+    return uiCommand;
 }
 
 uint8_t proto_isNewNavMsg(void){
@@ -63,6 +74,12 @@ static uint8_t deSerializeMsg(uint8_t *serialMsg){
         case MSG_ID_NAV :
             /* message is from Navigation */
             proto_reConstructMsgNav(serialMsg, &navMsg);
+            isNewNavMsg = TRUE;
+            
+        case MSG_ID_UI_COMMAND :
+            proto_reConstructMsgUICommand(serialMsg, &uiCommand);
+            isNewUICommandMsg = TRUE;
+        
         default :
             /* we should never end up here */
             ;

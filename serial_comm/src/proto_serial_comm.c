@@ -62,6 +62,32 @@ static uint8_t proto_serialSendToPanda(uint8_t *data);
 /* PC specific function implementations ********************************** */
 #ifdef PC
 
+uint8_t proto_serialSendUICommandMsg(uint32_t portHandle, uint8_t command){
+    uint8_t serialData[UI_COMMAND_MSG_LEN];
+    
+    proto_serializeUICommandMsg(command, serialData);
+    proto_serialSendToMega(portHandle, serialData);
+ 
+    return 1;
+}
+
+/*
+ *  Function to send navigation data message on serial port
+ *  
+ *  Takes a port handle to write to (serial port) and a navData struct
+ *  containing the data to send.
+ *
+ *  Author: Joakim
+ */
+uint8_t proto_serialSendNavMsg(int32_t portHandle, struct navData *data){
+    uint8_t serialData[NAV_MSG_LEN];
+
+    proto_serializeNavMsg(data, serialData);
+    proto_serialSendToMega(portHandle, serialData);
+    
+    return 1;
+}
+
 uint8_t proto_readMovConfirmMsg(int32_t portHandle, uint8_t *targetStorage){
     /* return the specific confirm message from movement */
     uint8_t *serialData;
@@ -93,23 +119,6 @@ static uint8_t *proto_serialReceiveFromMega(int32_t portHandle){
 }
 
 /*
- *  Function to send navigation data message on serial port
- *  
- *  Takes a port handle to write to (serial port) and a navData struct
- *  containing the data to send.
- *
- *  Author: Joakim
- */
-uint8_t proto_serialSendNavMsg(int32_t portHandle, struct navData *data){
-    uint8_t serialData[NAV_MSG_LEN];
-
-    proto_serializeNavMsg(data, serialData);
-    proto_serialSendToMega(portHandle, serialData);
-    
-    return 1;
-}
-
-/*
  *  Function for sending serial data on serial port
  *  
  *  Takes a port handle to write to (serial port) and a byte array
@@ -132,6 +141,18 @@ static uint8_t proto_serialSendToMega(int32_t portHandle, uint8_t *data){
 /* ARDUINO specific function implementations ***************************** */
 #ifdef ARDUINO
 
+uint8_t proto_serialReadUICommandMsg(void){
+    uint8_t uiCommand = 0;
+    
+    if (proto_isNewUICommandMsg() == TRUE) {
+        uiCommand = proto_readUICommandMsg();
+        return uiCommand;
+    }
+    else {
+        return 0;
+    }
+}
+
 struct navData *proto_serialReadNavMsg(void){
     struct navData *navMsg = NULL;
 
@@ -153,14 +174,14 @@ uint8_t proto_serialSendMovConfirmMsg(uint8_t msg){
     return 1;
 }
 
-static uint8_t proto_serialSendToPanda(uint8_t *data){
+static uint8_t proto_serialSendToPanda(uint8_t *serialData){
     /* 
      * call the usart_isr_mega code here to send data over Tx 
      * This should be changed to instead notifying the proto_run code
      * that a message needs to be sent and then let that code send it
      * when proto is scheduled
     */
-    proto_usartTransmit(data);
+    proto_usartTransmit(serialData);
     
     return 1;
 }

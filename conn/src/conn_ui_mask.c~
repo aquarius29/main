@@ -5,32 +5,20 @@
  *
  *  @author Michal Musialik
  *  @date 2011-05-07
- *  @history    2011-04-15 - first outcast of conn_tcpclient.c file
  *  @history    2011-05-07 - changing to switch
- *  @history    2011-04-13 - adding nav functions
+ *  @history    2011-05-13 - adding nav functions
  *  
+ *
+ *  Description:
+ *  This a mask that after receiving a value from the server,
+ *  do a selection by using a switch.
  */
-
 
 
 #include "conn_ui_mask.h"
 #include "conn_tcpserver.h"
-/*
-to nav
-nav_SetMovmentIdentifier(int id); - send movment command from mask
-nav_RunGPSSystem(double lat, double lon); - send lon lat to ui
-nav_RunIndoorSystem(double startX,doublr,startY,double stopX, double, stopY); - 
-from nav
+#include <stdio.h>
 
-nav_SendCurrentIndoorPosistionToGUI();
-nav_SendCurrentOutdoorPositionToGUI();
-nav_SendOutdoorPathToGUI();
-nav_SendIdoorPathToGUI();
-
-
-*/
-
-#define DEBUG(x) printf("%s",x);
 
 void controll_movement(int identifier){
  
@@ -86,16 +74,18 @@ case KILL_GPS:
   //  nav_killGPSSystem();
   break;
   
-case KILL_SERVER:
+  case KILL_SERVER:
   DEBUG("kill server\n")
-  break;
-
-case START_CAMERA:
-  DEBUG("starting camera\n")
-  break;
-
+    break;
+  
+  case START_CAMERA:
+    DEBUG("starting camera\n")
+   
+    break;
+  
 case START_INDOOR_PATH:
   DEBUG("start indoor path\n")
+    // nav_setIndoorData(double startX, startY, endX, endY);
   break;
 
 case START_OUTDOOR_PATH:
