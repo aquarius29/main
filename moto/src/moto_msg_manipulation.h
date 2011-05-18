@@ -23,8 +23,6 @@
 #endif
 #ifdef ARDUINO
    #include "WProgram.h"
-#elif defined PC
-   #include <stdio.h>
 #endif
 
 /* Casts a uint8_t into a pointer of type msg_pointer */

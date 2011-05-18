@@ -20,12 +20,9 @@
    #include <stdio.h>
 #endif
 
-//Parser functions
+/* Parser functions */
 int examineID(msg_pointer mp);
 void controlMotors(msg_pointer mp);
 void specialMotorCommand(msg_pointer mp);
-//msg scanHexMsgSTDIN(void);
-//#ifdef ARDUINO_DBG
-//uint8_t serReadUnsignedChar(void);
-//#endif
+
 #endif

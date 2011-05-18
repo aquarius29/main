@@ -1,4 +1,4 @@
-/**
+/*!
  * Module:       motor_control.h
  * Author(s):    Kristofer Hansson Aspman
  *               Magnus Bergqvist
@@ -6,7 +6,6 @@
  * Description:  The typedef of the bitfield struct and
  *               all the prototypes for the functions used
  *               by tools.c, motor_control.c and parser.c.
- *
  */
 #ifndef MOTO_DRIVER_FUNCTIONS_H
     #define MOTO_DRIVER_FUNCTIONS_H
@@ -16,12 +15,10 @@
 #endif
 #ifdef ARDUINO
    #include "WProgram.h"
-#elif defined PC
-   #include <stdio.h>
 #endif
 #include <stdint.h>
 
-#define NORMAL_STEP 1
+#define NORMAL_STEP 5
 #define PANIC_STEP 50
 
 /* defines which "pin" in the arduino, to be changed further on */
@@ -34,20 +31,20 @@
 /* defines maximum and minimum pulse width in µs for every motor 
    i.e. at which pulse the motor starts turning and at which pulse it
    reaches its max speed */
-#define MIN_PULSE_FRONT 1000
-#define MAX_PULSE_FRONT 2000
-#define MIN_PULSE_REAR 1000
-#define MAX_PULSE_REAR 2000
-#define MIN_PULSE_LEFT 1000
-#define MAX_PULSE_LEFT 2000
-#define MIN_PULSE_RIGHT 1000
-#define MAX_PULSE_RIGHT 2000
+#define MIN_PULSE_FRONT 1044
+#define MAX_PULSE_FRONT 1900
+#define MIN_PULSE_REAR 1044
+#define MAX_PULSE_REAR 1900
+#define MIN_PULSE_LEFT 1044
+#define MAX_PULSE_LEFT 1900
+#define MIN_PULSE_RIGHT 1044
+#define MAX_PULSE_RIGHT 1900
 
 /* defines the min and max values (pulse width in µs that are allowed) */
 #define MIN_ESC_PULSE 1000
 #define MAX_ESC_PULSE 2000
 
-#define IDLE_SPEED 1040
+#define IDLE_SPEED 1100
 #define STOP_PULSE 1000
 
 /* defines hover speed pulse width in µs for every motor */
@@ -104,20 +101,10 @@ void moto_right_motor(unsigned char,unsigned char);
 void moto_front_motor(unsigned char,unsigned char);
 void moto_rear_motor(unsigned char,unsigned char);
 
-uint16_t rightMotorLimitIncrease(uint16_t currentPulse, uint16_t increment);
-uint16_t rightMotorLimitDecrease(uint16_t currentPulse, uint16_t decrement);
-uint16_t leftMotorLimitIncrease(uint16_t currentPulse, uint16_t increment);
-uint16_t leftMotorLimitDecrease(uint16_t currentPulse, uint16_t decrement);
-uint16_t frontMotorLimitIncrease(uint16_t currentPulse, uint16_t increment);
-uint16_t frontMotorLimitDecrease(uint16_t currentPulse, uint16_t decrement);
-uint16_t rearMotorLimitIncrease(uint16_t currentPulse, uint16_t increment);
-uint16_t rearMotorLimitDecrease(uint16_t currentPulse, uint16_t decrement);
+uint16_t moto_LimitIncrease(uint16_t currentPulse, uint16_t increment);
+uint16_t moto_LimitDecrease(uint16_t currentPulse, uint16_t decrement);
 
-struct pulses{
-    uint16_t right;
-    uint16_t left;
-    uint16_t front;
-    uint16_t rear;
-};
+uint16_t moto_map(uint16_t actual, uint16_t out_boundary1,
+                                    uint16_t out_boundary2);
 
 #endif
