@@ -25,6 +25,6 @@
 #define START_OUTDOOR_PATH 31
 #define INDOOR_POSITION 20
 #define OUTDOOR_POSITION 21
-#define DEBUG(x) printf("%s",x);
+
 
 void controll_movement(int status);
