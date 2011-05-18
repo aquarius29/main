@@ -52,41 +52,6 @@ uint8_t proto_reConstructMovConfirmMsg(uint8_t *serialData, uint8_t *target){
  
     return 1;
 }
- 
-/* static int16_t proto_deserialize_height(uint8_t *serialData){ */
-/*   int16_t deserializedSignedInt; */
-/*   uint16_t reconstructerInt = */
-/*     (uint16_t) (serialData[NAV_HEIGHT_INDEX_HIGHBYTE] << 8) | */
-/*     (uint16_t)(serialData[NAV_HEIGHT_INDEX_LOWBYTE]); */
-/*   //printf("reconstructer: %d\n", reconstructerInt); */
-/*   if(serialData[NAV_HEIGHT_INDEX_POSORNEG] == 0){ */
-/*     deserializedSignedInt = */
-/*       reconstructerInt; */
-/*   } else { */
-/*     deserializedSignedInt = */
-/*       (int16_t)(~reconstructerInt + 1); */
-/*   } */
-/*   //printf("reconstructer2: %d\n", reconstructerInt); */
-/*   return deserializedSignedInt; */
-/* } */
-
-/* static int16_t proto_deserialize_yaw(uint8_t *serialData){  */
-/*   int16_t deserializedSignedInt; */
-/*   uint16_t reconstructerInt = */
-/*       (uint16_t) (serialData[NAV_YAW_INDEX_HIGHBYTE] << 8) | */
-/*       (uint16_t)(serialData[NAV_YAW_INDEX_LOWBYTE]); */
-/*     //printf("reconstructer: %d\n", reconstructerInt); */
-/*     if(serialData[NAV_YAW_INDEX_POSORNEG] == 0){ */
-/*       deserializedSignedInt = */
-/* 	reconstructerInt; */
-/*     } else { */
-/*       deserializedSignedInt = */
-/* 	(int16_t)(~reconstructerInt + 1); */
-/*     } */
-/*     //printf("reconstructer2: %d\n", reconstructerInt); */
-/*   } */
-/*   return deserializedSignedInt; */
-/* } */
 
 int16_t proto_deserialize_signed_int(uint8_t *serialData, uint8_t type){
   int16_t deserializedSignedInt;
@@ -98,7 +63,6 @@ int16_t proto_deserialize_signed_int(uint8_t *serialData, uint8_t type){
       reconstructerInt =
 	(uint16_t) (serialData[NAV_HEIGHT_INDEX_HIGHBYTE] << 8) |
 	(uint16_t)(serialData[NAV_HEIGHT_INDEX_LOWBYTE]);
-      //printf("reconstructer: %d\n", reconstructerInt);
       if(serialData[NAV_HEIGHT_INDEX_POSORNEG] == 0){
 	deserializedSignedInt =
 	  reconstructerInt;
@@ -106,7 +70,6 @@ int16_t proto_deserialize_signed_int(uint8_t *serialData, uint8_t type){
 	deserializedSignedInt =
 	  (int16_t)(~reconstructerInt + 1);
       }
-      //printf("reconstructer2: %d\n", reconstructerInt);
       return deserializedSignedInt;
       break;
     
@@ -114,7 +77,6 @@ int16_t proto_deserialize_signed_int(uint8_t *serialData, uint8_t type){
       reconstructerInt =
 	(uint16_t) (serialData[NAV_YAW_INDEX_HIGHBYTE] << 8) |
 	(uint16_t)(serialData[NAV_YAW_INDEX_LOWBYTE]);
-      //printf("reconstructer: %d\n", reconstructerInt);
       if(serialData[NAV_YAW_INDEX_POSORNEG] == 0){
 	deserializedSignedInt =
 	  reconstructerInt;
@@ -122,7 +84,6 @@ int16_t proto_deserialize_signed_int(uint8_t *serialData, uint8_t type){
 	deserializedSignedInt =
 	  (int16_t)(~reconstructerInt + 1);
       }
-      //printf("reconstructer2: %d\n", reconstructerInt);
       return deserializedSignedInt;
       break;
       
