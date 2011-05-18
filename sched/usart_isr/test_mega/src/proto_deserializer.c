@@ -1,6 +1,6 @@
 
 /*!
- *  @file proto_serializer.c
+ *  @file proto_deserializer.c
  *
  *  @brief Module for serializing data to send over serial port
  *
