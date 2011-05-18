@@ -8,9 +8,9 @@
 struct navData {
     uint8_t type;
     uint8_t order;
-    uint16_t height;
+    int16_t height;
     uint16_t distance;
-    uint16_t yaw;
+    int16_t yaw;
 };
 
 #endif /* PROTO_MSG_STRUCTS_H */
