@@ -11,7 +11,9 @@
 #ifndef _SCHED_BATMAN_MAIN_H_
 #define _SCHED_BATMAN_MAIN_H_
 
-void sched_batman_init(void);
+#include <stdint.h>
+
+int16_t sched_batman_init(void);
 void sched_batman_profile(void);
 void sched_batman_run(void);
 

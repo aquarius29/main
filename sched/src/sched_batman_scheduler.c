@@ -33,14 +33,10 @@
 #endif /* PC ARDUINO*/
 
 #include "moto_interface.h"
-//#include "move_stub.h"
 #include "proto_lib.h"
 #include "stab_interface.h"
 #include "mov_interface.h"
-/*
-#include "ca_interface.h"
-#include "mov_interface.h"
-*/
+#include "serial_interface.h"
 
 #include "sched_batman_scheduler.h"
 
@@ -85,7 +81,7 @@ void remove_process_tasks(Task *task)
 	}
 }
 
-/* Enqueues a task to a structer at the last position of queue */
+/* Enqueues a task to a process at the last position of queue */
 void enqueue_task(Process *process, Task *task)
 {
 	Task *pTmpTask = process->lastTask;
@@ -123,24 +119,16 @@ void run_idle_task(Process *process)
 /* Sets up the processes and initialize the init functions for processes */
 int16_t init_process_data(void)
 {
-    /* function pointers to modules init functions */
-   /* sched_Fun_t funArrInit[] = { &moto_init,
-                            &ca_init,
-                            &mov_init,
-                            &stab_init }; */
-
-    /* function pointers to modules run functions */
-    /* sched_Fun_t funArrRun[] = { &moto_run,
-                                &ca_run,
-                                &mov_run,
-                                &stab_run };
-                                */
-
-    sched_Fun_t funArrInit[] = { &moto_init, &mov_init, &stab_init };
-    sched_Fun_t funArrRun[] = { &moto_run, &mov_run, &stab_run };
+    /*
+    * funArrInit is an array of function calls to the init functions for the system
+    * and funArrRun is an array of function calls to the various system run functions.
+    * These are declared localy in this scope in order to save memory since these
+    * arrays are never needed after system initialization.
+    **/
+    sched_Fun_t funArrInit[] = { &moto_init, &mov_init, &stab_init, &serial_init };
+    sched_Fun_t funArrRun[] = { &moto_run, &mov_run, &stab_run, &serial_run };
 
     ProcessData *pProcessData;
-    
 
     #ifdef PC
         printf("Initializing system...\n");
@@ -151,11 +139,7 @@ int16_t init_process_data(void)
             printf("Error in system initialization sequence!\n");
             exit(1);
         #elif defined ARDUINO
-            /*  
-             *  Do we have a way to give fatal error message on arduino,
-             *  and exit? 
-             */
-            exit(1);
+            return 1;
             
         #endif /* PC ARDUINO */
     }
@@ -174,7 +158,7 @@ int16_t init_process_data(void)
             printf("FAILED\n\n");
             exit(1);
 #elif defined ARDUINO
-            
+            return 1;
 #endif /* PC ARDUINO */
         }
 
@@ -185,7 +169,7 @@ int16_t init_process_data(void)
             printf("DONE\n\n");
         #endif
     }
-    return 0;
+    return 0; /*EXIT_SUCCESS*/
 }
 
 int16_t process_setup(ProcessData *pProcessData, sched_Fun_t funArrRun[TOTAL_NO_PROCESSES])
@@ -201,48 +185,21 @@ int16_t process_setup(ProcessData *pProcessData, sched_Fun_t funArrRun[TOTAL_NO_
 
     /* MOVE PROCESS */
     process = create_process(MOVE_PID);
-    task = create_task(funArrRun[1], 54); /* 2011-05-14 | move_stub measured to ~54160 microseconds */
+    task = create_task(funArrRun[1], 54); /* Not measured */
     enqueue_task(process, task);
     pProcessData->processList[1] = process;
 
     /* STAB PROCESS */
     process = create_process(STAB_PID);
-    task = create_task(funArrRun[2], 5); /* 2011-05-15 | stab_run measured to 38100 microseconds */
+    task = create_task(funArrRun[2], 38); /* 2011-05-15 | stab_run measured to 38100 microseconds */
     enqueue_task(process, task);
     pProcessData->processList[2] = process;
 
-    /* MOVE PROCESS * /
-    process = create_process(MOVE_PID);
-    task = create_task(funArrRun[3], 10); /* time not measured * /
+    /* SERIAL PROCESS */
+    process = create_process(SERIAL_PID);
+    task = create_task(funArrRun[3], 5); /* not measured */
     enqueue_task(process, task);
-    pProcessData->processList[2] = process;
-
-    /* TEST CODE * /
-    process = create_process(MOTOR_PID);
-    task = create_task(funArrRun[0], 1);
-    enqueue_task(process, task);
-    pProcessData->processList[0] = process;
-
-    /*
-    process = create_process(MOTOR_PID);
-    task = create_task(MOTOR_TASK_1, funArrRun[0], 10);
-    enqueue_task(process, task);
-    pProcessData->processList[0] = process;
-
-    process = create_process(CA_PID);
-    task = create_task(COLLISION_TASK_1, funArrRun[1], 10);
-    enqueue_task(process, task);
-    pProcessData->processList[1] = process;
-
-    process = create_process(MOVE_PID);
-    task = create_task(MOVE_TASK_1, funArrRun[2], 10);
-    enqueue_task(process, task);
-    pProcessData->processList[2] = process;
-
-    process = create_process(CONN_PID);
-    task = create_task(CONN_TASK_1, funArrRun[4], 10);
-    enqueue_task(process, task);
-    pProcessData->processList[4] = process;*/
+    pProcessData->processList[3] = process;
 
     return 0;
 }
@@ -256,11 +213,11 @@ int16_t system_init(sched_Fun_t funArrInit[TOTAL_NO_PROCESSES]){
     for (i = 0; i < TOTAL_NO_PROCESSES; i++){
         res = (funArrInit[i])();
 
-        #ifdef PC
-        #ifdef DEBUG
+#ifdef PC
+#ifdef DEBUG
             printf("function call result: %d\n", res);
-        #endif /* DEBUG */
-        #endif /* PC */
+#endif /* DEBUG */
+#endif /* PC */
     }
     
     return 0;
@@ -319,17 +276,8 @@ void create_process_queue(int16_t timeFrame)
 
     null_queue();
 
-    if(timeLeft < 0)
+    if(timeLeft > 0)
     {
-        /* Do nothing */
-    }
-    else
-    {
-        /*enqueue_process(pProcessList[0]);
-        taskTime = peek_process(pProcessList[0], peekLayer)->executionTime;
-        timeLeft -= peek_process(pProcessList[0], peekLayer)->executionTime;
-        pProcessData->totalExecutionTime += taskTime;*/
-
         for(i = 1; i < MAX_PROC_ITER; i++)
         {
             if(i % TOTAL_NO_PROCESSES == 0)
