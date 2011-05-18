@@ -53,7 +53,7 @@ Servo escRear;
  * The moto_init function requested by the CFG. It is called when the 
  * drone boots up.
  */
-uint16_t moto_init(void){
+int16_t moto_init(void){
     PRINT_STRING("Inside moto_init");
     PRINT_NEW_LINE;
 #ifdef ARDUINO
@@ -74,7 +74,7 @@ uint16_t moto_init(void){
  * author(s): Kristofer Hansson Aspman
  * The moto_run function requested by the CFG. It is run each scheduled cycle.
  */
-uint16_t moto_run(void){
+int16_t moto_run(void){
     moto_cyclesSinceLastMsg++;
     PRINT_STRING("Number of cycles without a message: ");
     PRINT_DEC(moto_cyclesSinceLastMsg);

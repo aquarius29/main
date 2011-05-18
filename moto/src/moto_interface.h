@@ -43,6 +43,6 @@ extern Servo escRear;
  */
 static int moto_cyclesSinceLastMsg;
 
-uint16_t moto_init(void);
-uint16_t moto_run(void);
+int16_t moto_init(void);
+int16_t moto_run(void);
 #endif
