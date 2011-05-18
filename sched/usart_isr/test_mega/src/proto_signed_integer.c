@@ -7,6 +7,8 @@
  *  @date       2011-05-16
  *
  *  @history    2011-05-16 - Created this module - Justin
+ *              2011-05-18 - Completed and merged pieces into the proper places.
+ *                           This is now deprecated.
  *
  *  @details   will be integrated to the proto_serializer.c
  */
