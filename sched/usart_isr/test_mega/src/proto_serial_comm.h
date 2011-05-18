@@ -26,7 +26,16 @@
 #include <stdint.h>
 #include "proto_msg_structs.h"
 
-/*
+#ifdef PC
+
+/*!
+ *  send the UI command to the mega board
+ *
+ *  @author Joakim
+ */
+uint8_t proto_serialSendUICommandMsg(uint32_t portHandle, uint8_t command);
+
+/*!
  *  proto_serialSendNavMsg
  *
  *  Function to send navigation data message on serial port
@@ -34,41 +43,47 @@
  *  Takes a port handle to write to (serial port) and a navData struct
  *  containing the data to send. 
  *
- *  Author: Joakim
+ *  @author Joakim
  */ 
 uint8_t proto_serialSendNavMsg(int32_t portHandle, struct navData *data);
 
-/*
- *  proto_serialSendMovConfirmMsg
- *
- *  Function to send movements confirmation message to navigation
- *
- *  Takes an unsigned byte as message
- *
- *  Author: Joakim
+/*!
+ *  @author Joakim
  */
-uint8_t proto_serialSendMovConfirmMsg(uint8_t msg);
+uint8_t proto_serialReadMovConfirmMsg(int32_t portHandle, 
+                                        uint8_t *targetStorage);
 
-/*
+#endif /* PC */
+
+#ifdef ARDUINO
+
+/*!
+ *  @author Joakim
+ */
+uint8_t proto_serialReadUICommandMsg(void);
+
+/*!
  *  proto_serialReadNavMsg
  *
  *  Function to read navigations message to movement
  *
  *  Returns: a pointer to the structure that holds the message
  *
- *  Author: Joakim
+ *  @author Joakim
  */
 struct navData *proto_serialReadNavMsg(void);
 
-/* 
- *  send the UI command to the mega board
+/*!
+ *  proto_serialSendMovConfirmMsg
  *
- *  Author: Joakim
+ *  Function to send movements confirmation message to navigation
+ *
+ *  Takes an unsigned byte as message
+ *
+ *  @author Joakim
  */
-uint8_t proto_serialSendUICommandMsg(uint32_t portHandle, uint8_t command);
+uint8_t proto_serialSendMovConfirmMsg(uint8_t msg);
 
-uint8_t proto_readMovConfirmMsg(int32_t portHandle, uint8_t *targetStorage);
-
-uint8_t proto_serialReadUICommandMsg(void);
+#endif /* ARDUINO */
 
 #endif /* PROTO_SERIAL_COMM_H */

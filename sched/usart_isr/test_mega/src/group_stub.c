@@ -31,40 +31,41 @@ void group_run(void){
     uint8_t uiCommand = 0;
 
     /* trying to receive a UI action command message to movement code */
-    uiCommand = proto_serialReadUICommandMsg();
-    
-    if (uiCommand != 0) {
-        switch (uiCommand) {
-            case UP :
-                digitalWrite(13, HIGH);
-            case DOWN :
-                digitalWrite(12, HIGH);
-            case BACK :
-                digitalWrite(11, HIGH);
-            case FORWARD :
-                digitalWrite(10, HIGH);
-            case LEFT :
-                digitalWrite(9, HIGH);
-            case RIGHT :
-                digitalWrite(8, HIGH);
-            case HOVER :
-                digitalWrite(7, HIGH);
-            case LAND :
-                digitalWrite(13, LOW);
-                digitalWrite(12, LOW);
-                digitalWrite(11, LOW);
-                digitalWrite(10, LOW);
-                digitalWrite(9, LOW);
-                digitalWrite(8, LOW);
-        }
-    }
-
-    /* read data here */
+     uiCommand = proto_serialReadUICommandMsg();
+     
+     if (uiCommand != 0) {
+         switch (uiCommand) {
+             case UP :
+                 digitalWrite(13, HIGH);
+             case DOWN :
+                 digitalWrite(12, HIGH);
+             case BACK :
+                 digitalWrite(11, HIGH);
+             case FORWARD :
+                 digitalWrite(10, HIGH);
+             case LEFT :
+                 digitalWrite(9, HIGH);
+             case RIGHT :
+                 digitalWrite(8, HIGH);
+             case HOVER :
+                 digitalWrite(7, HIGH);
+             case LAND :
+                 digitalWrite(13, LOW);
+                 digitalWrite(12, LOW);
+                 digitalWrite(11, LOW);
+                 digitalWrite(10, LOW);
+                 digitalWrite(9, LOW);
+                 digitalWrite(8, LOW);
+                 digitalWrite(7, LOW);
+         }
+     }
+ 
+    // /* read data here */
     // navMsg = proto_serialReadNavMsg();
     // if (navMsg != NULL) {
     //     digitalWrite(13, LOW);
     //     if (navMsg->type == 10) {
-    //         // digitalWrite(12, HIGH);
+    //         digitalWrite(12, HIGH);
     //         proto_serialSendMovConfirmMsg(data);
     //     }
     //     else if (navMsg->type == 50) {
