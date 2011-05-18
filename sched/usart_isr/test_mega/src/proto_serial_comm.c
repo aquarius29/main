@@ -1,27 +1,33 @@
 
 /*!
- *  @file proto_srial_comm.c
+ *  @file       proto_srial_comm.c
  *  
- *  @brief Module for sending data on the serial port
+ *  @brief      Interface module for sending and receiving messages on the \n
+ *              serial port. 
  *
  *  @author     Joakim
- *  @date       2011-05-06
+ *  @date       2011-05-17
  *
- *  @history    2011-05-06 - Created this module - Joakim
- *              2011-05-12 - Added specific function for sending navigation
- *                           data which in turn uses the serialSend function.
- *                           Previous code versions made the user serialize
- *                           the data first, this is now done 
- *                           automatically. - Joakim
- *              2011-05-17 - Added more functions for receiving and sending
- *                           specific messages. Changed interface functions
- *                           to take a pointer to the data storage where
- *                           the message will be stored by the caller.
- *                           This is to reduce the need of having proto-code
- *                           responsible for keeping groups data in scope 
- *                           and available. - Joakim
+ *  @history    2011-05-06 - Created this module - Joakim \n
+ *              2011-05-12 - Added specific function for sending navigation \n
+ *                           data which in turn uses the serialSend \n
+ *                           function. Previous code versions made the user \n 
+ *                           serialize the data first, this is now done \n
+ *                           automatically. - Joakim \n
+ *              2011-05-17 - Added more functions for receiving and sending \n
+ *                           specific messages. Changed interface functions \n
+ *                           to take a pointer to the data storage where \n
+ *                           the message will be stored by the caller. \n
+ *                           This is to reduce the need of having \n
+ *                           proto-code responsible for keeping groups data \n
+ *                           in scope and available. - Joakim \n
  *
- *  @details
+ *  @details    Module should be used as the interface to send and receive \n
+ *              messages on the serial port by both the Panda/Pc and \n
+ *              Arduino systems. For the Panda/Pc side the actual sending \n
+ *              and receiving is done here. The same functionality for \n
+ *              the Arduino side is more hardware related and is done \n
+ *              in seperate modules that gets called from here. \n
  */
 
 #ifdef ARDUINO
@@ -38,9 +44,6 @@
 #include "proto_serial_define.h"
 #include "proto_usart_isr_mega.h"
 
-#define TRUE 1
-#define FALSE 0
-
 static uint8_t dataBuffer[PROTO_MAX_MSG_LEN];
 
 /* PC specific static function prototypes */
@@ -55,7 +58,6 @@ static uint8_t *proto_serialReceiveFromMega(int32_t portHandle);
 #ifdef ARDUINO
 
 static uint8_t proto_serialSendToPanda(uint8_t *data);
-/* receiving from panda is done in proto_usart_isr module */
 
 #endif /* ARDUINO */
 
@@ -71,13 +73,13 @@ uint8_t proto_serialSendUICommandMsg(uint32_t portHandle, uint8_t command){
     return 1;
 }
 
-/*
+/*!
  *  Function to send navigation data message on serial port
  *  
  *  Takes a port handle to write to (serial port) and a navData struct
  *  containing the data to send.
  *
- *  Author: Joakim
+ *  @author Joakim
  */
 uint8_t proto_serialSendNavMsg(int32_t portHandle, struct navData *data){
     uint8_t serialData[NAV_MSG_LEN];
@@ -88,8 +90,8 @@ uint8_t proto_serialSendNavMsg(int32_t portHandle, struct navData *data){
     return 1;
 }
 
-uint8_t proto_readMovConfirmMsg(int32_t portHandle, uint8_t *targetStorage){
-    /* return the specific confirm message from movement */
+uint8_t proto_serialReadMovConfirmMsg(int32_t portHandle, 
+                                        uint8_t *targetStorage){
     uint8_t *serialData;
     
     serialData = proto_serialReceiveFromMega(portHandle);
@@ -118,14 +120,14 @@ static uint8_t *proto_serialReceiveFromMega(int32_t portHandle){
     return dataBuffer;
 }
 
-/*
+/*!
  *  Function for sending serial data on serial port
  *  
  *  Takes a port handle to write to (serial port) and a byte array
  *  to send. This array has to be NULL-terminated. The NULL terminator
  *  should be added by the serializer when converting data into an array.
  *
- *  Author: Joakim
+ *  @author Joakim
  */
 static uint8_t proto_serialSendToMega(int32_t portHandle, uint8_t *data){
     while (*data != '\0') {
