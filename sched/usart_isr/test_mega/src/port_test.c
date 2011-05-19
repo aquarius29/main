@@ -32,10 +32,12 @@ void port_test(void){
 
     portHandle = proto_serialOpen();
     
-    proto_serialSendUICommandMsg(portHandle, 1);
-    proto_readMovConfirmMsg(portHandle, &movConfirmMsg);
+    proto_serialSendUICommandMsg(portHandle, 7);
+    proto_serialReadMovConfirmMsg(portHandle, &movConfirmMsg);
     
     printf("received confiramtion message: %d\n", movConfirmMsg);
+
+
     // while (x < ITERATIONS) {
     // // while (1) {
     //     if (x == 0) { 
@@ -47,7 +49,7 @@ void port_test(void){
     //         // printf("we received %d\n", *p_serialData);
     //         
     //         /* put movement confirmation in local storage */
-    //         proto_readMovConfirmMsg(portHandle, &movConfirmMsg);
+    //         proto_serialReadMovConfirmMsg(portHandle, &movConfirmMsg);
     //         printf("we received movement confirmation: %d\n", movConfirmMsg);
     //     }
     //     
@@ -61,11 +63,13 @@ void port_test(void){
     //         // printf("we received %d\n", *p_serialData);
     // 
     //         /* put movement confirmation in local storage */
-    //         proto_readMovConfirmMsg(portHandle, &movConfirmMsg);
+    //         proto_serialReadMovConfirmMsg(portHandle, &movConfirmMsg);
     //         printf("we received movement confirmation: %d\n", movConfirmMsg);
     //     }
     //     x++;
     // }
+
+
     sleep(1);
     
     proto_serialClose(portHandle);

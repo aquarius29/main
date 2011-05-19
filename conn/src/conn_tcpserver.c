@@ -34,6 +34,7 @@
 #include <stddef.h>
 #include <resolv.h>
 #include <fcntl.h>
+#include <arpa/inet.h> // needed on Mac
 
 int socket_tcp; 
 int new_socket;
@@ -55,7 +56,9 @@ struct sockaddr_in server;
 struct sockaddr_in client;
 struct hostent * host ;
 
-/*Function to get hosts IP information*/
+/*!
+    @brief Function to get hosts IP information
+*/
 void host_setup(void){
   gethostname(ip_buffer , IP_BUFFER_LENGTH);
   printf("%s\n", ip_buffer);
@@ -64,92 +67,112 @@ void host_setup(void){
   printf("Host IP Address : %s\n", inet_ntoa(*((struct in_addr *)host->h_addr))); 
 }
 
-/*Function for socket creation*/
+/*! 
+    @brief Function for socket creation
+*/
 int socket_create(void){
  if(( socket_tcp = socket(AF_INET,SOCK_STREAM,0))==-1){
   DEBUG("create()")
-  exit(EXIT_FAILURE);
-}
+    return 1;   
+ }
  else{
-  DEBUG("Created tcp socket\n")
-}
- return 0;
+   DEBUG("Created tcp socket\n")
+     return 0;
+ }
+ 
 }
 
-/*Function for socket reusage*/
+/*!
+   @brief Function for socket reusage
+*/
 int socket_reusing(void){
  if (setsockopt(socket_tcp, SOL_SOCKET, SO_REUSEADDR, &reusing_value, sizeof(reusing_value)) < 0){
       DEBUG("setsockopt()")
-      exit(EXIT_FAILURE);
-    }
+	return 1;          
+ }
   else{
     DEBUG("Reusing socket\n")
-  }
- return 0;
+      return 0;
+      }
 }
 
-/*Function for keeping socket alive*/
+/*!
+   @Function for keeping socket alive
+*/
 int socket_keep_alive(void){
   if(getsockopt(socket_tcp, SOL_SOCKET, SO_KEEPALIVE, &keepalive_value, &keepalive_length) < 0) {
       DEBUG("getsockopt()")
-      close(socket_tcp);
-      exit(EXIT_FAILURE);
+	return 1;      
    }
   else{
    printf("Socket is keept %s\n", (keepalive_value ? "alive." : "dead."));
+   return 0;
   }
-  return 0;
+
+
 }
 
-/*Function for binding socket*/
+/*!
+   Function for binding socket
+*/
 int socket_binding(void){
   server.sin_family = AF_INET; 
   server.sin_port = htons(PORT);
   server.sin_addr.s_addr = INADDR_ANY;
  if((bind(socket_tcp, (struct sockaddr *)&server, sizeof(struct sockaddr)))==-1){  
     DEBUG("bind()")
-    exit(EXIT_FAILURE);
+      return 1;
   }
   else{
     DEBUG("Binding server socket\n");
-  }
- return 0;
+    return 0; 
+ }
+
 }
 
-/*Function for listening*/
+/*!
+   @brief Function for listening
+*/
 int socket_listening(void){
  if((listen(socket_tcp, MAX_NR_OF_CONNECTIONS))<0){
     DEBUG("listen()")
-    exit(EXIT_FAILURE);
+      return 1;
   }
   else{
     DEBUG("Listening for connections\n")
-  }
-  return 0;
+  return 0; 
+ }
+
 }
 
-/*Function for accepting incomming sockets*/
+/*!
+   @brief Function for accepting incomming sockets
+*/
 int socket_accept(void){
   if(( new_socket = accept(socket_tcp, (struct sockaddr *)&client, &address_length))<0){
     DEBUG("accept()")
-    exit(EXIT_FAILURE);
+      return 1;
   }
   else{ 
     printf("Client IP is %s and port is : %d \n", inet_ntoa(client.sin_addr),
  ntohs(client.sin_port));
-   }
-     return 0;
+return 0;  
+ }
+     
 }
 
 
 
-/*Function that handles data passing. In here we fork the process for different
- purosses, one of the fork is to keep drone socket running when the client is
-dissconnected so that reconnection can be established, 2nd fork is for starting 
-camera, and last one if to receive messages.
+/*!
+   @Function that handles data passing. In here we fork the process for different
+   purosses, one of the fork is to keep drone socket running when the client is
+   dissconnected so that reconnection can be established, 2nd fork is for starting 
+   camera, and last one if to receive messages.
  */
 int data_passing(void){
-  /*Main while loop*/ 
+  /*!
+   @brief Main while loop
+*/ 
   
   while(1){
     socket_accept();
@@ -184,28 +207,36 @@ int data_passing(void){
 }
 
 
-/*Function for handling all data trafic*/
+/*!
+   @brief Function for handling all data trafic
+*/
 void message_handling(int new_socket,int parrent_pid){
   while(1){
     receive = recv(new_socket,receive_data,BUFFER_SIZE,0);
    receive_data[receive]= '\0';
-   /*closing client socket*/
+/*!
+   @brief Closing client socket
+*/
    if (strcmp(receive_data,"quit")==0){
      CLOSE_NEW_SOCKET;
      DEBUG("Closing client\n")
        break;	   
    }
-   /*closing server socket*/
+/*!
+   @brief Closing server socket
+*/
    else if (strcmp(receive_data,"shut_server")==0){
      printf("%i\n",parrent_pid);
      DEBUG("Shutting server\n")
-       kill(parrent_pid,SIGTERM);
+     kill(parrent_pid,SIGTERM);
    }   
    else{
-     /*reading incomming data and sending to controll_movement*/
+/*!
+  @Reading incomming data and sending to controll_movement
+*/
      printf("%s\n", receive_data); 
      atio_temp = atoi(receive_data);
-       controll_movement(atio_temp);
+     controll_movement(atio_temp);
    }
- }
+  }
 }

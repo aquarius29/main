@@ -59,7 +59,7 @@
 #############################################################################
 
 ##  Name of usb-port
-USB_PORT=/dev/tty.usbmodemfa141
+USB_PORT=/dev/ttyACM0
 
 ##  Name of executable or image
 PROG=prog
@@ -143,7 +143,7 @@ mega:
 	cd test_mega/src && $(MAKE) lib-mega
 	avr-ranlib test_mega/lib/libserial.a
 
-	$(GLOBAL_CC) -c mega_main.c -Itest_mega/src
+	$(GLOBAL_CC) -c mega_main.c -Itest_mega/src $(GLOBAL_CFLAGS)
 	$(GLOBAL_CC) mega_main.o $(BASIC_LIBS) $(LDFLAGS_ARDUINO_MEGA) -o $(PROG).elf
 	avr-objcopy -O srec $(PROG).elf $(PROG).rom
 	
@@ -155,7 +155,7 @@ mega-dbg:
 	cd test_mega/src && $(MAKE) lib-mega
 	avr-ranlib test_mega/lib/libserial.a
 	
-	$(GLOBAL_CC) -c mega_main.c -Itest_mega/src
+	$(GLOBAL_CC) -c mega_main.c -Itest_mega/src $(GLOBAL_CFLAGS)
 	$(GLOBAL_CC) mega_main.o $(BASIC_LIBS) $(LDFLAGS_ARDUINO_MEGA) -o $(PROG).elf
 	avr-objcopy -O srec $(PROG).elf $(PROG).rom
 	
@@ -176,10 +176,29 @@ uno:
 
 	
 ## panda-targets ############################################################
-panda:
+panda: GLOBAL_CC= gcc `pkg-config --cflags --libs opencv`
+panda: GLOBAL_CFLAGS+= $(PC_FLAGS) $(EXTRA_FLAGS) $(PANDA_INCLUDES)
+panda: 
+	cd psched/src && $(MAKE) lib-panda
+	cd nav/src && $(MAKE) lib-panda
+	cd cam/src && $(MAKE) lib-panda
+	cd conn/src && $(MAKE) lib-panda
+	cd serial_comm/src && $(MAKE) lib-panda
+	$(GLOBAL_CC) -c panda_main.c  $(PANDA_INCLUDES) 
+	$(GLOBAL_CC) -o $(PROG) panda_main.o $(PANDA_LIBS)
 
-panda-dbg:
 
+panda-dbg: GLOBAL_CC= gcc
+panda-dbg: GLOBAL_CFLAGS+= $(PC_FLAGS) $(EXTRA_FLAGS) $(PANDA_INCLUDES)
+panda-dbg: 
+
+	cd psched/src && $(MAKE) lib-panda
+	cd nav/src && $(MAKE) lib-panda
+	cd cam/src && $(MAKE) lib-panda
+	cd conn/src && $(MAKE) lib-panda
+	cd proto_panda/src && $(MAKE) lib-panda
+	$(GLOBAL_CC) -c panda_main.c -Ipsched/src
+	$(GLOBAL_CC) -o $(PROG) panda_main.o $(PANDA_LIBS)
 
 ## n900-targets #############################################################
 n900:

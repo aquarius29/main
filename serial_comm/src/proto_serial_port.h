@@ -19,7 +19,7 @@
 #include <stdio.h>
 #include <stdint.h>
 
-#define PROTO_SERIAL_PORT "/dev/tty.usbmodemfa141"
+#define PROTO_SERIAL_PORT "/dev/ttyACM0"
 
 int32_t proto_getSerialPort();
 int32_t proto_serialOpen(void);

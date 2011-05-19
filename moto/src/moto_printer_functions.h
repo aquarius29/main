@@ -22,40 +22,40 @@
     #define ARDUINO
 #endif*/
 
-    #ifdef ARDUINO
-        #include "WProgram.h"
-    #elif defined PC
-        #include <stdio.h>
-    #endif
+#ifdef ARDUINO
+    #include "WProgram.h"
+#elif defined PC
+    #include <stdio.h>
+#endif
 
 
-    #ifdef ARDUINO
-        #ifndef DEBUG
-            #define PRINT_STRING(a)
-            #define PRINT_DEC(a)
-            #define PRINT_HEX(a)
-            #define PRINT_NEW_LINE 
-        #endif
-        #ifdef DEBUG
-            #define PRINT_STRING(a) Serial.print(a)
-            #define PRINT_DEC(a) Serial.print(a, DEC)
-            #define PRINT_HEX(a) Serial.print(a, HEX)
-            #define PRINT_NEW_LINE Serial.println()
-        #endif
+#ifdef ARDUINO
+    #ifndef DEBUG
+        #define PRINT_STRING(a)
+        #define PRINT_DEC(a)
+        #define PRINT_HEX(a)
+        #define PRINT_NEW_LINE 
     #endif
+    #ifdef DEBUG
+        #define PRINT_STRING(a) Serial.print(a)
+        #define PRINT_DEC(a) Serial.print(a, DEC)
+        #define PRINT_HEX(a) Serial.print(a, HEX)
+        #define PRINT_NEW_LINE Serial.println()
+    #endif
+#endif
 
-    #ifdef PC
-        #ifndef DEBUG
-            #define PRINT_STRING(a)
-            #define PRINT_DEC(a)
-            #define PRINT_HEX(a)
-            #define PRINT_NEW_LINE
-        #endif
-        #ifdef DEBUG
-            #define PRINT_STRING(a) printf(a)
-            #define PRINT_DEC(a) printf("%d ", a)
-            #define PRINT_HEX(a) printf("%x ", a)
-            #define PRINT_NEW_LINE printf("\n")
-        #endif 
+#ifdef PC
+    #ifndef DEBUG
+        #define PRINT_STRING(a)
+        #define PRINT_DEC(a)
+        #define PRINT_HEX(a)
+        #define PRINT_NEW_LINE
     #endif
+    #ifdef DEBUG
+        #define PRINT_STRING(a) printf(a)
+        #define PRINT_DEC(a) printf("%d ", a)
+        #define PRINT_HEX(a) printf("%x ", a)
+        #define PRINT_NEW_LINE printf("\n")
+    #endif 
+#endif
 #endif

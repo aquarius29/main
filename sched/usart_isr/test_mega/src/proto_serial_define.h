@@ -3,10 +3,12 @@
  *  @file proto_serialDefine.h
  *
  *  @brief Combining defines for the serialize/deserialize
- *  @author     Justin
- *  @date       2011-05-12
+ *  @author     Justin, Joakim
+ *  @date       2011-05-18
  *
- *  @history    2011-05-12 - Created this header - Justin
+ *  @history    2011-05-12 - Created this header - Justin \n
+ *              2011-05-18 - Adding more definitions for UI command \n
+ *                           messages. - Joakim \n
  *
  *  @details
  */
@@ -15,6 +17,11 @@
 
 #define TRUE 1
 #define FALSE 0
+
+#define HEIGHT 1
+#define YAW 2
+
+#define POSITIVE_OR_NEGATIVE_MASK 0x7FFF
 
 /* size of buffers used and maximum message length */
 #define PROTO_MAX_MSG_LEN 100
@@ -37,11 +44,13 @@
 #define NAV_ORDER_INDEX 3
 #define NAV_HEIGHT_INDEX_LOWBYTE 4
 #define NAV_HEIGHT_INDEX_HIGHBYTE 5
-#define NAV_DISTANCE_INDEX_LOWBYTE 6
-#define NAV_DISTANCE_INDEX_HIGHBYTE 7
-#define NAV_YAW_INDEX_LOWBYTE 8
-#define NAV_YAW_INDEX_HIGHBYTE 9
-#define NAV_NULL_INDEX 10
+#define NAV_HEIGHT_INDEX_POSORNEG 6
+#define NAV_DISTANCE_INDEX_LOWBYTE 7
+#define NAV_DISTANCE_INDEX_HIGHBYTE 8
+#define NAV_YAW_INDEX_LOWBYTE 9
+#define NAV_YAW_INDEX_HIGHBYTE 10
+#define NAV_YAW_INDEX_POSORNEG 11
+#define NAV_NULL_INDEX 12
 
 /* message ID for messages from navigation */
 #define MSG_ID_NAV 1
