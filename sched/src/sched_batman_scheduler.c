@@ -39,10 +39,10 @@
 */
 #include <string.h>
 #include <stdlib.h>
-#include <malloc.h>
 
 #ifdef PC
 #include <stdio.h>
+#include <malloc.h>
 
 #define PRINT_STRING(string) printf(string)
 
