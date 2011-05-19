@@ -57,6 +57,8 @@
 ##
 ##  2011-05-11 - Added everything related to the panda target. Compiling all the
 ##               groups code for the board is now possible - Adam
+##  2011-05-17 - added clean up of 'test' folders and main 'doc' folder to 'clean' target
+##
 ##  Notes:
 ##  Missing instructions in targets not related to basic system. 
 ##  By no means done and decided with regards to what flags are set and
@@ -72,15 +74,16 @@ PROG=prog
 
 ##  Libraries to include when building the basic system, 
 ##  only include libs that work for all targets for that system here!
-BASIC_LIBS=-Lstab/lib -Lsched/lib -Lmoto/lib -Lmov/lib -Lca/lib -Lproto_mega/lib -Llib -lsched -lstab -lmoto -lmov -lca -lproto -lm
+BASIC_LIBS=-Lstab/lib -Lsched/lib  -Lserial_comm/lib -Lmoto/lib -Lmov/lib -Lca/lib -Lproto_mega/lib -Llib -lsched -lstab -lmoto -lmov -lca -lproto -lm -lserial
 
 ##  Set paths to headers used by code on the basic system
-BASIC_INCLUDES= -I../../stab/src -I../../moto/src -I../../mov/src -I../../ca/src -I../../proto_mega/src -I../../include
+BASIC_INCLUDES= -I../../stab/src -I../../serial_comm/src -I../../moto/src -I../../mov/src -I../../ca/src -I../../proto_mega/src -I../../include
 
 ##  Libraries to include when building the panda system, 
 ##  only include libs that work for all targets for that system here!
-PANDA_LIBS= -Lpsched/lib -Lnav/lib -Lconn/lib -Lserial_comm/lib  -Lcam/lib -Llib -lserial -lnav -lpsched -lconn -lcam -lm -lxml2 -lm -lpthread -Lpsched/lib 
-#-Lpsched/lib -Lnav/lib -Lconn/lib -Lcam/lib -Lproto_panda/lib -Llib -lnav -lpsched -lconn -lcam -lprotopanda -lm -lxml2 -lm -lpthread 
+##  The -lxxx lines has been added twice to avoid linking order problems 
+PANDA_LIBS= -Lpsched/lib -Lnav/lib -Lserial_comm/lib -Lconn/lib -Lcam/lib -Llib  -lserial -lnav -lpsched -lconn -lcam -lm -lxml2 -lm -lpthread -Lpsched/lib  -lserial -lnav -lpsched -lconn -lcam -lm -lxml2 -lm -lpthread -Lpsched/lib 
+
 
 ##  Set paths to headers used by code on the panda system
 PANDA_INCLUDES= -Ipsched/lib -I../../psched/src -I../../psched/lib/ -I./include -I../../nav/src -I../../nav/lib/ -I../../cam/src -I../../conn/src  -I../../serial_comm/src  -I/usr/include/libxml2 -Ipsched/src -Inav/src -Iconn/src -Icam/src
@@ -222,10 +225,10 @@ panda: GLOBAL_CC= gcc `pkg-config --cflags --libs opencv`
 panda: GLOBAL_CFLAGS+= $(PC_FLAGS) $(EXTRA_FLAGS) $(PANDA_INCLUDES)
 panda: 
 	cd psched/src && $(MAKE) lib-panda
+	cd serial_comm/src && $(MAKE) lib-panda
 	cd nav/src && $(MAKE) lib-panda
 	cd cam/src && $(MAKE) lib-panda
 	cd conn/src && $(MAKE) lib-panda
-	cd serial_comm/src && $(MAKE) lib-panda
 	$(GLOBAL_CC) -c panda_main.c  $(PANDA_INCLUDES) 
 	$(GLOBAL_CC) -o $(PROG) panda_main.o $(PANDA_LIBS)
 
@@ -263,33 +266,45 @@ flash:
 clean:
 	cd sched/src && $(MAKE) clean
 	cd sched/lib && rm  -f *.a
+	cd sched/test && rm -f *.o testsuite
 
 	cd stab/src && $(MAKE) clean
 	cd stab/lib && rm -f *.a
+	cd stab/test && rm -f *.o testsuite
 
 	cd moto/src && $(MAKE) clean
 	cd moto/lib && rm -f *.a
+	cd moto/test && rm -f *.o testsuite
 
 	cd mov/src && $(MAKE) clean
 	cd mov/lib && rm -f *.a
+	cd mov/test && rm -f *.o testsuite
 
 	cd ca/src && $(MAKE) clean
 	cd ca/lib && rm -f *.a
+	cd ca/test && rm -f *.o testsuite
 
 	cd proto_mega/src && $(MAKE) clean
 	cd proto_mega/lib && rm -f *.a
+	cd proto_mega/test && rm -f *.o testsuite
 
 	cd nav/src && $(MAKE) clean
 	cd nav/lib && rm -f *.a
+	cd nav/test && rm -f *.o testsuite
 
 	cd cam/src && $(MAKE) clean
 	cd cam/lib && rm -f *.a
+	cd cam/test && rm -f *.o testsuite
 
 	cd conn/src && $(MAKE) clean
 	cd conn/lib && rm -f *.a
+	cd conn/test && rm -f *.o testsuite
 
 	cd serial_comm/src && $(MAKE) clean
 	cd serial_comm/lib && rm -f *.a
+	cd serial_comm/test && rm -f *.o testsuite
+
+	cd doc && rm -rf html
 
 	rm -f $(PROG) $(PROG).exe $(PROG).elf $(PROG).rom *.o *.map
 

@@ -21,8 +21,6 @@
 
 #ifdef ARDUINO
     #include "WProgram.h"
-#elif defined PC
-    #include <stdio.h>
 #endif
 
 #include "moto_msg_manipulation.h"

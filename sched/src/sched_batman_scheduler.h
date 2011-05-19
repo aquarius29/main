@@ -19,7 +19,7 @@
 #define __SCHED_BATMAN_SCHEDULER_H_
 
 #include <stdint.h>
-#define TOTAL_NO_PROCESSES 3 /* Total number of processes */
+#define TOTAL_NO_PROCESSES 4 /* Total number of processes */
 #define MAX_PROC_ITER 100 /* maximum number of processes per iteration*/
 #define TIMEFRAME_MS 100 /* The timeframe amount in milliseconds */
 
@@ -29,6 +29,7 @@
 #define MOVE_PID 3
 #define STAB_PID 4
 #define CONN_PID 5
+#define SERIAL_PID 6
 
 /* type Fun_t is type "function that 
 * returns int16_t and takes no arguments */
@@ -48,9 +49,7 @@ typedef struct tagTask {
 /* struct Process consists of 1...n number of Tasks put into an array */
 typedef struct tagProcess {
     int8_t Pid; /* Process ID */
-	int8_t priority; /* Priority of process in range of 0-100 */
 	int8_t no_tasks; /* Numbers of tasks which the process contains */
-    int8_t peekLayer; /* At what layer of tasks the last peeking was at */
 	Task *firstTask; /* Pointer to first task in linked list */
 	Task *lastTask; /* Pointer to last task in linked list */
 	Task *idleTask; /* Pointer the idle task in linked list */
@@ -84,10 +83,10 @@ Task* create_task(sched_Fun_t functionPointer, int16_t executionTime);
 void remove_process_tasks(Task *task);
 
 /* Functions that handle the ProcessData struct */
+ProcessData* get_process_data(void);
 int16_t init_process_data(void);
 int16_t system_init(sched_Fun_t funArrInit[TOTAL_NO_PROCESSES]);
 void clean_process_data(void);
-ProcessData* get_process_data(void);
 void null_queue(void);
 void enqueue_process(Process *process);
 void run_process(int8_t processIndex);

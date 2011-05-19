@@ -1,4 +1,5 @@
-/*!@author Kristofer Hansson Aspman
+/*!
+ * @author Kristofer Hansson Aspman
  * @file moto_recv.c
  * @version v0.02
  * @date 2011-05-08
@@ -7,31 +8,21 @@
  * Uses the types msg and msg_pointer defined in\n
  * moto_msg_manipulation.h.
  *
- * @history 2011-04-14: Created the file.
- *          2011-05-08: Now reads from the protocol.
+ * @history 2011-05-18: Updated after code review. \n
+                        Removed old moto_recvMsg() incl. variables \n
+                        belonging to it. \n
+                        (Magnus) \n
+            2011-05-08: Now reads from the protocol. \n
+                        (Kristofer) \n
+            2011-04-14: Created the file. \n          
+                        (Kristofer)
  */
 
 #include "moto_recv.h"
 #include "../../proto_mega/src/proto_lib.h"
 
-uint8_t inputFromProto;
-msg binary;
-/* binaryStruct, only for moto_rcvMsg2 */
-msgStruct binaryStruct;
-
-msg_pointer moto_recvMsg(void){
-
-/* get message from protocol group and return it */
-
-    inputFromProto = proto_read_motor();
-    binary = INT_TO_BITFIELD(&inputFromProto);
-    return &binary;
-}
-
-
 msgStructPtr moto_recvMsg2(void){
-/* get message struct from protocol group and return it */
-  
+    /* get message struct from protocol group and return it */
     return (msgStructPtr)proto_read_motor2();
 }
 

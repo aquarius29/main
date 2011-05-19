@@ -2,7 +2,6 @@
 
 #include <stdio.h>
 #include "CUnit/CUnit.h"
-#include "cunit_moto_msg_handler.h"
 #include "cunit_master_test_suite.h"
 
 #ifdef AUTOMATED
@@ -37,10 +36,11 @@ int main(int argc){
 
 /***************************************************************************/
 
-    /* msg_handler tests */
+    /* msg_handler, holds tests from cunit_moto_msg_handler.c */
+    
     CU_pSuite msg_handler = CU_add_suite("msg_handler",NULL,NULL);    
     check_add_ok("suite msg_handler");
-
+    
     CU_add_test(msg_handler, "test_moto_examineID", test_moto_examineID);
     check_add_ok("test test_moto_examineID");
     
@@ -52,9 +52,26 @@ int main(int argc){
     check_add_ok("test test_moto_controlMotors");
 
     CU_add_test(msg_handler, "test_moto_specialMotorCommand", test_moto_specialMotorCommand);
-    check_add_ok("test test_moto_specialMotorCommand");    
+    check_add_ok("test test_moto_specialMotorCommand");
+
+    /*examineID suite, holds tests from cunit_moto_msg_handler.c */    
+    CU_pSuite examineID = CU_add_suite("examine_ID",NULL,NULL);
+    check_add_ok("suite examine_ID");
+
+    CU_add_test(examineID, "test_examineID_start", test_examineID_start);
+    check_add_ok("test test_examineID_start");    
     
+    CU_add_test(examineID, "test_examineID_stop", test_examineID_stop);
+    check_add_ok("test test_examineID_stop");  
+    
+    CU_add_test(examineID, "examineID_controlMotors", examineID_controlMotors);
+    check_add_ok("examineID_controlMotors");  
+  
+    CU_add_test(examineID, "examineID_specialCommands", examineID_specialCommands);
+    check_add_ok("examineID_specialCommands");    
+
     /* Create a test suite for start_stop functions */
+    /* holds tests from from cunit_moto_driver_functions.c */
     CU_pSuite start_stop = CU_add_suite("start_stop_motors",NULL,NULL);    
     check_add_ok("suite start_stop_motors");
 
@@ -67,6 +84,7 @@ int main(int argc){
     check_add_ok("test test_moto_stopMotors");
     
     /* Create a test suite for increase/decrease all-functions */
+    /* holds tests from from cunit_moto_driver_functions.c */
     CU_pSuite increase_decrease_all = 
         CU_add_suite("increase_decrese_all",NULL,NULL);
     check_add_ok("suite increase_decrease_all");
@@ -89,6 +107,7 @@ int main(int argc){
     check_add_ok("test test_moto_decreaseAllPanic");
 
     /* Create a test suite for special command functions */
+    /* holds tests from from cunit_moto_driver_functions.c */
     CU_pSuite special_commands = CU_add_suite("special commands",NULL,NULL);    
     check_add_ok("suite special_commands");
 
@@ -97,12 +116,20 @@ int main(int argc){
         test_moto_specialCommands);
     check_add_ok("Test test_moto_specialCommands");
 
+    /* holds tests from from cunit_moto_interface.c */
+    /* add interface suite */
+    CU_pSuite interface = CU_add_suite("interface",NULL,NULL);    
+    check_add_ok("suite msg_handler");
 
+    /* add test_moto_init to suite */
+    CU_add_test(interface, "test_moto_init", test_moto_init);
+    check_add_ok("test test_moto_init");
     
 /***************************************************************************/
 #ifdef AUTOMATED
     CU_basic_set_mode(CU_BRM_VERBOSE);
     CU_basic_run_tests();
+    //CU_console_run_tests();
 #else
     CU_console_run_tests();
 #endif

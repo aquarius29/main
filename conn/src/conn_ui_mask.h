@@ -1,3 +1,14 @@
+/*!
+ *  @file conn_mask_ui.h
+ *
+ *  @brief defines used in conn_ui_mask on server side
+ *
+ *  @author Michal Musialik
+ *  @date 2011-05-07
+ *  @history    2011-05-07 - adding new values for macros\n
+ *              2011-04-13 - uppdating to new standard
+ *  
+ */
 #define FORWARD 3
 #define BACK 4 
 #define LEFT 5 

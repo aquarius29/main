@@ -17,6 +17,9 @@ README~
 *.c~
 *.c#
 *.map
+*.gcov
+*.gcno
+*.gcda
 test/*.x
 *.h~
 ../proto_mega/src/*.o
@@ -24,5 +27,12 @@ test/*.x
 # Directories
 #################
 bin/
+lib/
 ../bin/
+../ca/
+../mov/lib/
+../sched/lib/
+../proto_mega/lib/
+../stab/lib/
 doc/
+covs/
