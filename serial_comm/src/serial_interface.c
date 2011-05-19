@@ -32,13 +32,17 @@
 #include "proto_handler.h"
 
 int16_t serial_init(void){
+    #ifdef ARDUINO
     proto_setupUSART();
+    #endif /* ARDUINO */
     
     return 0;
 }
 
 int16_t serial_run(void){
+    #ifdef ARDUINO
     proto_processMessages();
+    #endif /* ARDUINO */
     
     return 0;
 }

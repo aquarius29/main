@@ -15,6 +15,7 @@
 #############################################################################
 
 LIB_SRC_MEGA=	serial_interface.c			\
+				proto_handler.c				\
 				proto_usart_isr_mega.c 		\
 				proto_serial_comm.c 		\
 				proto_serializer.c 			\

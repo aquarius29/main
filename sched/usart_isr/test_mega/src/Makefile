@@ -24,6 +24,7 @@ LIB_SRC_MEGA=	sched_stub.c 				\
 				proto_deserializer.c 
 				
 LIB_SRC_PC=		port_test.c 				\
+				serial_interface.c			\
 				proto_serial_port.c 		\
 				proto_serial_comm.c 		\
 				proto_serializer.c 			\
