@@ -11,11 +11,11 @@
 *               2011-04-22 - wrote timing logic and logging
 *               2011-05-10 - Made arduino debugging and code cleaning
 */
+#include <stdint.h>
 
 #ifdef PC
 #include <time.h>
 #include <stdio.h>
-#include <stdint.h>
 
 #ifdef WINDOWS
 #include <Windows.h> /* for windows timing functions */
@@ -80,13 +80,20 @@
 /* 
 * Init function initializes all processes 
 **/
-void sched_batman_init(void) 
+int16_t sched_batman_init(void) 
 {
 #ifdef ARDUINO
     init();
     Serial.begin(9600);
 #endif
-    init_process_data();
+    if(init_process_data() == 0) /*0 == EXIT_SUCCESS*/
+    {
+        return 0; /*EXIT_SUCCESS*/
+    }
+    else
+    {
+        return 1; /*EXIT_FAILURE*/
+    }
 }
 
 /* 
@@ -137,32 +144,31 @@ void print_iteration_status(FILE * file, int32_t syncTime, double time)
 #endif
 
 /* 
- * This function acts as a profiler. 
- * The profiler mainly used for measuring time on the arduino 
- **/
-#ifdef ARDUINO
+* This function acts as a profiler. 
+* The profiler mainly used for measuring time on the arduino 
+**/
 void sched_batman_profile(void)
 {
-  TIME_TYPE start;
-  TIME_TYPE stop;
-  int32_t time;
-  ProcessData * pProcessData = get_process_data();
-  
-  while(1)
+    TIME_TYPE start;
+    TIME_TYPE stop;
+    int32_t time;
+    ProcessData * pProcessData = get_process_data();
+
+    while(1)
     {
-      start = micros();
-      pProcessData->processList[1]->idleTask->functionPointer();
-      stop = micros();
-      time = stop - start;
+        start = micros();
+        pProcessData->processList[1]->idleTask->functionPointer();
+        stop = micros();
+        time = stop - start;
 #ifdef ARDUINO
-      Serial.println(time, DEC);
+        Serial.println(time, DEC);
 #elif defined PC
-      printf("%d\n", time);
+        printf("%d\n", time);
 #endif
-      SLEEP(1000);
+        SLEEP(1000);
     }
 }
-#endif
+
 /*
 * This function is the actual process loop which run all the processes.
 * Each iteration consists of:
@@ -217,7 +223,14 @@ void sched_batman_run(void)
     **/
 #ifdef ARDUINO
     Serial.println("System is ready, PLUG IN BATTERY!");
-    SLEEP(30000); /* To be removed? */
+    SLEEP(20000);
+    Serial.println("3...");
+    SLEEP(1000);
+    Serial.println("2...");
+    SLEEP(1000);
+    Serial.println("1...");
+    SLEEP(1000);
+    Serial.println("System booting up");
 #endif
 
     /* This loop is the main scheduling loop */
@@ -231,16 +244,16 @@ void sched_batman_run(void)
         int16_t syncTime;
 
         DEBUG_MSG("iter start");
-        //DEBUG_MSG("Getting (start)clock");
+        DEBUG_MSG("Getting (start)clock");
 
         start = GET_CLOCK();
         
-        //DEBUG_MSG_VAR(start, DEC);
-        //DEBUG_MSG("Creating process queue");
+        DEBUG_MSG_VAR(start, DEC);
+        DEBUG_MSG("Creating process queue");
 
         create_process_queue(timeFrame); /* Creates a process queue */
 
-        //DEBUG_MSG("Running processes");
+        DEBUG_MSG("Running processes");
 
         /* Runs all the processes in the queue */
         for(j = 0; j < processData->currentQueueSize; j++)
@@ -248,22 +261,22 @@ void sched_batman_run(void)
             run_process(j);
         }
 
-        //DEBUG_MSG("Ran all processes, calculating sync time");
-        //DEBUG_MSG("Getting (stop)clock");
+        DEBUG_MSG("Ran all processes, calculating sync time");
+        DEBUG_MSG("Getting (stop)clock");
 
         stop = GET_CLOCK();
         time = (int32_t)(stop-start);
 
-        /*DEBUG_MSG_VAR(start, DEC);
+        DEBUG_MSG_VAR(start, DEC);
         DEBUG_MSG_VAR(stop, DEC);
         DEBUG_MSG("****************************");
         DEBUG_MSG_VAR(time, DEC);
-        DEBUG_MSG_VAR(processData->currentQueueSize, DEC);*/
+        DEBUG_MSG_VAR(processData->currentQueueSize, DEC);
 
         /* Calculates the time needed to synch */
         syncTime = (int)(timeFrame - time); 
-        //DEBUG_MSG("Sync time is...");
-        //  DEBUG_MSG_VAR(syncTime, DEC);
+        DEBUG_MSG("Sync time is...");
+        DEBUG_MSG_VAR(syncTime, DEC);
 
 #ifdef PC
 #ifdef LOG
@@ -302,9 +315,7 @@ void sched_batman_run(void)
             {
                 syncTime = TIMEFRAME_MS % syncTime;
             }
-#ifdef DEBUG
-
-#else
+#ifndef DEBUG
             timeFrame = TIMEFRAME_MS - syncTime;
 #endif
         }
