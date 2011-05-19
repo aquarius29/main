@@ -3,10 +3,12 @@
  *  @file proto_serialDefine.h
  *
  *  @brief Combining defines for the serialize/deserialize
- *  @author     Justin
- *  @date       2011-05-12
+ *  @author     Justin, Joakim
+ *  @date       2011-05-18
  *
- *  @history    2011-05-12 - Created this header - Justin
+ *  @history    2011-05-12 - Created this header - Justin \n
+ *              2011-05-18 - Adding more definitions for UI command \n
+ *                           messages. - Joakim \n
  *
  *  @details
  */
@@ -20,11 +22,10 @@
 #define PROTO_MAX_MSG_LEN 100
 
 /* Length defines for messages passed */
-#define DATA_BUFFER_LEN 100
+#define DATA_BUFFER_LEN PROTO_MAX_MSG_LEN
 #define NAV_MSG_LEN 10
 #define MOV_CONFIRM_MSG_LEN 3
 #define UI_COMMAND_MSG_LEN 3
-
 
 /* array index that holds message length */
 #define LEN_INDEX 0
@@ -57,6 +58,7 @@
 #define UI_COMMAND_VAL_INDEX 2
 #define UI_COMMAND_NULL_INDEX 3
 
+/* message ID for UI commands */
 #define MSG_ID_UI_COMMAND 3
 
 #endif /* PROTO_SERIALDEFINE_H */

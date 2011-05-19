@@ -25,19 +25,14 @@ uint8_t proto_setupPort(void){
 uint8_t proto_processMessages(void){
     uint8_t serialMsg[PROTO_MAX_MSG_LEN];
     
-    /* there is an unread message */
-    if (proto_isRxMsgComplete()) {
+    /* check if there is an unread message */
+    if (proto_isRxMsgComplete() == TRUE) {
         
         /* copy to local buffer */
         copyBuf(proto_getRxMsg(), serialMsg);
         
-        /* 
-         *  de-serialize data and re-construct the received struct
-         */
+        /* de-serialize data and re-construct the received struct */
         deSerializeMsg(serialMsg);
-        // if (navMsg.type == 10) {
-        //     digitalWrite(12, HIGH);
-        // }
 
         return 1;
     }
@@ -45,6 +40,15 @@ uint8_t proto_processMessages(void){
     else {
         return 0;
     }
+    
+    // /* check if there are any messages that should be sent */
+    // if () {
+    //     
+    // }
+    // /* there are no messages to be sent */
+    // else {
+    //     
+    // }
 }
 
 uint8_t proto_isNewUICommandMsg(void){
