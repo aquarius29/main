@@ -55,44 +55,44 @@ void group_run(void){
 
 
     /* trying to receive a UI action command message to movement code */
-     // uiCommand = proto_serialReadUICommandMsg();
+    uiCommand = proto_serialReadUICommandMsg();
      
-     // if (uiCommand != 0) {
-     //     switch (uiCommand) {
-     //         case UP :
-     //             digitalWrite(13, HIGH);
-     //             break;
-     //         case DOWN :
-     //             digitalWrite(12, HIGH);
-     //             proto_serialSendMovConfirmMsg(data2);
-     //             break;
-     //         case BACK :
-     //             digitalWrite(11, HIGH);
-     //             break;
-     //         case FORWARD :
-     //             digitalWrite(10, HIGH);
-     //             break;
-     //         case LEFT :
-     //             digitalWrite(9, HIGH);
-     //             break;
-     //         case RIGHT :
-     //             digitalWrite(8, HIGH);
-     //             break;
-     //         case HOVER :
-     //             digitalWrite(7, HIGH);
-     //             proto_serialSendMovConfirmMsg(data);
-     //             break;
-     //         case LAND :
-     //             digitalWrite(13, LOW);
-     //             digitalWrite(12, LOW);
-     //             digitalWrite(11, LOW);
-     //             digitalWrite(10, LOW);
-     //             digitalWrite(9, LOW);
-     //             digitalWrite(8, LOW);
-     //             digitalWrite(7, LOW);
-     //             break;
-     //     }
-     // }
+    if (uiCommand != 0) {
+        switch (uiCommand) {
+            case UP :
+                digitalWrite(13, HIGH);
+                break;
+            case DOWN :
+                digitalWrite(12, HIGH);
+                proto_serialSendMovConfirmMsg(data2);
+                break;
+            case BACK :
+                digitalWrite(11, HIGH);
+                break;
+            case FORWARD :
+                digitalWrite(10, HIGH);
+                break;
+            case LEFT :
+                digitalWrite(9, HIGH);
+                break;
+            case RIGHT :
+                digitalWrite(8, HIGH);
+                break;
+            case HOVER :
+                digitalWrite(7, HIGH);
+                proto_serialSendMovConfirmMsg(data);
+                break;
+            case LAND :
+                digitalWrite(13, LOW);
+                digitalWrite(12, LOW);
+                digitalWrite(11, LOW);
+                digitalWrite(10, LOW);
+                digitalWrite(9, LOW);
+                digitalWrite(8, LOW);
+                digitalWrite(7, LOW);
+                break;
+         }
+     }
  
     /* below is an example of reading a struct message from navigation */
     navMsg = proto_serialReadNavMsg();
