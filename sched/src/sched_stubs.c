@@ -1,3 +1,20 @@
+/***************************************************************************
+ * Copyright (C) 2011  <name of author>
+ * 
+ * This program is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ ****************************************************************************/
 
 /*!
  *  @file sched_stubs.c
@@ -38,18 +55,14 @@
 #endif /* PC ARDUINO */
 
 int16_t caRun(void) {
-#ifdef DEBUG
     DEBUG_MSG("inside caRun\n");
-#endif /* DEBUG */
     SLEEP(10);
 	
 	return 0;
 }
 
 int16_t stabRun(void) {
-#ifdef DEBUG
 	DEBUG_MSG("inside stabRun\n");
-#endif /* DEBUG */
     SLEEP(10);
 
 	
@@ -57,85 +70,64 @@ int16_t stabRun(void) {
 }
 
 int16_t moveRun(void) {
-#ifdef DEBUG
 	DEBUG_MSG("inside moveRun\n");
-#endif /* DEBUG */
     SLEEP(10);
 	
 	return 0;
 }
 
 int16_t motoRun(void) {
-/*
-#ifdef DEBUG
     DEBUG_MSG("inside motoRun");
-#endif /* DEBUG */
 	
-	return 0;
+    return 0;
 }
 
 int16_t protoRun(void) {
-#ifdef DEBUG
 	DEBUG_MSG("inside protoRun\n");
-#endif /* DEBUG */
     SLEEP(10);
 	
 	return 0;
 }
 
 int16_t connRun(void) {
-#ifdef DEBUG
 	DEBUG_MSG("inside connRun\n");
-#endif /* DEBUG */
     SLEEP(10);
 	
 	return 0;
 }
 
 int16_t caInit(void) {
-#ifdef DEBUG
 	DEBUG_MSG("inside caInit\n");
-#endif /* DEBUG */
 	
 	return 0;
 }
 
 int16_t stabInit(void) {
-#ifdef DEBUG
 	DEBUG_MSG("inside stabInit\n");
-#endif /* DEBUG */
 	
 	return 0;
 }
 
 int16_t moveInit(void) {
-#ifdef DEBUG
 	DEBUG_MSG("inside moveInit\n");
-#endif /* DEBUG */
 	
 	return 0;
 }
 
 int16_t motoInit(void) {
-#ifdef DEBUG
 	DEBUG_MSG("inside motoInit");
-#endif /* DEBUG */
 
 	return 0;
 }
 
 int16_t protoInit(void) {
-#ifdef DEBUG
 	DEBUG_MSG("inside protoInit\n");
-#endif /* DEBUG */
 	
 	return 0;
 }
 
 int16_t connInit(void) {
-#ifdef DEBUG
 	DEBUG_MSG("inside connInit\n");
-#endif /* DEBUG */
 	
 	return 0;
 }
