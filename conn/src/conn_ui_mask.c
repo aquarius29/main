@@ -5,19 +5,20 @@
  *
  *  @author Michal Musialik
  *  @date 2011-05-07
- *  @history    2011-05-07 - changing to switch
- *  @history    2011-05-13 - adding nav functions
+ *  @history    2011-05-07 - changing to switch\n 
+ *              2011-05-13 - adding nav functions
  *  
  *
- *  Description:
- *  This a mask that after receiving a value from the server,
+ *  @details This a mask that after receiving a value from the server\n
  *  do a selection by using a switch.
  */
 
 #include "conn_ui_mask.h"
 #include <stdio.h>
 #include "conn_tcpserver.h"
+
 /*
+These includes and values are dirrectly used in motor module
 
 #include "port_test.c"
 #include "proto_serial_port.h"
@@ -36,87 +37,64 @@ uint8_t land  = 0x08;
 */
 
 void controll_movement(int identifier){
-  // portHandle = proto_serialOpen();
-  switch(identifier){
-
-  case FORWARD:
-  DEBUG("Going forward\n")
-    // proto_serialSendUICommandMsg(portHandle, forward);
-  break;
-  
-case BACK:
-  DEBUG("Going back\n")
-    // proto_serialSendUICommandMsg(portHandle, back);
-  break;
-  
-case LEFT:
-  DEBUG("Going left\n")
-    // proto_serialSendUICommandMsg(portHandle, left);
-  break;
-  
-case RIGHT:
-  DEBUG("Going right\n")
-    //proto_serialSendUICommandMsg(portHandle,right);
-  break;
-  
-case UP:
-  DEBUG("Going up\n")
-    //proto_serialSendUICommandMsg(portHandle,alt_up);
-  break;
-  
-case DOWN:
-  DEBUG("Going down\n")
-    //proto_serialSendUICommandMsg(portHandle,alt_down);
-  break;
-  
-case LAND:
-  DEBUG("land\n")
-    //proto_serialSendUICommandMsg(portHandle,land);
-  break;
-  
-case TAKE_OFF:
-  DEBUG("taking off\n")
-    //proto_serialSendUICommandMsg(portHandle,hover);
-  break;
-
-case KILL_INDOOR:
-  DEBUG("kill indoor\n")
- 
-  break;
-  
-case KILL_GPS:
-  DEBUG("kill gps\n")
- 
-  break;
-  
-  case KILL_SERVER:
-  DEBUG("kill server\n")
-    break;
-  
-  case START_CAMERA:
-    DEBUG("starting camera\n")
-   
-    break;
-  
-case START_INDOOR_PATH:
-  DEBUG("start indoor path\n")
-  
-  break;
-
-case START_OUTDOOR_PATH:
-  DEBUG("start outdoor path\n")
-  break;
-
-case INDOOR_POSITION:
-  DEBUG("indoor position\n")
-  break;
-
-case OUTDOOR_POSITION:
-  DEBUG("outdoor position\n")
-  break;
-
-
-  }
-  
+// portHandle = proto_serialOpen();
+    switch(identifier){
+        case FORWARD:
+        DEBUG("Going forward\n")
+// proto_serialSendUICommandMsg(portHandle, forward);
+        break; 
+        case BACK:
+        DEBUG("Going back\n")
+// proto_serialSendUICommandMsg(portHandle, back);
+        break;
+        case LEFT:
+        DEBUG("Going left\n")
+// proto_serialSendUICommandMsg(portHandle, left);
+        break;  
+        case RIGHT:
+        DEBUG("Going right\n")
+//proto_serialSendUICommandMsg(portHandle,right);
+        break;
+        case UP:
+        DEBUG("Going up\n")
+//proto_serialSendUICommandMsg(portHandle,alt_up);
+        break;
+        case DOWN:
+        DEBUG("Going down\n")
+//proto_serialSendUICommandMsg(portHandle,alt_down);
+        break; 
+        case LAND:
+        DEBUG("land\n")
+//proto_serialSendUICommandMsg(portHandle,land);
+        break;
+        case TAKE_OFF:
+        DEBUG("taking off\n")
+//proto_serialSendUICommandMsg(portHandle,hover);
+        break;
+        case KILL_INDOOR:
+        DEBUG("kill indoor\n")
+        break;
+        case KILL_GPS:
+        DEBUG("kill gps\n")
+        break;
+        case KILL_SERVER:
+        DEBUG("kill server\n")
+        break; 
+        case START_CAMERA:
+        DEBUG("starting camera\n")  
+        break;
+        case START_INDOOR_PATH:
+        DEBUG("start indoor path\n")
+        break; 
+        case START_OUTDOOR_PATH:
+        DEBUG("start outdoor path\n")
+        break;
+        case INDOOR_POSITION:
+        DEBUG("indoor position\n")
+        break;
+        case OUTDOOR_POSITION:
+        DEBUG("outdoor position\n")
+        break;
+     }
 }
 

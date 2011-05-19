@@ -17,3 +17,7 @@ testsuite
 *~
 .DS_Store?
 Thumbs.db
+
+# Generated documentation #
+###########################
+doc/*

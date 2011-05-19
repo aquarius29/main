@@ -1,15 +1,17 @@
 /*!
- *  @file conn_framet.c
+ *  @file conn_frame.h
  *
- *  This is a header file that contain prtotype used frame.c
+ *  @brief This is a header file that contain prtotype used frame.c
  *  @author Michal Musialik
-
+ *
  *  @date 2011-05-07
- *  @history    2011-05-11 - adding final prototypes
- *  @history    2011-05-16 - linking 
+ *  @history    2011-05-11 - adding final prototypes\n
+ *              2011-05-16 - linking
+ *
+ *  @ref http://www.gtk.org 
  */
 
-/*Prototypes for GUI*/
+
 
 #include <gtk/gtk.h>
 #define TEXT_SIZE 50
@@ -52,8 +54,8 @@ void gps_indoor(void);
 void gps_kill_indoor(void);
 void kill_server(void);
 void command_quit(void);
-void indoor_position(char text[TEXT_SIZE]);
-void outdoor_position(char text[TEXT_SIZE]);
+void indoor_position(char* text);
+void outdoor_position(char* text);
 void landing(void);
 void drone_connect(void);
 void enter_callback(GtkWidget *widget, GtkWidget *entry );

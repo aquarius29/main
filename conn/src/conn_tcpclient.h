@@ -3,15 +3,15 @@
  *
  *  @brief Header file for conn_tcpclient.c
  *
- *  @author Michal Musialik
+ *  @author Michal Musialik, Ali Issa
  *  @date 2011-05-07
- *  @history    2011-05-07 - first outcast of conn_tcpclient.h file
- *  @history    2011-05-13 - restructuring
+ *  @history    2011-05-07 - first outcast of conn_tcpclient.h file\n
+ *              2011-05-13 - restructuring
  */
 
-#define GPS_BUFFER 50
+#define GPS_BUFFER 50/*Buffer for GPS data*/
 #define PORT 9600 
-#define BUFFER_SIZE 20 
+#define BUFFER_SIZE 15/*Buffer controll message handling*/
 #define CLOSE_SOCKET_TCP close(socket_tcp)
 
 #define FORWARD "3"
@@ -54,4 +54,3 @@ void send_indoor(void);
 void send_kill_indoor(void);
 void send_indoor_position(void);
 void send_outdoor_position(void);
-void recieving(void);
