@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (C) 2011  Anders Treptow
+ * Copyright (C) 2011  Anders Treptow, Joakim Gross
  * 
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as published
@@ -22,6 +22,7 @@
  *  @brief Temporary solution to represent missing modules
  *
  *  @author Joakim
+ *  @author Anders
  *  @date 2011-04-16
  *  @history    2011-04-10 - wrote original code
  *              2011-04-14 - added Doxygen comments
