@@ -288,7 +288,7 @@ int16_t system_init(sched_Fun_t funArrInit[TOTAL_NO_PROCESSES]){
     for (i = 0; i < TOTAL_NO_PROCESSES; i++){
         res = (funArrInit[i])();
 
-        PRINT_STRING("function call result: %d\n", res);
+        DEBUG_MSG("function call result: %d\n", res);
     }
     
     return 0;
