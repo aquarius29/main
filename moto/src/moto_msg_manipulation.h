@@ -62,7 +62,7 @@ typedef struct control_message{
  * @param msg_pointer
  * @return void
  * @brief Simply prints out necessary debug information\n
- * such as the status of the motors and the bits of the message\n
+ * @details such as the status of the motors and the bits of the message\n
  * sent in as a parameter to the functions.\n
  * Uses Serial.print or printf depending on what flag has been set\n
  * for the compilation (ARDUINO_DBG or PC respectively).

@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "CUnit/Basic.h"
 #include "../src/conn_tcpserver.c"
+#include "../src/conn_ui_mask.c"
 
 /*! 
     @author Ali, Kuhan, Michal, Eugene
@@ -21,13 +22,13 @@ void test2_reuse(void) {
 
 /* Test 3: socket keep alive */
 void test3_keepalive(void) {
-  CU_ASSERT(socket_keepa_live() == 0);
+  CU_ASSERT(socket_keep_alive() == 0);
 }
 
 /* Test 4: binding address to a socket*/
 void test4_bind(void) {
      /* CU_ASSERT(gatherInfo()); - previous version of the function */
-     CU_ASSERT(socket_bind() == 0);
+     CU_ASSERT(socket_binding() == 0);
 }
 
 /*!
