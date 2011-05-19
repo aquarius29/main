@@ -46,8 +46,6 @@
 
 #define PRINT_STRING(string) printf(string)
 
-/* stubs represent other modules */
-/* #include "sched_stubs.h" */
 #elif defined ARDUINO
 #include "WProgram.h"
 
@@ -61,6 +59,7 @@
 #include "mov_interface.h"
 #include "serial_interface.h"
 #else
+/* stubs represent other modules */
 #include "sched_stubs.h"
 #endif
 
@@ -254,21 +253,21 @@ int16_t process_setup(ProcessData *pProcessData,
 
     /* MOVE PROCESS */
     process = create_process(MOVE_PID);
-    task = create_task(funArrRun[1], 54); /* 2011-05-16 | 
-                                          time measured to ~ */
+    task = create_task(funArrRun[1], 4); /* 2011-05-16 | 
+                                          time measured to ~4324 microseconds */
     enqueue_task(process, task);
     pProcessData->processList[1] = process;
 
     /* STAB PROCESS */
     process = create_process(STAB_PID);
-    task = create_task(funArrRun[2], 38); /* 2011-05-15 | 
-                                          stab_run measured to ~38100 */
+    task = create_task(funArrRun[2], 4); /* 2011-05-15 | 
+                                          stab_run measured to ~4550 */
     enqueue_task(process, task);
     pProcessData->processList[2] = process;
 
     /* SERIAL PROCESS */
     process = create_process(SERIAL_PID);
-    task = create_task(funArrRun[3], 5); /* not measured */
+    task = create_task(funArrRun[3], 1); /* not measured | added late in project */
     enqueue_task(process, task);
     pProcessData->processList[3] = process;
 
