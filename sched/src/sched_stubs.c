@@ -45,14 +45,22 @@
 #define SLEEP(a) usleep(a)
 #endif /* WIN */
 
+#ifdef DEBUG
 #define DEBUG_MSG(msg) printf(msg)
+#else
+#define DEBUG_MSG(msg)
+#endif
 
 #elif ARDUINO
 #include "WProgram.h"
 
 #define SLEEP(a) delay(a)
+#ifdef DEBUG
 #define DEBUG_MSG(msg) Serial.println(msg)
-#endif /* PC ARDUINO */
+#else
+#define DEBUG_MSG(msg)
+#endif
+#endif
 
 int16_t ca_run(void){
     DEBUG_MSG("inside ca_run\n");
@@ -63,7 +71,7 @@ int16_t ca_run(void){
 
 int16_t stab_run(void){
 	DEBUG_MSG("inside stab_run\n");
-    SLEEP(10);
+    SLEEP(4);
 
 	
 	return 0;
@@ -71,13 +79,14 @@ int16_t stab_run(void){
 
 int16_t mov_run(void){
 	DEBUG_MSG("inside mov_run\n");
-    SLEEP(10);
+    SLEEP(4);
 	
 	return 0;
 }
 
 int16_t moto_run(void){
     DEBUG_MSG("inside moto_run");
+    SLEEP(1);
 	
     return 0;
 }
@@ -98,7 +107,7 @@ int16_t conn_run(void){
 
 int16_t serial_run(void){
     DEBUG_MSG("inside serial_run\n");
-    SLEEP(10);
+    SLEEP(1);
 
     return 0;
 }

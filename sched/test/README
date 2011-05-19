@@ -2,14 +2,23 @@ How to make tests:
 
 DETAILS:
 ******************************
-For running the tests on sched_scheduler_h the sched_scheduler module will 
+For running the CUNIT tests on sched_scheduler_h the sched_scheduler module will 
 replace the actual function pointers with stubs provided in the sched_stubs.c file.
 In this way the scheduler will still behave as it were the real function pointers but you
 don't have to compile all the files for the project.
+
+There is also an option to make a simulated scheduler to see an actual simulated execution
+of the batman implementation. This will produce a log in .txt format with 500 iterations
+printed out.
 ******************************
 
-HOW TO:
+HOW TO MAKE CUNIT TESTS:
 ******************************
-Simple type "make test" without the quatation marks and then run ./testsuite
+Simply type "make test" without the quatation marks and then run ./testsuite
+******************************
+
+HOW TO MAKE SIMULATED SCHEDULER:
+******************************
+type "make sched-run" without the quatation marks then run ./scheduler
 ******************************
 
