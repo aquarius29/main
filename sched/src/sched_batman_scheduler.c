@@ -35,7 +35,7 @@
 *               2011-04-21 - Made execution time measurement
 *               2011-05-10 - made time measurement for core components
 *               2011-05-19 - added license
-*               2011-05-19 - fixed some doxygen comments
+*               2011-05-19 - fixed some doxygen comments, added cunit flag
 */
 #include <string.h>
 #include <stdlib.h>
@@ -54,11 +54,15 @@
 #define PRINT_STRING(string) Serial.println(string)
 #endif /* PC ARDUINO*/
 
+#ifndef CUNIT
 #include "moto_interface.h"
 #include "proto_lib.h"
 #include "stab_interface.h"
 #include "mov_interface.h"
 #include "serial_interface.h"
+#else
+#include "sched_stubs.h"
+#endif
 
 #include "sched_batman_scheduler.h"
 
@@ -288,7 +292,9 @@ int16_t system_init(sched_Fun_t funArrInit[TOTAL_NO_PROCESSES]){
     for (i = 0; i < TOTAL_NO_PROCESSES; i++){
         res = (funArrInit[i])();
 
-        DEBUG_MSG("function call result: %d\n", res);
+#ifdef PC
+        printf("function call result: %d\n", res);
+#endif
     }
     
     return 0;

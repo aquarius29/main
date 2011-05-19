@@ -1,5 +1,6 @@
-SRCDIR=../src/arduino/batman_impl
-SRC=$(SRCDIR)/sched_scheduler.c  $(SRCDIR)/sched_stubs.c 
+PROG=testsuite
+SRCDIR=../src
+SRC=$(SRCDIR)/sched_batman_scheduler.c $(SRCDIR)/sched_stubs.c -DPC -DCUNIT
 TESTSRC=test_scheduler_h.c $(SRC)
 
 default:
@@ -10,7 +11,7 @@ default:
 	@echo "make clean   clean up test"
 
 test:
-	gcc -o test $(TESTSRC) -lcunit
+	gcc -o $(PROG) $(TESTSRC) -I../src -lcunit
 
 clean:
-	rm -r test.exe
+	rm -f $(PROG).exe $(PROG).elf $(PROG)

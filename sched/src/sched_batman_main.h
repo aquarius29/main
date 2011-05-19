@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (C) 2011  <name of author>
+ * Copyright (C) 2011  Anders Treptow
  * 
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as published

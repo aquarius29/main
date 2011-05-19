@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (C) 2011  <name of author>
+ * Copyright (C) 2011  Anders Treptow
  * 
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as published
@@ -54,80 +54,93 @@
 #define DEBUG_MSG(msg) Serial.println(msg)
 #endif /* PC ARDUINO */
 
-int16_t caRun(void) {
-    DEBUG_MSG("inside caRun\n");
+int16_t ca_run(void){
+    DEBUG_MSG("inside ca_run\n");
     SLEEP(10);
 	
 	return 0;
 }
 
-int16_t stabRun(void) {
-	DEBUG_MSG("inside stabRun\n");
+int16_t stab_run(void){
+	DEBUG_MSG("inside stab_run\n");
     SLEEP(10);
 
 	
 	return 0;
 }
 
-int16_t moveRun(void) {
-	DEBUG_MSG("inside moveRun\n");
+int16_t mov_run(void){
+	DEBUG_MSG("inside mov_run\n");
     SLEEP(10);
 	
 	return 0;
 }
 
-int16_t motoRun(void) {
-    DEBUG_MSG("inside motoRun");
+int16_t moto_run(void){
+    DEBUG_MSG("inside moto_run");
 	
     return 0;
 }
 
-int16_t protoRun(void) {
-	DEBUG_MSG("inside protoRun\n");
+int16_t proto_run(void){
+	DEBUG_MSG("inside proto_run\n");
     SLEEP(10);
 	
 	return 0;
 }
 
-int16_t connRun(void) {
-	DEBUG_MSG("inside connRun\n");
+int16_t conn_run(void){
+	DEBUG_MSG("inside conn_run\n");
     SLEEP(10);
 	
 	return 0;
 }
 
-int16_t caInit(void) {
-	DEBUG_MSG("inside caInit\n");
+int16_t serial_run(void){
+    DEBUG_MSG("inside serial_run\n");
+    SLEEP(10);
+
+    return 0;
+}
+
+int16_t ca_init(void){
+	DEBUG_MSG("inside ca_init\n");
 	
 	return 0;
 }
 
-int16_t stabInit(void) {
-	DEBUG_MSG("inside stabInit\n");
+int16_t stab_init(void){
+	DEBUG_MSG("inside stab_init\n");
 	
 	return 0;
 }
 
-int16_t moveInit(void) {
-	DEBUG_MSG("inside moveInit\n");
+int16_t mov_init(void){
+	DEBUG_MSG("inside mov_init\n");
 	
 	return 0;
 }
 
-int16_t motoInit(void) {
-	DEBUG_MSG("inside motoInit");
+int16_t moto_init(void){
+	DEBUG_MSG("inside moto_init");
 
 	return 0;
 }
 
-int16_t protoInit(void) {
-	DEBUG_MSG("inside protoInit\n");
+int16_t proto_init(void){
+	DEBUG_MSG("inside proto_init\n");
 	
 	return 0;
 }
 
-int16_t connInit(void) {
-	DEBUG_MSG("inside connInit\n");
+int16_t conn_init(void){
+	DEBUG_MSG("inside conn_init\n");
 	
 	return 0;
+}
+
+int16_t serial_init(void){
+    DEBUG_MSG("inside serial_init");
+
+    return 0;
 }
