@@ -60,10 +60,10 @@ void port_test(void){
     /* this opens the serial device defined in proto_serial_port.h */
     portHandle = proto_serialOpen();
     
-    // proto_serialSendUICommandMsg(portHandle, 2);
-    // proto_serialReadMovConfirmMsg(portHandle, &movConfirmMsg);
-    // 
-    // printf("received confiramtion message: %d\n", movConfirmMsg);
+    proto_serialSendUICommandMsg(portHandle, 2);
+    proto_serialReadMovConfirmMsg(portHandle, &movConfirmMsg);
+    
+    printf("received confiramtion message: %d\n", movConfirmMsg);
 
 
     while (x < ITERATIONS) {

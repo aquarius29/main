@@ -29,7 +29,8 @@
  *
  *  @details Module de-constructs messages and puts them into an array \n
  *           of bytes (this is the "serialization"). It also adds some \n
- *           meta-data in the array that is used on the receiving end. \n
+ *           meta-data in the array that is used on the receiving end, \n
+ *           as well as the crucial null terminator. \n
  *           This is why even single byte values needs to go through here \n
  */
 

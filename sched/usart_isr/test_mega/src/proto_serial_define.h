@@ -1,14 +1,33 @@
+/***************************************************************************
+ * Copyright (C) 2011  Joakim Gross, Justin Wagner
+ * 
+ * This program is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ ****************************************************************************/
 
 /*!
- *  @file proto_serialDefine.h
+ *  @file proto_serial_define.h
  *
- *  @brief Combining defines for the serialize/deserialize
+ *  @brief      Combining defines for the serialize/deserialize modules
  *  @author     Justin, Joakim
  *  @date       2011-05-18
  *
  *  @history    2011-05-12 - Created this header - Justin \n
  *              2011-05-18 - Adding more definitions for UI command \n
  *                           messages. - Joakim \n
+ *              2011-05-19 - Added license text and additonal comments \n
+ *                           - Joakim \n
  *
  *  @details
  */
