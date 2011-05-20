@@ -1,0 +1,3 @@
+
+Set the device name of the serial port to be used in the proto_serial_port.h
+file. 
