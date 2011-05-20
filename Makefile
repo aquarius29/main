@@ -74,10 +74,10 @@ PROG=prog
 
 ##  Libraries to include when building the basic system, 
 ##  only include libs that work for all targets for that system here!
-BASIC_LIBS=-Lstab/lib -Lsched/lib  -Lserial_comm/lib -Lmoto/lib -Lmov/lib -Lca/lib -Lproto_mega/lib -Llib -lsched -lstab -lmoto -lmov -lca -lproto -lm -lserial
+BASIC_LIBS=-Lstab/lib -Lsched/lib  -Lserial_comm/lib -Lmoto/lib -Lmov/lib -Lca/lib -Lproto_mega/lib -Llib -lsched -lstab -lmoto -lmov -lca -lproto -lm -lserial -lsched -lstab -lmoto -lmov -lca -lproto -lm -lserial
 
 ##  Set paths to headers used by code on the basic system
-BASIC_INCLUDES= -I../../stab/src -I../../serial_comm/src -I../../moto/src -I../../mov/src -I../../ca/src -I../../proto_mega/src -I../../include
+BASIC_INCLUDES= -I../../stab/src -I../../serial_comm/src -I../../serial_comm/lib -I../../moto/src -I../../mov/src -I../../ca/src -I../../proto_mega/src -I../../include
 
 ##  Libraries to include when building the panda system, 
 ##  only include libs that work for all targets for that system here!
@@ -141,7 +141,7 @@ pc:
 	cd ca/src && $(MAKE) lib-pc
 	cd serial_comm/src && $(MAKE) lib-pc
 	cd proto_mega/src && $(MAKE) lib-pc
-	$(GLOBAL_CC) -c main.c $(SCHED_FLAG) -Isched/src
+	$(GLOBAL_CC) -c main.c $(SCHED_FLAG)  -Isched/src $(BASIC_INCLUDES)
 	$(GLOBAL_CC) -o $(PROG) main.o $(BASIC_LIBS)
 
 
