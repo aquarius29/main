@@ -1,3 +1,21 @@
+/***************************************************************************
+ * Copyright (C) 2011  Anders Treptow
+ * 
+ * This program is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ ****************************************************************************/
+
 /*!
 *   @file sched_main.c
 *   
@@ -10,6 +28,7 @@
 *               2011-04-12 - updated process run structure
 *               2011-04-22 - wrote timing logic and logging
 *               2011-05-10 - Made arduino debugging and code cleaning
+*               2011-05-19 - added license
 */
 #include <stdint.h>
 
@@ -49,8 +68,10 @@
 #define ITER_END() printf(".")
 #endif
 
+#define PRINT_STRING(string) printf(string)
+
 #ifdef DEBUG
-#define DEBUG_MSG(msg)
+#define DEBUG_MSG(msg) PRINT_STRING(msg)
 #define DEBUG_MSG_VAR(var, type)
 #else
 #define DEBUG_MSG(msg)
@@ -65,8 +86,10 @@
 #define TIME_TYPE uint32_t
 #define ITER_END()
 
+#define PRINT_STRING(string) Serial.println(string)
+
 #ifdef DEBUG
-#define DEBUG_MSG(msg) Serial.println(msg)
+#define DEBUG_MSG(msg) PRINT_STRING(msg)
 #define DEBUG_MSG_VAR(var, type) Serial.println(var, type)
 #else
 #define DEBUG_MSG(msg)
@@ -77,52 +100,49 @@
 
 #endif
 
-/* 
-* Init function initializes all processes 
-**/
-int16_t sched_batman_init(void) 
-{
+/*!
+*   @brief  Init function initializes all processes.
+*   
+*   @return Will return 0 if everything was initialized \n
+*   properly, otherwise 1.
+*/
+int16_t sched_batman_init(void){
 #ifdef ARDUINO
     init();
     Serial.begin(9600);
 #endif
-    if(init_process_data() == 0) /*0 == EXIT_SUCCESS*/
-    {
+    if(init_process_data() == 0){ /*0 == EXIT_SUCCESS*/
         return 0; /*EXIT_SUCCESS*/
     }
-    else
-    {
+    else{
         return 1; /*EXIT_FAILURE*/
     }
 }
 
-/* 
-* Used for deallocating dynamic memory allocated for
-* the scheduler. Mostly used for PC 
-**/
-void shutdown_scheduler(void)
-{
-#ifdef PC
-    printf("\n\nShutting down scheduler............");
-#endif
+/*! 
+*   @brief  Used for deallocating dynamic memory allocated for \n
+*   the scheduler. Mostly used for PC 
+*/
+void shutdown_scheduler(void){
+    PRINT_STRING("\n\nShutting down scheduler............");
     clean_process_data();
-#ifdef PC
-    printf("DONE\n");
-#endif
+    PRINT_STRING("DONE\n");
 }
 
-/*
-* Used for logging the scheduler for the PC. 
-* Prints out number of processes ran, total execution time,
-* synchronization time and if the timeframe was exceeded and by how much
+/*!
+*   @brief  Used for logging the scheduler for the PC.\n
+*   Prints out number of processes ran, total execution time,\n
+*   synchronization time and if the timeframe was exceeded and by how much
+*
+*   @param  file Pointer to a FILE to write to.
+*   @param  syncTime The time that was need to synchronize.
+*   @param  time    The total execution time for the iteration.
 */
 #ifdef PC
 #ifdef LOG
-void print_iteration_status(FILE * file, int32_t syncTime, double time)
-{
+void print_iteration_status(FILE * file, int32_t syncTime, double time){
     int i;
     ProcessData * pProcessData = get_process_data();
-
 
     fprintf(file, "Ran: %d processes\n", pProcessData->currentQueueSize);
     for(i = 0; i < pProcessData->currentQueueSize; i++)
@@ -143,23 +163,25 @@ void print_iteration_status(FILE * file, int32_t syncTime, double time)
 #endif
 #endif
 
-/* 
-* This function acts as a profiler. 
-* The profiler mainly used for measuring time on the arduino 
-**/
-void sched_batman_profile(void)
-{
+/*!
+*   @brief  This function acts as a profiler. \n
+*   The profiler is mainly used for measuring time on the arduino.
+*/
+void sched_batman_profile(void){
     TIME_TYPE start;
     TIME_TYPE stop;
     int32_t time;
     ProcessData * pProcessData = get_process_data();
 
-    while(1)
-    {
-        start = micros();
+    while(1){
+        start = GET_CLOCK();
         pProcessData->processList[1]->idleTask->functionPointer();
-        stop = micros();
+        stop = GET_CLOCK();
         time = stop - start;
+
+        /* 
+        * Exception from the DEBUG_MSG since this message needs to be
+        * printed outside the DEBUG flag */
 #ifdef ARDUINO
         Serial.println(time, DEC);
 #elif defined PC
@@ -169,28 +191,27 @@ void sched_batman_profile(void)
     }
 }
 
-/*
-* This function is the actual process loop which run all the processes.
-* Each iteration consists of:
-* 
-* A process queue is constructed with idle processes to be scheduled,
-* the queue's size and content of processes depend of the available
-* for the current timeframe and idle processes exection time.
-*
-* The process queue runs all processes.
-*
-* Total execution time is calculated.
-*
-* If the total execution time exceeds the value of the timeframe 
-* then the next timeframe is deducted by the exceeding time.
-*
-* If the total execution time did not exceed the value of the
-* timeframe then the processes waits (timeframe - total execution time)
-* in order to synchronous.
-*
+/*!
+*   @brief      This function acts as the main scheduling loop.
+*   @details    This function is the actual process loop which run\n
+*   all the processes. Each iteration consists of:\n
+*   \n
+*   A process queue is constructed with idle processes to be scheduled,\n
+*   the queue's size and content of processes depend of the available\n
+*   for the current timeframe and idle processes exection time.\n
+*   \n
+*   The process queue runs all processes.\n
+*   \n
+*   Total execution time is calculated.\n
+*   \n
+*   If the total execution time exceeds the value of the timeframe\n
+*   then the next timeframe is deducted by the exceeding time.\n
+*   \n
+*   If the total execution time did not exceed the value of the\n
+*   timeframe then the processes waits (timeframe - total execution time)\n
+*   in order to synchronize.\n
 **/
-void sched_batman_run(void)
-{
+void sched_batman_run(void){
     int16_t i;
     int32_t time;
     ProcessData * processData;
@@ -213,24 +234,22 @@ void sched_batman_run(void)
     processData = get_process_data();
     processQueue = processData->processQueue;
 
-#ifdef PC
-    printf("Starting scheduler: running processes\n");
-#endif
+    PRINT_STRING("Starting scheduler: running processes\n");
 
     /* 
     * Delay of 20 seconds to plug in the 
     * motors before any commands can start the motors
     **/
 #ifdef ARDUINO
-    Serial.println("System is ready, PLUG IN BATTERY!");
+    PRINT_STRING("System is ready, PLUG IN BATTERY!");
     SLEEP(20000);
-    Serial.println("3...");
+    PRINT_STRING("3...");
     SLEEP(1000);
-    Serial.println("2...");
+    PRINT_STRING("2...");
     SLEEP(1000);
-    Serial.println("1...");
+    PRINT_STRING("1...");
     SLEEP(1000);
-    Serial.println("System booting up");
+    PRINT_STRING("System booting up");
 #endif
 
     /* This loop is the main scheduling loop */
@@ -256,8 +275,7 @@ void sched_batman_run(void)
         DEBUG_MSG("Running processes");
 
         /* Runs all the processes in the queue */
-        for(j = 0; j < processData->currentQueueSize; j++)
-        {
+        for(j = 0; j < processData->currentQueueSize; j++){
             run_process(j);
         }
 
@@ -285,24 +303,22 @@ void sched_batman_run(void)
 #endif /* PC */
 
         DEBUG_MSG("Checking if timeframe was exceeded");
-        if(syncTime >= 0)
-        {
+        if(syncTime >= 0){
             SLEEP(syncTime);
             timeFrame = TIMEFRAME_MS;
         }
-        else if((syncTime * -1) > 1000)
-        {
+        else if((syncTime * -1) > 1000){
             /* 
             * DEADLINE has been exceeded
             * System faulure: THIS IS DANGEROUS
             * PANIC MODE? 
             * */
 #ifdef ARDUINO
-            analogWrite(13, 0);
+            /* If something went wrong the light stops flashing */
+            analogWrite(13, 0); 
 #endif
         }
-        else 
-        {
+        else{
             /* If the timeframe was exceeded with more time 
             * than what fits in the TIMEFRAME then the timeframe should be
             * set to the time of the last timeframe since the other
@@ -311,8 +327,7 @@ void sched_batman_run(void)
             syncTime *= -1;
 
             /* Setting the (last) timeframe  */
-            if(syncTime > TIMEFRAME_MS)
-            {
+            if(syncTime > TIMEFRAME_MS){
                 syncTime = TIMEFRAME_MS % syncTime;
             }
 #ifndef DEBUG

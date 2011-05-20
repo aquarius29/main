@@ -1,3 +1,20 @@
+/***************************************************************************
+ * Copyright (C) 2011  Anders Treptow, Joakim Gross
+ * 
+ * This program is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as published
+ * by the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ ****************************************************************************/
 
 /*!
  *  @file sched_stubs.c
@@ -28,114 +45,111 @@
 #define SLEEP(a) usleep(a)
 #endif /* WIN */
 
+#ifdef DEBUG
 #define DEBUG_MSG(msg) printf(msg)
+#else
+#define DEBUG_MSG(msg)
+#endif
 
 #elif ARDUINO
 #include "WProgram.h"
 
 #define SLEEP(a) delay(a)
+#ifdef DEBUG
 #define DEBUG_MSG(msg) Serial.println(msg)
-#endif /* PC ARDUINO */
+#else
+#define DEBUG_MSG(msg)
+#endif
+#endif
 
-int16_t caRun(void) {
-#ifdef DEBUG
-    DEBUG_MSG("inside caRun\n");
-#endif /* DEBUG */
+int16_t ca_run(void){
+    DEBUG_MSG("inside ca_run\n");
     SLEEP(10);
 	
 	return 0;
 }
 
-int16_t stabRun(void) {
-#ifdef DEBUG
-	DEBUG_MSG("inside stabRun\n");
-#endif /* DEBUG */
-    SLEEP(10);
+int16_t stab_run(void){
+	DEBUG_MSG("inside stab_run\n");
+    SLEEP(4);
 
 	
 	return 0;
 }
 
-int16_t moveRun(void) {
-#ifdef DEBUG
-	DEBUG_MSG("inside moveRun\n");
-#endif /* DEBUG */
-    SLEEP(10);
+int16_t mov_run(void){
+	DEBUG_MSG("inside mov_run\n");
+    SLEEP(4);
 	
 	return 0;
 }
 
-int16_t motoRun(void) {
-/*
-#ifdef DEBUG
-    DEBUG_MSG("inside motoRun");
-#endif /* DEBUG */
+int16_t moto_run(void){
+    DEBUG_MSG("inside moto_run");
+    SLEEP(1);
 	
-	return 0;
+    return 0;
 }
 
-int16_t protoRun(void) {
-#ifdef DEBUG
-	DEBUG_MSG("inside protoRun\n");
-#endif /* DEBUG */
+int16_t proto_run(void){
+	DEBUG_MSG("inside proto_run\n");
     SLEEP(10);
 	
 	return 0;
 }
 
-int16_t connRun(void) {
-#ifdef DEBUG
-	DEBUG_MSG("inside connRun\n");
-#endif /* DEBUG */
+int16_t conn_run(void){
+	DEBUG_MSG("inside conn_run\n");
     SLEEP(10);
 	
 	return 0;
 }
 
-int16_t caInit(void) {
-#ifdef DEBUG
-	DEBUG_MSG("inside caInit\n");
-#endif /* DEBUG */
+int16_t serial_run(void){
+    DEBUG_MSG("inside serial_run\n");
+    SLEEP(1);
+
+    return 0;
+}
+
+int16_t ca_init(void){
+	DEBUG_MSG("inside ca_init\n");
 	
 	return 0;
 }
 
-int16_t stabInit(void) {
-#ifdef DEBUG
-	DEBUG_MSG("inside stabInit\n");
-#endif /* DEBUG */
+int16_t stab_init(void){
+	DEBUG_MSG("inside stab_init\n");
 	
 	return 0;
 }
 
-int16_t moveInit(void) {
-#ifdef DEBUG
-	DEBUG_MSG("inside moveInit\n");
-#endif /* DEBUG */
+int16_t mov_init(void){
+	DEBUG_MSG("inside mov_init\n");
 	
 	return 0;
 }
 
-int16_t motoInit(void) {
-#ifdef DEBUG
-	DEBUG_MSG("inside motoInit");
-#endif /* DEBUG */
+int16_t moto_init(void){
+	DEBUG_MSG("inside moto_init");
 
 	return 0;
 }
 
-int16_t protoInit(void) {
-#ifdef DEBUG
-	DEBUG_MSG("inside protoInit\n");
-#endif /* DEBUG */
+int16_t proto_init(void){
+	DEBUG_MSG("inside proto_init\n");
 	
 	return 0;
 }
 
-int16_t connInit(void) {
-#ifdef DEBUG
-	DEBUG_MSG("inside connInit\n");
-#endif /* DEBUG */
+int16_t conn_init(void){
+	DEBUG_MSG("inside conn_init\n");
 	
 	return 0;
+}
+
+int16_t serial_init(void){
+    DEBUG_MSG("inside serial_init");
+
+    return 0;
 }
