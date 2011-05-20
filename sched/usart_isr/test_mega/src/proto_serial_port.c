@@ -1,5 +1,5 @@
 /***************************************************************************
- * Copyright (C) 2011  Joakim Gross, Michal ????
+ * Copyright (C) 2011  Joakim Gross, Michal Musialik
  * 
  * This program is free software: you can redistribute it and/or
  * modify it under the terms of the GNU General Public License as published
@@ -44,11 +44,9 @@
 #include <stdint.h>
 
 #include "proto_serial_port.h"
+#include "proto_serial_define.h"
 
 #define BAUD_RATE B9600
- 
-#define TRUE 1
-#define FALSE 0
  
 static int32_t portHandle;
 static uint8_t isPortOpen = FALSE;
